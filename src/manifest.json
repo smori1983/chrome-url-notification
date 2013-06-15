@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+
+    "name": "chrome url notifier",
+    "description": "chrome url notifier",
+    "version": "0.1.0",
+
+    "content_scripts": [{
+        "matches": ["https://*/*", "http://*/*"],
+        "js": [
+            "js/jquery-1.9.1.min.js",
+            "js/content.js"
+        ],
+        "run_at": "document_end"
+    }],
+
+    "background": {
+        "scripts": [
+            "js/jquery-1.9.1.min.js",
+            "js/urlNotifier/storage.js",
+            "js/urlNotifier/finder.js",
+            "js/background.js"
+        ],
+        "persistent": false
+    },
+
+    "options_page": "html/options.html"
+}
