@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<title>chrome autofill for redmine</title>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
+</head>
+<body class="m50">
+
+<div class="mBottom50">
+    <h1>Chrome URL notifier</h1>
+</div>
+
+<div class="mBottom50">
+    <h2>パターン登録</h2>
+    <h3 class="mBottom20">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</h3>
+    <form id="js_form_pattern">
+        <table>
+            <tr>
+                <td>URLパターン</td>
+                <td><input type="text" value="" id="js_input_url" class="w500" placeholder="例: http://*.example.com/" /></td>
+            </tr>
+            <tr>
+                <td>表示するメッセージ</td>
+                <td><input type="text" value="" id="js_input_msg" class="w500" placeholder="例: example.com本番サイトを閲覧中" /></td>
+            </tr>
+        </table>
+        <input type="submit" value="パターンを追加" />
+    </form>
+</div>
+
+<div class="mBottom50">
+    <h2>パターン一覧</h2>
+    <table id="js_list_pattern"></table>
+</div>
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/urlNotifier/storage.js"></script>
+<script type="text/javascript" src="/js/options.js"></script>
+</body>
+</html>
