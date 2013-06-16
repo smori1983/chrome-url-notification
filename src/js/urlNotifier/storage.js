@@ -58,6 +58,10 @@ urlNotifier.storage = (function() {
             return _getAllPattern();
         },
 
+        findByUrl: function(url) {
+            return _findByUrl(url);
+        },
+
         addPattern: function(pattern) {
             _addPattern(pattern);
         },
