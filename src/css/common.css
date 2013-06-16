@@ -24,6 +24,8 @@ html, input, select {
 .minw400 { min-width: 400px; }
 .minw500 { min-width: 500px; }
 
+.textError { color: #fd0006; }
+
 .m10 { margin: 10px; }
 .m20 { margin: 20px; }
 .m30 { margin: 30px; }
