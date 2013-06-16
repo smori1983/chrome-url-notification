@@ -30,11 +30,11 @@ urlNotifier.storage = (function() {
         return result;
     };
 
-    var _addPattern = function(url, msg) {
-        if (_findByUrl(url) === null) {
+    var _addPattern = function(pattern) {
+        if (_findByUrl(pattern.url) === null) {
             var data = _getAllPattern();
 
-            data.push({ url: url, msg: msg });
+            data.push(pattern);
             _update(data);
         }
     };
@@ -58,8 +58,8 @@ urlNotifier.storage = (function() {
             return _getAllPattern();
         },
 
-        addPattern: function(url, msg) {
-            _addPattern(url, msg);
+        addPattern: function(pattern) {
+            _addPattern(pattern);
         },
 
         deletePattern: function(pattern) {

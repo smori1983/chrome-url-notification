@@ -50,7 +50,10 @@ $("#js_form_pattern").submit(function(e) {
         msg = $("#js_input_msg").val();
 
     if (url !== "" && msg !== "") {
-        urlNotifier.storage.addPattern(url, msg);
+        urlNotifier.storage.addPattern({
+            url: url,
+            msg: msg
+        });
         showPatternList();
     }
 });
