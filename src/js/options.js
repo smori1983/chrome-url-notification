@@ -46,8 +46,8 @@ var showPatternList = function() {
 $("#js_form_pattern").submit(function(e) {
     e.preventDefault();
 
-    var url = $("#js_input_url").val(),
-        msg = $("#js_input_msg").val();
+    var url = $("#js_input_url").val().trim(),
+        msg = $("#js_input_msg").val().trim();
 
     if (url !== "" && msg !== "") {
         urlNotifier.storage.addPattern({
