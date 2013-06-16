@@ -43,13 +43,41 @@ var showPatternList = function() {
     });
 };
 
+var patternMsg = (function() {
+    var that = {},
+        timeoutId = null;
+
+    that.show = function(msg) {
+        $("#js_msg_pattern").text(msg);
+
+        if (timeoutId !== null) {
+            window.clearTimeout(timeoutId);
+        }
+
+        timeoutId = window.setTimeout(function() {
+            timeoutId = null;
+            that.hide();
+        }, 2000);
+    };
+
+    that.hide = function() {
+        $("#js_msg_pattern").empty();
+    };
+
+    return that;
+})();
+
 $("#js_form_pattern").submit(function(e) {
     e.preventDefault();
 
     var url = $("#js_input_url").val().trim(),
         msg = $("#js_input_msg").val().trim();
 
-    if (url !== "" && msg !== "") {
+    if (url === "" || msg === "") {
+        patternMsg.show("未入力の項目があります。");
+    } else if (urlNotifier.storage.findByUrl(url)) {
+        patternMsg.show("入力されたURLパターンは既に登録されています。");
+    } else {
         urlNotifier.storage.addPattern({
             url: url,
             msg: msg
