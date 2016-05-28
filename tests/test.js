@@ -13,8 +13,8 @@ QUnit.test("初期状態の件数", function(assert) {
 QUnit.test("全データ削除", function(assert) {
     setUp();
 
-    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "example.com" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "example.com" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
 
     urlNotifier.storage.deleteAll();
 
@@ -24,11 +24,11 @@ QUnit.test("全データ削除", function(assert) {
 QUnit.test("1件削除", function(assert) {
     setUp();
 
-    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "example.com" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "example.com" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "example.com" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    urlNotifier.storage.deletePattern({ url: "http://example.com/1", msg: "example.com" });
+    urlNotifier.storage.deletePattern({ url: "http://example.com/1", msg: "1" });
 
     assert.equal(2, urlNotifier.storage.getCount());
 });
@@ -51,9 +51,9 @@ QUnit.test("全件取得", function(assert) {
 QUnit.test("URLで検索 該当データなし", function(assert) {
     setUp();
 
-    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "example.com" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "example.com" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "example.com" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
     var found = urlNotifier.storage.findByUrl("http://example.com/");
 
