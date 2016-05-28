@@ -4,8 +4,13 @@ var setUp = function() {
 
 QUnit.module("urlNotifier.storage");
 
-QUnit.test("delete all patterns", function(assert) {
-    urlNotifier.storage.addPattern({ url: "http://example.com/", msg: "example.com" });
+QUnit.test("初期状態の件数", function(assert) {
+    assert.equal(0, urlNotifier.storage.getCount());
+});
+
+QUnit.test("全データ削除", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "example.com" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "example.com" });
 
     urlNotifier.storage.deleteAll();
 
