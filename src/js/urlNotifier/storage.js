@@ -10,6 +10,10 @@ urlNotifier.storage = (function() {
         localStorage.setItem(key.pattern, JSON.stringify(data));
     };
 
+    var _getCount = function() {
+        return _getAllPattern().length;
+    };
+
     var _getAllPattern = function() {
         var result = [], data;
 
@@ -57,7 +61,15 @@ urlNotifier.storage = (function() {
         }
     };
 
+    var _deleteAll = function() {
+        _update([]);
+    };
+
     return {
+        getCount: function() {
+            return _getCount();
+        },
+
         getAllPattern: function() {
             return _getAllPattern();
         },
@@ -72,6 +84,10 @@ urlNotifier.storage = (function() {
 
         deletePattern: function(pattern) {
             _deletePattern(pattern);
+        },
+
+        deleteAll: function() {
+            _deleteAll();
         }
     };
 })();
