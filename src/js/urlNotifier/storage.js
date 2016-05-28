@@ -2,14 +2,18 @@ var urlNotifier = urlNotifier || {};
 
 urlNotifier.storage = (function() {
 
+    var key = {
+        pattern: "pattern"
+    };
+
     var _update = function(data) {
-        localStorage.setItem("pattern", JSON.stringify(data));
+        localStorage.setItem(key.pattern, JSON.stringify(data));
     };
 
     var _getAllPattern = function() {
         var result = [], data;
 
-        if ((data = localStorage.getItem("pattern")) !== null) {
+        if ((data = localStorage.getItem(key.pattern)) !== null) {
             $.each(JSON.parse(data), function(idx, item) {
                 result.push(item);
             });
