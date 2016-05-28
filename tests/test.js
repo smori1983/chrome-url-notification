@@ -1,3 +1,7 @@
+var setUp = function() {
+    urlNotifier.storage.deleteAll();
+};
+
 QUnit.module("number");
 
 QUnit.test("delete all patterns", function(assert) {
