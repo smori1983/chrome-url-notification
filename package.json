@@ -1,0 +1,20 @@
+{
+  "name": "chrome-url-notifier",
+  "version": "1.0.0",
+  "description": "chrome-url-notifier",
+  "directories": {
+  },
+  "scripts": {
+    "test": "gulp test",
+    "watch:test": "watch 'npm run test' src/ tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smori1983/chrome-url-notifier.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "node-qunit-phantomjs": "^1.4.0",
+    "watch": "^0.18.0"
+  }
+}
