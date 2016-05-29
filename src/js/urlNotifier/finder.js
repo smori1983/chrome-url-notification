@@ -3,18 +3,17 @@ var urlNotifier = urlNotifier || {};
 urlNotifier.finder = (function() {
 
     var _find = function(url) {
-        var result = null, i, len, allPattern = urlNotifier.storage.getAllPattern();
+        var i, len, allPattern = urlNotifier.storage.getAllPattern();
 
         for (i = 0, len = allPattern.length; i < len; i++) {
             var str = _convertForMaching(allPattern[i].url);
 
             if (new RegExp(str).test(url)) {
-                result = allPattern[i];
-                break;
+                return allPattern[i];
             }
         }
 
-        return result;
+        return null;
     };
 
     var _convertForMaching = function(url) {
