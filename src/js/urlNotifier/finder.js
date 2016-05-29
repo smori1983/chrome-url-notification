@@ -6,14 +6,16 @@ urlNotifier.finder = (function() {
         var i, len, patterns = urlNotifier.storage.getAllPattern();
 
         for (i = 0, len = patterns.length; i < len; i++) {
-            var str = _convertForMaching(patterns[i].url);
-
-            if (new RegExp(str).test(url)) {
+            if (_makeRegExp(patterns[i].url).test(url)) {
                 return patterns[i];
             }
         }
 
         return null;
+    };
+
+    var _makeRegExp = function(url) {
+        return new RegExp(_convertForMaching(url));
     };
 
     var _convertForMaching = function(url) {
