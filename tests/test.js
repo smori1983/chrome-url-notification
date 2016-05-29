@@ -71,3 +71,30 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
 
     assert.equal("2", found.msg);
 });
+
+
+
+
+QUnit.module("urlNotifier.finder");
+
+QUnit.test("URLで検索 該当データなし", function(assert) {
+    setUp();
+
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+
+    var result = urlNotifier.finder.find("http://example.com/");
+
+    assert.equal(null, result);
+});
+
+QUnit.test("URLで検索 該当データなし", function(assert) {
+    setUp();
+
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+
+    var result = urlNotifier.finder.find("http://example.com/");
+
+    assert.equal(null, result);
+});
