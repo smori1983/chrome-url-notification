@@ -39,12 +39,14 @@ urlNotifier.storage = (function() {
     };
 
     var _addPattern = function(pattern) {
-        if (_findByUrl(pattern.url) === null) {
-            var data = _getAllPattern();
-
-            data.push(pattern);
-            _update(data);
+        if (_findByUrl(pattern.url)) {
+            return;
         }
+
+        var data = _getAllPattern();
+
+        data.push(pattern);
+        _update(data);
     };
 
     var _deletePattern = function(pattern) {
