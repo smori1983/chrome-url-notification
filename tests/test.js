@@ -72,6 +72,15 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
     assert.equal("2", found.msg);
 });
 
+QUnit,test("パターンの重複登録はできない", function(assert) {
+    setUp();
+
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+
+    assert.equal(1, urlNotifier.storage.getCount());
+});
 
 
 
