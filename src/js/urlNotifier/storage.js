@@ -11,10 +11,10 @@ urlNotifier.storage = (function() {
     };
 
     var _getCount = function() {
-        return _getAllPattern().length;
+        return _getAll().length;
     };
 
-    var _getAllPattern = function() {
+    var _getAll = function() {
         var result = [], data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
@@ -29,7 +29,7 @@ urlNotifier.storage = (function() {
     var _findByUrl = function(url) {
         var result = null;
 
-        $.each(_getAllPattern(), function(idx, item) {
+        $.each(_getAll(), function(idx, item) {
             if (item.url === url) {
                 result = item;
             }
@@ -43,7 +43,7 @@ urlNotifier.storage = (function() {
             return;
         }
 
-        var data = _getAllPattern();
+        var data = _getAll();
 
         data.push(pattern);
         _update(data);
@@ -53,7 +53,7 @@ urlNotifier.storage = (function() {
         if (_findByUrl(pattern.url) !== null) {
             var newData = [];
 
-            $.each(_getAllPattern(), function(idx, item) {
+            $.each(_getAll(), function(idx, item) {
                 if (item.url !== pattern.url) {
                     newData.push(item);
                 }
@@ -72,8 +72,8 @@ urlNotifier.storage = (function() {
             return _getCount();
         },
 
-        getAllPattern: function() {
-            return _getAllPattern();
+        getAll: function() {
+            return _getAll();
         },
 
         findByUrl: function(url) {

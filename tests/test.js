@@ -40,7 +40,7 @@ QUnit.test("全件取得", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    var all = urlNotifier.storage.getAllPattern();
+    var all = urlNotifier.storage.getAll();
 
     assert.equal(3, all.length);
     assert.equal("1", all[0].msg);

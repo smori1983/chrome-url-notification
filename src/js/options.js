@@ -5,7 +5,7 @@ var showPatternList = function() {
 
     $(id).empty();
 
-    $.each(urlNotifier.storage.getAllPattern(), function(idx, item) {
+    $.each(urlNotifier.storage.getAll(), function(idx, item) {
         var tdUrl, tdMsg, tdDelete, aDelete;
 
         tdUrl = $("<td>").

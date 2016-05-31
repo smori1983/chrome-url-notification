@@ -3,7 +3,7 @@ var urlNotifier = urlNotifier || {};
 urlNotifier.finder = (function() {
 
     var _find = function(url) {
-        var i, len, patterns = urlNotifier.storage.getAllPattern();
+        var i, len, patterns = urlNotifier.storage.getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (_makeRegExp(patterns[i].url).test(url)) {
