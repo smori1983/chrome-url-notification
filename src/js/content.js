@@ -3,6 +3,10 @@ $(function() {
 chrome.runtime.sendMessage({
     url: location.href
 }, function(result) {
+    if (result === null) {
+        return;
+    }
+
     var container;
 
     container = $("<div>").css({
