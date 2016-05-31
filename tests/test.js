@@ -55,9 +55,7 @@ QUnit.test("URLで検索 該当データなし", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    var found = urlNotifier.storage.findByUrl("http://example.com/");
-
-    assert.equal(null, found);
+    assert.equal(null, urlNotifier.storage.findByUrl("http://example.com/"));
 });
 
 QUnit.test("URLで検索 該当データあり", function(assert) {
@@ -67,9 +65,7 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    var found = urlNotifier.storage.findByUrl("http://example.com/2");
-
-    assert.equal("2", found.msg);
+    assert.equal("2", urlNotifier.storage.findByUrl("http://example.com/2").msg);
 });
 
 QUnit,test("パターンの重複登録はできない", function(assert) {
@@ -89,12 +85,10 @@ QUnit.module("urlNotifier.finder");
 QUnit.test("URLで検索 該当データなし", function(assert) {
     setUp();
 
-    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
-    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/*", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "2" });
 
-    var result = urlNotifier.finder.find("http://example.com/");
-
-    assert.equal(null, result);
+    assert.equal(null, urlNotifier.finder.find("http://example.com/"));
 });
 
 QUnit.test("URLで検索 該当データなし", function(assert) {
@@ -103,9 +97,7 @@ QUnit.test("URLで検索 該当データなし", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
 
-    var result = urlNotifier.finder.find("http://example.com/");
-
-    assert.equal(null, result);
+    assert.equal(null, urlNotifier.finder.find("http://example.com/"));
 });
 
 QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
@@ -115,7 +107,5 @@ QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/*", msg: "3" });
 
-    var result = urlNotifier.finder.find("http://example.com/3");
-
-    assert.equal(result.msg, "3");
+    assert.equal("3", urlNotifier.finder.find("http://example.com/3").msg);
 });
