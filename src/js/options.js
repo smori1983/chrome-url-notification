@@ -94,6 +94,13 @@ $("#js_form_pattern").submit(function(e) {
     }
 });
 
+$("#js_input_clear").click(function(e) {
+    e.preventDefault();
+
+    $("#js_input_url").val("");
+    $("#js_input_msg").val("");
+});
+
 
 showPatternList();
 
