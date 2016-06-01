@@ -26,22 +26,59 @@ var showPatternList = function() {
 
         aDelete = $("<a>").
             css({
-                color:  "#0044cc",
+                color:  "#bb0000",
                 cursor: "pointer"
             }).
             text("削除").
             click(function(e) {
                 e.preventDefault();
 
-                if (confirm(item.url + " を削除します。")) {
-                    urlNotifier.storage.deletePattern(item);
-                    showPatternList();
-                }
+                $(this).next("span").show();
             });
+
+        aDeleteConfirm = $("<span>").
+            css({
+                "display": "none",
+                "padding": "0px 20px"
+            }).
+            append(
+                $("<a>").
+                    css({
+                        "background": "#0044cc",
+                        "color": "#ffffff",
+                        "margin": "0px 5px",
+                        "padding": "3px 10px",
+                        "cursor": "pointer",
+                        "border-radius": "3px"
+                    }).
+                    text("OK").
+                    click(function(e) {
+                        e.preventDefault();
+                        urlNotifier.storage.deletePattern(item);
+                        showPatternList();
+                    })
+            ).
+            append(
+                $("<a>").
+                    css({
+                        "background": "#444444",
+                        "color": "#ffffff",
+                        "margin": "0px 5px",
+                        "padding": "3px 10px",
+                        "cursor": "pointer",
+                        "border-radius": "3px"
+                    }).
+                    text("キャンセル").
+                    click(function(e) {
+                        e.preventDefault();
+                        $(this).parent().hide();
+                    })
+            );
 
         tdDelete = $("<td>").
             addClass("pRight50").
-            append(aDelete);
+            append(aDelete).
+            append(aDeleteConfirm);
 
         $("<tr>").
             append(tdUrl).
