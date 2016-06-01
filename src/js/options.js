@@ -14,7 +14,15 @@ var showPatternList = function() {
 
         tdMsg = $("<td>").
             addClass("pRight50").
-            text(item.msg);
+            append(
+                $("<div>").
+                    addClass("list-message").
+                    css({
+                        "background-color": "#000000",
+                        "color": "#ffffff"
+                    }).
+                    text(item.msg)
+            );
 
         aDelete = $("<a>").
             css({
