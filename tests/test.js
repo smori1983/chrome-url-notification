@@ -109,3 +109,12 @@ QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
 
     assert.equal("3", urlNotifier.finder.find("http://example.com/3").msg);
 });
+
+QUnit.test("URLで検索 部分一致", function(assert) {
+    setUp();
+
+    urlNotifier.storage.addPattern({ url: "example.com", msg: "1" });
+
+    assert.equal("1", urlNotifier.finder.find("http://example.com/").msg);
+});
+
