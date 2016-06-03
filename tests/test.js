@@ -118,3 +118,39 @@ QUnit.test("URLで検索 部分一致", function(assert) {
     assert.equal("1", urlNotifier.finder.find("http://example.com/").msg);
 });
 
+
+
+QUnit.module("urlNotifier.data");
+
+QUnit.test("URLソート 整数の比較", function(assert) {
+
+    var patterns = [
+        { url: "http://example.com/2", msg: "2" },
+        { url: "http://example.com/1", msg: "1" },
+        { url: "http://example.com/3", msg: "3" }
+    ];
+
+    var sorted = urlNotifier.data.sortByUrl(patterns);
+
+    assert.equal(3, sorted.length);
+    assert.equal(sorted[0].msg, "1");
+    assert.equal(sorted[1].msg, "2");
+    assert.equal(sorted[2].msg, "3");
+});
+
+QUnit.test("URLソート 整数と'*'の比較", function(assert) {
+
+    var patterns = [
+        { url: "http://example.com/2", msg: "2" },
+        { url: "http://example.com/1", msg: "1" },
+        { url: "http://example.com/*", msg: "*" }
+    ];
+
+    var sorted = urlNotifier.data.sortByUrl(patterns);
+
+    assert.equal(3, sorted.length);
+    assert.equal(sorted[0].msg, "*");
+    assert.equal(sorted[1].msg, "1");
+    assert.equal(sorted[2].msg, "2");
+});
+
