@@ -8,9 +8,18 @@ urlNotifier.data = (function() {
         });
     };
 
+    var _sortByMessage = function(patterns) {
+        return patterns.sort(function(a, b) {
+            return (a.msg < b.msg) ? -1 : 1;
+        });
+    };
+
     return {
         sortByUrl: function(patterns) {
             return _sortByUrl(patterns);
         },
+        sortByMessage: function(patterns) {
+            return _sortByMessage(patterns);
+        }
     }
 })();

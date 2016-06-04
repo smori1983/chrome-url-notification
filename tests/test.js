@@ -154,3 +154,18 @@ QUnit.test("URLソート 整数と'*'の比較", function(assert) {
     assert.equal(sorted[2].msg, "2");
 });
 
+QUnit.test("メッセージソート", function(assert) {
+
+    var patterns = [
+        { url: "http://example.com/2", msg: "two" },
+        { url: "http://example.com/1", msg: "three" },
+        { url: "http://example.com/3", msg: "one" }
+    ];
+
+    var sorted = urlNotifier.data.sortByMessage(patterns);
+
+    assert.equal(3, sorted.length);
+    assert.equal("one", sorted[0].msg);
+    assert.equal("three", sorted[1].msg);
+    assert.equal("two", sorted[2].msg);
+});
