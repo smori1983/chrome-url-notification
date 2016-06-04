@@ -1,9 +1,15 @@
 $(function() {
 
-var showPatternList = function() {
-    var id = "#js_list_pattern";
+var selector = {}
+selector.patternForm = "#js_form_pattern";
+selector.inputUrl = "#js_input_url";
+selector.inputMsg = "#js_input_msg";
+selector.formClear = "#js_input_clear";
+selector.msgPattern = "#js_msg_pattern";
+selector.listArea = "#js_list_pattern";
 
-    $(id).empty();
+var showPatternList = function() {
+    $(selector.listArea).empty();
 
     $.each(urlNotifier.storage.getAll(), function(idx, item) {
         var tdUrl, tdMsg, tdDelete, aDelete;
@@ -84,7 +90,7 @@ var showPatternList = function() {
             append(tdUrl).
             append(tdMsg).
             append(tdDelete).
-            appendTo($(id));
+            appendTo($(selector.listArea));
     });
 };
 
@@ -93,7 +99,7 @@ var patternMsg = (function() {
         timeoutId = null;
 
     that.show = function(msg) {
-        $("#js_msg_pattern").text(msg);
+        $(selector.msgPattern).text(msg);
 
         if (timeoutId !== null) {
             window.clearTimeout(timeoutId);
@@ -106,17 +112,17 @@ var patternMsg = (function() {
     };
 
     that.hide = function() {
-        $("#js_msg_pattern").empty();
+        $(selector.msgPattern).empty();
     };
 
     return that;
 })();
 
-$("#js_form_pattern").submit(function(e) {
+$(selector.patternForm).submit(function(e) {
     e.preventDefault();
 
-    var url = $("#js_input_url").val().trim(),
-        msg = $("#js_input_msg").val().trim();
+    var url = $(selector.inputUrl).val().trim(),
+        msg = $(selector.inputMsg).val().trim();
 
     if (url === "" || msg === "") {
         patternMsg.show("未入力の項目があります。");
@@ -131,11 +137,11 @@ $("#js_form_pattern").submit(function(e) {
     }
 });
 
-$("#js_input_clear").click(function(e) {
+$(selector.formClear).click(function(e) {
     e.preventDefault();
 
-    $("#js_input_url").val("");
-    $("#js_input_msg").val("");
+    $(selector.inputUrl).val("");
+    $(selector.inputMsg).val("");
 });
 
 
