@@ -9,89 +9,94 @@ selector.msgPattern = "#js_msg_pattern";
 selector.listArea = "#js_list_pattern";
 
 var showPatternList = function() {
-    $(selector.listArea).empty();
+    var listArea = $(selector.listArea);
+
+    listArea.empty();
 
     $.each(urlNotifier.storage.getAll(), function(idx, item) {
-        var tdUrl, tdMsg, tdDelete, aDelete;
-
-        tdUrl = $("<td>").
-            addClass("pRight50").
-            text(item.url);
-
-        tdMsg = $("<td>").
-            addClass("pRight50").
-            append(
-                $("<div>").
-                    addClass("list-message").
-                    css({
-                        "background-color": "#000000",
-                        "color": "#ffffff"
-                    }).
-                    text(item.msg)
-            );
-
-        aDelete = $("<a>").
-            css({
-                color:  "#bb0000",
-                cursor: "pointer"
-            }).
-            text("削除").
-            click(function(e) {
-                e.preventDefault();
-
-                $(this).next("span").show();
-            });
-
-        aDeleteConfirm = $("<span>").
-            css({
-                "display": "none",
-                "padding": "0px 20px"
-            }).
-            append(
-                $("<a>").
-                    css({
-                        "background": "#0044cc",
-                        "color": "#ffffff",
-                        "margin": "0px 5px",
-                        "padding": "3px 10px",
-                        "cursor": "pointer",
-                        "border-radius": "3px"
-                    }).
-                    text("OK").
-                    click(function(e) {
-                        e.preventDefault();
-                        urlNotifier.storage.deletePattern(item);
-                        showPatternList();
-                    })
-            ).
-            append(
-                $("<a>").
-                    css({
-                        "background": "#444444",
-                        "color": "#ffffff",
-                        "margin": "0px 5px",
-                        "padding": "3px 10px",
-                        "cursor": "pointer",
-                        "border-radius": "3px"
-                    }).
-                    text("キャンセル").
-                    click(function(e) {
-                        e.preventDefault();
-                        $(this).parent().hide();
-                    })
-            );
-
-        tdDelete = $("<td>").
-            addClass("pRight50").
-            append(aDelete).
-            append(aDeleteConfirm);
-
-        $("<tr>").
-            append(tdUrl).
-            append(tdMsg).
-            append(tdDelete).
-            appendTo($(selector.listArea));
+        makeRow(item).appendTo(listArea);
     });
+};
+
+var makeRow = function (item) {
+    var tdUrl, tdMsg, tdDelete, aDelete;
+
+    tdUrl = $("<td>").
+        addClass("pRight50").
+        text(item.url);
+
+    tdMsg = $("<td>").
+        addClass("pRight50").
+        append(
+            $("<div>").
+                addClass("list-message").
+                css({
+                    "background-color": "#000000",
+                    "color": "#ffffff"
+                }).
+                text(item.msg)
+        );
+
+    aDelete = $("<a>").
+        css({
+            color:  "#bb0000",
+            cursor: "pointer"
+        }).
+        text("削除").
+        click(function(e) {
+            e.preventDefault();
+
+            $(this).next("span").show();
+        });
+
+    aDeleteConfirm = $("<span>").
+        css({
+            "display": "none",
+            "padding": "0px 20px"
+        }).
+        append(
+            $("<a>").
+                css({
+                    "background": "#0044cc",
+                    "color": "#ffffff",
+                    "margin": "0px 5px",
+                    "padding": "3px 10px",
+                    "cursor": "pointer",
+                    "border-radius": "3px"
+                }).
+                text("OK").
+                click(function(e) {
+                    e.preventDefault();
+                    urlNotifier.storage.deletePattern(item);
+                    showPatternList();
+                })
+        ).
+        append(
+            $("<a>").
+                css({
+                    "background": "#444444",
+                    "color": "#ffffff",
+                    "margin": "0px 5px",
+                    "padding": "3px 10px",
+                    "cursor": "pointer",
+                    "border-radius": "3px"
+                }).
+                text("キャンセル").
+                click(function(e) {
+                    e.preventDefault();
+                    $(this).parent().hide();
+                })
+        );
+
+    tdDelete = $("<td>").
+        addClass("pRight50").
+        append(aDelete).
+        append(aDeleteConfirm);
+
+    return $("<tr>").
+        append(tdUrl).
+        append(tdMsg).
+        append(tdDelete);
 };
 
 var patternMsg = (function() {
