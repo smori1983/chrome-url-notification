@@ -27,15 +27,15 @@ urlNotifier.storage = (function() {
     };
 
     var _findByUrl = function(url) {
-        var result = null;
+        var i, len, patterns = _getAll();
 
-        $.each(_getAll(), function(idx, item) {
-            if (item.url === url) {
-                result = item;
+        for (i = 0, len = patterns.length; i < len; i++) {
+            if (patterns[i].url === url) {
+                return patterns[i];
             }
-        });
+        }
 
-        return result;
+        return null;
     };
 
     var _addPattern = function(pattern) {
