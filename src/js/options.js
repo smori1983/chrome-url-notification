@@ -4,6 +4,7 @@ var selector = {}
 selector.patternForm = "#js_form_pattern";
 selector.inputUrl = "#js_input_url";
 selector.inputMsg = "#js_input_msg";
+selector.inputBackgroundColor = "#js_input_backgroundcolor";
 selector.formClear = "#js_input_clear";
 selector.msgPattern = "#js_msg_pattern";
 selector.listArea = "#js_list_pattern";
@@ -31,7 +32,7 @@ var makeRow = function (item) {
             $("<div>").
                 addClass("list-message").
                 css({
-                    "background-color": "#000000",
+                    "background-color": "#" + item.backgroundColor,
                     "color": "#ffffff"
                 }).
                 text(item.msg)
@@ -123,20 +124,34 @@ var patternMsg = (function() {
     return that;
 })();
 
+$(selector.inputBackgroundColor).ColorPicker({
+    onSubmit: function(hsb, hex, rgb, el) {
+        $(el).val(hex);
+        $(el).ColorPickerHide();
+    },
+    onBeforeShow: function () {
+        $(this).ColorPickerSetColor(this.value);
+    }
+}).bind("keyup", function(){
+    $(this).ColorPickerSetColor(this.value);
+});
+
 $(selector.patternForm).submit(function(e) {
     e.preventDefault();
 
-    var url = $(selector.inputUrl).val().trim(),
-        msg = $(selector.inputMsg).val().trim();
+    var url = $(selector.inputUrl).val().trim();
+    var msg = $(selector.inputMsg).val().trim();
+    var backgroundColor = $(selector.inputBackgroundColor).val().trim();
 
-    if (url === "" || msg === "") {
+    if (url === "" || msg === "" || backgroundColor === "") {
         patternMsg.show("未入力の項目があります。");
     } else if (urlNotifier.storage.findByUrl(url)) {
         patternMsg.show("入力されたURLパターンは既に登録されています。");
     } else {
         urlNotifier.storage.addPattern({
             url: url,
-            msg: msg
+            msg: msg,
+            backgroundColor: backgroundColor
         });
         showPatternList();
     }
@@ -147,6 +162,7 @@ $(selector.formClear).click(function(e) {
 
     $(selector.inputUrl).val("");
     $(selector.inputMsg).val("");
+    $(selector.inputBackgroundColor).val("000000");
 });
 
 

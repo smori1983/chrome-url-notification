@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if ((result = urlNotifier.finder.find(request.url)) !== null) {
 
         var style = {};
-        style.backgroundColor = "#000000";
+        style.backgroundColor = "#" + result.backgroundColor;
         style.fontColor = "#ffffff";
 
         result.style = style;

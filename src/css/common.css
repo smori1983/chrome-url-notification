@@ -38,6 +38,12 @@ html, input, select {
 .mBottom40 { margin-bottom: 40px; }
 .mBottom50 { margin-bottom: 50px; }
 
+.p10 { padding: 10px; }
+.p20 { padding: 20px; }
+.p30 { padding: 30px; }
+.p40 { padding: 40px; }
+.p50 { padding: 50px; }
+
 .pRight10 { padding-right: 10px; }
 .pRight20 { padding-right: 20px; }
 .pRight30 { padding-right: 30px; }
