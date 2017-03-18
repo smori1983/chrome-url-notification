@@ -55,6 +55,11 @@ urlNotifier.storage = (function() {
         _update(data);
     };
 
+    var _updatePattern = function(originalUrl, pattern) {
+        _deletePattern({ url: originalUrl });
+        _addPattern(pattern);
+    };
+
     var _deletePattern = function(pattern) {
         if (_findByUrl(pattern.url) !== null) {
             var newData = [];
@@ -88,6 +93,10 @@ urlNotifier.storage = (function() {
 
         addPattern: function(pattern) {
             _addPattern(pattern);
+        },
+
+        updatePattern: function(url, pattern) {
+            _updatePattern(url, pattern);
         },
 
         deletePattern: function(pattern) {

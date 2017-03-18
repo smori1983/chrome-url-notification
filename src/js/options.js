@@ -2,25 +2,31 @@ $(function() {
 
 var selector = {}
 selector.patternForm = "#js_form_pattern";
+selector.inputOriginalUrl = "#js_form_pattern_original_url";
 selector.inputUrl = "#js_input_url";
 selector.inputMsg = "#js_input_msg";
 selector.inputBackgroundColor = "#js_input_backgroundcolor";
 selector.formClear = "#js_input_clear";
 selector.msgPattern = "#js_msg_pattern";
 selector.listArea = "#js_list_pattern";
+selector.formAdd = "#js_form_add_pattern";
+selector.formPatternMode = "#js_form_pattern_mode";
+selector.modalPattern = "#js_modal_pattern";
 
 var showPatternList = function() {
     var listArea = $(selector.listArea);
 
     listArea.empty();
 
-    $.each(urlNotifier.storage.getAll(), function(idx, item) {
+    var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
+
+    $.each(sorted, function(idx, item) {
         makeRow(item).appendTo(listArea);
     });
 };
 
 var makeRow = function (item) {
-    var tdUrl, tdMsg, tdDelete, aDelete;
+    var tdUrl, tdMsg, tdDelete, aEdit, aDelete;
 
     tdUrl = $("<td>").
         addClass("pRight50").
@@ -38,9 +44,27 @@ var makeRow = function (item) {
                 text(item.msg)
         );
 
+    aEdit = $("<a>").
+        css({
+            marginRight: "10px",
+            color: "#000000",
+            cursor: "pointer"
+        }).
+        text("編集").
+        click(function(e) {
+            e.preventDefault();
+
+            openPatternForm({
+                mode: "edit",
+                url: item.url,
+                message: item.msg,
+                backgroundColor: item.backgroundColor
+            });
+        });
+
     aDelete = $("<a>").
         css({
-            color:  "#bb0000",
+            color: "#bb0000",
             cursor: "pointer"
         }).
         text("削除").
@@ -91,6 +115,7 @@ var makeRow = function (item) {
 
     tdDelete = $("<td>").
         addClass("pRight50").
+        append(aEdit).
         append(aDelete).
         append(aDeleteConfirm);
 
@@ -124,6 +149,27 @@ var patternMsg = (function() {
     return that;
 })();
 
+var openPatternForm = function(formValues) {
+    var formValues = $.extend({
+        mode: "add",
+        url: "",
+        message: "",
+        backgroundColor: "000000"
+    }, formValues);
+
+    $(selector.formPatternMode).val(formValues.mode);
+    $(selector.inputOriginalUrl).val(formValues.url);
+    $(selector.inputUrl).val(formValues.url);
+    $(selector.inputMsg).val(formValues.message);
+    $(selector.inputBackgroundColor).val(formValues.backgroundColor);
+
+    $(selector.modalPattern).modal({
+        showClose: false,
+        modalClass: "modal",
+        fadeDuration: 100
+    });
+};
+
 $(selector.inputBackgroundColor).ColorPicker({
     onSubmit: function(hsb, hex, rgb, el) {
         $(el).val(hex);
@@ -136,23 +182,54 @@ $(selector.inputBackgroundColor).ColorPicker({
     $(this).ColorPickerSetColor(this.value);
 });
 
+$(selector.formAdd).submit(function(e) {
+    e.preventDefault();
+
+    openPatternForm({});
+});
+
 $(selector.patternForm).submit(function(e) {
     e.preventDefault();
 
+    var mode = $(selector.formPatternMode).val().trim();
+    var originalUrl = $(selector.inputOriginalUrl).val().trim();
     var url = $(selector.inputUrl).val().trim();
     var msg = $(selector.inputMsg).val().trim();
     var backgroundColor = $(selector.inputBackgroundColor).val().trim();
 
     if (url === "" || msg === "" || backgroundColor === "") {
         patternMsg.show("未入力の項目があります。");
-    } else if (urlNotifier.storage.findByUrl(url)) {
-        patternMsg.show("入力されたURLパターンは既に登録されています。");
-    } else {
-        urlNotifier.storage.addPattern({
+        return;
+    }
+
+    if (mode === "add") {
+        if (urlNotifier.storage.findByUrl(url)) {
+            patternMsg.show("入力されたURLパターンは既に登録されています。");
+        } else {
+            urlNotifier.storage.addPattern({
+                url: url,
+                msg: msg,
+                backgroundColor: backgroundColor
+            });
+            $.modal.close();
+            showPatternList();
+        }
+    }
+
+    if (mode === "edit") {
+        if (originalUrl !== url) {
+            if (urlNotifier.storage.findByUrl(url)) {
+                patternMsg.show("入力されたURLパターンは既に登録されています。");
+                return;
+            }
+        }
+
+        urlNotifier.storage.updatePattern(originalUrl, {
             url: url,
             msg: msg,
             backgroundColor: backgroundColor
         });
+        $.modal.close();
         showPatternList();
     }
 });
