@@ -202,17 +202,21 @@ $(selector.patternForm).submit(function(e) {
         return;
     }
 
+    var saveData = {
+        url: url,
+        msg: msg,
+        backgroundColor: backgroundColor
+    };
+
+    var errorDuplicated = "入力されたURLパターンは既に登録されています。";
+
     if (mode === "add") {
         if (urlNotifier.storage.findByUrl(url)) {
-            patternMsg.show("入力されたURLパターンは既に登録されています。");
+            patternMsg.show(errorDuplicated);
             return;
         }
 
-        urlNotifier.storage.addPattern({
-            url: url,
-            msg: msg,
-            backgroundColor: backgroundColor
-        });
+        urlNotifier.storage.addPattern(saveData);
 
         $.modal.close();
         showPatternList();
@@ -221,16 +225,13 @@ $(selector.patternForm).submit(function(e) {
     if (mode === "edit") {
         if (originalUrl !== url) {
             if (urlNotifier.storage.findByUrl(url)) {
-                patternMsg.show("入力されたURLパターンは既に登録されています。");
+                patternMsg.show(errorDuplicated);
                 return;
             }
         }
 
-        urlNotifier.storage.updatePattern(originalUrl, {
-            url: url,
-            msg: msg,
-            backgroundColor: backgroundColor
-        });
+        urlNotifier.storage.updatePattern(originalUrl, saveData);
+
         $.modal.close();
         showPatternList();
     }
