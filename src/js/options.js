@@ -205,15 +205,17 @@ $(selector.patternForm).submit(function(e) {
     if (mode === "add") {
         if (urlNotifier.storage.findByUrl(url)) {
             patternMsg.show("入力されたURLパターンは既に登録されています。");
-        } else {
-            urlNotifier.storage.addPattern({
-                url: url,
-                msg: msg,
-                backgroundColor: backgroundColor
-            });
-            $.modal.close();
-            showPatternList();
+            return;
         }
+
+        urlNotifier.storage.addPattern({
+            url: url,
+            msg: msg,
+            backgroundColor: backgroundColor
+        });
+
+        $.modal.close();
+        showPatternList();
     }
 
     if (mode === "edit") {
