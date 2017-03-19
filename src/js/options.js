@@ -45,15 +45,10 @@ var makeRow = function (item) {
         );
 
     aEdit = $("<a>").
-        css({
-            marginRight: "10px",
-            color: "#000000",
-            cursor: "pointer"
-        }).
+        addClass("list-action-edit").
         text("編集").
         click(function(e) {
             e.preventDefault();
-
             openPatternForm({
                 mode: "edit",
                 url: item.url,
@@ -63,32 +58,18 @@ var makeRow = function (item) {
         });
 
     aDelete = $("<a>").
-        css({
-            color: "#bb0000",
-            cursor: "pointer"
-        }).
+        addClass("list-action-delete").
         text("削除").
         click(function(e) {
             e.preventDefault();
-
             $(this).next("span").show();
         });
 
     aDeleteConfirm = $("<span>").
-        css({
-            "display": "none",
-            "padding": "0px 20px"
-        }).
+        addClass("list-action-delete-confirm").
         append(
             $("<a>").
-                css({
-                    "background": "#0044cc",
-                    "color": "#ffffff",
-                    "margin": "0px 5px",
-                    "padding": "3px 10px",
-                    "cursor": "pointer",
-                    "border-radius": "3px"
-                }).
+                addClass("list-action-delete-accept").
                 text("OK").
                 click(function(e) {
                     e.preventDefault();
@@ -98,14 +79,7 @@ var makeRow = function (item) {
         ).
         append(
             $("<a>").
-                css({
-                    "background": "#444444",
-                    "color": "#ffffff",
-                    "margin": "0px 5px",
-                    "padding": "3px 10px",
-                    "cursor": "pointer",
-                    "border-radius": "3px"
-                }).
+                addClass("list-action-delete-cancel").
                 text("キャンセル").
                 click(function(e) {
                     e.preventDefault();
