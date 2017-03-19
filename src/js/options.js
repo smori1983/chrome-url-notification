@@ -25,6 +25,14 @@ var showPatternList = function() {
     });
 };
 
+var formDefaultValues = function() {
+    return {
+        url: "",
+        message: "",
+        backgroundColor: "000000"
+    };
+};
+
 var makeRow = function (item) {
     var tdUrl, tdMsg, tdAction;
 
@@ -142,12 +150,11 @@ var patternMsg = (function() {
 })();
 
 var openPatternForm = function(formValues) {
-    var formValues = $.extend({
-        mode: "add",
-        url: "",
-        message: "",
-        backgroundColor: "000000"
-    }, formValues);
+    var formValues = $.extend(
+        formDefaultValues(),
+        { mode: "add" },
+        formValues
+    );
 
     $(selector.formPatternMode).val(formValues.mode);
     $(selector.inputOriginalUrl).val(formValues.url);
@@ -234,9 +241,11 @@ $(selector.patternForm).submit(function(e) {
 $(selector.formClear).click(function(e) {
     e.preventDefault();
 
-    $(selector.inputUrl).val("");
-    $(selector.inputMsg).val("");
-    $(selector.inputBackgroundColor).val("000000");
+    var values = formDefaultValues();
+
+    $(selector.inputUrl).val(values.url);
+    $(selector.inputMsg).val(values.message);
+    $(selector.inputBackgroundColor).val(values.backgroundColor);
 });
 
 
