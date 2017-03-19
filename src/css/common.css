@@ -38,8 +38,60 @@ html, input, select {
 .mBottom40 { margin-bottom: 40px; }
 .mBottom50 { margin-bottom: 50px; }
 
+.p10 { padding: 10px; }
+.p20 { padding: 20px; }
+.p30 { padding: 30px; }
+.p40 { padding: 40px; }
+.p50 { padding: 50px; }
+
 .pRight10 { padding-right: 10px; }
 .pRight20 { padding-right: 20px; }
 .pRight30 { padding-right: 30px; }
 .pRight40 { padding-right: 40px; }
 .pRight50 { padding-right: 50px; }
+
+.list-message {
+    width: 100%;
+    text-align: center;
+    padding: 2px 10px;
+}
+
+.list-action-copy {
+    margin-right: 10px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.list-action-edit {
+    margin-right: 10px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.list-action-delete {
+    color: #bb0000;
+    cursor: pointer;
+}
+
+.list-action-delete-confirm {
+    display: none;
+    padding: 0px 20px;
+}
+
+.list-action-delete-accept {
+    background: #0044cc;
+    color: #ffffff;
+    margin: 0px 5px;
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.list-action-delete-cancel {
+    background: #444444;
+    color: #ffffff;
+    margin: 0px 5px;
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}

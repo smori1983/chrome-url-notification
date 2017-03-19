@@ -1,46 +1,128 @@
 $(function() {
 
+var selector = {}
+selector.patternForm = "#js_form_pattern";
+selector.inputOriginalUrl = "#js_form_pattern_original_url";
+selector.inputUrl = "#js_input_url";
+selector.inputMsg = "#js_input_msg";
+selector.inputBackgroundColor = "#js_input_backgroundcolor";
+selector.formClear = "#js_input_clear";
+selector.msgPattern = "#js_msg_pattern";
+selector.listArea = "#js_list_pattern";
+selector.formAdd = "#js_form_add_pattern";
+selector.formPatternMode = "#js_form_pattern_mode";
+selector.modalPattern = "#js_modal_pattern";
+
 var showPatternList = function() {
-    var id = "#js_list_pattern";
+    var listArea = $(selector.listArea);
 
-    $(id).empty();
+    listArea.empty();
 
-    $.each(urlNotifier.storage.getAll(), function(idx, item) {
-        var tdUrl, tdMsg, tdDelete, aDelete;
+    var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
 
-        tdUrl = $("<td>").
-            addClass("pRight50").
-            text(item.url);
+    $.each(sorted, function(idx, item) {
+        makeRow(item).appendTo(listArea);
+    });
+};
 
-        tdMsg = $("<td>").
-            addClass("pRight50").
-            text(item.msg);
+var formDefaultValues = function() {
+    return {
+        url: "",
+        message: "",
+        backgroundColor: "000000"
+    };
+};
 
-        aDelete = $("<a>").
-            css({
-                color:  "#0044cc",
-                cursor: "pointer"
-            }).
-            text("削除").
-            click(function(e) {
-                e.preventDefault();
+var makeRow = function (item) {
+    var tdUrl, tdMsg, tdAction;
 
-                if (confirm(item.url + " を削除します。")) {
+    var listMessageCss = function(item) {
+        return {
+            "background-color": "#" + item.backgroundColor,
+            "color": "#ffffff"
+        };
+    };
+
+    tdUrl = $("<td>").
+        addClass("pRight50").
+        text(item.url);
+
+    tdMsg = $("<td>").
+        addClass("pRight50").
+        append(
+            $("<div>").
+                addClass("list-message").
+                css(listMessageCss(item)).
+                text(item.msg)
+        );
+
+    tdAction = $("<td>").
+        addClass("pRight50");
+
+    $("<a>").
+        addClass("list-action-copy").
+        text("コピー").
+        click(function(e) {
+            e.preventDefault();
+            openPatternForm({
+                mode: "add",
+                url: item.url,
+                message: item.msg,
+                backgroundColor: item.backgroundColor
+            });
+        }).
+        appendTo(tdAction);
+
+    $("<a>").
+        addClass("list-action-edit").
+        text("編集").
+        click(function(e) {
+            e.preventDefault();
+            openPatternForm({
+                mode: "edit",
+                url: item.url,
+                message: item.msg,
+                backgroundColor: item.backgroundColor
+            });
+        }).
+        appendTo(tdAction);
+
+    $("<a>").
+        addClass("list-action-delete").
+        text("削除").
+        click(function(e) {
+            e.preventDefault();
+            $(this).next("span").show();
+        }).
+        appendTo(tdAction);
+
+    $("<span>").
+        addClass("list-action-delete-confirm").
+        append(
+            $("<a>").
+                addClass("list-action-delete-accept").
+                text("OK").
+                click(function(e) {
+                    e.preventDefault();
                     urlNotifier.storage.deletePattern(item);
                     showPatternList();
-                }
-            });
+                })
+        ).
+        append(
+            $("<a>").
+                addClass("list-action-delete-cancel").
+                text("キャンセル").
+                click(function(e) {
+                    e.preventDefault();
+                    $(this).parent().hide();
+                })
+        ).
+        appendTo(tdAction);
 
-        tdDelete = $("<td>").
-            addClass("pRight50").
-            append(aDelete);
-
-        $("<tr>").
-            append(tdUrl).
-            append(tdMsg).
-            append(tdDelete).
-            appendTo($(id));
-    });
+    return $("<tr>").
+        append(tdUrl).
+        append(tdMsg).
+        append(tdAction);
 };
 
 var patternMsg = (function() {
@@ -48,7 +130,7 @@ var patternMsg = (function() {
         timeoutId = null;
 
     that.show = function(msg) {
-        $("#js_msg_pattern").text(msg);
+        $(selector.msgPattern).text(msg);
 
         if (timeoutId !== null) {
             window.clearTimeout(timeoutId);
@@ -61,29 +143,112 @@ var patternMsg = (function() {
     };
 
     that.hide = function() {
-        $("#js_msg_pattern").empty();
+        $(selector.msgPattern).empty();
     };
 
     return that;
 })();
 
-$("#js_form_pattern").submit(function(e) {
+var openPatternForm = function(formValues) {
+    var formValues = $.extend(
+        formDefaultValues(),
+        { mode: "add" },
+        formValues
+    );
+
+    $(selector.formPatternMode).val(formValues.mode);
+    $(selector.inputOriginalUrl).val(formValues.url);
+    $(selector.inputUrl).val(formValues.url);
+    $(selector.inputMsg).val(formValues.message);
+    $(selector.inputBackgroundColor).val(formValues.backgroundColor);
+
+    $(selector.modalPattern).modal({
+        showClose: false,
+        modalClass: "modal",
+        fadeDuration: 100
+    }).on($.modal.OPEN, function(e, modal) {
+        $(selector.inputUrl).focus();
+    });
+};
+
+$(selector.inputBackgroundColor).ColorPicker({
+    onSubmit: function(hsb, hex, rgb, el) {
+        $(el).val(hex);
+        $(el).ColorPickerHide();
+    },
+    onBeforeShow: function () {
+        $(this).ColorPickerSetColor(this.value);
+    }
+}).bind("keyup", function(){
+    $(this).ColorPickerSetColor(this.value);
+});
+
+$(selector.formAdd).submit(function(e) {
     e.preventDefault();
 
-    var url = $("#js_input_url").val().trim(),
-        msg = $("#js_input_msg").val().trim();
+    openPatternForm({});
+});
 
-    if (url === "" || msg === "") {
+$(selector.patternForm).submit(function(e) {
+    e.preventDefault();
+
+    var trimValue = function(selector) {
+        return $(selector).val().trim();
+    };
+
+    var mode = trimValue(selector.formPatternMode);
+    var originalUrl = trimValue(selector.inputOriginalUrl);
+    var url = trimValue(selector.inputUrl);
+    var msg = trimValue(selector.inputMsg);
+    var backgroundColor = trimValue(selector.inputBackgroundColor);
+
+    if (url === "" || msg === "" || backgroundColor === "") {
         patternMsg.show("未入力の項目があります。");
-    } else if (urlNotifier.storage.findByUrl(url)) {
-        patternMsg.show("入力されたURLパターンは既に登録されています。");
-    } else {
-        urlNotifier.storage.addPattern({
-            url: url,
-            msg: msg
-        });
-        showPatternList();
+        return;
     }
+
+    var saveData = {
+        url: url,
+        msg: msg,
+        backgroundColor: backgroundColor
+    };
+
+    var errorDuplicated = "入力されたURLパターンは既に登録されています。";
+
+    var end = function() {
+        $.modal.close();
+        showPatternList();
+    };
+
+    if (mode === "add") {
+        if (urlNotifier.storage.findByUrl(url)) {
+            patternMsg.show(errorDuplicated);
+            return;
+        }
+
+        urlNotifier.storage.addPattern(saveData);
+        end();
+    }
+
+    if (mode === "edit") {
+        if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
+            patternMsg.show(errorDuplicated);
+            return;
+        }
+
+        urlNotifier.storage.updatePattern(originalUrl, saveData);
+        end();
+    }
+});
+
+$(selector.formClear).click(function(e) {
+    e.preventDefault();
+
+    var values = formDefaultValues();
+
+    $(selector.inputUrl).val(values.url);
+    $(selector.inputMsg).val(values.message);
+    $(selector.inputBackgroundColor).val(values.backgroundColor);
 });
 
 

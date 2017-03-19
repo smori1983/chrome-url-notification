@@ -2,6 +2,8 @@ var urlNotifier = urlNotifier || {};
 
 urlNotifier.storage = (function() {
 
+    var defaultBackgroundColor = "000000";
+
     var key = {
         pattern: "pattern"
     };
@@ -19,6 +21,10 @@ urlNotifier.storage = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             $.each(JSON.parse(data), function(idx, item) {
+                if (typeof item.backgroundColor === "undefined") {
+                    item.backgroundColor = defaultBackgroundColor;
+                }
+
                 result.push(item);
             });
         }
@@ -47,6 +53,11 @@ urlNotifier.storage = (function() {
 
         data.push(pattern);
         _update(data);
+    };
+
+    var _updatePattern = function(originalUrl, pattern) {
+        _deletePattern({ url: originalUrl });
+        _addPattern(pattern);
     };
 
     var _deletePattern = function(pattern) {
@@ -82,6 +93,10 @@ urlNotifier.storage = (function() {
 
         addPattern: function(pattern) {
             _addPattern(pattern);
+        },
+
+        updatePattern: function(url, pattern) {
+            _updatePattern(url, pattern);
         },
 
         deletePattern: function(pattern) {

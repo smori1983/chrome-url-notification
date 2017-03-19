@@ -3,30 +3,45 @@
 <meta charset="utf-8" />
 <title>Chrome URL notifier</title>
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
+<link rel="stylesheet" type="text/css" href="/plugin/jquery-modal-0.8.0/jquery.modal.min.css" />
+<link rel="stylesheet" type="text/css" href="/plugin/colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" type="text/css" href="/css/plugin_overwrite.css" />
 </head>
-<body class="m50">
+<body class="p50">
 
 <div class="mBottom50">
     <h1>Chrome URL notifier</h1>
 </div>
 
 <div class="mBottom50">
-    <h2>パターン登録</h2>
-    <h3 class="mBottom20">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</h3>
-    <form id="js_form_pattern">
-        <table>
-            <tr>
-                <td>URLパターン</td>
-                <td><input type="text" value="" id="js_input_url" class="w500" placeholder="例: http://*.example.com/" /></td>
-            </tr>
-            <tr>
-                <td>表示するメッセージ</td>
-                <td><input type="text" value="" id="js_input_msg" class="w500" placeholder="例: example.com本番サイトを閲覧中" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="パターンを追加" />
-        <span id="js_msg_pattern" class="textError"></span>
+    <form id="js_form_add_pattern" action="#">
+        <input type="submit" value="パターン登録" />
     </form>
+
+    <div id="js_modal_pattern" style="display:none;">
+        <h3 class="mBottom20">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</h3>
+        <form id="js_form_pattern" action="#">
+            <input type="hidden" id="js_form_pattern_mode" value="" />
+            <input type="hidden" id="js_form_pattern_original_url" value="" />
+            <table>
+                <tr>
+                    <td>URLパターン</td>
+                    <td><input type="text" value="" id="js_input_url" class="minw400" placeholder="例: http://*.example.com/" /></td>
+                </tr>
+                <tr>
+                    <td>メッセージ</td>
+                    <td><input type="text" value="" id="js_input_msg" class="minw400" placeholder="例: example.com本番サイトを閲覧中" /></td>
+                </tr>
+                <tr>
+                    <td>背景色</td>
+                    <td><input type="text" value="" id="js_input_backgroundcolor" class="w100" /></td>
+                </tr>
+            </table>
+            <input type="submit" value="保存" />
+            <input type="button" value="クリア" id="js_input_clear" />
+            <span id="js_msg_pattern" class="textError"></span>
+        </form>
+    </div>
 </div>
 
 <div class="mBottom50">
@@ -36,6 +51,12 @@
 
 <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/js/urlNotifier/storage.js"></script>
+<script type="text/javascript" src="/js/urlNotifier/data.js"></script>
 <script type="text/javascript" src="/js/options.js"></script>
+<script type="text/javascript" src="/plugin/jquery-modal-0.8.0/jquery.modal.min.js"></script>
+<script type="text/javascript" src="/plugin/colorpicker/js/colorpicker.js"></script>
+<script type="text/javascript" src="/plugin/colorpicker/js/eye.js"></script>
+<script type="text/javascript" src="/plugin/colorpicker/js/utils.js"></script>
+<script type="text/javascript" src="/plugin/colorpicker/js/layout.js"></script>
 </body>
 </html>
