@@ -26,7 +26,7 @@ var showPatternList = function() {
 };
 
 var makeRow = function (item) {
-    var tdUrl, tdMsg, tdDelete, aEdit, aDelete;
+    var tdUrl, tdMsg, tdAction, aEdit, aDelete;
 
     tdUrl = $("<td>").
         addClass("pRight50").
@@ -113,7 +113,7 @@ var makeRow = function (item) {
                 })
         );
 
-    tdDelete = $("<td>").
+    tdAction = $("<td>").
         addClass("pRight50").
         append(aEdit).
         append(aDelete).
@@ -122,7 +122,7 @@ var makeRow = function (item) {
     return $("<tr>").
         append(tdUrl).
         append(tdMsg).
-        append(tdDelete);
+        append(tdAction);
 };
 
 var patternMsg = (function() {
