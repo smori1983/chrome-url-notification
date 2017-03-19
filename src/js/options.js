@@ -159,6 +159,8 @@ var openPatternForm = function(formValues) {
         showClose: false,
         modalClass: "modal",
         fadeDuration: 100
+    }).on($.modal.OPEN, function(e, modal) {
+        $(selector.inputUrl).focus();
     });
 };
 
