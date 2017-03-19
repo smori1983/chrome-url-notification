@@ -28,6 +28,13 @@ var showPatternList = function() {
 var makeRow = function (item) {
     var tdUrl, tdMsg, tdAction, aCopy, aEdit, aDelete;
 
+    var listMessageCss = function(item) {
+        return {
+            "background-color": "#" + item.backgroundColor,
+            "color": "#ffffff"
+        };
+    };
+
     tdUrl = $("<td>").
         addClass("pRight50").
         text(item.url);
@@ -37,10 +44,7 @@ var makeRow = function (item) {
         append(
             $("<div>").
                 addClass("list-message").
-                css({
-                    "background-color": "#" + item.backgroundColor,
-                    "color": "#ffffff"
-                }).
+                css(listMessageCss(item)).
                 text(item.msg)
         );
 
