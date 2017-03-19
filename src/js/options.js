@@ -26,7 +26,7 @@ var showPatternList = function() {
 };
 
 var makeRow = function (item) {
-    var tdUrl, tdMsg, tdAction, aEdit, aDelete;
+    var tdUrl, tdMsg, tdAction, aCopy, aEdit, aDelete;
 
     tdUrl = $("<td>").
         addClass("pRight50").
@@ -43,6 +43,19 @@ var makeRow = function (item) {
                 }).
                 text(item.msg)
         );
+
+    aCopy = $("<a>").
+        addClass("list-action-copy").
+        text("コピー").
+        click(function(e) {
+            e.preventDefault();
+            openPatternForm({
+                mode: "add",
+                url: item.url,
+                message: item.msg,
+                backgroundColor: item.backgroundColor
+            });
+        });
 
     aEdit = $("<a>").
         addClass("list-action-edit").
@@ -89,6 +102,7 @@ var makeRow = function (item) {
 
     tdAction = $("<td>").
         addClass("pRight50").
+        append(aCopy).
         append(aEdit).
         append(aDelete).
         append(aDeleteConfirm);

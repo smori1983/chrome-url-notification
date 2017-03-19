@@ -56,6 +56,12 @@ html, input, select {
     padding: 2px 10px;
 }
 
+.list-action-copy {
+    margin-right: 10px;
+    color: #000000;
+    cursor: pointer;
+}
+
 .list-action-edit {
     margin-right: 10px;
     color: #000000;
