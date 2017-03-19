@@ -192,11 +192,15 @@ $(selector.formAdd).submit(function(e) {
 $(selector.patternForm).submit(function(e) {
     e.preventDefault();
 
-    var mode = $(selector.formPatternMode).val().trim();
-    var originalUrl = $(selector.inputOriginalUrl).val().trim();
-    var url = $(selector.inputUrl).val().trim();
-    var msg = $(selector.inputMsg).val().trim();
-    var backgroundColor = $(selector.inputBackgroundColor).val().trim();
+    var trimValue = function(selector) {
+        return $(selector).val().trim();
+    };
+
+    var mode = trimValue(selector.formPatternMode);
+    var originalUrl = trimValue(selector.inputOriginalUrl);
+    var url = trimValue(selector.inputUrl);
+    var msg = trimValue(selector.inputMsg);
+    var backgroundColor = trimValue(selector.inputBackgroundColor);
 
     if (url === "" || msg === "" || backgroundColor === "") {
         patternMsg.show("未入力の項目があります。");
