@@ -211,6 +211,11 @@ $(selector.patternForm).submit(function(e) {
 
     var errorDuplicated = "入力されたURLパターンは既に登録されています。";
 
+    var end = function() {
+        $.modal.close();
+        showPatternList();
+    };
+
     if (mode === "add") {
         if (urlNotifier.storage.findByUrl(url)) {
             patternMsg.show(errorDuplicated);
@@ -218,23 +223,17 @@ $(selector.patternForm).submit(function(e) {
         }
 
         urlNotifier.storage.addPattern(saveData);
-
-        $.modal.close();
-        showPatternList();
+        end();
     }
 
     if (mode === "edit") {
-        if (originalUrl !== url) {
-            if (urlNotifier.storage.findByUrl(url)) {
-                patternMsg.show(errorDuplicated);
-                return;
-            }
+        if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
+            patternMsg.show(errorDuplicated);
+            return;
         }
 
         urlNotifier.storage.updatePattern(originalUrl, saveData);
-
-        $.modal.close();
-        showPatternList();
+        end();
     }
 });
 
