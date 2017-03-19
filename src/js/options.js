@@ -26,7 +26,7 @@ var showPatternList = function() {
 };
 
 var makeRow = function (item) {
-    var tdUrl, tdMsg, tdAction, aCopy, aEdit, aDelete;
+    var tdUrl, tdMsg, tdAction;
 
     var listMessageCss = function(item) {
         return {
@@ -48,7 +48,10 @@ var makeRow = function (item) {
                 text(item.msg)
         );
 
-    aCopy = $("<a>").
+    tdAction = $("<td>").
+        addClass("pRight50");
+
+    $("<a>").
         addClass("list-action-copy").
         text("コピー").
         click(function(e) {
@@ -59,9 +62,10 @@ var makeRow = function (item) {
                 message: item.msg,
                 backgroundColor: item.backgroundColor
             });
-        });
+        }).
+        appendTo(tdAction);
 
-    aEdit = $("<a>").
+    $("<a>").
         addClass("list-action-edit").
         text("編集").
         click(function(e) {
@@ -72,17 +76,19 @@ var makeRow = function (item) {
                 message: item.msg,
                 backgroundColor: item.backgroundColor
             });
-        });
+        }).
+        appendTo(tdAction);
 
-    aDelete = $("<a>").
+    $("<a>").
         addClass("list-action-delete").
         text("削除").
         click(function(e) {
             e.preventDefault();
             $(this).next("span").show();
-        });
+        }).
+        appendTo(tdAction);
 
-    aDeleteConfirm = $("<span>").
+    $("<span>").
         addClass("list-action-delete-confirm").
         append(
             $("<a>").
@@ -102,14 +108,8 @@ var makeRow = function (item) {
                     e.preventDefault();
                     $(this).parent().hide();
                 })
-        );
-
-    tdAction = $("<td>").
-        addClass("pRight50").
-        append(aCopy).
-        append(aEdit).
-        append(aDelete).
-        append(aDeleteConfirm);
+        ).
+        appendTo(tdAction);
 
     return $("<tr>").
         append(tdUrl).
