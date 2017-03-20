@@ -7,15 +7,15 @@ chrome.runtime.sendMessage({
         return;
     }
 
-    var container;
+    var height = "30px"
 
-    container = $("<div>").css({
+    var container = $("<div>").css({
         position:   "fixed",
         top:        "0px",
         left:       "0px",
         width:      "100%",
-        height:     "50px",
-        lineHeight: "50px",
+        height:     height,
+        lineHeight: height,
         background: result.style.backgroundColor,
         color:      result.style.fontColor,
         fontSize:   "12px",
@@ -27,7 +27,7 @@ chrome.runtime.sendMessage({
     }).text(result.msg);
 
     $("body").css({
-        marginTop: "50px"
+        marginTop: height
     }).append(container);
 });
 
