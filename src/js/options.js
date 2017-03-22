@@ -9,7 +9,7 @@ selector.inputBackgroundColor = "#js_input_backgroundcolor";
 selector.formClear = "#js_input_clear";
 selector.msgPattern = "#js_msg_pattern";
 selector.listArea = "#js_list_pattern";
-selector.formAdd = "#js_form_add_pattern";
+selector.buttonAdd = "#js_button_add_pattern";
 selector.formPatternMode = "#js_form_pattern_mode";
 selector.modalPattern = "#js_modal_pattern";
 
@@ -44,11 +44,9 @@ var makeRow = function (item) {
     };
 
     tdUrl = $("<td>").
-        addClass("pRight50").
         text(item.url);
 
     tdMsg = $("<td>").
-        addClass("pRight50").
         append(
             $("<div>").
                 addClass("list-message").
@@ -57,10 +55,10 @@ var makeRow = function (item) {
         );
 
     tdAction = $("<td>").
-        addClass("pRight50");
+        addClass("action");
 
-    $("<a>").
-        addClass("list-action-copy").
+    $("<button>").
+        addClass("btn btn-default btn-xs").
         text("コピー").
         click(function(e) {
             e.preventDefault();
@@ -73,8 +71,8 @@ var makeRow = function (item) {
         }).
         appendTo(tdAction);
 
-    $("<a>").
-        addClass("list-action-edit").
+    $("<button>").
+        addClass("btn btn-primary btn-xs").
         text("編集").
         click(function(e) {
             e.preventDefault();
@@ -87,8 +85,8 @@ var makeRow = function (item) {
         }).
         appendTo(tdAction);
 
-    $("<a>").
-        addClass("list-action-delete").
+    $("<button>").
+        addClass("btn btn-danger btn-xs").
         text("削除").
         click(function(e) {
             e.preventDefault();
@@ -100,7 +98,7 @@ var makeRow = function (item) {
         addClass("list-action-delete-confirm").
         append(
             $("<a>").
-                addClass("list-action-delete-accept").
+                addClass("btn btn-warning btn-xs list-action-delete-accept").
                 text("OK").
                 click(function(e) {
                     e.preventDefault();
@@ -110,7 +108,7 @@ var makeRow = function (item) {
         ).
         append(
             $("<a>").
-                addClass("list-action-delete-cancel").
+                addClass("btn btn-default btn-xs list-action-delete-cancel").
                 text("キャンセル").
                 click(function(e) {
                     e.preventDefault();
@@ -183,9 +181,8 @@ $(selector.inputBackgroundColor).ColorPicker({
     $(this).ColorPickerSetColor(this.value);
 });
 
-$(selector.formAdd).submit(function(e) {
+$(selector.buttonAdd).click(function(e) {
     e.preventDefault();
-
     openPatternForm({});
 });
 

@@ -1,0 +1,15 @@
+body {
+    padding-top: 70px;
+}
+
+.table .action .btn {
+    margin-right: 10px;
+}
+
+.list-message {
+    padding: 1px 10px;
+}
+
+.list-action-delete-confirm {
+    display: none;
+}
