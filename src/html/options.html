@@ -27,7 +27,6 @@
     </nav>
 
     <div id="js_modal_pattern" style="display:none;">
-
         <form id="js_form_pattern" action="#">
             <input type="hidden" id="js_form_pattern_mode" value="" />
             <input type="hidden" id="js_form_pattern_original_url" value="" />
@@ -49,6 +48,22 @@
             <input type="submit" class="btn btn-success" value="保存" />
             <input type="button" class="btn btn-warning" value="クリア" id="js_input_clear" />
             <span id="js_msg_pattern" class="text-danger"></span>
+        </form>
+    </div>
+
+    <div id="js_modal_delete" style="display:none;">
+        <form id="js_form_delete" action="#">
+            <div class="form-group">
+                <label>URLパターン</label>
+                <span id="js_form_delete_pattern" class="form-control"></span>
+            </div>
+            <div class="form-group">
+                <label>メッセージ</label>
+                <span id="js_form_delete_message" class="form-control"></span>
+            </div>
+
+            <input type="submit" class="btn btn-danger" value="削除" />
+            <input id="js_form_delete_cancel" type="button" class="btn btn-warning" value="キャンセル" />
         </form>
     </div>
 

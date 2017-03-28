@@ -58,7 +58,7 @@ var makeRow = function (item) {
         addClass("action");
 
     $("<button>").
-        addClass("btn btn-default btn-xs").
+        addClass("btn btn-default btn-sm").
         text("コピー").
         click(function(e) {
             e.preventDefault();
@@ -72,7 +72,7 @@ var makeRow = function (item) {
         appendTo(tdAction);
 
     $("<button>").
-        addClass("btn btn-primary btn-xs").
+        addClass("btn btn-primary btn-sm").
         text("編集").
         click(function(e) {
             e.preventDefault();
@@ -86,11 +86,14 @@ var makeRow = function (item) {
         appendTo(tdAction);
 
     $("<button>").
-        addClass("btn btn-danger btn-xs").
+        addClass("btn btn-danger btn-sm").
         text("削除").
         click(function(e) {
             e.preventDefault();
-            $(this).next("span").show();
+            openDeleteForm({
+                url: item.url,
+                message: item.msg
+            });
         }).
         appendTo(tdAction);
 
@@ -166,6 +169,17 @@ var openPatternForm = function(formValues) {
         fadeDuration: 100
     }).on($.modal.OPEN, function(e, modal) {
         $(selector.inputUrl).focus();
+    });
+};
+
+var openDeleteForm = function(formValues) {
+    $("#js_form_delete_pattern").text(formValues.url);
+    $("#js_form_delete_message").text(formValues.message);
+
+    $("#js_modal_delete").modal({
+        showClose: false,
+        modalClass: "modal",
+        fadeDuration: 100
     });
 };
 
@@ -246,6 +260,22 @@ $(selector.formClear).click(function(e) {
     $(selector.inputUrl).val(values.url);
     $(selector.inputMsg).val(values.message);
     $(selector.inputBackgroundColor).val(values.backgroundColor);
+});
+
+$("#js_form_delete").submit(function(e) {
+    e.preventDefault();
+
+    urlNotifier.storage.deletePattern({
+        url: $("#js_form_delete_pattern").text()
+    });
+    $.modal.close();
+    showPatternList();
+});
+
+$("#js_form_delete_cancel").click(function(e) {
+    e.preventDefault();
+
+    $.modal.close();
 });
 
 

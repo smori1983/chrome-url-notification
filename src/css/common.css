@@ -50,12 +50,6 @@ html, input, select {
 .pRight40 { padding-right: 40px; }
 .pRight50 { padding-right: 50px; }
 
-.list-message {
-    width: 100%;
-    text-align: center;
-    padding: 2px 10px;
-}
-
 .list-action-copy {
     margin-right: 10px;
     color: #000000;
