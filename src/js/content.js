@@ -7,7 +7,7 @@ chrome.runtime.sendMessage({
         return;
     }
 
-    var height = 30;
+    var height = 50;
 
     var container = $("<div>").css({
         position:   "fixed",
