@@ -1,20 +1,7 @@
 $(function() {
 
-var selector = {}
-selector.patternForm = "#js_form_pattern";
-selector.inputOriginalUrl = "#js_form_pattern_original_url";
-selector.inputUrl = "#js_input_url";
-selector.inputMsg = "#js_input_msg";
-selector.inputBackgroundColor = "#js_input_backgroundcolor";
-selector.formClear = "#js_input_clear";
-selector.msgPattern = "#js_msg_pattern";
-selector.listArea = "#js_list_pattern";
-selector.formAdd = "#js_form_add_pattern";
-selector.formPatternMode = "#js_form_pattern_mode";
-selector.modalPattern = "#js_modal_pattern";
-
 var showPatternList = function() {
-    var listArea = $(selector.listArea);
+    var listArea = $("#js_list_pattern");
 
     listArea.empty();
 
@@ -44,11 +31,9 @@ var makeRow = function (item) {
     };
 
     tdUrl = $("<td>").
-        addClass("pRight50").
         text(item.url);
 
     tdMsg = $("<td>").
-        addClass("pRight50").
         append(
             $("<div>").
                 addClass("list-message").
@@ -57,10 +42,10 @@ var makeRow = function (item) {
         );
 
     tdAction = $("<td>").
-        addClass("pRight50");
+        addClass("action");
 
-    $("<a>").
-        addClass("list-action-copy").
+    $("<button>").
+        addClass("btn btn-default btn-sm").
         text("コピー").
         click(function(e) {
             e.preventDefault();
@@ -73,8 +58,8 @@ var makeRow = function (item) {
         }).
         appendTo(tdAction);
 
-    $("<a>").
-        addClass("list-action-edit").
+    $("<button>").
+        addClass("btn btn-primary btn-sm").
         text("編集").
         click(function(e) {
             e.preventDefault();
@@ -87,12 +72,15 @@ var makeRow = function (item) {
         }).
         appendTo(tdAction);
 
-    $("<a>").
-        addClass("list-action-delete").
+    $("<button>").
+        addClass("btn btn-danger btn-sm").
         text("削除").
         click(function(e) {
             e.preventDefault();
-            $(this).next("span").show();
+            openDeleteForm({
+                url: item.url,
+                message: item.msg
+            });
         }).
         appendTo(tdAction);
 
@@ -100,7 +88,7 @@ var makeRow = function (item) {
         addClass("list-action-delete-confirm").
         append(
             $("<a>").
-                addClass("list-action-delete-accept").
+                addClass("btn btn-warning btn-xs list-action-delete-accept").
                 text("OK").
                 click(function(e) {
                     e.preventDefault();
@@ -110,7 +98,7 @@ var makeRow = function (item) {
         ).
         append(
             $("<a>").
-                addClass("list-action-delete-cancel").
+                addClass("btn btn-default btn-xs list-action-delete-cancel").
                 text("キャンセル").
                 click(function(e) {
                     e.preventDefault();
@@ -130,7 +118,7 @@ var patternMsg = (function() {
         timeoutId = null;
 
     that.show = function(msg) {
-        $(selector.msgPattern).text(msg);
+        $("#js_msg_pattern").text(msg);
 
         if (timeoutId !== null) {
             window.clearTimeout(timeoutId);
@@ -143,7 +131,7 @@ var patternMsg = (function() {
     };
 
     that.hide = function() {
-        $(selector.msgPattern).empty();
+        $("#js_msg_pattern").empty();
     };
 
     return that;
@@ -156,22 +144,27 @@ var openPatternForm = function(formValues) {
         formValues
     );
 
-    $(selector.formPatternMode).val(formValues.mode);
-    $(selector.inputOriginalUrl).val(formValues.url);
-    $(selector.inputUrl).val(formValues.url);
-    $(selector.inputMsg).val(formValues.message);
-    $(selector.inputBackgroundColor).val(formValues.backgroundColor);
+    $("#js_form_pattern_mode").val(formValues.mode);
+    $("#js_form_pattern_original_url").val(formValues.url);
+    $("#js_input_url").val(formValues.url);
+    $("#js_input_msg").val(formValues.message);
+    $("#js_input_backgroundcolor").val(formValues.backgroundColor);
 
-    $(selector.modalPattern).modal({
-        showClose: false,
-        modalClass: "modal",
-        fadeDuration: 100
-    }).on($.modal.OPEN, function(e, modal) {
-        $(selector.inputUrl).focus();
-    });
+    $("#js_modal_pattern").modal("show");
 };
 
-$(selector.inputBackgroundColor).ColorPicker({
+$("#js_modal_pattern").on("shown.bs.modal", function() {
+    $("#js_input_url").focus();
+});
+
+var openDeleteForm = function(formValues) {
+    $("#js_form_delete_pattern").text(formValues.url);
+    $("#js_form_delete_message").text(formValues.message);
+
+    $("#js_modal_delete").modal("show");
+};
+
+$("#js_input_backgroundcolor").ColorPicker({
     onSubmit: function(hsb, hex, rgb, el) {
         $(el).val(hex);
         $(el).ColorPickerHide();
@@ -183,24 +176,23 @@ $(selector.inputBackgroundColor).ColorPicker({
     $(this).ColorPickerSetColor(this.value);
 });
 
-$(selector.formAdd).submit(function(e) {
+$("#js_button_add_pattern").click(function(e) {
     e.preventDefault();
-
     openPatternForm({});
 });
 
-$(selector.patternForm).submit(function(e) {
+$("#js_form_pattern").submit(function(e) {
     e.preventDefault();
 
     var trimValue = function(selector) {
         return $(selector).val().trim();
     };
 
-    var mode = trimValue(selector.formPatternMode);
-    var originalUrl = trimValue(selector.inputOriginalUrl);
-    var url = trimValue(selector.inputUrl);
-    var msg = trimValue(selector.inputMsg);
-    var backgroundColor = trimValue(selector.inputBackgroundColor);
+    var mode = trimValue("#js_form_pattern_mode");
+    var originalUrl = trimValue("#js_form_pattern_original_url");
+    var url = trimValue("#js_input_url");
+    var msg = trimValue("#js_input_msg");
+    var backgroundColor = trimValue("#js_input_backgroundcolor");
 
     if (url === "" || msg === "" || backgroundColor === "") {
         patternMsg.show("未入力の項目があります。");
@@ -216,7 +208,8 @@ $(selector.patternForm).submit(function(e) {
     var errorDuplicated = "入力されたURLパターンは既に登録されています。";
 
     var end = function() {
-        $.modal.close();
+        $(".colorpicker").hide();
+        $("#js_modal_pattern").modal("hide");
         showPatternList();
     };
 
@@ -241,14 +234,24 @@ $(selector.patternForm).submit(function(e) {
     }
 });
 
-$(selector.formClear).click(function(e) {
+$("#js_input_clear").click(function(e) {
     e.preventDefault();
 
     var values = formDefaultValues();
 
-    $(selector.inputUrl).val(values.url);
-    $(selector.inputMsg).val(values.message);
-    $(selector.inputBackgroundColor).val(values.backgroundColor);
+    $("#js_input_url").val(values.url);
+    $("#js_input_msg").val(values.message);
+    $("#js_input_backgroundcolor").val(values.backgroundColor);
+});
+
+$("#js_form_delete").submit(function(e) {
+    e.preventDefault();
+
+    urlNotifier.storage.deletePattern({
+        url: $("#js_form_delete_pattern").text()
+    });
+    $("#js_modal_delete").modal("hide");
+    showPatternList();
 });
 
 

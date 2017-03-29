@@ -1,0 +1,21 @@
+body {
+    padding-top: 70px;
+}
+
+.table .action .btn {
+    margin-right: 10px;
+}
+
+.list-message {
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.list-action-delete-confirm {
+    display: none;
+}
+
+.modal-dialog {
+    margin-top: 80px;
+}
