@@ -150,24 +150,18 @@ var openPatternForm = function(formValues) {
     $("#js_input_msg").val(formValues.message);
     $("#js_input_backgroundcolor").val(formValues.backgroundColor);
 
-    $("#js_modal_pattern").modal({
-        showClose: false,
-        modalClass: "modal",
-        fadeDuration: 100
-    }).on($.modal.OPEN, function(e, modal) {
-        $("#js_input_url").focus();
-    });
+    $("#js_modal_pattern").modal("show");
 };
+
+$("#js_modal_pattern").on("shown.bs.modal", function() {
+    $("#js_input_url").focus();
+});
 
 var openDeleteForm = function(formValues) {
     $("#js_form_delete_pattern").text(formValues.url);
     $("#js_form_delete_message").text(formValues.message);
 
-    $("#js_modal_delete").modal({
-        showClose: false,
-        modalClass: "modal",
-        fadeDuration: 100
-    });
+    $("#js_modal_delete").modal("show");
 };
 
 $("#js_input_backgroundcolor").ColorPicker({
@@ -214,7 +208,8 @@ $("#js_form_pattern").submit(function(e) {
     var errorDuplicated = "入力されたURLパターンは既に登録されています。";
 
     var end = function() {
-        $.modal.close();
+        $(".colorpicker").hide();
+        $("#js_modal_pattern").modal("hide");
         showPatternList();
     };
 
@@ -255,14 +250,8 @@ $("#js_form_delete").submit(function(e) {
     urlNotifier.storage.deletePattern({
         url: $("#js_form_delete_pattern").text()
     });
-    $.modal.close();
+    $("#js_modal_delete").modal("hide");
     showPatternList();
-});
-
-$("#js_form_delete_cancel").click(function(e) {
-    e.preventDefault();
-
-    $.modal.close();
 });
 
 
