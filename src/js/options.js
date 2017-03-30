@@ -84,29 +84,6 @@ var makeRow = function (item) {
         }).
         appendTo(tdAction);
 
-    $("<span>").
-        addClass("list-action-delete-confirm").
-        append(
-            $("<a>").
-                addClass("btn btn-warning btn-xs list-action-delete-accept").
-                text("OK").
-                click(function(e) {
-                    e.preventDefault();
-                    urlNotifier.storage.deletePattern(item);
-                    showPatternList();
-                })
-        ).
-        append(
-            $("<a>").
-                addClass("btn btn-default btn-xs list-action-delete-cancel").
-                text("キャンセル").
-                click(function(e) {
-                    e.preventDefault();
-                    $(this).parent().hide();
-                })
-        ).
-        appendTo(tdAction);
-
     return $("<tr>").
         append(tdUrl).
         append(tdMsg).
