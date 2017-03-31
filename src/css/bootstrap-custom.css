@@ -2,6 +2,10 @@ body {
     padding-top: 70px;
 }
 
+#js_version {
+    margin-left: 10px;
+}
+
 .table .action .btn {
     margin-right: 10px;
 }

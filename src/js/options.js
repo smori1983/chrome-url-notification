@@ -1,5 +1,11 @@
 $(function() {
 
+var showVersion = function() {
+    var version = chrome.runtime.getManifest().version;
+
+    $("#js_version").text("Ver. " + version);
+};
+
 var showPatternList = function() {
     var listArea = $("#js_list_pattern");
 
@@ -232,6 +238,7 @@ $("#js_form_delete").submit(function(e) {
 });
 
 
+showVersion();
 showPatternList();
 
 });
