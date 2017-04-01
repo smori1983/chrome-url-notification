@@ -117,21 +117,6 @@ var clearPatternForm = function() {
     $("#js_input_backgroundcolor").val(values.backgroundColor);
 };
 
-var openDeleteForm = function(formValues) {
-    $("#js_form_delete_pattern").text(formValues.url);
-    $("#js_form_delete_message").text(formValues.message);
-
-    $("#js_modal_delete").modal("show");
-};
-
-var submitDeleteForm = function() {
-    urlNotifier.storage.deletePattern({
-        url: $("#js_form_delete_pattern").text()
-    });
-    $("#js_modal_delete").modal("hide");
-    showPatternList();
-};
-
 var submitPatternForm = (function() {
     var error = {
         required: "未入力の項目があります。",
@@ -211,6 +196,21 @@ var submitPatternForm = (function() {
         }
     };
 })();
+
+var openDeleteForm = function(formValues) {
+    $("#js_form_delete_pattern").text(formValues.url);
+    $("#js_form_delete_message").text(formValues.message);
+
+    $("#js_modal_delete").modal("show");
+};
+
+var submitDeleteForm = function() {
+    urlNotifier.storage.deletePattern({
+        url: $("#js_form_delete_pattern").text()
+    });
+    $("#js_modal_delete").modal("hide");
+    showPatternList();
+};
 
 var initEventHandlers = function() {
     $("#js_button_add_pattern").click(function(e) {
