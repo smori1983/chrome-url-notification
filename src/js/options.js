@@ -185,6 +185,11 @@ var patternMsg = (function() {
 })();
 
 var submitPatternForm = function() {
+    var error = {
+        required: "未入力の項目があります。",
+        duplicated: "入力されたURLパターンは既に登録されています。"
+    };
+
     var trimValue = function(selector) {
         return $(selector).val().trim();
     };
@@ -196,7 +201,7 @@ var submitPatternForm = function() {
     var backgroundColor = trimValue("#js_input_backgroundcolor");
 
     if (url === "" || msg === "" || backgroundColor === "") {
-        patternMsg.show("未入力の項目があります。");
+        patternMsg.show(error.required);
         return;
     }
 
@@ -206,8 +211,6 @@ var submitPatternForm = function() {
         backgroundColor: backgroundColor
     };
 
-    var errorDuplicated = "入力されたURLパターンは既に登録されています。";
-
     var end = function() {
         $(".colorpicker").hide();
         $("#js_modal_pattern").modal("hide");
@@ -216,7 +219,7 @@ var submitPatternForm = function() {
 
     if (mode === "add") {
         if (urlNotifier.storage.findByUrl(url)) {
-            patternMsg.show(errorDuplicated);
+            patternMsg.show(error.duplicated);
             return;
         }
 
@@ -226,7 +229,7 @@ var submitPatternForm = function() {
 
     if (mode === "edit") {
         if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
-            patternMsg.show(errorDuplicated);
+            patternMsg.show(error.duplicated);
             return;
         }
 
