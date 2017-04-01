@@ -194,6 +194,12 @@ var submitPatternForm = (function() {
         return that;
     })();
 
+    var end = function() {
+        $(".colorpicker").hide();
+        $("#js_modal_pattern").modal("hide");
+        showPatternList();
+    };
+
     return function() {
         var mode = trimValue("#js_form_pattern_mode");
         var originalUrl = trimValue("#js_form_pattern_original_url");
@@ -210,12 +216,6 @@ var submitPatternForm = (function() {
             url: url,
             msg: msg,
             backgroundColor: backgroundColor
-        };
-
-        var end = function() {
-            $(".colorpicker").hide();
-            $("#js_modal_pattern").modal("hide");
-            showPatternList();
         };
 
         if (mode === "add") {
