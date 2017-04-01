@@ -154,6 +154,14 @@ var openDeleteForm = function(formValues) {
     $("#js_modal_delete").modal("show");
 };
 
+var submitDeleteForm = function() {
+    urlNotifier.storage.deletePattern({
+        url: $("#js_form_delete_pattern").text()
+    });
+    $("#js_modal_delete").modal("hide");
+    showPatternList();
+};
+
 $("#js_input_backgroundcolor").ColorPicker({
     onSubmit: function(hsb, hex, rgb, el) {
         $(el).val(hex);
@@ -231,12 +239,7 @@ $("#js_input_clear").click(function(e) {
 
 $("#js_form_delete").submit(function(e) {
     e.preventDefault();
-
-    urlNotifier.storage.deletePattern({
-        url: $("#js_form_delete_pattern").text()
-    });
-    $("#js_modal_delete").modal("hide");
-    showPatternList();
+    submitDeleteForm();
 });
 
 
