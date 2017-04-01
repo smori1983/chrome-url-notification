@@ -6,6 +6,10 @@ body {
     margin-left: 10px;
 }
 
+#js_pattern_list_badge {
+    margin-left: 10px;
+}
+
 .table .action .btn {
     margin-right: 10px;
 }

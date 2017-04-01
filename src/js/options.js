@@ -13,6 +13,8 @@ var showPatternList = function() {
 
     var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
 
+    $("#js_pattern_list_badge").text(sorted.length);
+
     $.each(sorted, function(idx, item) {
         makeRow(item).appendTo(listArea);
     });
