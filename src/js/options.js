@@ -160,30 +160,6 @@ $("#js_form_pattern").submit(function(e) {
     submitPatternForm();
 });
 
-var patternMsg = (function() {
-    var that = {},
-        timeoutId = null;
-
-    that.show = function(msg) {
-        $("#js_msg_pattern").text(msg);
-
-        if (timeoutId !== null) {
-            window.clearTimeout(timeoutId);
-        }
-
-        timeoutId = window.setTimeout(function() {
-            timeoutId = null;
-            that.hide();
-        }, 2000);
-    };
-
-    that.hide = function() {
-        $("#js_msg_pattern").empty();
-    };
-
-    return that;
-})();
-
 var submitPatternForm = function() {
     var error = {
         required: "未入力の項目があります。",
@@ -193,6 +169,30 @@ var submitPatternForm = function() {
     var trimValue = function(selector) {
         return $(selector).val().trim();
     };
+
+    var patternMsg = (function() {
+        var that = {},
+            timeoutId = null;
+
+        that.show = function(msg) {
+            $("#js_msg_pattern").text(msg);
+
+            if (timeoutId !== null) {
+                window.clearTimeout(timeoutId);
+            }
+
+            timeoutId = window.setTimeout(function() {
+                timeoutId = null;
+                that.hide();
+            }, 2000);
+        };
+
+        that.hide = function() {
+            $("#js_msg_pattern").empty();
+        };
+
+        return that;
+    })();
 
     var mode = trimValue("#js_form_pattern_mode");
     var originalUrl = trimValue("#js_form_pattern_original_url");
