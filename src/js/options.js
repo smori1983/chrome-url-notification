@@ -1,7 +1,5 @@
 var showVersion = function() {
-    var version = chrome.runtime.getManifest().version;
-
-    $("#js_version").text("Ver. " + version);
+    $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
 };
 
 var showPatternList = function() {
