@@ -181,7 +181,10 @@ $("#js_button_add_pattern").click(function(e) {
 
 $("#js_form_pattern").submit(function(e) {
     e.preventDefault();
+    submitPatternForm();
+});
 
+var submitPatternForm = function() {
     var trimValue = function(selector) {
         return $(selector).val().trim();
     };
@@ -230,7 +233,7 @@ $("#js_form_pattern").submit(function(e) {
         urlNotifier.storage.updatePattern(originalUrl, saveData);
         end();
     }
-});
+};
 
 $("#js_input_clear").click(function(e) {
     e.preventDefault();
