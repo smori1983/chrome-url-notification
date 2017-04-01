@@ -1,5 +1,3 @@
-$(function() {
-
 var showVersion = function() {
     var version = chrome.runtime.getManifest().version;
 
@@ -119,10 +117,6 @@ var clearPatternForm = function() {
     $("#js_input_backgroundcolor").val(values.backgroundColor);
 };
 
-$("#js_modal_pattern").on("shown.bs.modal", function() {
-    $("#js_input_url").focus();
-});
-
 var openDeleteForm = function(formValues) {
     $("#js_form_delete_pattern").text(formValues.url);
     $("#js_form_delete_message").text(formValues.message);
@@ -137,28 +131,6 @@ var submitDeleteForm = function() {
     $("#js_modal_delete").modal("hide");
     showPatternList();
 };
-
-$("#js_input_backgroundcolor").ColorPicker({
-    onSubmit: function(hsb, hex, rgb, el) {
-        $(el).val(hex);
-        $(el).ColorPickerHide();
-    },
-    onBeforeShow: function () {
-        $(this).ColorPickerSetColor(this.value);
-    }
-}).bind("keyup", function(){
-    $(this).ColorPickerSetColor(this.value);
-});
-
-$("#js_button_add_pattern").click(function(e) {
-    e.preventDefault();
-    openPatternForm({});
-});
-
-$("#js_form_pattern").submit(function(e) {
-    e.preventDefault();
-    submitPatternForm();
-});
 
 var submitPatternForm = (function() {
     var error = {
@@ -240,18 +212,46 @@ var submitPatternForm = (function() {
     };
 })();
 
-$("#js_input_clear").click(function(e) {
-    e.preventDefault();
-    clearPatternForm();
-});
+var initEventHandlers = function() {
+    $("#js_button_add_pattern").click(function(e) {
+        e.preventDefault();
+        openPatternForm({});
+    });
 
-$("#js_form_delete").submit(function(e) {
-    e.preventDefault();
-    submitDeleteForm();
-});
+    $("#js_modal_pattern").on("shown.bs.modal", function() {
+        $("#js_input_url").focus();
+    });
 
+    $("#js_input_backgroundcolor").ColorPicker({
+        onSubmit: function(hsb, hex, rgb, el) {
+            $(el).val(hex);
+            $(el).ColorPickerHide();
+        },
+        onBeforeShow: function () {
+            $(this).ColorPickerSetColor(this.value);
+        }
+    }).bind("keyup", function(){
+        $(this).ColorPickerSetColor(this.value);
+    });
 
-showVersion();
-showPatternList();
+    $("#js_input_clear").click(function(e) {
+        e.preventDefault();
+        clearPatternForm();
+    });
 
+    $("#js_form_pattern").submit(function(e) {
+        e.preventDefault();
+        submitPatternForm();
+    });
+
+    $("#js_form_delete").submit(function(e) {
+        e.preventDefault();
+        submitDeleteForm();
+    });
+};
+
+$(function() {
+    initEventHandlers();
+    showVersion();
+    showPatternList();
 });
