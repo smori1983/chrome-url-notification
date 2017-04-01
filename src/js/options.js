@@ -29,8 +29,6 @@ var formDefaultValues = function() {
 };
 
 var makeRow = function (item) {
-    var tdUrl, tdMsg, tdAction;
-
     var listMessageCss = function(item) {
         return {
             "background-color": "#" + item.backgroundColor,
@@ -38,61 +36,58 @@ var makeRow = function (item) {
         };
     };
 
-    tdUrl = $("<td>").
-        text(item.url);
+    var row = function() {
+        return $("<tr>");
+    };
 
-    tdMsg = $("<td>").
-        append(
-            $("<div>").
-                addClass("list-message").
-                css(listMessageCss(item)).
-                text(item.msg)
-        );
+    var column = function() {
+        return $("<td>");
+    };
 
-    tdAction = $("<td>").
-        addClass("action");
+    var button = function(clazz, text) {
+        return $("<button>").addClass(clazz).text(text);
+    };
 
-    $("<button>").
-        addClass("btn btn-default btn-sm").
-        text("コピー").
-        click(function(e) {
-            e.preventDefault();
-            openPatternForm({
-                mode: "add",
-                url: item.url,
-                message: item.msg,
-                backgroundColor: item.backgroundColor
-            });
-        }).
-        appendTo(tdAction);
+    var tdUrl = column().text(item.url);
 
-    $("<button>").
-        addClass("btn btn-primary btn-sm").
-        text("編集").
-        click(function(e) {
-            e.preventDefault();
-            openPatternForm({
-                mode: "edit",
-                url: item.url,
-                message: item.msg,
-                backgroundColor: item.backgroundColor
-            });
-        }).
-        appendTo(tdAction);
+    var tdMsg = column().append(
+        $("<div>").
+            addClass("list-message").
+            css(listMessageCss(item)).
+            text(item.msg)
+    );
 
-    $("<button>").
-        addClass("btn btn-danger btn-sm").
-        text("削除").
-        click(function(e) {
-            e.preventDefault();
-            openDeleteForm({
-                url: item.url,
-                message: item.msg
-            });
-        }).
-        appendTo(tdAction);
+    var tdAction = column().addClass("action");
 
-    return $("<tr>").
+    button("btn btn-default btn-sm", "コピー").click(function(e) {
+        e.preventDefault();
+        openPatternForm({
+            mode: "add",
+            url: item.url,
+            message: item.msg,
+            backgroundColor: item.backgroundColor
+        });
+    }).appendTo(tdAction);
+
+    button("btn btn-primary btn-sm", "編集").click(function(e) {
+        e.preventDefault();
+        openPatternForm({
+            mode: "edit",
+            url: item.url,
+            message: item.msg,
+            backgroundColor: item.backgroundColor
+        });
+    }).appendTo(tdAction);
+
+    button("btn btn-danger btn-sm", "削除").click(function(e) {
+        e.preventDefault();
+        openDeleteForm({
+            url: item.url,
+            message: item.msg
+        });
+    }).appendTo(tdAction);
+
+    return row().
         append(tdUrl).
         append(tdMsg).
         append(tdAction);
