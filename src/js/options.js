@@ -160,7 +160,7 @@ $("#js_form_pattern").submit(function(e) {
     submitPatternForm();
 });
 
-var submitPatternForm = function() {
+var submitPatternForm = (function() {
     var error = {
         required: "未入力の項目があります。",
         duplicated: "入力されたURLパターンは既に登録されています。"
@@ -194,49 +194,51 @@ var submitPatternForm = function() {
         return that;
     })();
 
-    var mode = trimValue("#js_form_pattern_mode");
-    var originalUrl = trimValue("#js_form_pattern_original_url");
-    var url = trimValue("#js_input_url");
-    var msg = trimValue("#js_input_msg");
-    var backgroundColor = trimValue("#js_input_backgroundcolor");
+    return function() {
+        var mode = trimValue("#js_form_pattern_mode");
+        var originalUrl = trimValue("#js_form_pattern_original_url");
+        var url = trimValue("#js_input_url");
+        var msg = trimValue("#js_input_msg");
+        var backgroundColor = trimValue("#js_input_backgroundcolor");
 
-    if (url === "" || msg === "" || backgroundColor === "") {
-        patternMsg.show(error.required);
-        return;
-    }
-
-    var saveData = {
-        url: url,
-        msg: msg,
-        backgroundColor: backgroundColor
-    };
-
-    var end = function() {
-        $(".colorpicker").hide();
-        $("#js_modal_pattern").modal("hide");
-        showPatternList();
-    };
-
-    if (mode === "add") {
-        if (urlNotifier.storage.findByUrl(url)) {
-            patternMsg.show(error.duplicated);
+        if (url === "" || msg === "" || backgroundColor === "") {
+            patternMsg.show(error.required);
             return;
         }
 
-        urlNotifier.storage.addPattern(saveData);
-        end();
-    }
+        var saveData = {
+            url: url,
+            msg: msg,
+            backgroundColor: backgroundColor
+        };
 
-    if (mode === "edit") {
-        if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
-            patternMsg.show(error.duplicated);
-            return;
+        var end = function() {
+            $(".colorpicker").hide();
+            $("#js_modal_pattern").modal("hide");
+            showPatternList();
+        };
+
+        if (mode === "add") {
+            if (urlNotifier.storage.findByUrl(url)) {
+                patternMsg.show(error.duplicated);
+                return;
+            }
+
+            urlNotifier.storage.addPattern(saveData);
+            end();
         }
 
-        urlNotifier.storage.updatePattern(originalUrl, saveData);
-        end();
-    }
-};
+        if (mode === "edit") {
+            if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
+                patternMsg.show(error.duplicated);
+                return;
+            }
+
+            urlNotifier.storage.updatePattern(originalUrl, saveData);
+            end();
+        }
+    };
+})();
 
 $("#js_input_clear").click(function(e) {
     e.preventDefault();
