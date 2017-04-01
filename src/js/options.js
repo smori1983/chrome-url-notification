@@ -20,14 +20,6 @@ var showPatternList = function() {
     });
 };
 
-var formDefaultValues = function() {
-    return {
-        url: "",
-        message: "",
-        backgroundColor: "000000"
-    };
-};
-
 var makeRow = (function() {
     var listMessageCss = function(item) {
         return {
@@ -118,6 +110,14 @@ var patternMsg = (function() {
 
     return that;
 })();
+
+var formDefaultValues = function() {
+    return {
+        url: "",
+        message: "",
+        backgroundColor: "000000"
+    };
+};
 
 var openPatternForm = function(formValues) {
     var formValues = $.extend(
