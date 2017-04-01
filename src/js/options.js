@@ -87,30 +87,6 @@ var makeRow = (function() {
     };
 })();
 
-var patternMsg = (function() {
-    var that = {},
-        timeoutId = null;
-
-    that.show = function(msg) {
-        $("#js_msg_pattern").text(msg);
-
-        if (timeoutId !== null) {
-            window.clearTimeout(timeoutId);
-        }
-
-        timeoutId = window.setTimeout(function() {
-            timeoutId = null;
-            that.hide();
-        }, 2000);
-    };
-
-    that.hide = function() {
-        $("#js_msg_pattern").empty();
-    };
-
-    return that;
-})();
-
 var formDefaultValues = function() {
     return {
         url: "",
@@ -183,6 +159,30 @@ $("#js_form_pattern").submit(function(e) {
     e.preventDefault();
     submitPatternForm();
 });
+
+var patternMsg = (function() {
+    var that = {},
+        timeoutId = null;
+
+    that.show = function(msg) {
+        $("#js_msg_pattern").text(msg);
+
+        if (timeoutId !== null) {
+            window.clearTimeout(timeoutId);
+        }
+
+        timeoutId = window.setTimeout(function() {
+            timeoutId = null;
+            that.hide();
+        }, 2000);
+    };
+
+    that.hide = function() {
+        $("#js_msg_pattern").empty();
+    };
+
+    return that;
+})();
 
 var submitPatternForm = function() {
     var trimValue = function(selector) {
