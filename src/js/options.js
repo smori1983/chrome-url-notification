@@ -135,6 +135,14 @@ var openPatternForm = function(formValues) {
     $("#js_modal_pattern").modal("show");
 };
 
+var clearPatternForm = function() {
+    var values = formDefaultValues();
+
+    $("#js_input_url").val(values.url);
+    $("#js_input_msg").val(values.message);
+    $("#js_input_backgroundcolor").val(values.backgroundColor);
+};
+
 $("#js_modal_pattern").on("shown.bs.modal", function() {
     $("#js_input_url").focus();
 });
@@ -218,12 +226,7 @@ $("#js_form_pattern").submit(function(e) {
 
 $("#js_input_clear").click(function(e) {
     e.preventDefault();
-
-    var values = formDefaultValues();
-
-    $("#js_input_url").val(values.url);
-    $("#js_input_msg").val(values.message);
-    $("#js_input_backgroundcolor").val(values.backgroundColor);
+    clearPatternForm();
 });
 
 $("#js_form_delete").submit(function(e) {
