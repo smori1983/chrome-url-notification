@@ -4,13 +4,11 @@ var showVersion = function() {
 
 var showPatternList = function() {
     var listArea = $("#js_list_pattern");
-
-    listArea.empty();
-
     var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
 
     $("#js_pattern_list_badge").text(sorted.length);
 
+    listArea.empty();
     $.each(sorted, function(idx, item) {
         makeRow(item).appendTo(listArea);
     });
