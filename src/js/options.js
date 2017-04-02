@@ -1,3 +1,41 @@
+var deleteForm = (function() {
+    var current = {
+        pattern: null
+    };
+
+    var set = function(pattern) {
+        current.pattern = pattern;
+    };
+
+    var show = function(pattern, message) {
+        set(pattern);
+
+        $("#js_form_delete_pattern").text(pattern);
+        $("#js_form_delete_message").text(message);
+
+        $("#js_form_delete").off("submit").on("submit", function(e) {
+            e.preventDefault();
+            submit();
+        });
+
+        $("#js_modal_delete").modal("show");
+    };
+
+    var submit = function() {
+        urlNotifier.storage.deletePattern({
+            url: current.pattern
+        });
+        $("#js_modal_delete").modal("hide");
+        showPatternList();
+    };
+
+    return {
+        show: function(pattern, message) {
+            show(pattern, message);
+        }
+    };
+})();
+
 var showVersion = function() {
     $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
 };
@@ -68,10 +106,7 @@ var makeRow = (function() {
 
         button("btn btn-danger btn-sm", "削除").click(function(e) {
             e.preventDefault();
-            openDeleteForm({
-                url: item.url,
-                message: item.msg
-            });
+            deleteForm.show(item.url, item.msg);
         }).appendTo(tdAction);
 
         return row().
@@ -193,21 +228,6 @@ var submitPatternForm = (function() {
     };
 })();
 
-var openDeleteForm = function(formValues) {
-    $("#js_form_delete_pattern").text(formValues.url);
-    $("#js_form_delete_message").text(formValues.message);
-
-    $("#js_modal_delete").modal("show");
-};
-
-var submitDeleteForm = function() {
-    urlNotifier.storage.deletePattern({
-        url: $("#js_form_delete_pattern").text()
-    });
-    $("#js_modal_delete").modal("hide");
-    showPatternList();
-};
-
 var initEventHandlers = function() {
     $("#js_button_add_pattern").click(function(e) {
         e.preventDefault();
@@ -238,11 +258,6 @@ var initEventHandlers = function() {
     $("#js_form_pattern").submit(function(e) {
         e.preventDefault();
         submitPatternForm();
-    });
-
-    $("#js_form_delete").submit(function(e) {
-        e.preventDefault();
-        submitDeleteForm();
     });
 };
 
