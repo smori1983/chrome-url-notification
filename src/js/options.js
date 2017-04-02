@@ -8,6 +8,7 @@ var patternForm = (function() {
     };
 
     var current = {
+        mode: null,
         url: null,
         message: null,
         backgroundColor: null
@@ -19,19 +20,15 @@ var patternForm = (function() {
         current.backgroundColor = backgroundColor;
     };
 
-    var show = function(formValues) {
-        var formValues = $.extend(
-            defaultValues(),
-            { mode: "add" },
-            formValues
-        );
+    var show = function(mode, formValues) {
+        current.mode = mode;
 
-        $("#js_form_pattern_mode").val(formValues.mode);
+        var formValues = $.extend(defaultValues(), formValues);
+
         $("#js_form_pattern_original_url").val(formValues.url);
         $("#js_input_url").val(formValues.url);
         $("#js_input_msg").val(formValues.message);
         $("#js_input_backgroundcolor").val(formValues.backgroundColor);
-
 
         $("#js_input_clear").off("click").on("click", function(e) {
             e.preventDefault();
@@ -95,7 +92,6 @@ var patternForm = (function() {
         };
 
         return function() {
-            var mode = trimValue("#js_form_pattern_mode");
             var originalUrl = trimValue("#js_form_pattern_original_url");
             var url = trimValue("#js_input_url");
             var msg = trimValue("#js_input_msg");
@@ -112,7 +108,7 @@ var patternForm = (function() {
                 backgroundColor: backgroundColor
             };
 
-            if (mode === "add") {
+            if (current.mode === "add") {
                 if (urlNotifier.storage.findByUrl(url)) {
                     patternMsg.show(error.duplicated);
                     return;
@@ -122,7 +118,7 @@ var patternForm = (function() {
                 end();
             }
 
-            if (mode === "edit") {
+            if (current.mode === "edit") {
                 if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
                     patternMsg.show(error.duplicated);
                     return;
@@ -156,8 +152,8 @@ var patternForm = (function() {
         init: function() {
             init();
         },
-        show: function(formValues) {
-            show(formValues);
+        show: function(mode, formValues) {
+            show(mode, formValues);
         }
     };
 })();
@@ -250,8 +246,7 @@ var makeRow = (function() {
 
         button("btn btn-default btn-sm", "コピー").click(function(e) {
             e.preventDefault();
-            patternForm.show({
-                mode: "add",
+            patternForm.show("add", {
                 url: item.url,
                 message: item.msg,
                 backgroundColor: item.backgroundColor
@@ -260,8 +255,7 @@ var makeRow = (function() {
 
         button("btn btn-primary btn-sm", "編集").click(function(e) {
             e.preventDefault();
-            patternForm.show({
-                mode: "edit",
+            patternForm.show("edit", {
                 url: item.url,
                 message: item.msg,
                 backgroundColor: item.backgroundColor
@@ -283,7 +277,7 @@ var makeRow = (function() {
 var initEventHandlers = function() {
     $("#js_button_add_pattern").click(function(e) {
         e.preventDefault();
-        patternForm.show({});
+        patternForm.show("add", {});
     });
 };
 
