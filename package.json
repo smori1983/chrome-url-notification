@@ -5,6 +5,7 @@
   "directories": {
   },
   "scripts": {
+    "build": "gulp build",
     "test": "gulp test",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles"
   },
@@ -14,7 +15,11 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "node-qunit-phantomjs": "^1.4.0",
-    "watch": "^0.18.0"
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "node-qunit-phantomjs": "*",
+    "pump": "*",
+    "watch": "*"
   }
 }
