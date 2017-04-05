@@ -85,7 +85,10 @@ var patternListComponent = (function() {
 
             button("btn btn-danger btn-sm", "削除").click(function(e) {
                 e.preventDefault();
-                deleteForm.show(item.url, item.msg);
+                deleteForm.show({
+                    pattern: item.url,
+                    message: item.msg
+                });
             }).appendTo(tdAction);
 
             return row().
@@ -263,19 +266,13 @@ var patternForm = (function() {
 })();
 
 var deleteForm = (function() {
-    var current = {
-        pattern: null
-    };
+    var current = null;
 
-    var set = function(pattern) {
-        current.pattern = pattern;
-    };
+    var show = function(item) {
+        current = item;
 
-    var show = function(pattern, message) {
-        set(pattern);
-
-        $("#js_form_delete_pattern").text(pattern);
-        $("#js_form_delete_message").text(message);
+        $("#js_form_delete_pattern").text(item.pattern);
+        $("#js_form_delete_message").text(item.message);
 
         $("#js_form_delete").off("submit").on("submit", function(e) {
             e.preventDefault();
@@ -294,8 +291,13 @@ var deleteForm = (function() {
     };
 
     return {
-        show: function(pattern, message) {
-            show(pattern, message);
+        /**
+         * item
+         * - pattern
+         * - message
+         */
+        show: function(item) {
+            show(item);
         }
     };
 })();
