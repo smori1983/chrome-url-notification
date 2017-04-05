@@ -18,6 +18,88 @@ var headerComponent = (function() {
     };
 })();
 
+var patternListComponent = (function() {
+    var show = function() {
+        var listArea = $("#js_list_pattern");
+        var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
+
+        $("#js_pattern_list_badge").text(sorted.length);
+
+        listArea.empty();
+        $.each(sorted, function(idx, item) {
+            makeRow(item).appendTo(listArea);
+        });
+    };
+
+    var makeRow = (function() {
+        var listMessageCss = function(item) {
+            return {
+                "background-color": "#" + item.backgroundColor,
+                "color": "#ffffff"
+            };
+        };
+
+        var row = function() {
+            return $("<tr>");
+        };
+
+        var column = function() {
+            return $("<td>");
+        };
+
+        var button = function(clazz, text) {
+            return $("<button>").addClass(clazz).text(text);
+        };
+
+        return function(item) {
+            var tdUrl = column().text(item.url);
+
+            var tdMsg = column().append(
+                $("<div>").
+                    addClass("list-message").
+                    css(listMessageCss(item)).
+                    text(item.msg)
+            );
+
+            var tdAction = column().addClass("action");
+
+            button("btn btn-default btn-sm", "コピー").click(function(e) {
+                e.preventDefault();
+                patternForm.show("add", {
+                    url: item.url,
+                    message: item.msg,
+                    backgroundColor: item.backgroundColor
+                });
+            }).appendTo(tdAction);
+
+            button("btn btn-primary btn-sm", "編集").click(function(e) {
+                e.preventDefault();
+                patternForm.show("edit", {
+                    url: item.url,
+                    message: item.msg,
+                    backgroundColor: item.backgroundColor
+                });
+            }).appendTo(tdAction);
+
+            button("btn btn-danger btn-sm", "削除").click(function(e) {
+                e.preventDefault();
+                deleteForm.show(item.url, item.msg);
+            }).appendTo(tdAction);
+
+            return row().
+                append(tdUrl).
+                append(tdMsg).
+                append(tdAction);
+        };
+    })();
+
+    return {
+        show: function() {
+            show();
+        }
+    };
+})();
+
 var patternForm = (function() {
     var defaultValues = function() {
         return {
@@ -108,7 +190,7 @@ var patternForm = (function() {
         var end = function() {
             $(".colorpicker").hide();
             $("#js_modal_pattern").modal("hide");
-            showPatternList();
+            patternListComponent.show();
         };
 
         return function() {
@@ -206,7 +288,7 @@ var deleteForm = (function() {
             url: current.pattern
         });
         $("#js_modal_delete").modal("hide");
-        showPatternList();
+        patternListComponent.show();
     };
 
     return {
@@ -216,82 +298,8 @@ var deleteForm = (function() {
     };
 })();
 
-var showPatternList = function() {
-    var listArea = $("#js_list_pattern");
-    var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
-
-    $("#js_pattern_list_badge").text(sorted.length);
-
-    listArea.empty();
-    $.each(sorted, function(idx, item) {
-        makeRow(item).appendTo(listArea);
-    });
-};
-
-var makeRow = (function() {
-    var listMessageCss = function(item) {
-        return {
-            "background-color": "#" + item.backgroundColor,
-            "color": "#ffffff"
-        };
-    };
-
-    var row = function() {
-        return $("<tr>");
-    };
-
-    var column = function() {
-        return $("<td>");
-    };
-
-    var button = function(clazz, text) {
-        return $("<button>").addClass(clazz).text(text);
-    };
-
-    return function(item) {
-        var tdUrl = column().text(item.url);
-
-        var tdMsg = column().append(
-            $("<div>").
-                addClass("list-message").
-                css(listMessageCss(item)).
-                text(item.msg)
-        );
-
-        var tdAction = column().addClass("action");
-
-        button("btn btn-default btn-sm", "コピー").click(function(e) {
-            e.preventDefault();
-            patternForm.show("add", {
-                url: item.url,
-                message: item.msg,
-                backgroundColor: item.backgroundColor
-            });
-        }).appendTo(tdAction);
-
-        button("btn btn-primary btn-sm", "編集").click(function(e) {
-            e.preventDefault();
-            patternForm.show("edit", {
-                url: item.url,
-                message: item.msg,
-                backgroundColor: item.backgroundColor
-            });
-        }).appendTo(tdAction);
-
-        button("btn btn-danger btn-sm", "削除").click(function(e) {
-            e.preventDefault();
-            deleteForm.show(item.url, item.msg);
-        }).appendTo(tdAction);
-
-        return row().
-            append(tdUrl).
-            append(tdMsg).
-            append(tdAction);
-    };
-})();
-
 $(function() {
     headerComponent.init();
+    patternListComponent.show();
     patternForm.init();
-    showPatternList();
 });
