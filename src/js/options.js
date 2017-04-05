@@ -126,24 +126,14 @@ var patternForm = (function() {
 
     var mode = null;
 
-    var current = {
-        url: null,
-        message: null,
-        backgroundColor: null
-    };
+    var original = null;
 
-    var set = function(url, message, backgroundColor) {
-        current.url = url;
-        current.message = message;
-        current.backgroundColor = backgroundColor;
-    };
-
-    var show = function(argMode, formValues) {
+    var show = function(argMode, argOriginal) {
         mode = argMode;
+        original = argOriginal;
 
-        var formValues = $.extend(defaultValues(), formValues);
+        var formValues = $.extend(defaultValues(), original);
 
-        $("#js_form_pattern_original_url").val(formValues.url);
         $("#js_input_url").val(formValues.url);
         $("#js_input_msg").val(formValues.message);
         $("#js_input_backgroundcolor").val(formValues.backgroundColor);
@@ -210,7 +200,6 @@ var patternForm = (function() {
         };
 
         return function() {
-            var originalUrl = trimValue("#js_form_pattern_original_url");
             var url = trimValue("#js_input_url");
             var msg = trimValue("#js_input_msg");
             var backgroundColor = trimValue("#js_input_backgroundcolor");
@@ -237,12 +226,12 @@ var patternForm = (function() {
             }
 
             if (mode === "edit") {
-                if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
+                if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
                     patternMsg.show(error.duplicated);
                     return;
                 }
 
-                urlNotifier.storage.updatePattern(originalUrl, saveData);
+                urlNotifier.storage.updatePattern(original.url, saveData);
                 end();
             }
         };
