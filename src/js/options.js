@@ -1,3 +1,13 @@
+var util = (function() {
+    var rebind = function(selector, eventName, callback) {
+        $(selector).off(eventName).on(eventName, callback);
+    };
+
+    return {
+        rebind: rebind
+    };
+})();
+
 var headerComponent = (function() {
     var showVersion = function() {
         $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
@@ -137,12 +147,12 @@ var patternForm = (function() {
         $("#js_input_msg").val(formValues.message);
         $("#js_input_backgroundcolor").val(formValues.backgroundColor);
 
-        $("#js_input_clear").off("click").on("click", function(e) {
+        util.rebind("#js_input_clear", "click", function(e) {
             e.preventDefault();
             clear();
         });
 
-        $("#js_form_pattern").off("submit").on("submit", function(e) {
+        util.rebind("#js_form_pattern", "submit", function(e) {
             e.preventDefault();
             submit();
         });
@@ -282,7 +292,7 @@ var deleteForm = (function() {
         $("#js_form_delete_pattern").text(item.pattern);
         $("#js_form_delete_message").text(item.message);
 
-        $("#js_form_delete").off("submit").on("submit", function(e) {
+        util.rebind("#js_form_delete", "submit", function(e) {
             e.preventDefault();
             submit();
         });
