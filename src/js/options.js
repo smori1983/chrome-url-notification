@@ -259,6 +259,14 @@ var patternForm = (function() {
         init: function() {
             init();
         },
+        /**
+         * mode: "add" or "edit"
+         *
+         * formValues
+         * - url
+         * - message
+         * - backgroundColor
+         */
         show: function(mode, formValues) {
             show(mode, formValues);
         }
