@@ -124,8 +124,9 @@ var patternForm = (function() {
         };
     };
 
+    var mode = null;
+
     var current = {
-        mode: null,
         url: null,
         message: null,
         backgroundColor: null
@@ -137,8 +138,8 @@ var patternForm = (function() {
         current.backgroundColor = backgroundColor;
     };
 
-    var show = function(mode, formValues) {
-        current.mode = mode;
+    var show = function(argMode, formValues) {
+        mode = argMode;
 
         var formValues = $.extend(defaultValues(), formValues);
 
@@ -225,7 +226,7 @@ var patternForm = (function() {
                 backgroundColor: backgroundColor
             };
 
-            if (current.mode === "add") {
+            if (mode === "add") {
                 if (urlNotifier.storage.findByUrl(url)) {
                     patternMsg.show(error.duplicated);
                     return;
@@ -235,7 +236,7 @@ var patternForm = (function() {
                 end();
             }
 
-            if (current.mode === "edit") {
+            if (mode === "edit") {
                 if (originalUrl !== url && urlNotifier.storage.findByUrl(url)) {
                     patternMsg.show(error.duplicated);
                     return;
