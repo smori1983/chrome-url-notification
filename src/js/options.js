@@ -260,7 +260,7 @@ var patternForm = (function() {
             onBeforeShow: function () {
                 $(this).ColorPickerSetColor(this.value);
             }
-        }).bind("keyup", function(){
+        }).on("keyup", function(){
             $(this).ColorPickerSetColor(this.value);
         });
     };
