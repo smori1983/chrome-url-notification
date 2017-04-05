@@ -32,13 +32,6 @@ var patternListComponent = (function() {
     };
 
     var makeRow = (function() {
-        var listMessageCss = function(item) {
-            return {
-                "background-color": "#" + item.backgroundColor,
-                "color": "#ffffff"
-            };
-        };
-
         var row = function() {
             return $("<tr>");
         };
@@ -51,15 +44,24 @@ var patternListComponent = (function() {
             return $("<button>").addClass(clazz).text(text);
         };
 
+        var listMessage = function(item) {
+            return $("<div>").
+                addClass("list-message").
+                css(listMessageCss(item)).
+                text(item.msg);
+        };
+
+        var listMessageCss = function(item) {
+            return {
+                "background-color": "#" + item.backgroundColor,
+                "color": "#ffffff"
+            };
+        };
+
         return function(item) {
             var tdUrl = column().text(item.url);
 
-            var tdMsg = column().append(
-                $("<div>").
-                    addClass("list-message").
-                    css(listMessageCss(item)).
-                    text(item.msg)
-            );
+            var tdMsg = column().append(listMessage(item));
 
             var tdAction = column().addClass("action");
 
