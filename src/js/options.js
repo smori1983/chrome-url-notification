@@ -1,3 +1,23 @@
+var headerComponent = (function() {
+    var showVersion = function() {
+        $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
+    };
+
+    var initEventHandlers = function() {
+        $("#js_button_add_pattern").click(function(e) {
+            e.preventDefault();
+            patternForm.show("add", {});
+        });
+    };
+
+    return {
+        init: function() {
+            initEventHandlers();
+            showVersion();
+        }
+    };
+})();
+
 var patternForm = (function() {
     var defaultValues = function() {
         return {
@@ -196,10 +216,6 @@ var deleteForm = (function() {
     };
 })();
 
-var showVersion = function() {
-    $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
-};
-
 var showPatternList = function() {
     var listArea = $("#js_list_pattern");
     var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
@@ -274,16 +290,8 @@ var makeRow = (function() {
     };
 })();
 
-var initEventHandlers = function() {
-    $("#js_button_add_pattern").click(function(e) {
-        e.preventDefault();
-        patternForm.show("add", {});
-    });
-};
-
 $(function() {
-    initEventHandlers();
+    headerComponent.init();
     patternForm.init();
-    showVersion();
     showPatternList();
 });
