@@ -17,8 +17,7 @@
     "background": {
         "scripts": [
             "js/jquery-1.9.1.min.js",
-            "js/urlNotifier/storage.js",
-            "js/urlNotifier/finder.js",
+            "js/urlNotifier.js",
             "js/background.js"
         ],
         "persistent": false
