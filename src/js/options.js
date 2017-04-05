@@ -128,15 +128,17 @@ var patternForm = (function() {
 
     var original = null;
 
+    var bindValues = function(formValues) {
+        $("#js_input_url").val(formValues.url);
+        $("#js_input_msg").val(formValues.message);
+        $("#js_input_backgroundcolor").val(formValues.backgroundColor);
+    };
+
     var show = function(argMode, argOriginal) {
         mode = argMode;
         original = argOriginal;
 
-        var formValues = $.extend(defaultValues(), original);
-
-        $("#js_input_url").val(formValues.url);
-        $("#js_input_msg").val(formValues.message);
-        $("#js_input_backgroundcolor").val(formValues.backgroundColor);
+        bindValues($.extend(defaultValues(), original));
 
         util.rebind("#js_input_clear", "click", function(e) {
             e.preventDefault();
@@ -152,11 +154,7 @@ var patternForm = (function() {
     };
 
     var clear = function() {
-        var values = defaultValues();
-
-        $("#js_input_url").val(values.url);
-        $("#js_input_msg").val(values.message);
-        $("#js_input_backgroundcolor").val(values.backgroundColor);
+        bindValues(defaultValues());
     };
 
     var submit = (function() {
