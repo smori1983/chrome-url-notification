@@ -18,6 +18,11 @@ var headerComponent = (function() {
             e.preventDefault();
             patternForm.show("add", {});
         });
+
+        $("#js_button_export").click(function(e) {
+            e.preventDefault();
+            exportCompoenent.show();
+        });
     };
 
     return {
@@ -25,6 +30,20 @@ var headerComponent = (function() {
             initEventHandlers();
             showVersion();
         }
+    };
+})();
+
+var exportCompoenent = (function() {
+    var show = function() {
+        var data = urlNotifier.storage.getAll();
+        var jsonString = JSON.stringify(data, null, 4);
+
+        $("#js_export_display").html(jsonString);
+        $("#js_modal_export").modal("show");
+    };
+
+    return {
+        show: show
     };
 })();
 

@@ -6,6 +6,10 @@ body {
     margin-left: 10px;
 }
 
+#js_export_display {
+    font-size: 10px;
+}
+
 #js_pattern_list_badge {
     margin-left: 10px;
 }
