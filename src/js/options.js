@@ -34,6 +34,14 @@ var headerComponent = (function() {
 })();
 
 var exportCompoenent = (function() {
+    var init = function() {
+        var clipboard = new Clipboard("#js_export_copy");
+
+        clipboard.on("success", function(e) {
+            e.clearSelection();
+        });
+    };
+
     var show = function() {
         var data = urlNotifier.storage.getAll();
         var jsonString = JSON.stringify(data, null, 4);
@@ -43,6 +51,7 @@ var exportCompoenent = (function() {
     };
 
     return {
+        init: init,
         show: show
     };
 })();
@@ -329,6 +338,7 @@ var deleteForm = (function() {
 
 $(function() {
     headerComponent.init();
+    exportCompoenent.init();
     patternListComponent.show();
     patternForm.init();
 });
