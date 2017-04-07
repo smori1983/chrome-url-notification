@@ -21,7 +21,7 @@ var headerComponent = (function() {
 
         $("#js_button_export").click(function(e) {
             e.preventDefault();
-            exportCompoenent.show();
+            exportComponent.show();
         });
     };
 
@@ -33,7 +33,7 @@ var headerComponent = (function() {
     };
 })();
 
-var exportCompoenent = (function() {
+var exportComponent = (function() {
     var init = function() {
         var clipboard = new Clipboard("#js_export_copy");
 
@@ -338,7 +338,7 @@ var deleteForm = (function() {
 
 $(function() {
     headerComponent.init();
-    exportCompoenent.init();
+    exportComponent.init();
     patternListComponent.show();
     patternForm.init();
 });
