@@ -23,6 +23,11 @@ var headerComponent = (function() {
             e.preventDefault();
             exportComponent.show();
         });
+
+        $("#js_button_import").click(function(e) {
+            e.preventDefault();
+            importComponent.show();
+        });
     };
 
     return {
@@ -49,6 +54,135 @@ var exportComponent = (function() {
         $("#js_export_display").html(jsonString);
         $("#js_modal_export").modal("show");
     };
+
+    return {
+        init: init,
+        show: show
+    };
+})();
+
+var importComponent = (function() {
+    var init = function() {
+        $("#js_modal_import").on("shown.bs.modal", function() {
+            $("#js_form_import_json").focus();
+        });
+    };
+
+    var show = function() {
+        clear();
+
+        util.rebind("#js_form_import", "submit", function(e) {
+            e.preventDefault();
+            submit();
+        });
+
+        $("#js_modal_import").modal("show");
+    };
+
+    var clear = function() {
+        $("#js_form_import_json").val("");
+    };
+
+    var submit = (function() {
+        var error = {
+            required: "フォームが未入力です。",
+            invalidJson: "JSONテキストが正しくありません。"
+        };
+
+        var message = (function() {
+            var that = {},
+                timeoutId = null;
+
+            that.show = function(msg) {
+                $("#js_msg_import").text(msg);
+
+                if (timeoutId !== null) {
+                    window.clearTimeout(timeoutId);
+                }
+
+                timeoutId = window.setTimeout(function() {
+                    timeoutId = null;
+                    that.hide();
+                }, 2000);
+            };
+
+            that.hide = function() {
+                $("#js_msg_import").empty();
+            };
+
+            return that;
+        })();
+
+        return function() {
+            var jsonText = $("#js_form_import_json").val().trim();
+
+            if (jsonText.length === 0) {
+                message.show(error.required);
+
+                return;
+            }
+
+            var json;
+
+            try {
+                json = JSON.parse(jsonText);
+            } catch (e) {
+                console.log(e);
+                message.show(error.invalidJson);
+
+                return;
+            }
+
+            importJson(json);
+
+            $("#js_modal_import").modal("hide");
+            patternListComponent.show();
+        };
+    })();
+
+    var importJson = (function() {
+        var validate = (function() {
+            var properties = ["url", "msg", "backgroundColor"];
+
+            var isSomethingString = function(obj, property) {
+                return (typeof obj[property] === "string") && (obj[property].length > 0);
+            };
+
+            return function(item) {
+                for (var i = 0, length = properties.length; i < length; i++) {
+                    if (!isSomethingString(item, properties[i])) {
+                        return false;
+                    }
+                }
+
+                return true;
+            };
+        })();
+
+        var prepare = function(item) {
+            return {
+                url: item.url,
+                msg: item.msg,
+                backgroundColor: item.backgroundColor
+            };
+        };
+
+        var addOrUpdate = function(data) {
+            if (urlNotifier.storage.findByUrl(data.url)) {
+                urlNotifier.storage.updatePattern(data.url, data);
+            } else {
+                urlNotifier.storage.addPattern(data);
+            }
+        };
+
+        return function(json) {
+            $.each(json, function(idx, item) {
+                if (validate(item)) {
+                    addOrUpdate(prepare(item));
+                }
+            });
+        };
+    })();
 
     return {
         init: init,
@@ -339,6 +473,7 @@ var deleteForm = (function() {
 $(function() {
     headerComponent.init();
     exportComponent.init();
+    importComponent.init();
     patternListComponent.show();
     patternForm.init();
 });
