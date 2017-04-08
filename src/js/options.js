@@ -3,8 +3,35 @@ var util = (function() {
         $(selector).off(eventName).on(eventName, callback);
     };
 
+    var buildMessage = function(selector) {
+        return (function(selector) {
+            var that = {};
+            var timeoutId = null;
+
+            that.show = function(msg) {
+                $(selector).text(msg);
+
+                if (timeoutId !== null) {
+                    window.clearTimeout(timeoutId);
+                }
+
+                timeoutId = window.setTimeout(function() {
+                    timeoutId = null;
+                    that.hide();
+                }, 3000);
+            };
+
+            that.hide = function() {
+                $(selector).empty();
+            };
+
+            return that;
+        })(selector);
+    };
+
     return {
-        rebind: rebind
+        rebind: rebind,
+        buildMessage: buildMessage
     };
 })();
 
@@ -89,29 +116,7 @@ var importComponent = (function() {
             invalidJson: "JSONテキストが正しくありません。"
         };
 
-        var message = (function() {
-            var that = {},
-                timeoutId = null;
-
-            that.show = function(msg) {
-                $("#js_msg_import").text(msg);
-
-                if (timeoutId !== null) {
-                    window.clearTimeout(timeoutId);
-                }
-
-                timeoutId = window.setTimeout(function() {
-                    timeoutId = null;
-                    that.hide();
-                }, 2000);
-            };
-
-            that.hide = function() {
-                $("#js_msg_import").empty();
-            };
-
-            return that;
-        })();
+        var message = util.buildMessage("#js_msg_import");
 
         return function() {
             var jsonText = $("#js_form_import_json").val().trim();
@@ -329,29 +334,7 @@ var patternForm = (function() {
             return $(selector).val().trim();
         };
 
-        var patternMsg = (function() {
-            var that = {},
-                timeoutId = null;
-
-            that.show = function(msg) {
-                $("#js_msg_pattern").text(msg);
-
-                if (timeoutId !== null) {
-                    window.clearTimeout(timeoutId);
-                }
-
-                timeoutId = window.setTimeout(function() {
-                    timeoutId = null;
-                    that.hide();
-                }, 2000);
-            };
-
-            that.hide = function() {
-                $("#js_msg_pattern").empty();
-            };
-
-            return that;
-        })();
+        var message = util.buildMessage("#js_msg_pattern");
 
         var end = function() {
             $(".colorpicker").hide();
@@ -365,7 +348,7 @@ var patternForm = (function() {
             var backgroundColor = trimValue("#js_input_backgroundcolor");
 
             if (url === "" || msg === "" || backgroundColor === "") {
-                patternMsg.show(error.required);
+                message.show(error.required);
                 return;
             }
 
@@ -377,7 +360,7 @@ var patternForm = (function() {
 
             if (mode === "add") {
                 if (urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
@@ -387,7 +370,7 @@ var patternForm = (function() {
 
             if (mode === "edit") {
                 if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
