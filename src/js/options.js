@@ -23,29 +23,27 @@ var util = (function() {
     };
 
     var buildMessage = function(selector) {
-        return (function(selector) {
-            var that = {};
-            var timeoutId = null;
+        var that = {};
+        var timeoutId = null;
 
-            that.show = function(msg) {
-                $(selector).text(msg);
+        that.show = function(msg) {
+            $(selector).text(msg);
 
-                if (timeoutId !== null) {
-                    window.clearTimeout(timeoutId);
-                }
+            if (timeoutId !== null) {
+                window.clearTimeout(timeoutId);
+            }
 
-                timeoutId = window.setTimeout(function() {
-                    timeoutId = null;
-                    that.hide();
-                }, 3000);
-            };
+            timeoutId = window.setTimeout(function() {
+                timeoutId = null;
+                that.hide();
+            }, 3000);
+        };
 
-            that.hide = function() {
-                $(selector).empty();
-            };
+        that.hide = function() {
+            $(selector).empty();
+        };
 
-            return that;
-        })(selector);
+        return that;
     };
 
     return {
