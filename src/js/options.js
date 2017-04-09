@@ -289,11 +289,15 @@ var patternForm = (function() {
 var deleteForm = (function() {
     var current = null;
 
+    var bindValues = function(item) {
+        $("#js_form_delete_pattern").text(item.pattern);
+        $("#js_form_delete_message").text(item.message);
+    };
+
     var show = function(item) {
         current = item;
 
-        $("#js_form_delete_pattern").text(item.pattern);
-        $("#js_form_delete_message").text(item.message);
+        bindValues(current);
 
         util.rebind("#js_form_delete", "submit", function(e) {
             e.preventDefault();
