@@ -68,43 +68,58 @@ var patternListComponent = (function() {
             };
         };
 
-        return function(item) {
-            var tdUrl = column().text(item.url);
+        var patternColumn = function(item) {
+            return column().text(item.url);
+        };
 
-            var tdMsg = column().append(listMessage(item));
+        var messgeColumn = function(item) {
+            return column().append(listMessage(item));
+        };
 
-            var tdAction = column().addClass("action");
+        var actionColumn = function(item) {
+            return column().addClass("action").
+                append(copyButton(item)).
+                append(editButton(item)).
+                append(deleteButton(item));
+        };
 
-            button("btn btn-default btn-sm", "コピー").click(function(e) {
+        var copyButton = function(item) {
+            return button("btn btn-default btn-sm", "コピー").click(function(e) {
                 e.preventDefault();
                 patternForm.show("add", {
                     url: item.url,
                     message: item.msg,
                     backgroundColor: item.backgroundColor
                 });
-            }).appendTo(tdAction);
+            });
+        };
 
-            button("btn btn-primary btn-sm", "編集").click(function(e) {
+        var editButton = function(item) {
+            return button("btn btn-primary btn-sm", "編集").click(function(e) {
                 e.preventDefault();
                 patternForm.show("edit", {
                     url: item.url,
                     message: item.msg,
                     backgroundColor: item.backgroundColor
                 });
-            }).appendTo(tdAction);
+            });
+        };
 
-            button("btn btn-danger btn-sm", "削除").click(function(e) {
+        var deleteButton = function(item) {
+            return button("btn btn-danger btn-sm", "削除").click(function(e) {
                 e.preventDefault();
                 deleteForm.show({
                     pattern: item.url,
                     message: item.msg
                 });
-            }).appendTo(tdAction);
+            });
+        };
 
+        return function(item) {
             return row().
-                append(tdUrl).
-                append(tdMsg).
-                append(tdAction);
+                append(patternColumn(item)).
+                append(messgeColumn(item)).
+                append(actionColumn(item));
         };
     })();
 
