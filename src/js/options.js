@@ -3,8 +3,28 @@ var util = (function() {
         $(selector).off(eventName).on(eventName, callback);
     };
 
+    var modal = function(selector, events) {
+        $.each($.extend({}, events), function(eventName, callback) {
+            $(selector).on(eventName, callback);
+        });
+
+        var show = function() {
+            $(selector).modal("show");
+        };
+
+        var hide = function() {
+            $(selector).modal("hide");
+        };
+
+        return {
+            show: show,
+            hide: hide
+        };
+    };
+
     return {
-        rebind: rebind
+        rebind: rebind,
+        modal: modal
     };
 })();
 
@@ -149,6 +169,8 @@ var patternForm = (function() {
         $("#js_input_backgroundcolor").val(formValues.backgroundColor);
     };
 
+    var modal = null;
+
     var show = function(argMode, argOriginal) {
         mode = argMode;
         original = argOriginal;
@@ -165,7 +187,7 @@ var patternForm = (function() {
             submit();
         });
 
-        $("#js_modal_pattern").modal("show");
+        modal.show();
     };
 
     var clear = function() {
@@ -208,7 +230,7 @@ var patternForm = (function() {
 
         var end = function() {
             $(".colorpicker").hide();
-            $("#js_modal_pattern").modal("hide");
+            modal.hide();
             patternListComponent.show();
         };
 
@@ -251,8 +273,10 @@ var patternForm = (function() {
     })();
 
     var init = function() {
-        $("#js_modal_pattern").on("shown.bs.modal", function() {
-            $("#js_input_url").focus();
+        modal = util.modal("#js_modal_pattern", {
+            "shown.bs.modal": function() {
+                $("#js_input_url").focus();
+            }
         });
 
         $("#js_input_backgroundcolor").ColorPicker({
@@ -294,6 +318,8 @@ var deleteForm = (function() {
         $("#js_form_delete_message").text(item.message);
     };
 
+    var modal = null;
+
     var show = function(item) {
         current = item;
 
@@ -304,18 +330,25 @@ var deleteForm = (function() {
             submit();
         });
 
-        $("#js_modal_delete").modal("show");
+        modal.show();
     };
 
     var submit = function() {
         urlNotifier.storage.deletePattern({
             url: current.pattern
         });
-        $("#js_modal_delete").modal("hide");
+        modal.hide();
         patternListComponent.show();
     };
 
+    var init = function() {
+        modal = util.modal("#js_modal_delete");
+    };
+
     return {
+        init: function() {
+            init();
+        },
         /**
          * item
          * - pattern
@@ -331,4 +364,5 @@ $(function() {
     headerComponent.init();
     patternListComponent.show();
     patternForm.init();
+    deleteForm.init();
 });
