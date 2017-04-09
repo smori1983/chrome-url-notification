@@ -147,20 +147,26 @@ var importComponent = (function() {
 
     var importJson = (function() {
         var validate = (function() {
-            var properties = ["url", "msg", "backgroundColor"];
+            var dummyForm = function(item) {
+                return $("<form>").
+                    append($("<input>").attr({ type: "text", name: "url", value: item.url || "" })).
+                    append($("<input>").attr({ type: "text", name: "msg", value: item.msg || "" })).
+                    append($("<input>").attr({ type: "text", name: "backgroundColor", value: item.backgroundColor || "" }));
+            };
 
-            var isSomethingString = function(obj, property) {
-                return (typeof obj[property] === "string") && (obj[property].length > 0);
+            var validatorConfig = {
+                ignore: "", // overwrites the default of ":hidden".
+                rules: {
+                    url: { required: true },
+                    msg: { required: true },
+                    backgroundColor: { required: true, hexColor: true }
+                }
             };
 
             return function(item) {
-                for (var i = 0, length = properties.length; i < length; i++) {
-                    if (!isSomethingString(item, properties[i])) {
-                        return false;
-                    }
-                }
+                var validator = dummyForm(item).validate(validatorConfig);
 
-                return true;
+                return validator.form();
             };
         })();
 
@@ -454,6 +460,10 @@ var deleteForm = (function() {
 })();
 
 $(function() {
+    $.validator.addMethod("hexColor", function(value, element) {
+        return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
+    });
+
     headerComponent.init();
     exportComponent.init();
     importComponent.init();
