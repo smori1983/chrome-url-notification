@@ -68,9 +68,11 @@ var headerComponent = (function() {
 var exportComponent = (function() {
     var init = function() {
         var clipboard = new Clipboard("#js_export_copy");
+        var message = util.buildMessage("#js_msg_export");
 
         clipboard.on("success", function(e) {
             e.clearSelection();
+            message.show("コピーしました。");
         });
     };
 
