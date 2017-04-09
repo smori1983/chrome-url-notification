@@ -14,6 +14,14 @@ body {
     font-size: 10px;
 }
 
+/**
+ * font-family is same with the value for pre in bootstrap code.less
+ */
+#js_form_import_json {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 10px;
+}
+
 #js_pattern_list_badge {
     margin-left: 10px;
 }

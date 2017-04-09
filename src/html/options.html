@@ -21,6 +21,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#" id="js_button_add_pattern">パターン追加</a></li>
                     <li><a href="#" id="js_button_export">エクスポート</a></li>
+                    <li><a href="#" id="js_button_import">インポート</a></li>
                 </ul>
             </div>
         </div>
@@ -93,6 +94,26 @@
             <div class="modal-footer">
                 <button id="js_export_copy" class="btn btn-default" data-clipboard-target="#js_export_display">コピー</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="js_modal_import" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="js_form_import" action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>JSONテキスト</label>
+                        <textarea id="js_form_import_json" class="form-control" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="js_msg_import" class="text-danger"></span>
+                    <input type="submit" class="btn btn-success" value="インポート" />
+                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -3,8 +3,35 @@ var util = (function() {
         $(selector).off(eventName).on(eventName, callback);
     };
 
+    var buildMessage = function(selector) {
+        return (function(selector) {
+            var that = {};
+            var timeoutId = null;
+
+            that.show = function(msg) {
+                $(selector).text(msg);
+
+                if (timeoutId !== null) {
+                    window.clearTimeout(timeoutId);
+                }
+
+                timeoutId = window.setTimeout(function() {
+                    timeoutId = null;
+                    that.hide();
+                }, 3000);
+            };
+
+            that.hide = function() {
+                $(selector).empty();
+            };
+
+            return that;
+        })(selector);
+    };
+
     return {
-        rebind: rebind
+        rebind: rebind,
+        buildMessage: buildMessage
     };
 })();
 
@@ -22,6 +49,11 @@ var headerComponent = (function() {
         $("#js_button_export").click(function(e) {
             e.preventDefault();
             exportComponent.show();
+        });
+
+        $("#js_button_import").click(function(e) {
+            e.preventDefault();
+            importComponent.show();
         });
     };
 
@@ -49,6 +81,119 @@ var exportComponent = (function() {
         $("#js_export_display").html(jsonString);
         $("#js_modal_export").modal("show");
     };
+
+    return {
+        init: init,
+        show: show
+    };
+})();
+
+var importComponent = (function() {
+    var init = function() {
+        $("#js_modal_import").on("shown.bs.modal", function() {
+            $("#js_form_import_json").focus();
+        });
+    };
+
+    var show = function() {
+        clear();
+
+        util.rebind("#js_form_import", "submit", function(e) {
+            e.preventDefault();
+            submit();
+        });
+
+        $("#js_modal_import").modal("show");
+    };
+
+    var clear = function() {
+        $("#js_form_import_json").val("");
+    };
+
+    var submit = (function() {
+        var error = {
+            required: "フォームが未入力です。",
+            invalidJson: "JSONテキストが正しくありません。"
+        };
+
+        var message = util.buildMessage("#js_msg_import");
+
+        return function() {
+            var jsonText = $("#js_form_import_json").val().trim();
+
+            if (jsonText.length === 0) {
+                message.show(error.required);
+
+                return;
+            }
+
+            var json;
+
+            try {
+                json = JSON.parse(jsonText);
+            } catch (e) {
+                console.log(e);
+                message.show(error.invalidJson);
+
+                return;
+            }
+
+            importJson(json);
+
+            $("#js_modal_import").modal("hide");
+            patternListComponent.show();
+        };
+    })();
+
+    var importJson = (function() {
+        var validate = (function() {
+            var dummyForm = function(item) {
+                return $("<form>").
+                    append($("<input>").attr({ type: "text", name: "url", value: item.url || "" })).
+                    append($("<input>").attr({ type: "text", name: "msg", value: item.msg || "" })).
+                    append($("<input>").attr({ type: "text", name: "backgroundColor", value: item.backgroundColor || "" }));
+            };
+
+            var validatorConfig = {
+                ignore: "", // overwrites the default of ":hidden".
+                rules: {
+                    url: { required: true },
+                    msg: { required: true },
+                    backgroundColor: { required: true, hexColor: true }
+                }
+            };
+
+            return function(item) {
+                var validator = dummyForm(item).validate(validatorConfig);
+
+                return validator.form();
+            };
+        })();
+
+        var prepare = function(item) {
+            return {
+                url: item.url,
+                msg: item.msg,
+                backgroundColor: item.backgroundColor
+            };
+        };
+
+        var addOrUpdate = function(data) {
+            if (urlNotifier.storage.findByUrl(data.url)) {
+                urlNotifier.storage.updatePattern(data.url, data);
+            } else {
+                urlNotifier.storage.addPattern(data);
+            }
+        };
+
+        return function(json) {
+            $.each(json, function(idx, item) {
+                if (validate(item)) {
+                    addOrUpdate(prepare(item));
+                }
+            });
+        };
+    })();
 
     return {
         init: init,
@@ -195,29 +340,7 @@ var patternForm = (function() {
             return $(selector).val().trim();
         };
 
-        var patternMsg = (function() {
-            var that = {},
-                timeoutId = null;
-
-            that.show = function(msg) {
-                $("#js_msg_pattern").text(msg);
-
-                if (timeoutId !== null) {
-                    window.clearTimeout(timeoutId);
-                }
-
-                timeoutId = window.setTimeout(function() {
-                    timeoutId = null;
-                    that.hide();
-                }, 2000);
-            };
-
-            that.hide = function() {
-                $("#js_msg_pattern").empty();
-            };
-
-            return that;
-        })();
+        var message = util.buildMessage("#js_msg_pattern");
 
         var end = function() {
             $(".colorpicker").hide();
@@ -231,7 +354,7 @@ var patternForm = (function() {
             var backgroundColor = trimValue("#js_input_backgroundcolor");
 
             if (url === "" || msg === "" || backgroundColor === "") {
-                patternMsg.show(error.required);
+                message.show(error.required);
                 return;
             }
 
@@ -243,7 +366,7 @@ var patternForm = (function() {
 
             if (mode === "add") {
                 if (urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
@@ -253,7 +376,7 @@ var patternForm = (function() {
 
             if (mode === "edit") {
                 if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
@@ -337,8 +460,13 @@ var deleteForm = (function() {
 })();
 
 $(function() {
+    $.validator.addMethod("hexColor", function(value, element) {
+        return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
+    });
+
     headerComponent.init();
     exportComponent.init();
+    importComponent.init();
     patternListComponent.show();
     patternForm.init();
 });
