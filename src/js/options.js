@@ -84,6 +84,8 @@ var headerComponent = (function() {
 })();
 
 var exportComponent = (function() {
+    var modal = null;
+
     var init = function() {
         var clipboard = new Clipboard("#js_export_copy");
         var message = util.buildMessage("#js_msg_export");
@@ -92,6 +94,8 @@ var exportComponent = (function() {
             e.clearSelection();
             message.show("コピーしました。");
         });
+
+        modal = util.modal("#js_modal_export");
     };
 
     var show = function() {
@@ -99,7 +103,7 @@ var exportComponent = (function() {
         var jsonString = JSON.stringify(data, null, 4);
 
         $("#js_export_display").html(jsonString);
-        $("#js_modal_export").modal("show");
+        modal.show();
     };
 
     return {
@@ -109,9 +113,13 @@ var exportComponent = (function() {
 })();
 
 var importComponent = (function() {
+    var modal = null;
+
     var init = function() {
-        $("#js_modal_import").on("shown.bs.modal", function() {
-            $("#js_form_import_json").focus();
+        modal = util.modal("#js_modal_import", {
+            "shown.bs.modal": function() {
+                $("#js_form_import_json").focus();
+            }
         });
     };
 
@@ -123,7 +131,7 @@ var importComponent = (function() {
             submit();
         });
 
-        $("#js_modal_import").modal("show");
+        modal.show();
     };
 
     var clear = function() {
@@ -160,7 +168,7 @@ var importComponent = (function() {
 
             importJson(json);
 
-            $("#js_modal_import").modal("hide");
+            modal.hide();
             patternListComponent.show();
         };
     })();
