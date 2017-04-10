@@ -98,11 +98,16 @@ var exportComponent = (function() {
         modal = util.modal("#js_modal_export");
     };
 
+    var bindValues = function(values) {
+        $("#js_export_display").html(values.jsonString);
+    };
+
     var show = function() {
         var data = urlNotifier.storage.getAll();
         var jsonString = JSON.stringify(data, null, 4);
 
-        $("#js_export_display").html(jsonString);
+        bindValues({ jsonString: jsonString });
+
         modal.show();
     };
 
