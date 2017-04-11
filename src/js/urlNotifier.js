@@ -166,6 +166,10 @@ urlNotifier.storage = (function() {
             _updatePattern(url, pattern);
         },
 
+        /**
+         * pattern
+         * - url
+         */
         deletePattern: function(pattern) {
             _deletePattern(pattern);
         },

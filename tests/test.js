@@ -20,14 +20,24 @@ QUnit.test("全データ削除", function(assert) {
     assert.equal(0, urlNotifier.storage.getCount());
 });
 
-QUnit.test("1件削除", function(assert) {
+QUnit.test("1件削除 - 該当データ有り", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    urlNotifier.storage.deletePattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.deletePattern({ url: "http://example.com/1" });
 
     assert.equal(2, urlNotifier.storage.getCount());
+});
+
+QUnit.test("1件削除 - 該当データ無し", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.deletePattern({ url: "http://example.com" });
+
+    assert.equal(3, urlNotifier.storage.getCount());
 });
 
 QUnit.test("全件取得", function(assert) {
