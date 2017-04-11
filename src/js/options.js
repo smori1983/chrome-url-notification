@@ -91,7 +91,7 @@ var exportComponent = (function() {
 
     var init = function() {
         var clipboard = new Clipboard("#js_export_copy");
-        var message = util.buildMessage("#js_msg_export");
+        var message = util.buildMessage("#js_export_message");
 
         clipboard.on("success", function(e) {
             e.clearSelection();
@@ -152,7 +152,7 @@ var importComponent = (function() {
             invalidJson: "JSONテキストが正しくありません。"
         };
 
-        var message = util.buildMessage("#js_msg_import");
+        var message = util.buildMessage("#js_import_message");
 
         return function() {
             var jsonText = $("#js_form_import_json").val().trim();
@@ -393,7 +393,7 @@ var patternForm = (function() {
             return $(selector).val().trim();
         };
 
-        var message = util.buildMessage("#js_msg_pattern");
+        var message = util.buildMessage("#js_pattern_message");
 
         var end = function() {
             $(".colorpicker").hide();
