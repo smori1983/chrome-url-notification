@@ -20,14 +20,28 @@ QUnit.test("全データ削除", function(assert) {
     assert.equal(0, urlNotifier.storage.getCount());
 });
 
-QUnit.test("1件削除", function(assert) {
+QUnit.test("1件削除 - 該当データ有り", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-    urlNotifier.storage.deletePattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.deletePattern({ url: "http://example.com/1" });
 
     assert.equal(2, urlNotifier.storage.getCount());
+});
+
+QUnit.test("1件削除 - 該当データ無し", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.deletePattern({ url: "http://example.com" });
+
+    assert.equal(3, urlNotifier.storage.getCount());
+});
+
+QUnit.test("全件取得 - ローカルストレージにデータなし", function(assert) {
+    assert.equal(0, urlNotifier.storage.getAll().length);
 });
 
 QUnit.test("全件取得", function(assert) {
@@ -59,7 +73,7 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
     assert.equal("2", urlNotifier.storage.findByUrl("http://example.com/2").msg);
 });
 
-QUnit,test("パターンの重複登録はできない", function(assert) {
+QUnit.test("パターンの重複登録はできない", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
@@ -67,6 +81,37 @@ QUnit,test("パターンの重複登録はできない", function(assert) {
     assert.equal(1, urlNotifier.storage.getCount());
 });
 
+QUnit.test("データ更新 - 該当データ無し", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.updatePattern("http://example.com", {
+        url: "http://example.com",
+        msg: "!"
+    });
+
+    assert.equal(3, urlNotifier.storage.getCount());
+    assert.equal("1", urlNotifier.storage.findByUrl("http://example.com/1").msg);
+    assert.equal("2", urlNotifier.storage.findByUrl("http://example.com/2").msg);
+    assert.equal("3", urlNotifier.storage.findByUrl("http://example.com/3").msg);
+});
+
+QUnit.test("データ更新 - 該当データ有り", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.updatePattern("http://example.com/2", {
+        url: "http://example.com/2",
+        msg: "!"
+    });
+
+    assert.equal(3, urlNotifier.storage.getCount());
+    assert.equal("1", urlNotifier.storage.findByUrl("http://example.com/1").msg);
+    assert.equal("!", urlNotifier.storage.findByUrl("http://example.com/2").msg);
+    assert.equal("3", urlNotifier.storage.findByUrl("http://example.com/3").msg);
+});
 
 
 QUnit.module("urlNotifier.finder", {
@@ -82,14 +127,14 @@ QUnit.test("URLで検索 該当データなし", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/*", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "2" });
 
-    assert.equal(null, urlNotifier.finder.find("http://example.com/"));
+    assert.equal(null, urlNotifier.finder.findFor("http://example.com/"));
 });
 
 QUnit.test("URLで検索 該当データなし", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
 
-    assert.equal(null, urlNotifier.finder.find("http://example.com/"));
+    assert.equal(null, urlNotifier.finder.findFor("http://example.com/"));
 });
 
 QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
@@ -97,13 +142,13 @@ QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
     urlNotifier.storage.addPattern({ url: "http://example.com/*", msg: "3" });
 
-    assert.equal("3", urlNotifier.finder.find("http://example.com/3").msg);
+    assert.equal("3", urlNotifier.finder.findFor("http://example.com/3").msg);
 });
 
 QUnit.test("URLで検索 部分一致", function(assert) {
     urlNotifier.storage.addPattern({ url: "example.com", msg: "1" });
 
-    assert.equal("1", urlNotifier.finder.find("http://example.com/").msg);
+    assert.equal("1", urlNotifier.finder.findFor("http://example.com/").msg);
 });
 
 

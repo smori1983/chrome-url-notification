@@ -56,6 +56,10 @@ urlNotifier.storage = (function() {
     };
 
     var _updatePattern = function(originalUrl, pattern) {
+        if (_findByUrl(originalUrl) === null) {
+            return;
+        }
+
         _deletePattern({ url: originalUrl });
         _addPattern(pattern);
     };
@@ -99,6 +103,10 @@ urlNotifier.storage = (function() {
             _updatePattern(url, pattern);
         },
 
+        /**
+         * pattern
+         * - url
+         */
         deletePattern: function(pattern) {
             _deletePattern(pattern);
         },
