@@ -1,17 +1,43 @@
+require("dotenv").config();
+
 var gulp = require("gulp");
 var concat = require("gulp-concat");
+var del = require("del");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
 var qunit = require("node-qunit-phantomjs");
+var sprintf = require("sprintf-js").sprintf;
 
-gulp.task("build", ["concat"]);
+var dist = process.env.EXTENSION_DIST || "dist";
+
+gulp.task("clean", function(db) {
+    del.sync([
+        sprintf("%s/**", dist),
+        sprintf("!%s", dist)
+    ], { force: true });
+});
+
+gulp.task("make", ["concat"]);
 
 gulp.task("concat", function(cb) {
     pump([
         gulp.src("./src/js/urlNotifier/*.js"),
         concat("urlNotifier.js"),
         gulp.dest("./src/js")
+    ], cb);
+});
+
+gulp.task("dist", function(cb) {
+    pump([
+        gulp.src([
+            "src/css/**",
+            "src/html/**",
+            "src/js/**",
+            "src/plugin/**/**",
+            "src/manifest.json"
+        ], { base: "src" }),
+        gulp.dest(dist)
     ], cb);
 });
 
