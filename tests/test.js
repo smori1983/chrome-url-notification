@@ -40,6 +40,10 @@ QUnit.test("1件削除 - 該当データ無し", function(assert) {
     assert.equal(3, urlNotifier.storage.getCount());
 });
 
+QUnit.test("全件取得 - ローカルストレージにデータなし", function(assert) {
+    assert.equal(0, urlNotifier.storage.getAll().length);
+});
+
 QUnit.test("全件取得", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
