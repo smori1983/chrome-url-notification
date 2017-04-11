@@ -81,6 +81,37 @@ QUnit.test("パターンの重複登録はできない", function(assert) {
     assert.equal(1, urlNotifier.storage.getCount());
 });
 
+QUnit.test("データ更新 - 該当データ無し", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.updatePattern("http://example.com", {
+        url: "http://example.com",
+        msg: "!"
+    });
+
+    assert.equal(3, urlNotifier.storage.getCount());
+    assert.equal("1", urlNotifier.storage.findByUrl("http://example.com/1").msg);
+    assert.equal("2", urlNotifier.storage.findByUrl("http://example.com/2").msg);
+    assert.equal("3", urlNotifier.storage.findByUrl("http://example.com/3").msg);
+});
+
+QUnit.test("データ更新 - 該当データ有り", function(assert) {
+    urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+    urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+    urlNotifier.storage.updatePattern("http://example.com/2", {
+        url: "http://example.com/2",
+        msg: "!"
+    });
+
+    assert.equal(3, urlNotifier.storage.getCount());
+    assert.equal("1", urlNotifier.storage.findByUrl("http://example.com/1").msg);
+    assert.equal("!", urlNotifier.storage.findByUrl("http://example.com/2").msg);
+    assert.equal("3", urlNotifier.storage.findByUrl("http://example.com/3").msg);
+});
 
 
 QUnit.module("urlNotifier.finder", {
