@@ -73,7 +73,7 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
     assert.equal("2", urlNotifier.storage.findByUrl("http://example.com/2").msg);
 });
 
-QUnit,test("パターンの重複登録はできない", function(assert) {
+QUnit.test("パターンの重複登録はできない", function(assert) {
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
