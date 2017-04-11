@@ -23,11 +23,10 @@ var util = (function() {
     };
 
     var buildMessage = function(selector) {
-        var that = {};
         var timeoutId = null;
 
-        that.show = function(msg) {
-            $(selector).text(msg);
+        var show = function(message) {
+            $(selector).text(message);
 
             if (timeoutId !== null) {
                 window.clearTimeout(timeoutId);
@@ -35,15 +34,19 @@ var util = (function() {
 
             timeoutId = window.setTimeout(function() {
                 timeoutId = null;
-                that.hide();
+                hide();
             }, 3000);
+
         };
 
-        that.hide = function() {
+        var hide = function() {
             $(selector).empty();
         };
 
-        return that;
+        return {
+            show: show,
+            hide: hide
+        };
     };
 
     return {
