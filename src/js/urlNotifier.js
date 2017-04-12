@@ -75,15 +75,15 @@ urlNotifier.storage = (function() {
         pattern: "pattern"
     };
 
-    var _update = function(data) {
+    var update = function(data) {
         localStorage.setItem(key.pattern, JSON.stringify(data));
     };
 
-    var _getCount = function() {
-        return _getAll().length;
+    var getCount = function() {
+        return getAll().length;
     };
 
-    var _getAll = function() {
+    var getAll = function() {
         var result = [], data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
@@ -99,8 +99,8 @@ urlNotifier.storage = (function() {
         return result;
     };
 
-    var _findByUrl = function(url) {
-        var i, len, patterns = _getAll();
+    var findByUrl = function(url) {
+        var i, len, patterns = getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (patterns[i].url === url) {
@@ -111,63 +111,63 @@ urlNotifier.storage = (function() {
         return null;
     };
 
-    var _addPattern = function(pattern) {
-        if (_findByUrl(pattern.url)) {
+    var addPattern = function(pattern) {
+        if (findByUrl(pattern.url)) {
             return;
         }
 
-        var data = _getAll();
+        var data = getAll();
 
         data.push(pattern);
-        _update(data);
+        update(data);
     };
 
-    var _updatePattern = function(originalUrl, pattern) {
-        if (_findByUrl(originalUrl) === null) {
+    var updatePattern = function(originalUrl, pattern) {
+        if (findByUrl(originalUrl) === null) {
             return;
         }
 
-        _deletePattern({ url: originalUrl });
-        _addPattern(pattern);
+        deletePattern({ url: originalUrl });
+        addPattern(pattern);
     };
 
-    var _deletePattern = function(pattern) {
-        if (_findByUrl(pattern.url) !== null) {
+    var deletePattern = function(pattern) {
+        if (findByUrl(pattern.url) !== null) {
             var newData = [];
 
-            $.each(_getAll(), function(idx, item) {
+            $.each(getAll(), function(idx, item) {
                 if (item.url !== pattern.url) {
                     newData.push(item);
                 }
             });
 
-            _update(newData);
+            update(newData);
         }
     };
 
-    var _deleteAll = function() {
-        _update([]);
+    var deleteAll = function() {
+        update([]);
     };
 
     return {
         getCount: function() {
-            return _getCount();
+            return getCount();
         },
 
         getAll: function() {
-            return _getAll();
+            return getAll();
         },
 
         findByUrl: function(url) {
-            return _findByUrl(url);
+            return findByUrl(url);
         },
 
         addPattern: function(pattern) {
-            _addPattern(pattern);
+            addPattern(pattern);
         },
 
         updatePattern: function(url, pattern) {
-            _updatePattern(url, pattern);
+            updatePattern(url, pattern);
         },
 
         /**
@@ -175,11 +175,11 @@ urlNotifier.storage = (function() {
          * - url
          */
         deletePattern: function(pattern) {
-            _deletePattern(pattern);
+            deletePattern(pattern);
         },
 
         deleteAll: function() {
-            _deleteAll();
+            deleteAll();
         }
     };
 })();
