@@ -65,17 +65,15 @@ urlNotifier.storage = (function() {
     };
 
     var deletePattern = function(pattern) {
-        if (findByUrl(pattern.url) !== null) {
-            var newData = [];
+        var newData = [];
 
-            $.each(getAll(), function(idx, item) {
-                if (item.url !== pattern.url) {
-                    newData.push(item);
-                }
-            });
+        $.each(getAll(), function(idx, item) {
+            if (item.url !== pattern.url) {
+                newData.push(item);
+            }
+        });
 
-            update(newData);
-        }
+        update(newData);
     };
 
     var deleteAll = function() {
