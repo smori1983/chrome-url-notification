@@ -1,14 +1,13 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.data = (function() {
-
-    var _sortByUrl = function(patterns) {
+    var sortByUrl = function(patterns) {
         return patterns.sort(function(a, b) {
             return (a.url < b.url) ? -1 : 1;
         });
     };
 
-    var _sortByMessage = function(patterns) {
+    var sortByMessage = function(patterns) {
         return patterns.sort(function(a, b) {
             if (a.msg === b.msg) {
                 return (a.url < b.url) ? -1 : 1;
@@ -20,10 +19,10 @@ urlNotifier.data = (function() {
 
     return {
         sortByUrl: function(patterns) {
-            return _sortByUrl(patterns);
+            return sortByUrl(patterns);
         },
         sortByMessage: function(patterns) {
-            return _sortByMessage(patterns);
+            return sortByMessage(patterns);
         }
     }
 })();
@@ -132,17 +131,15 @@ urlNotifier.storage = (function() {
     };
 
     var deletePattern = function(pattern) {
-        if (findByUrl(pattern.url) !== null) {
-            var newData = [];
+        var newData = [];
 
-            $.each(getAll(), function(idx, item) {
-                if (item.url !== pattern.url) {
-                    newData.push(item);
-                }
-            });
+        $.each(getAll(), function(idx, item) {
+            if (item.url !== pattern.url) {
+                newData.push(item);
+            }
+        });
 
-            update(newData);
-        }
+        update(newData);
     };
 
     var deleteAll = function() {

@@ -1,18 +1,21 @@
 (function() {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    var result;
+    var response = {
+        matched: false,
+        data: null
+    };
 
-    if ((result = urlNotifier.finder.findFor(request.url)) !== null) {
-        result.style = {
-            backgroundColor: "#" + result.backgroundColor,
-            fontColor: "#ffffff"
+    if ((item = urlNotifier.finder.findFor(request.url)) !== null) {
+        response.matched = true;
+        response.data = {
+            message: item.msg,
+            backgroundColor: item.backgroundColor,
+            fontColor: "ffffff"
         };
-
-        sendResponse(result);
     }
 
-    return true;
+    sendResponse(response);
 });
 
 })();
