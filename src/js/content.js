@@ -2,8 +2,8 @@ $(function() {
 
 chrome.runtime.sendMessage({
     url: location.href
-}, function(result) {
-    if (result === null) {
+}, function(response) {
+    if (response.matched === false) {
         return;
     }
 
@@ -16,15 +16,15 @@ chrome.runtime.sendMessage({
         width:      "100%",
         height:     height + "px",
         lineHeight: height + "px",
-        background: result.style.backgroundColor,
-        color:      result.style.fontColor,
+        background: "#" + response.data.backgroundColor,
+        color:      "#" + response.data.fontColor,
         fontSize:   "12px",
         textAlign:  "center",
         fontFamily: "Meiryo",
         zIndex:     "1000",
 
         webkitUserSelect: "none"
-    }).text(result.msg);
+    }).text(response.data.message);
 
     $("body").css({
         marginTop: (height + $("body").offset().top) + "px"
