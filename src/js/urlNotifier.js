@@ -45,10 +45,10 @@ urlNotifier.finder = (function() {
     };
 
     var makeRegExp = function(url) {
-        return new RegExp(convertForMaching(url));
+        return new RegExp(convertForMatching(url));
     };
 
-    var convertForMaching = function(url) {
+    var convertForMatching = function(url) {
         return url.
             replace(/\/|\.|\-|\+|\?/g, function(matched) {
                 return "\\" + matched;
