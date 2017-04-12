@@ -6,6 +6,7 @@
   },
   "scripts": {
     "build": "gulp clean; gulp make; gulp dist;",
+    "make": "gulp make",
     "test": "gulp test",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles"
   },
