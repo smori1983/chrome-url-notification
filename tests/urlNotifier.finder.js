@@ -1,5 +1,5 @@
 QUnit.module("urlNotifier.finder", {
-    boforeEach: function() {
+    beforeEach: function() {
         localStorage.clear();
     },
     afterEach: function() {
