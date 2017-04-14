@@ -71,7 +71,10 @@ var patternListComponent = (function() {
         };
 
         var button = function(clazz, text) {
-            return $("<button>").addClass(clazz).text(text);
+            return $("<button>").
+                addClass("btn btn-sm").
+                addClass(clazz).
+                text(text);
         };
 
         var listMessage = function(item) {
@@ -104,7 +107,7 @@ var patternListComponent = (function() {
         };
 
         var copyButton = function(item) {
-            return button("btn btn-default btn-sm", "コピー").click(function(e) {
+            return button("btn-default", "コピー").click(function(e) {
                 e.preventDefault();
                 patternForm.show("add", {
                     url: item.url,
@@ -115,7 +118,7 @@ var patternListComponent = (function() {
         };
 
         var editButton = function(item) {
-            return button("btn btn-primary btn-sm", "編集").click(function(e) {
+            return button("btn-primary", "編集").click(function(e) {
                 e.preventDefault();
                 patternForm.show("edit", {
                     url: item.url,
@@ -126,7 +129,7 @@ var patternListComponent = (function() {
         };
 
         var deleteButton = function(item) {
-            return button("btn btn-danger btn-sm", "削除").click(function(e) {
+            return button("btn-danger", "削除").click(function(e) {
                 e.preventDefault();
                 deleteForm.show({
                     pattern: item.url,
