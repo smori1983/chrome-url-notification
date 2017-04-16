@@ -1,6 +1,12 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.background = (function() {
+    var migrate = function() {
+        while (urlNotifier.migration.shouldMigrate()) {
+            urlNotifier.migration.migrateFrom(urlNotifier.migration.currentVersion());
+        }
+    };
+
     var find = function(pattern) {
         var result = {
             matched: false,
@@ -20,6 +26,9 @@ urlNotifier.background = (function() {
     };
 
     return {
+        migrate: function() {
+            migrate();
+        },
         find: function(pattern) {
             return find(pattern);
         }

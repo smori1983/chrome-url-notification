@@ -1,6 +1,12 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.background = (function() {
+    var migrate = function() {
+        while (urlNotifier.migration.shouldMigrate()) {
+            urlNotifier.migration.migrateFrom(urlNotifier.migration.currentVersion());
+        }
+    };
+
     var find = function(pattern) {
         var result = {
             matched: false,
@@ -20,8 +26,31 @@ urlNotifier.background = (function() {
     };
 
     return {
+        migrate: function() {
+            migrate();
+        },
         find: function(pattern) {
             return find(pattern);
+        }
+    };
+})();
+
+var urlNotifier = urlNotifier || {};
+
+urlNotifier.config = (function() {
+    var version = 1;
+
+    /**
+     * used for migration from 0 to 1
+     */
+    var defaultBackgroundColor = "000000";
+
+    return {
+        version: function() {
+            return version;
+        },
+        defaultBackgroundColor: function() {
+            return defaultBackgroundColor;
         }
     };
 })();
@@ -94,10 +123,87 @@ urlNotifier.finder = (function() {
 
 var urlNotifier = urlNotifier || {};
 
+urlNotifier.migration = (function() {
+    var key = {
+        version: "version",
+        pattern: "pattern"
+    };
+
+    var hasVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return false;
+        }
+
+        return /^\d+$/.test(version);
+    };
+
+    var currentVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return 0;
+        }
+
+        if (/^\d+$/.test(version)) {
+            return version;
+        }
+
+        return 0;
+    };
+
+    var shouldMigrate = function() {
+        return currentVersion() < urlNotifier.config.version();
+    };
+
+    var migrateFrom = function(currentVersion) {
+        if (migrationFunctions.hasOwnProperty(currentVersion)) {
+            migrationFunctions[currentVersion]();
+        }
+    };
+
+    var migrateFor0 = function() {
+        var result = [];
+        var data;
+
+        if ((data = localStorage.getItem(key.pattern)) !== null) {
+            $.each(JSON.parse(data), function(idx, item) {
+                if (typeof item.backgroundColor === "undefined") {
+                    item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+                }
+
+                result.push(item);
+            });
+        }
+
+        localStorage.setItem(key.pattern, JSON.stringify(result));
+        localStorage.setItem(key.version, 1);
+    };
+
+    var migrationFunctions = {
+        0: migrateFor0
+    };
+
+    return {
+        hasVersion: function() {
+            return hasVersion();
+        },
+        currentVersion: function() {
+            return currentVersion();
+        },
+        shouldMigrate: function() {
+            return shouldMigrate();
+        },
+        migrateFrom: function(currentVersion) {
+            migrateFrom(currentVersion);
+        }
+    };
+})();
+
+var urlNotifier = urlNotifier || {};
+
 urlNotifier.storage = (function() {
-
-    var defaultBackgroundColor = "000000";
-
     var key = {
         pattern: "pattern"
     };
@@ -115,10 +221,6 @@ urlNotifier.storage = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             $.each(JSON.parse(data), function(idx, item) {
-                if (typeof item.backgroundColor === "undefined") {
-                    item.backgroundColor = defaultBackgroundColor;
-                }
-
                 result.push(item);
             });
         }

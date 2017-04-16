@@ -5,6 +5,8 @@ QUnit.module("urlNotifier.background", {
         urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
         urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
         urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+
+        urlNotifier.background.migrate();
     },
     afterEach: function() {
         localStorage.clear();
