@@ -40,6 +40,11 @@ urlNotifier.migration = (function() {
         }
     };
 
+    /**
+     * Migration from 0 to 1
+     *
+     * - set default background color
+     */
     var migrateFor0 = function() {
         var result = [];
         var data;
