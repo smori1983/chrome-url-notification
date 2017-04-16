@@ -1,9 +1,6 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.storage = (function() {
-
-    var defaultBackgroundColor = "000000";
-
     var key = {
         pattern: "pattern"
     };
@@ -21,10 +18,6 @@ urlNotifier.storage = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             $.each(JSON.parse(data), function(idx, item) {
-                if (typeof item.backgroundColor === "undefined") {
-                    item.backgroundColor = defaultBackgroundColor;
-                }
-
                 result.push(item);
             });
         }
