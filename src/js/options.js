@@ -158,7 +158,7 @@ var patternForm = (function() {
         return {
             url: "",
             message: "",
-            backgroundColor: "000000"
+            backgroundColor: urlNotifier.config.defaultBackgroundColor()
         };
     };
 
