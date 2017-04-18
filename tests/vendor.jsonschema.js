@@ -53,8 +53,7 @@ QUnit.test("import json - error - array", function(assert) {
 });
 
 QUnit.test("import json - error - no keys", function(assert) {
-    assert.notOk(this.isValid({
-    }));
+    assert.notOk(this.isValid({}));
 });
 
 QUnit.test("import json - error - version not defined", function(assert) {
