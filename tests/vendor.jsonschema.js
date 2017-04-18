@@ -291,7 +291,7 @@ QUnit.test("import json - error - pattern - backgroundColor is null", function(a
     }));
 });
 
-QUnit.test("import json - error - pattern - backgroundColor is null", function(assert) {
+QUnit.test("import json - error - pattern - backgroundColor is true", function(assert) {
     assert.notOk(this.isValid({
         version: 1,
         pattern: [
@@ -301,7 +301,7 @@ QUnit.test("import json - error - pattern - backgroundColor is null", function(a
     }));
 });
 
-QUnit.test("import json - error - pattern - backgroundColor is null", function(assert) {
+QUnit.test("import json - error - pattern - backgroundColor is false", function(assert) {
     assert.notOk(this.isValid({
         version: 1,
         pattern: [
