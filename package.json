@@ -8,6 +8,7 @@
     "build": "gulp clean; gulp make; gulp dist;",
     "make": "gulp make",
     "test": "gulp test",
+    "vendor:js": "gulp vendor:js",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles"
   },
   "repository": {
@@ -15,15 +16,18 @@
     "url": "git+https://github.com/smori1983/chrome-url-notifier.git"
   },
   "devDependencies": {
+    "browserify": "*",
     "del": "*",
     "dotenv": "*",
     "gulp": "^3.9.1",
     "gulp-concat": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
+    "jsonschema": "*",
     "node-qunit-phantomjs": "*",
     "pump": "*",
     "sprintf-js": "*",
-    "watch": "*"
+    "watch": "*",
+    "vinyl-source-stream": "*"
   }
 }

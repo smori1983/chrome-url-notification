@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+var browserify = require("browserify");
 var gulp = require("gulp");
 var concat = require("gulp-concat");
 var del = require("del");
@@ -7,9 +8,22 @@ var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
 var qunit = require("node-qunit-phantomjs");
+var source = require("vinyl-source-stream");
 var sprintf = require("sprintf-js").sprintf;
 
 var dist = process.env.EXTENSION_DIST || "dist";
+
+gulp.task("vendor:js", function(cb) {
+    pump([
+        browserify({
+            require: [
+                "jsonschema"
+            ]
+        }).bundle(),
+        source("vendor.js"),
+        gulp.dest("src/js")
+    ], cb);
+});
 
 gulp.task("clean", function(db) {
     del.sync([
