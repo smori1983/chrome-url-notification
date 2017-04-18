@@ -16,11 +16,13 @@ QUnit.module("vendor.jsonschema", {
                         "properties": {
                             "url": {
                                 "required": true,
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                             },
                             "msg": {
                                 "required": true,
-                                "type": "string"
+                                "type": "string",
+                                "minLength": 1
                             },
                             "backgroundColor": {
                                 "required": true,
@@ -189,6 +191,26 @@ QUnit.test("import json - error - pattern - url is false", function(assert) {
     }));
 });
 
+QUnit.test("import json - error - pattern - url is number", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: 100,       msg: "sample2", backgroundColor: "222222" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - url is empty string", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "",        msg: "sample2", backgroundColor: "222222" }
+        ]
+    }));
+});
+
 QUnit.test("import json - error - pattern - msg is not defined", function(assert) {
     assert.notOk(this.isValid({
         version: 1,
@@ -225,6 +247,26 @@ QUnit.test("import json - error - pattern - msg is false", function(assert) {
         pattern: [
             { url: "sample1", msg: "sample1", backgroundColor: "111111" },
             { url: "sample2", msg: false,     backgroundColor: "222222" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - msg is number", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: 100,       backgroundColor: "222222" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - msg is empty string", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "",        backgroundColor: "222222" }
         ]
     }));
 });
