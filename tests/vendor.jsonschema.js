@@ -1,8 +1,6 @@
 QUnit.module("vendor.jsonschema", {
     beforeEach: function() {
-        this.validate = require("jsonschema").validate;
-
-        this.schema = {
+        var schema = {
             "type": "object",
             "properties": {
                 "version": {
@@ -12,31 +10,38 @@ QUnit.module("vendor.jsonschema", {
                 "pattern": {
                     "required": true,
                     "type": "array",
-                    "items": {
-                        "properties": {
-                            "url": {
-                                "required": true,
-                                "type": "string",
-                                "minLength": 1
-                            },
-                            "msg": {
-                                "required": true,
-                                "type": "string",
-                                "minLength": 1
-                            },
-                            "backgroundColor": {
-                                "required": true,
-                                "type": "string",
-                                "pattern": /^[0-9a-f]{6}$/i
-                            }
-                        }
-                    }
+                    "items": { "$ref": "/item" }
+                }
+            }
+        };
+
+        var itemSchema = {
+            "id": "/item",
+            "properties": {
+                "url": {
+                    "required": true,
+                    "type": "string",
+                    "minLength": 1
+                },
+                "msg": {
+                    "required": true,
+                    "type": "string",
+                    "minLength": 1
+                },
+                "backgroundColor": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^[0-9a-f]{6}$/i
                 }
             }
         };
 
         this.isValid = function(json) {
-            return this.validate(json, this.schema).valid;
+            var v = new (require("jsonschema").Validator)();
+
+            v.addSchema(itemSchema, "/item");
+
+            return v.validate(json, schema).valid;
         };
     },
     afterEach: function() {
