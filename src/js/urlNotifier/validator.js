@@ -11,7 +11,9 @@ urlNotifier.validator = (function() {
             "properties": {
                 "version": {
                     "required": true,
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": urlNotifier.config.version()
                 },
                 "pattern": {
                     "required": true,

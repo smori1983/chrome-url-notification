@@ -81,6 +81,24 @@ QUnit.test("import json - error - version is float", function(assert) {
     }));
 });
 
+QUnit.test("import json - error - version is out of range", function(assert) {
+    assert.notOk(this.isValid({
+        version: 0,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+        ]
+    }));
+});
+
 QUnit.test("import json - error - pattern is null", function(assert) {
     assert.notOk(this.isValid({
         version: 1,
