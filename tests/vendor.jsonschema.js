@@ -26,7 +26,8 @@ QUnit.module("vendor.jsonschema", {
                             },
                             "backgroundColor": {
                                 "required": true,
-                                "type": "string"
+                                "type": "string",
+                                "pattern": /^[0-9a-f]{6}$/i
                             }
                         }
                     }
@@ -307,6 +308,34 @@ QUnit.test("import json - error - pattern - backgroundColor is false", function(
         pattern: [
             { url: "sample1", msg: "sample1", backgroundColor: "111111" },
             { url: "sample2", msg: "sample2", backgroundColor: false    }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - backgroundColor is empty string", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "sample2", backgroundColor: "12345z" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - backgroundColor is not hex color", function(assert) {
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "sample2", backgroundColor: "12345z" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 1,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
+            { url: "sample2", msg: "sample2", backgroundColor: "black"  }
         ]
     }));
 });
