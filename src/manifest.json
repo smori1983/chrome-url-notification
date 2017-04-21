@@ -16,7 +16,6 @@
 
     "background": {
         "scripts": [
-            "js/jquery-1.9.1.min.js",
             "js/urlNotifier.js",
             "js/background.js"
         ],
