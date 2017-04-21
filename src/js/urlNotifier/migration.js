@@ -50,7 +50,7 @@ urlNotifier.migration = (function() {
         var data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
-            $.each(JSON.parse(data), function(idx, item) {
+            JSON.parse(data).forEach(function(item) {
                 if (typeof item.backgroundColor === "undefined") {
                     item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
                 }
