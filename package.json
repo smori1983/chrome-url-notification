@@ -1,7 +1,7 @@
 {
-  "name": "chrome-url-notifier",
+  "name": "chrome-url-notification",
   "version": "1.0.0",
-  "description": "chrome-url-notifier",
+  "description": "Chrome URL Notification",
   "directories": {
   },
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/smori1983/chrome-url-notifier.git"
+    "url": "git+https://github.com/smori1983/chrome-url-notification.git"
   },
   "devDependencies": {
     "browserify": "*",
