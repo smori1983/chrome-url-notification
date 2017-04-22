@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
 
-    "name": "Chrome URL Notifier",
-    "description": "Chrome URL Notifier",
+    "name": "Chrome URL Notification",
+    "description": "Chrome URL Notification",
     "version": "0.1.0",
 
     "content_scripts": [{

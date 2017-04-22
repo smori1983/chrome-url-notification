@@ -1,4 +1,4 @@
-# Chrome URL notifier
+# Chrome URL Notification
 
 ## 主な用途
 
