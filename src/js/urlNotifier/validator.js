@@ -5,6 +5,28 @@ urlNotifier.validator = (function() {
         return new (require("jsonschema").Validator)();
     };
 
+    var importJsonEssential = function(json) {
+        var schema = {
+            "type": "object",
+            "properties": {
+                "version": {
+                    "required": true,
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": urlNotifier.config.version()
+                },
+                "pattern": {
+                    "required": true,
+                    "type": "array",
+                }
+            }
+        };
+
+        var validator = create();
+
+        return validator.validate(json, schema).valid;
+    };
+
     var importJson = function(json) {
         var schema = {
             "type": "object",
@@ -52,6 +74,12 @@ urlNotifier.validator = (function() {
     };
 
     return {
+        /**
+         * @return bool
+         */
+        forImportJsonEssential: function(json) {
+            return importJsonEssential(json);
+        },
         /**
          * @return bool
          */
