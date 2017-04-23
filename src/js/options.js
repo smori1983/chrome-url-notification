@@ -177,6 +177,12 @@ var importComponent = (function() {
                 return;
             }
 
+            if (urlNotifier.validator.forImportJson(json) === false) {
+                message.show(error.invalidJson);
+
+                return;
+            }
+
             importJson(json);
 
             modal.hide();
@@ -185,30 +191,6 @@ var importComponent = (function() {
     })();
 
     var importJson = (function() {
-        var validate = (function() {
-            var dummyForm = function(item) {
-                return $("<form>").
-                    append($("<input>").attr({ type: "text", name: "url", value: item.url || "" })).
-                    append($("<input>").attr({ type: "text", name: "msg", value: item.msg || "" })).
-                    append($("<input>").attr({ type: "text", name: "backgroundColor", value: item.backgroundColor || "" }));
-            };
-
-            var validatorConfig = {
-                ignore: "", // overwrites the default of ":hidden".
-                rules: {
-                    url: { required: true },
-                    msg: { required: true },
-                    backgroundColor: { required: true, hexColor: true }
-                }
-            };
-
-            return function(item) {
-                var validator = dummyForm(item).validate(validatorConfig);
-
-                return validator.form();
-            };
-        })();
-
         var prepare = function(item) {
             return {
                 url: item.url,
@@ -226,10 +208,8 @@ var importComponent = (function() {
         };
 
         return function(json) {
-            $.each(json, function(idx, item) {
-                if (validate(item)) {
-                    addOrUpdate(prepare(item));
-                }
+            json.pattern.forEach(function(item) {
+                addOrUpdate(prepare(item));
             });
         };
     })();
