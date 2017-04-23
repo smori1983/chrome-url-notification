@@ -106,7 +106,10 @@ var exportComponent = (function() {
     };
 
     var show = function() {
-        var data = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
+        var data = {
+            version: urlNotifier.config.version(),
+            pattern: urlNotifier.data.sortByMessage(urlNotifier.storage.getAll())
+        };
         var jsonString = JSON.stringify(data, null, 4);
 
         bindValues({ jsonString: jsonString });
