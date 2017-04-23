@@ -358,7 +358,8 @@ var patternForm = (function() {
     var bindValues = function(formValues) {
         $("#js_input_url").val(formValues.url);
         $("#js_input_msg").val(formValues.message);
-        $("#js_input_backgroundcolor").val(formValues.backgroundColor);
+        $("#js_input_backgroundcolor").val("#" + formValues.backgroundColor);
+        $("#js_colorpicker").colorpicker("setValue", "#" + formValues.backgroundColor);
     };
 
     var modal = null;
@@ -399,7 +400,6 @@ var patternForm = (function() {
         var message = util.buildMessage("#js_pattern_message");
 
         var end = function() {
-            $(".colorpicker").hide();
             modal.hide();
             patternListComponent.show();
         };
@@ -417,7 +417,7 @@ var patternForm = (function() {
             var saveData = {
                 url: url,
                 msg: msg,
-                backgroundColor: backgroundColor
+                backgroundColor: backgroundColor.replace(/^#/, "")
             };
 
             if (mode === "add") {
@@ -449,16 +449,9 @@ var patternForm = (function() {
             }
         });
 
-        $("#js_input_backgroundcolor").ColorPicker({
-            onSubmit: function(hsb, hex, rgb, el) {
-                $(el).val(hex);
-                $(el).ColorPickerHide();
-            },
-            onBeforeShow: function () {
-                $(this).ColorPickerSetColor(this.value);
-            }
-        }).on("keyup", function(){
-            $(this).ColorPickerSetColor(this.value);
+        $("#js_colorpicker").colorpicker({
+            align: "left",
+            format: "hex"
         });
     };
 
