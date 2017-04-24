@@ -27,25 +27,15 @@ urlNotifier.validator = (function() {
         return validator.validate(json, schema).valid;
     };
 
-    var importJson = function(json) {
-        var schema = {
-            "type": "object",
-            "properties": {
-                "version": {
-                    "required": true,
-                    "type": "integer",
-                    "minimum": 1,
-                    "maximum": urlNotifier.config.version()
-                },
-                "pattern": {
-                    "required": true,
-                    "type": "array",
-                    "items": { "$ref": "/item" }
-                }
-            }
-        };
+    var patternBase = function() {
+        return {
+            "type": "array",
+            "items": { "$ref": "/item" }
+         };
+    };
 
-        var itemSchema = {
+    var patternV1 = function() {
+        return {
             "id": "/item",
             "properties": {
                 "url": {
@@ -65,12 +55,30 @@ urlNotifier.validator = (function() {
                 }
             }
         };
+    };
 
+    var patterns = {
+        1: patternV1
+    };
+
+    var patternFor = function(version) {
+        if (patterns.hasOwnProperty(version)) {
+            return patterns[version]();
+        }
+
+        return {};
+    };
+
+    var importJson = function(json) {
         var validator = create();
 
-        validator.addSchema(itemSchema, "/item");
+        if (importJsonEssential(json) === false) {
+            return false;
+        }
 
-        return validator.validate(json, schema).valid;
+        validator.addSchema(patternFor(json.version), "/item");
+
+        return validator.validate(json.pattern, patternBase()).valid;
     };
 
     return {
