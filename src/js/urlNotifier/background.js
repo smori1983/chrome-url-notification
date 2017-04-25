@@ -8,6 +8,7 @@ urlNotifier.background = (function() {
     };
 
     var find = function(pattern) {
+        var item;
         var result = {
             matched: false,
             data: null
