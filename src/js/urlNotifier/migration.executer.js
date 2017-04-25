@@ -2,7 +2,7 @@ var urlNotifier = urlNotifier || {};
 
 urlNotifier.migration = urlNotifier.migration || {};
 
-urlNotifier.migration.converter = (function() {
+urlNotifier.migration.executer = (function() {
     /**
      * Migration from 0 to 1
      *
@@ -20,7 +20,7 @@ urlNotifier.migration.converter = (function() {
         0: for0
     };
 
-    var convert = function(fromVersion, item) {
+    var execute = function(fromVersion, item) {
         if (converters.hasOwnProperty(fromVersion)) {
             return converters[fromVersion](item);
         }
@@ -29,8 +29,8 @@ urlNotifier.migration.converter = (function() {
     };
 
     return {
-        convertFrom: function(verstion, item) {
-            return convert(verstion, item);
+        from: function(verstion, item) {
+            return execute(verstion, item);
         }
     }
 })();
