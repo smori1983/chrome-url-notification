@@ -4,6 +4,7 @@ var browserify = require("browserify");
 var gulp = require("gulp");
 var concat = require("gulp-concat");
 var del = require("del");
+var eslint = require("gulp-eslint");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
@@ -55,6 +56,20 @@ gulp.task("dist", function(cb) {
     ], cb);
 });
 
-gulp.task("test", function() {
+gulp.task("test", ["lint"], function() {
     qunit("./tests/test.html");
+});
+
+gulp.task("lint", function() {
+    pump([
+        gulp.src([
+            "src/js/**/*.js",
+            "!src/js/urlNotifier.js",
+            "!src/js/jquery-1.9.1.min.js",
+            "!src/js/vendor.js"
+        ]),
+        eslint({ useEslintrc: true }),
+        eslint.format(),
+        eslint.failAfterError()
+    ]);
 });
