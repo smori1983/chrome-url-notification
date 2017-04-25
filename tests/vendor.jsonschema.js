@@ -299,7 +299,7 @@ QUnit.test("import json - error - pattern - backgroundColor is empty string", fu
         version: 1,
         pattern: [
             { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "12345z" }
+            { url: "sample2", msg: "sample2", backgroundColor: ""       }
         ]
     }));
 });
