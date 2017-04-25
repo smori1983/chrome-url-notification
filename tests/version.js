@@ -48,21 +48,21 @@ QUnit.test("urlNotifier.migration - version 0", function(assert) {
 });
 
 QUnit.test("urlNotifier.migration - version 0 to 1", function(assert) {
-    var expected = [
+    var expectedBefore = [
         { url: "http://example.com/1", msg: "1" }
     ];
 
-    assert.propEqual(urlNotifier.storage.getAll(), expected);
+    assert.propEqual(urlNotifier.storage.getAll(), expectedBefore);
 
     assert.equal(urlNotifier.migration.shouldMigrate(), true);
 
     urlNotifier.migration.migrateFrom(0);
 
-    var expected = [
+    var expectedAfter = [
         { url: "http://example.com/1", msg: "1", backgroundColor: "000000" }
     ];
 
-    assert.propEqual(urlNotifier.storage.getAll(), expected);
+    assert.propEqual(urlNotifier.storage.getAll(), expectedAfter);
 
     assert.equal(urlNotifier.migration.currentVersion(), 1);
 });
