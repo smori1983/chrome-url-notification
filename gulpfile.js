@@ -52,7 +52,9 @@ gulp.task("lint", function() {
             "src/js/**/*.js",
             "!src/js/urlNotifier.js",
             "!src/js/jquery-1.9.1.min.js",
-            "!src/js/vendor.js"
+            "!src/js/vendor.js",
+            "tests/**/*.js",
+            "!tests/qunit/*.js"
         ]),
         eslint({ useEslintrc: true }),
         eslint.format(),

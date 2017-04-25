@@ -7,6 +7,7 @@
         "chrome": true,
         "localStorage": true,
         "$": true,
+        "QUnit": true,
         "urlNotifier": true
     },
     "rules": {
