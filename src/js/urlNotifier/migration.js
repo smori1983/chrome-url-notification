@@ -51,11 +51,7 @@ urlNotifier.migration = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             JSON.parse(data).forEach(function(item) {
-                if (typeof item.backgroundColor === "undefined") {
-                    item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
-                }
-
-                result.push(item);
+                result.push(urlNotifier.migration.converter.convertFrom(0, item));
             });
         }
 
