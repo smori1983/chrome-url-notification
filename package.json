@@ -2,13 +2,13 @@
   "name": "chrome-url-notification",
   "version": "1.0.0",
   "description": "Chrome URL Notification",
-  "directories": {
-  },
+  "directories": {},
   "scripts": {
     "build": "gulp clean; gulp make; gulp dist;",
     "make": "gulp make",
     "test": "gulp test",
-    "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles"
+    "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
+    "lint": "gulp lint"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "dotenv": "*",
     "gulp": "^3.9.1",
     "gulp-concat": "*",
+    "gulp-eslint": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
     "node-qunit-phantomjs": "*",
