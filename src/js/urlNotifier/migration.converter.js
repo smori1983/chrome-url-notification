@@ -3,6 +3,11 @@ var urlNotifier = urlNotifier || {};
 urlNotifier.migration = urlNotifier.migration || {};
 
 urlNotifier.migration.converter = (function() {
+    /**
+     * Migration from 0 to 1
+     *
+     * - set default background color
+     */
     var for0 = function(item) {
         if (typeof item.backgroundColor === "undefined") {
             item.backgroundColor = urlNotifier.config.defaultBackgroundColor();

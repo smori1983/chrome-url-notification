@@ -35,32 +35,17 @@ urlNotifier.migration = (function() {
     };
 
     var migrateFrom = function(currentVersion) {
-        if (migrationFunctions.hasOwnProperty(currentVersion)) {
-            migrationFunctions[currentVersion]();
-        }
-    };
-
-    /**
-     * Migration from 0 to 1
-     *
-     * - set default background color
-     */
-    var migrateFor0 = function() {
         var result = [];
         var data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             JSON.parse(data).forEach(function(item) {
-                result.push(urlNotifier.migration.converter.convertFrom(0, item));
+                result.push(urlNotifier.migration.converter.convertFrom(currentVersion, item));
             });
         }
 
         localStorage.setItem(key.pattern, JSON.stringify(result));
-        localStorage.setItem(key.version, 1);
-    };
-
-    var migrationFunctions = {
-        0: migrateFor0
+        localStorage.setItem(key.version, currentVersion + 1);
     };
 
     return {
