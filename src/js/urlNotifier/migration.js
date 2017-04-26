@@ -35,36 +35,17 @@ urlNotifier.migration = (function() {
     };
 
     var migrateFrom = function(currentVersion) {
-        if (migrationFunctions.hasOwnProperty(currentVersion)) {
-            migrationFunctions[currentVersion]();
-        }
-    };
-
-    /**
-     * Migration from 0 to 1
-     *
-     * - set default background color
-     */
-    var migrateFor0 = function() {
         var result = [];
         var data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
-            $.each(JSON.parse(data), function(idx, item) {
-                if (typeof item.backgroundColor === "undefined") {
-                    item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
-                }
-
-                result.push(item);
+            JSON.parse(data).forEach(function(item) {
+                result.push(urlNotifier.migration.executer.from(currentVersion, item));
             });
         }
 
         localStorage.setItem(key.pattern, JSON.stringify(result));
-        localStorage.setItem(key.version, 1);
-    };
-
-    var migrationFunctions = {
-        0: migrateFor0
+        localStorage.setItem(key.version, currentVersion + 1);
     };
 
     return {

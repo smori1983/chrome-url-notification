@@ -22,9 +22,37 @@ var util = (function() {
         };
     };
 
+    var buildMessage = function(selector) {
+        var timeoutId = null;
+
+        var show = function(message) {
+            $(selector).text(message);
+
+            if (timeoutId !== null) {
+                window.clearTimeout(timeoutId);
+            }
+
+            timeoutId = window.setTimeout(function() {
+                timeoutId = null;
+                hide();
+            }, 3000);
+
+        };
+
+        var hide = function() {
+            $(selector).empty();
+        };
+
+        return {
+            show: show,
+            hide: hide
+        };
+    };
+
     return {
         rebind: rebind,
-        modal: modal
+        modal: modal,
+        buildMessage: buildMessage
     };
 })();
 
@@ -38,6 +66,16 @@ var headerComponent = (function() {
             e.preventDefault();
             patternForm.show("add", {});
         });
+
+        $("#js_button_export").click(function(e) {
+            e.preventDefault();
+            exportComponent.show();
+        });
+
+        $("#js_button_import").click(function(e) {
+            e.preventDefault();
+            importComponent.show();
+        });
     };
 
     return {
@@ -45,6 +83,144 @@ var headerComponent = (function() {
             initEventHandlers();
             showVersion();
         }
+    };
+})();
+
+var exportComponent = (function() {
+    var modal = null;
+
+    var init = function() {
+        var clipboard = new Clipboard("#js_export_copy");
+        var message = util.buildMessage("#js_export_message");
+
+        clipboard.on("success", function(e) {
+            e.clearSelection();
+            message.show("コピーしました。");
+        });
+
+        modal = util.modal("#js_modal_export", {
+            "shown.bs.modal": function() {
+                $(this).scrollTop(0);
+            }
+        });
+    };
+
+    var bindValues = function(values) {
+        $("#js_export_display").html(values.jsonString);
+    };
+
+    var show = function() {
+        var data = {
+            version: urlNotifier.config.version(),
+            pattern: urlNotifier.data.sortByMessage(urlNotifier.storage.getAll())
+        };
+        var jsonString = JSON.stringify(data, null, 4);
+
+        bindValues({ jsonString: jsonString });
+
+        modal.show();
+    };
+
+    return {
+        init: init,
+        show: show
+    };
+})();
+
+var importComponent = (function() {
+    var modal = null;
+
+    var init = function() {
+        modal = util.modal("#js_modal_import", {
+            "shown.bs.modal": function() {
+                $("#js_form_import_json").focus();
+            }
+        });
+    };
+
+    var show = function() {
+        clear();
+
+        util.rebind("#js_form_import", "submit", function(e) {
+            e.preventDefault();
+            submit();
+        });
+
+        modal.show();
+    };
+
+    var clear = function() {
+        $("#js_form_import_json").val("");
+    };
+
+    var submit = (function() {
+        var error = {
+            required: "フォームが未入力です。",
+            invalidJson: "JSONテキストが正しくありません。"
+        };
+
+        var message = util.buildMessage("#js_import_message");
+
+        return function() {
+            var jsonText = $("#js_form_import_json").val().trim();
+
+            if (jsonText.length === 0) {
+                message.show(error.required);
+
+                return;
+            }
+
+            var json;
+
+            try {
+                json = JSON.parse(jsonText);
+            } catch (e) {
+                console.log(e);
+                message.show(error.invalidJson);
+
+                return;
+            }
+
+            if (urlNotifier.validator.forImportJson(json) === false) {
+                message.show(error.invalidJson);
+
+                return;
+            }
+
+            importJson(json);
+
+            modal.hide();
+            patternListComponent.show();
+        };
+    })();
+
+    var importJson = (function() {
+        var prepare = function(item) {
+            return {
+                url: item.url,
+                msg: item.msg,
+                backgroundColor: item.backgroundColor
+            };
+        };
+
+        var addOrUpdate = function(data) {
+            if (urlNotifier.storage.findByUrl(data.url)) {
+                urlNotifier.storage.updatePattern(data.url, data);
+            } else {
+                urlNotifier.storage.addPattern(data);
+            }
+        };
+
+        return function(json) {
+            json.pattern.forEach(function(item) {
+                addOrUpdate(prepare(item));
+            });
+        };
+    })();
+
+    return {
+        init: init,
+        show: show
     };
 })();
 
@@ -169,7 +345,8 @@ var patternForm = (function() {
     var bindValues = function(formValues) {
         $("#js_input_url").val(formValues.url);
         $("#js_input_msg").val(formValues.message);
-        $("#js_input_backgroundcolor").val(formValues.backgroundColor);
+        $("#js_input_backgroundcolor").val("#" + formValues.backgroundColor);
+        $("#js_colorpicker").colorpicker("setValue", "#" + formValues.backgroundColor);
     };
 
     var modal = null;
@@ -207,32 +384,9 @@ var patternForm = (function() {
             return $(selector).val().trim();
         };
 
-        var patternMsg = (function() {
-            var that = {},
-                timeoutId = null;
-
-            that.show = function(msg) {
-                $("#js_msg_pattern").text(msg);
-
-                if (timeoutId !== null) {
-                    window.clearTimeout(timeoutId);
-                }
-
-                timeoutId = window.setTimeout(function() {
-                    timeoutId = null;
-                    that.hide();
-                }, 2000);
-            };
-
-            that.hide = function() {
-                $("#js_msg_pattern").empty();
-            };
-
-            return that;
-        })();
+        var message = util.buildMessage("#js_pattern_message");
 
         var end = function() {
-            $(".colorpicker").hide();
             modal.hide();
             patternListComponent.show();
         };
@@ -243,19 +397,19 @@ var patternForm = (function() {
             var backgroundColor = trimValue("#js_input_backgroundcolor");
 
             if (url === "" || msg === "" || backgroundColor === "") {
-                patternMsg.show(error.required);
+                message.show(error.required);
                 return;
             }
 
             var saveData = {
                 url: url,
                 msg: msg,
-                backgroundColor: backgroundColor
+                backgroundColor: backgroundColor.replace(/^#/, "")
             };
 
             if (mode === "add") {
                 if (urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
@@ -265,7 +419,7 @@ var patternForm = (function() {
 
             if (mode === "edit") {
                 if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
-                    patternMsg.show(error.duplicated);
+                    message.show(error.duplicated);
                     return;
                 }
 
@@ -282,16 +436,9 @@ var patternForm = (function() {
             }
         });
 
-        $("#js_input_backgroundcolor").ColorPicker({
-            onSubmit: function(hsb, hex, rgb, el) {
-                $(el).val(hex);
-                $(el).ColorPickerHide();
-            },
-            onBeforeShow: function () {
-                $(this).ColorPickerSetColor(this.value);
-            }
-        }).on("keyup", function(){
-            $(this).ColorPickerSetColor(this.value);
+        $("#js_colorpicker").colorpicker({
+            align: "left",
+            format: "hex"
         });
     };
 
@@ -364,7 +511,13 @@ var deleteForm = (function() {
 })();
 
 $(function() {
+    $.validator.addMethod("hexColor", function(value, element) {
+        return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
+    });
+
     headerComponent.init();
+    exportComponent.init();
+    importComponent.init();
     patternListComponent.show();
     patternForm.init();
     deleteForm.init();

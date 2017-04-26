@@ -17,7 +17,7 @@ urlNotifier.storage = (function() {
         var result = [], data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
-            $.each(JSON.parse(data), function(idx, item) {
+            JSON.parse(data).forEach(function(item) {
                 result.push(item);
             });
         }
@@ -60,7 +60,7 @@ urlNotifier.storage = (function() {
     var deletePattern = function(pattern) {
         var newData = [];
 
-        $.each(getAll(), function(idx, item) {
+        getAll().forEach(function(item) {
             if (item.url !== pattern.url) {
                 newData.push(item);
             }
