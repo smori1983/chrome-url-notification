@@ -98,7 +98,11 @@ var exportComponent = (function() {
             message.show("コピーしました。");
         });
 
-        modal = util.modal("#js_modal_export");
+        modal = util.modal("#js_modal_export", {
+            "shown.bs.modal": function() {
+                $(this).scrollTop(0);
+            }
+        });
     };
 
     var bindValues = function(values) {
