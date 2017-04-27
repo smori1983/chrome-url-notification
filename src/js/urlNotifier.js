@@ -8,6 +8,7 @@ urlNotifier.background = (function() {
     };
 
     var find = function(pattern) {
+        var item;
         var result = {
             matched: false,
             data: null
@@ -109,7 +110,7 @@ urlNotifier.finder = (function() {
             replace(/\/|\.|\-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
-            replace(/\*/g, function(matched) {
+            replace(/\*/g, function() {
                 return "[0-9a-zA-Z\-_]+";
             });
     };
@@ -119,6 +120,43 @@ urlNotifier.finder = (function() {
             return find(url);
         }
     };
+})();
+
+var urlNotifier = urlNotifier || {};
+
+urlNotifier.migration = urlNotifier.migration || {};
+
+urlNotifier.migration.executer = (function() {
+    /**
+     * Migration from 0 to 1
+     *
+     * - set default background color
+     */
+    var for0 = function(item) {
+        if (typeof item.backgroundColor === "undefined") {
+            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+        }
+
+        return item;
+    };
+
+    var converters = {
+        0: for0
+    };
+
+    var execute = function(fromVersion, item) {
+        if (converters.hasOwnProperty(fromVersion)) {
+            return converters[fromVersion](item);
+        }
+
+        return item;
+    };
+
+    return {
+        from: function(verstion, item) {
+            return execute(verstion, item);
+        }
+    }
 })();
 
 var urlNotifier = urlNotifier || {};
@@ -158,36 +196,17 @@ urlNotifier.migration = (function() {
     };
 
     var migrateFrom = function(currentVersion) {
-        if (migrationFunctions.hasOwnProperty(currentVersion)) {
-            migrationFunctions[currentVersion]();
-        }
-    };
-
-    /**
-     * Migration from 0 to 1
-     *
-     * - set default background color
-     */
-    var migrateFor0 = function() {
         var result = [];
         var data;
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             JSON.parse(data).forEach(function(item) {
-                if (typeof item.backgroundColor === "undefined") {
-                    item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
-                }
-
-                result.push(item);
+                result.push(urlNotifier.migration.executer.from(currentVersion, item));
             });
         }
 
         localStorage.setItem(key.pattern, JSON.stringify(result));
-        localStorage.setItem(key.version, 1);
-    };
-
-    var migrationFunctions = {
-        0: migrateFor0
+        localStorage.setItem(key.version, currentVersion + 1);
     };
 
     return {
@@ -323,7 +342,7 @@ urlNotifier.validator = (function() {
         return new (require("jsonschema").Validator)();
     };
 
-    var importJson = function(json) {
+    var importJsonEssential = function(json) {
         var schema = {
             "type": "object",
             "properties": {
@@ -336,12 +355,24 @@ urlNotifier.validator = (function() {
                 "pattern": {
                     "required": true,
                     "type": "array",
-                    "items": { "$ref": "/item" }
                 }
             }
         };
 
-        var itemSchema = {
+        var validator = create();
+
+        return validator.validate(json, schema).valid;
+    };
+
+    var patternBase = function() {
+        return {
+            "type": "array",
+            "items": { "$ref": "/item" }
+         };
+    };
+
+    var patternV1 = function() {
+        return {
             "id": "/item",
             "properties": {
                 "url": {
@@ -361,15 +392,39 @@ urlNotifier.validator = (function() {
                 }
             }
         };
+    };
 
+    var patterns = {
+        1: patternV1
+    };
+
+    var patternFor = function(version) {
+        if (patterns.hasOwnProperty(version)) {
+            return patterns[version]();
+        }
+
+        return {};
+    };
+
+    var importJson = function(json) {
         var validator = create();
 
-        validator.addSchema(itemSchema, "/item");
+        if (importJsonEssential(json) === false) {
+            return false;
+        }
 
-        return validator.validate(json, schema).valid;
+        validator.addSchema(patternFor(json.version), "/item");
+
+        return validator.validate(json.pattern, patternBase()).valid;
     };
 
     return {
+        /**
+         * @return bool
+         */
+        forImportJsonEssential: function(json) {
+            return importJsonEssential(json);
+        },
         /**
          * @return bool
          */
