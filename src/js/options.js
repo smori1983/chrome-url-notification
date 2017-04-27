@@ -100,7 +100,7 @@ var exportComponent = (function() {
 
         modal = util.modal("#js_modal_export", {
             "shown.bs.modal": function() {
-                $(this).scrollTop(0);
+                $("#js_export_display").scrollTop(0);
             }
         });
     };
