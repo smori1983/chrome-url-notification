@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+/**
+ * z-index of bootstrap .modal is 1050
+ */
+.colorpicker {
+    z-index: 2000;
+}

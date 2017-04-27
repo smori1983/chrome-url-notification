@@ -1,41 +1,134 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Chrome URL notifier</title>
-<link rel="stylesheet" type="text/css" href="/css/common.css" />
+<title>Chrome URL Notification</title>
+<link rel="stylesheet" type="text/css" href="/plugin/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/plugin/bootstrap-colorpicker-2.5.0/dist/css/bootstrap-colorpicker.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-custom.css" />
+<link rel="stylesheet" type="text/css" href="/css/plugin_overwrite.css" />
 </head>
-<body class="m50">
+<body>
 
-<div class="mBottom50">
-    <h1>Chrome URL notifier</h1>
+<div class="container">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <span class="navbar-brand">Chrome URL Notification<span id="js_version"></span></span>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" id="js_button_add_pattern">パターン追加</a></li>
+                    <li><a href="#" id="js_button_export">エクスポート</a></li>
+                    <li><a href="#" id="js_button_import">インポート</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h2>パターン一覧<span id="js_pattern_list_badge" class="badge"><!-- 0 --></span></h2>
+    <table id="js_list_pattern" class="table"></table>
+
 </div>
 
-<div class="mBottom50">
-    <h2>パターン登録</h2>
-    <h3 class="mBottom20">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</h3>
-    <form id="js_form_pattern">
-        <table>
-            <tr>
-                <td>URLパターン</td>
-                <td><input type="text" value="" id="js_input_url" class="w500" placeholder="例: http://*.example.com/" /></td>
-            </tr>
-            <tr>
-                <td>表示するメッセージ</td>
-                <td><input type="text" value="" id="js_input_msg" class="w500" placeholder="例: example.com本番サイトを閲覧中" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="パターンを追加" />
-        <span id="js_msg_pattern" class="textError"></span>
-    </form>
+<div id="js_modal_pattern" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="js_form_pattern" action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>URLパターン</label>
+                        <p class="small text-info">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</p>
+                        <input type="text" value="" id="js_input_url" class="form-control" placeholder="例: http://*.example.com/" />
+                    </div>
+                    <div class="form-group">
+                        <label>メッセージ</label>
+                        <input type="text" value="" id="js_input_msg" class="form-control" placeholder="例: example.com本番サイトを閲覧中" />
+                    </div>
+                    <div class="form-group">
+                        <label>背景色</label>
+                        <div id="js_colorpicker" class="input-group colorpicker-component">
+                            <span class="input-group-addon"><i><!-- // --></i></span>
+                            <input type="text" value="" id="js_input_backgroundcolor" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="js_pattern_message" class="text-danger"></span>
+                    <input type="submit" class="btn btn-success" value="保存" />
+                    <input type="button" class="btn btn-warning" value="クリア" id="js_input_clear" />
+                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div class="mBottom50">
-    <h2>パターン一覧</h2>
-    <table id="js_list_pattern"></table>
+<div id="js_modal_delete" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="js_form_delete" action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>URLパターン</label>
+                        <span id="js_form_delete_pattern" class="form-control"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>メッセージ</label>
+                        <span id="js_form_delete_message" class="form-control"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-danger" value="削除" />
+                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
+<div id="js_modal_export" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <pre id="js_export_display"></pre>
+            </div>
+            <div class="modal-footer">
+                <span id="js_export_message" class="text-success"></span>
+                <button id="js_export_copy" class="btn btn-default" data-clipboard-target="#js_export_display">コピー</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="js_modal_import" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="js_form_import" action="#">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>JSONテキスト</label>
+                        <textarea id="js_form_import_json" class="form-control" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="js_import_message" class="text-danger"></span>
+                    <input type="submit" class="btn btn-success" value="インポート" />
+                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/vendor.js"></script>
 <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/js/urlNotifier/storage.js"></script>
+<script type="text/javascript" src="/plugin/jquery-validation-1.16.0-dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/plugin/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/urlNotifier.js"></script>
 <script type="text/javascript" src="/js/options.js"></script>
+<script type="text/javascript" src="/plugin/clipboard.js-1.6.1/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/plugin/bootstrap-colorpicker-2.5.0/dist/js/bootstrap-colorpicker.min.js"></script>
 </body>
 </html>

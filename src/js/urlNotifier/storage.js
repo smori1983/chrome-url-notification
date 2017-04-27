@@ -1,16 +1,23 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.storage = (function() {
-
-    var _update = function(data) {
-        localStorage.setItem("pattern", JSON.stringify(data));
+    var key = {
+        pattern: "pattern"
     };
 
-    var _getAllPattern = function() {
+    var update = function(data) {
+        localStorage.setItem(key.pattern, JSON.stringify(data));
+    };
+
+    var getCount = function() {
+        return getAll().length;
+    };
+
+    var getAll = function() {
         var result = [], data;
 
-        if ((data = localStorage.getItem("pattern")) !== null) {
-            $.each(JSON.parse(data), function(idx, item) {
+        if ((data = localStorage.getItem(key.pattern)) !== null) {
+            JSON.parse(data).forEach(function(item) {
                 result.push(item);
             });
         }
@@ -18,56 +25,85 @@ urlNotifier.storage = (function() {
         return result;
     };
 
-    var _findByUrl = function(url) {
-        var result = null;
+    var findByUrl = function(url) {
+        var i, len, patterns = getAll();
 
-        $.each(_getAllPattern(), function(idx, item) {
-            if (item.url === url) {
-                result = item;
+        for (i = 0, len = patterns.length; i < len; i++) {
+            if (patterns[i].url === url) {
+                return patterns[i];
+            }
+        }
+
+        return null;
+    };
+
+    var addPattern = function(pattern) {
+        if (findByUrl(pattern.url)) {
+            return;
+        }
+
+        var data = getAll();
+
+        data.push(pattern);
+        update(data);
+    };
+
+    var updatePattern = function(originalUrl, pattern) {
+        if (findByUrl(originalUrl) === null) {
+            return;
+        }
+
+        deletePattern({ url: originalUrl });
+        addPattern(pattern);
+    };
+
+    var deletePattern = function(pattern) {
+        var newData = [];
+
+        getAll().forEach(function(item) {
+            if (item.url !== pattern.url) {
+                newData.push(item);
             }
         });
 
-        return result;
+        update(newData);
     };
 
-    var _addPattern = function(pattern) {
-        if (_findByUrl(pattern.url) === null) {
-            var data = _getAllPattern();
-
-            data.push(pattern);
-            _update(data);
-        }
-    };
-
-    var _deletePattern = function(pattern) {
-        if (_findByUrl(pattern.url) !== null) {
-            var newData = [];
-
-            $.each(_getAllPattern(), function(idx, item) {
-                if (item.url !== pattern.url) {
-                    newData.push(item);
-                }
-            });
-
-            _update(newData);
-        }
+    var deleteAll = function() {
+        update([]);
     };
 
     return {
-        getAllPattern: function() {
-            return _getAllPattern();
+        getCount: function() {
+            return getCount();
+        },
+
+        getAll: function() {
+            return getAll();
         },
 
         findByUrl: function(url) {
-            return _findByUrl(url);
+            return findByUrl(url);
         },
 
         addPattern: function(pattern) {
-            _addPattern(pattern);
+            addPattern(pattern);
         },
 
+        updatePattern: function(url, pattern) {
+            updatePattern(url, pattern);
+        },
+
+        /**
+         * pattern
+         * - url
+         */
         deletePattern: function(pattern) {
-            _deletePattern(pattern);
+            deletePattern(pattern);
+        },
+
+        deleteAll: function() {
+            deleteAll();
         }
     };
 })();
