@@ -175,7 +175,7 @@ var importComponent = (function() {
             try {
                 json = JSON.parse(jsonText);
             } catch (e) {
-                console.log(e);
+                console.warn(e);
                 message.show(error.invalidJson);
 
                 return;
