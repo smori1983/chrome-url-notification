@@ -20,7 +20,7 @@ urlNotifier.finder = (function() {
 
     var convertForMatching = function(url) {
         return url.
-            replace(/\/|\.|\-|\+|\?/g, function(matched) {
+            replace(/\/|\.|-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
