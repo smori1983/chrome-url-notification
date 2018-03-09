@@ -24,7 +24,7 @@ urlNotifier.finder = (function() {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
-                return "[0-9a-zA-Z\-_]+";
+                return "[0-9a-zA-Z-_]+";
             });
     };
 

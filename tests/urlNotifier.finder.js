@@ -9,6 +9,8 @@ QUnit.module("urlNotifier.finder", {
         urlNotifier.storage.addPattern({ url: "http://abc-123.net/1", msg: "abc-123-1" });
         urlNotifier.storage.addPattern({ url: "http://abc-123.net/*", msg: "abc-123-0" });
 
+        urlNotifier.storage.addPattern({ url: "http://*.example.com/", msg: "subdomain-1" });
+
         urlNotifier.background.migrate();
     },
     afterEach: function() {
@@ -50,5 +52,11 @@ QUnit.test("URLで検索 エスケープ処理 : -", function(assert) {
     var result = urlNotifier.finder.findFor("http://abc-123.net/1.html");
 
     assert.propEqual(result.msg, 'abc-123-1');
+});
+
+QUnit.test("URLで検索 *パターンエスケープ処理 : -", function(assert) {
+    var result = urlNotifier.finder.findFor("http://a-b-c.example.com/");
+
+    assert.propEqual(result.msg, 'subdomain-1');
 });
 
