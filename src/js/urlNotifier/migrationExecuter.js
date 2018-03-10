@@ -1,8 +1,6 @@
 var urlNotifier = urlNotifier || {};
 
-urlNotifier.migration = urlNotifier.migration || {};
-
-urlNotifier.migration.executer = (function() {
+urlNotifier.migrationExecuter = (function() {
     /**
      * Migration from 0 to 1
      *

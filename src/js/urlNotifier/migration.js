@@ -40,7 +40,7 @@ urlNotifier.migration = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             JSON.parse(data).forEach(function(item) {
-                result.push(urlNotifier.migration.executer.from(currentVersion, item));
+                result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
             });
         }
 
