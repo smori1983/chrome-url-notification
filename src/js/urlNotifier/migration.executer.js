@@ -16,8 +16,22 @@ urlNotifier.migration.executer = (function() {
         return item;
     };
 
+    /**
+     * Migration from 1 to 2
+     *
+     * - set default display position
+     */
+    var for1 = function(item) {
+        if (typeof item.displayPosition === "undefined") {
+            item.displayPosition = urlNotifier.config.defaultDisplayPosition();
+        }
+
+        return item;
+    };
+
     var converters = {
-        0: for0
+        0: for0,
+        1: for1,
     };
 
     var execute = function(fromVersion, item) {

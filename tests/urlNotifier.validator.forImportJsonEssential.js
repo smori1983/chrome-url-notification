@@ -19,8 +19,8 @@ QUnit.test("import json - error - no keys", function(assert) {
 QUnit.test("import json - error - version not defined", function(assert) {
     assert.notOk(this.isValid({
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -35,8 +35,8 @@ QUnit.test("import json - error - version is null", function(assert) {
     assert.notOk(this.isValid({
         version: null,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -45,8 +45,8 @@ QUnit.test("import json - error - version is true", function(assert) {
     assert.notOk(this.isValid({
         version: true,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -55,8 +55,8 @@ QUnit.test("import json - error - version is false", function(assert) {
     assert.notOk(this.isValid({
         version: false,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -65,8 +65,8 @@ QUnit.test("import json - error - version is string of integer", function(assert
     assert.notOk(this.isValid({
         version: "1",
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -75,8 +75,8 @@ QUnit.test("import json - error - version is float", function(assert) {
     assert.notOk(this.isValid({
         version: 1.1,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -85,16 +85,16 @@ QUnit.test("import json - error - version is out of range", function(assert) {
     assert.notOk(this.isValid({
         version: 0,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 
     assert.notOk(this.isValid({
-        version: 2,
+        version: 3,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "222222" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
         ]
     }));
 });
@@ -130,7 +130,7 @@ QUnit.test("import json - error - pattern is string", function(assert) {
 QUnit.test("import json - error - pattern is object", function(assert) {
     assert.notOk(this.isValid({
         version: 1,
-        pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111" }
+        pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" }
     }));
 });
 

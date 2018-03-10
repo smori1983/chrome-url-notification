@@ -26,7 +26,8 @@ QUnit.test("background.find() - 該当データあり", function(assert) {
     var expectedData = {
         message: "1",
         backgroundColor: "000000",
-        fontColor: "ffffff"
+        fontColor: "ffffff",
+        displayPosition: "top",
     };
 
     assert.equal(result.matched, true);

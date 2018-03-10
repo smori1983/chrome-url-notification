@@ -57,8 +57,37 @@ urlNotifier.validator = (function() {
         };
     };
 
+    var patternV2 = function() {
+        return {
+            "id": "/item",
+            "properties": {
+                "url": {
+                    "required": true,
+                    "type": "string",
+                    "minLength": 1
+                },
+                "msg": {
+                    "required": true,
+                    "type": "string",
+                    "minLength": 1
+                },
+                "backgroundColor": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^[0-9a-f]{6}$/i
+                },
+                "displayPosition": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^(bottom|top)$/
+                }
+            }
+        };
+    };
+
     var patterns = {
-        1: patternV1
+        1: patternV1,
+        2: patternV2,
     };
 
     var patternFor = function(version) {

@@ -24,7 +24,7 @@ urlNotifier.migration = (function() {
         }
 
         if (/^\d+$/.test(version)) {
-            return version;
+            return parseInt(version, 10);
         }
 
         return 0;

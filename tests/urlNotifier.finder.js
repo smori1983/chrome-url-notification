@@ -30,7 +30,8 @@ QUnit.test("URLで検索 *パターンにマッチ", function(assert) {
     var expected = {
         url: "http://example.com/*",
         msg: "*",
-        backgroundColor: "000000"
+        backgroundColor: "000000",
+        displayPosition: "top",
     };
 
     assert.propEqual(result, expected);
@@ -42,7 +43,8 @@ QUnit.test("URLで検索 部分一致", function(assert) {
     var expected = {
         url: "http://example.com/1",
         msg: "1",
-        backgroundColor: "000000"
+        backgroundColor: "000000",
+        displayPosition: "top",
     };
 
     assert.propEqual(result, expected);
@@ -59,4 +61,3 @@ QUnit.test("URLで検索 *パターンエスケープ処理 : -", function(asser
 
     assert.propEqual(result.msg, 'subdomain-1');
 });
-
