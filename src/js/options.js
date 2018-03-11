@@ -288,7 +288,8 @@ var patternListComponent = (function() {
                 patternForm.show("add", {
                     url: item.url,
                     message: item.msg,
-                    backgroundColor: item.backgroundColor
+                    backgroundColor: item.backgroundColor,
+                    displayPosition: item.displayPosition,
                 });
             });
         };
@@ -299,7 +300,8 @@ var patternListComponent = (function() {
                 patternForm.show("edit", {
                     url: item.url,
                     message: item.msg,
-                    backgroundColor: item.backgroundColor
+                    backgroundColor: item.backgroundColor,
+                    displayPosition: item.displayPosition,
                 });
             });
         };
@@ -334,7 +336,8 @@ var patternForm = (function() {
         return {
             url: "",
             message: "",
-            backgroundColor: urlNotifier.config.defaultBackgroundColor()
+            backgroundColor: urlNotifier.config.defaultBackgroundColor(),
+            displayPosition: urlNotifier.config.defaultDisplayPosition(),
         };
     };
 
@@ -347,6 +350,7 @@ var patternForm = (function() {
         $("#js_input_msg").val(formValues.message);
         $("#js_input_backgroundcolor").val("#" + formValues.backgroundColor);
         $("#js_colorpicker").colorpicker("setValue", "#" + formValues.backgroundColor);
+        $("input[name=display_position]").val([formValues.displayPosition]);
     };
 
     var modal = null;
@@ -395,8 +399,9 @@ var patternForm = (function() {
             var url = trimValue("#js_input_url");
             var msg = trimValue("#js_input_msg");
             var backgroundColor = trimValue("#js_input_backgroundcolor");
+            var displayPosition = trimValue("input[name=display_position]:checked");
 
-            if (url === "" || msg === "" || backgroundColor === "") {
+            if (url === "" || msg === "" || backgroundColor === "" || displayPosition === "") {
                 message.show(error.required);
                 return;
             }
@@ -404,7 +409,8 @@ var patternForm = (function() {
             var saveData = {
                 url: url,
                 msg: msg,
-                backgroundColor: backgroundColor.replace(/^#/, "")
+                backgroundColor: backgroundColor.replace(/^#/, ""),
+                displayPosition: displayPosition,
             };
 
             if (mode === "add") {
@@ -453,6 +459,7 @@ var patternForm = (function() {
          * - url
          * - message
          * - backgroundColor
+         * - displayPosition
          */
         show: function(mode, formValues) {
             show(mode, formValues);
