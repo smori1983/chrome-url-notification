@@ -18,9 +18,8 @@ chrome.runtime.sendMessage({
             lineHeight: height + "px",
             background: "#" + response.data.backgroundColor,
             color:      "#" + response.data.fontColor,
-            fontSize:   "12px",
+            fontSize:   "16px",
             textAlign:  "center",
-            fontFamily: "Meiryo",
             zIndex:     "99999999",
 
             webkitUserSelect: "none"
@@ -32,7 +31,7 @@ chrome.runtime.sendMessage({
     };
 
     var container = $("<div>").
-        attr("id", "chrome-url-notification-message").
+        attr("id", "chrome-url-notification-container").
         css(createCss()).
         text(response.data.message);
 
