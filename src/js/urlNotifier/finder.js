@@ -20,11 +20,11 @@ urlNotifier.finder = (function() {
 
     var convertForMatching = function(url) {
         return url.
-            replace(/\/|\.|\-|\+|\?/g, function(matched) {
+            replace(/\/|\.|-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
-                return "[0-9a-zA-Z\-_]+";
+                return "[0-9a-zA-Z-_]+";
             });
     };
 

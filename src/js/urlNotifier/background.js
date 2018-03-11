@@ -19,7 +19,8 @@ urlNotifier.background = (function() {
             result.data = {
                 message: item.msg,
                 backgroundColor: item.backgroundColor,
-                fontColor: "ffffff"
+                fontColor: "ffffff",
+                displayPosition: item.displayPosition,
             };
         }
 

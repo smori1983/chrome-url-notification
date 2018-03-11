@@ -21,6 +21,7 @@
     "cross-env": "*",
     "del": "*",
     "dotenv": "*",
+    "extend": "*",
     "gulp": "^3.9.1",
     "gulp-concat": "*",
     "gulp-eslint": "*",

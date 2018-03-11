@@ -19,7 +19,8 @@ urlNotifier.background = (function() {
             result.data = {
                 message: item.msg,
                 backgroundColor: item.backgroundColor,
-                fontColor: "ffffff"
+                fontColor: "ffffff",
+                displayPosition: item.displayPosition,
             };
         }
 
@@ -39,12 +40,17 @@ urlNotifier.background = (function() {
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.config = (function() {
-    var version = 1;
+    var version = 2;
 
     /**
      * used for migration from 0 to 1
      */
     var defaultBackgroundColor = "000000";
+
+    /**
+     * used for migration from 1 to 2
+     */
+    var defaultDisplayPosition = "top";
 
     return {
         version: function() {
@@ -52,6 +58,9 @@ urlNotifier.config = (function() {
         },
         defaultBackgroundColor: function() {
             return defaultBackgroundColor;
+        },
+        defaultDisplayPosition: function() {
+            return defaultDisplayPosition;
         }
     };
 })();
@@ -107,11 +116,11 @@ urlNotifier.finder = (function() {
 
     var convertForMatching = function(url) {
         return url.
-            replace(/\/|\.|\-|\+|\?/g, function(matched) {
+            replace(/\/|\.|-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
-                return "[0-9a-zA-Z\-_]+";
+                return "[0-9a-zA-Z-_]+";
             });
     };
 
@@ -120,43 +129,6 @@ urlNotifier.finder = (function() {
             return find(url);
         }
     };
-})();
-
-var urlNotifier = urlNotifier || {};
-
-urlNotifier.migration = urlNotifier.migration || {};
-
-urlNotifier.migration.executer = (function() {
-    /**
-     * Migration from 0 to 1
-     *
-     * - set default background color
-     */
-    var for0 = function(item) {
-        if (typeof item.backgroundColor === "undefined") {
-            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
-        }
-
-        return item;
-    };
-
-    var converters = {
-        0: for0
-    };
-
-    var execute = function(fromVersion, item) {
-        if (converters.hasOwnProperty(fromVersion)) {
-            return converters[fromVersion](item);
-        }
-
-        return item;
-    };
-
-    return {
-        from: function(verstion, item) {
-            return execute(verstion, item);
-        }
-    }
 })();
 
 var urlNotifier = urlNotifier || {};
@@ -185,7 +157,7 @@ urlNotifier.migration = (function() {
         }
 
         if (/^\d+$/.test(version)) {
-            return version;
+            return parseInt(version, 10);
         }
 
         return 0;
@@ -201,7 +173,7 @@ urlNotifier.migration = (function() {
 
         if ((data = localStorage.getItem(key.pattern)) !== null) {
             JSON.parse(data).forEach(function(item) {
-                result.push(urlNotifier.migration.executer.from(currentVersion, item));
+                result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
             });
         }
 
@@ -223,6 +195,55 @@ urlNotifier.migration = (function() {
             migrateFrom(currentVersion);
         }
     };
+})();
+
+var urlNotifier = urlNotifier || {};
+
+urlNotifier.migrationExecuter = (function() {
+    /**
+     * Migration from 0 to 1
+     *
+     * - set default background color
+     */
+    var for0 = function(item) {
+        if (typeof item.backgroundColor === "undefined") {
+            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+        }
+
+        return item;
+    };
+
+    /**
+     * Migration from 1 to 2
+     *
+     * - set default display position
+     */
+    var for1 = function(item) {
+        if (typeof item.displayPosition === "undefined") {
+            item.displayPosition = urlNotifier.config.defaultDisplayPosition();
+        }
+
+        return item;
+    };
+
+    var converters = {
+        0: for0,
+        1: for1,
+    };
+
+    var execute = function(fromVersion, item) {
+        if (converters.hasOwnProperty(fromVersion)) {
+            return converters[fromVersion](item);
+        }
+
+        return item;
+    };
+
+    return {
+        from: function(verstion, item) {
+            return execute(verstion, item);
+        }
+    }
 })();
 
 var urlNotifier = urlNotifier || {};
@@ -338,6 +359,8 @@ urlNotifier.storage = (function() {
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.validator = (function() {
+    var extend = require("extend");
+
     var create = function() {
         return new (require("jsonschema").Validator)();
     };
@@ -367,35 +390,54 @@ urlNotifier.validator = (function() {
     var patternBase = function() {
         return {
             "type": "array",
-            "items": { "$ref": "/item" }
-         };
+            "items": { "$ref": "/item" },
+        };
+    };
+
+    var patternTemplate = function() {
+        return {
+            "id": "/item",
+            "properties": {},
+        };
     };
 
     var patternV1 = function() {
-        return {
-            "id": "/item",
+        return extend(patternTemplate(), {
             "properties": {
                 "url": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "msg": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "backgroundColor": {
                     "required": true,
                     "type": "string",
-                    "pattern": /^[0-9a-f]{6}$/i
-                }
-            }
-        };
+                    "pattern": /^[0-9a-f]{6}$/i,
+                },
+            },
+        });
+    };
+
+    var patternV2 = function() {
+        return extend(patternV1(), {
+            "properties": {
+                "displayPosition": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^(bottom|top)$/,
+                },
+            },
+        });
     };
 
     var patterns = {
-        1: patternV1
+        1: patternV1,
+        2: patternV2,
     };
 
     var patternFor = function(version) {

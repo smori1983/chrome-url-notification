@@ -1,6 +1,8 @@
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.validator = (function() {
+    var extend = require("extend");
+
     var create = function() {
         return new (require("jsonschema").Validator)();
     };
@@ -30,35 +32,54 @@ urlNotifier.validator = (function() {
     var patternBase = function() {
         return {
             "type": "array",
-            "items": { "$ref": "/item" }
-         };
+            "items": { "$ref": "/item" },
+        };
+    };
+
+    var patternTemplate = function() {
+        return {
+            "id": "/item",
+            "properties": {},
+        };
     };
 
     var patternV1 = function() {
-        return {
-            "id": "/item",
+        return extend(patternTemplate(), {
             "properties": {
                 "url": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "msg": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "backgroundColor": {
                     "required": true,
                     "type": "string",
-                    "pattern": /^[0-9a-f]{6}$/i
-                }
-            }
-        };
+                    "pattern": /^[0-9a-f]{6}$/i,
+                },
+            },
+        });
+    };
+
+    var patternV2 = function() {
+        return extend(patternV1(), {
+            "properties": {
+                "displayPosition": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^(bottom|top)$/,
+                },
+            },
+        });
     };
 
     var patterns = {
-        1: patternV1
+        1: patternV1,
+        2: patternV2,
     };
 
     var patternFor = function(version) {

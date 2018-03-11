@@ -16,6 +16,7 @@
 
     "background": {
         "scripts": [
+            "js/vendor.js",
             "js/urlNotifier.js",
             "js/background.js"
         ],

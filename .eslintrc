@@ -5,9 +5,11 @@
     },
     "globals": {
         "chrome": true,
+        "Clipboard": true,
         "localStorage": true,
         "$": true,
         "QUnit": true,
+        "require": true,
         "urlNotifier": true
     },
     "rules": {

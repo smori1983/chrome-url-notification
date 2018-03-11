@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 'use strict';
 
 var helpers = require('./helpers');
@@ -188,6 +188,10 @@ validators.properties = function validateProperties (instance, schema, options, 
   var result = new ValidatorResult(instance, schema, options, ctx);
   var properties = schema.properties || {};
   for (var property in properties) {
+    if (typeof options.preValidateProperty == 'function') {
+      options.preValidateProperty(instance, property, properties[property], options, ctx);
+    }
+
     var prop = (instance || undefined) && instance[property];
     var res = this.validateSchema(prop, properties[property], options, ctx.makeChild(properties[property], property));
     if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
@@ -215,6 +219,11 @@ function testAdditionalProperty (instance, schema, options, ctx, property, resul
     });
   } else {
     var additionalProperties = schema.additionalProperties || {};
+
+    if (typeof options.preValidateProperty == 'function') {
+      options.preValidateProperty(instance, property, additionalProperties, options, ctx);
+    }
+
     var res = this.validateSchema(instance[property], additionalProperties, options, ctx.makeChild(additionalProperties, property));
     if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
     result.importErrors(res);
@@ -243,6 +252,11 @@ validators.patternProperties = function validatePatternProperties (instance, sch
         continue;
       }
       test = false;
+
+      if (typeof options.preValidateProperty == 'function') {
+        options.preValidateProperty(instance, property, patternProperties[pattern], options, ctx);
+      }
+
       var res = this.validateSchema(instance[property], patternProperties[pattern], options, ctx.makeChild(patternProperties[pattern], property));
       if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
       result.importErrors(res);
@@ -413,59 +427,60 @@ validators.maximum = function validateMaximum (instance, schema, options, ctx) {
 };
 
 /**
- * Validates divisibleBy when the type of the instance value is a number.
- * Of course, this is susceptible to floating point error since it compares the floating points
- * and not the JSON byte sequences to arbitrary precision.
+ * Perform validation for multipleOf and divisibleBy, which are essentially the same.
  * @param instance
  * @param schema
- * @return {String|null}
+ * @param validationType
+ * @param errorMessage
+ * @returns {String|null}
  */
-validators.divisibleBy = function validateDivisibleBy (instance, schema, options, ctx) {
+var validateMultipleOfOrDivisbleBy = function validateMultipleOfOrDivisbleBy (instance, schema, options, ctx, validationType, errorMessage) {
   if (typeof instance !== 'number') {
     return null;
   }
 
-  if (schema.divisibleBy == 0) {
-    throw new SchemaError("divisibleBy cannot be zero");
+  var validationArgument = schema[validationType];
+  if (validationArgument == 0) {
+    throw new SchemaError(validationType + " cannot be zero");
   }
 
   var result = new ValidatorResult(instance, schema, options, ctx);
-  if (instance / schema.divisibleBy % 1) {
+
+  var instanceDecimals = helpers.getDecimalPlaces(instance);
+  var divisorDecimals = helpers.getDecimalPlaces(validationArgument);
+
+  var maxDecimals = Math.max(instanceDecimals , divisorDecimals);
+  var multiplier = Math.pow(10, maxDecimals);
+
+  if (Math.round(instance * multiplier) % Math.round(validationArgument * multiplier) !== 0) {
     result.addError({
-      name: 'divisibleBy',
-      argument: schema.divisibleBy,
-      message: "is not divisible by (multiple of) " + JSON.stringify(schema.divisibleBy),
+      name: validationType,
+      argument:  validationArgument,
+      message: errorMessage + JSON.stringify(validationArgument)
     });
   }
+
   return result;
 };
 
 /**
  * Validates divisibleBy when the type of the instance value is a number.
- * Of course, this is susceptible to floating point error since it compares the floating points
- * and not the JSON byte sequences to arbitrary precision.
  * @param instance
  * @param schema
  * @return {String|null}
  */
 validators.multipleOf = function validateMultipleOf (instance, schema, options, ctx) {
-  if (typeof instance !== 'number') {
-    return null;
-  }
+ return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "multipleOf", "is not a multiple of (divisible by) ");
+};
 
-  if (schema.multipleOf == 0) {
-    throw new SchemaError("multipleOf cannot be zero");
-  }
-
-  var result = new ValidatorResult(instance, schema, options, ctx);
-  if (instance / schema.multipleOf % 1) {
-    result.addError({
-      name: 'multipleOf',
-      argument:  schema.multipleOf,
-      message: "is not a multiple of (divisible by) " + JSON.stringify(schema.multipleOf),
-    });
-  }
-  return result;
+/**
+ * Validates multipleOf when the type of the instance value is a number.
+ * @param instance
+ * @param schema
+ * @return {String|null}
+ */
+validators.divisibleBy = function validateDivisibleBy (instance, schema, options, ctx) {
+  return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "divisibleBy", "is not divisible by (multiple of) ");
 };
 
 /**
@@ -477,6 +492,7 @@ validators.multipleOf = function validateMultipleOf (instance, schema, options, 
 validators.required = function validateRequired (instance, schema, options, ctx) {
   var result = new ValidatorResult(instance, schema, options, ctx);
   if (instance === undefined && schema.required === true) {
+    // A boolean form is implemented for reverse-compatability with schemas written against older drafts
     result.addError({
       name: 'required',
       message: "is required"
@@ -768,6 +784,25 @@ validators['enum'] = function validateEnum (instance, schema, options, ctx) {
       name: 'enum',
       argument: schema['enum'],
       message: "is not one of enum values: " + schema['enum'].join(','),
+    });
+  }
+  return result;
+};
+
+/**
+ * Validates whether the instance exactly matches a given value
+ *
+ * @param instance
+ * @param schema
+ * @return {ValidatorResult|null}
+ */
+validators['const'] = function validateEnum (instance, schema, options, ctx) {
+  var result = new ValidatorResult(instance, schema, options, ctx);
+  if (!helpers.deepCompareStrict(schema['const'], instance)) {
+    result.addError({
+      name: 'const',
+      argument: schema['const'],
+      message: "does not exactly match expected constant: " + schema['const'],
     });
   }
   return result;
@@ -1095,6 +1130,41 @@ exports.encodePath = function encodePointer(a){
 	return a.map(pathEncoder).join('');
 };
 
+
+/**
+ * Calculate the number of decimal places a number uses
+ * We need this to get correct results out of multipleOf and divisibleBy
+ * when either figure is has decimal places, due to IEEE-754 float issues.
+ * @param number
+ * @returns {number}
+ */
+exports.getDecimalPlaces = function getDecimalPlaces(number) {
+
+  var decimalPlaces = 0;
+  if (isNaN(number)) return decimalPlaces;
+
+  if (typeof number !== 'number') {
+    number = Number(number);
+  }
+
+  var parts = number.toString().split('e');
+  if (parts.length === 2) {
+    if (parts[1][0] !== '-') {
+      return decimalPlaces;
+    } else {
+      decimalPlaces = Number(parts[1].slice(1));
+    }
+  }
+
+  var decimalParts = parts[0].split('.');
+  if (decimalParts.length === 2) {
+    decimalPlaces += decimalParts[1].length;
+  }
+
+  return decimalPlaces;
+};
+
+
 },{"url":8}],3:[function(require,module,exports){
 'use strict';
 
@@ -1354,7 +1424,7 @@ Validator.prototype.superResolve = function superResolve (schema, ctx) {
 * @param Object switchSchema
 * @param SchemaContext ctx
 * @return Object resolved schemas {subschema:String, switchSchema: String}
-* @thorws SchemaError
+* @throws SchemaError
 */
 Validator.prototype.resolve = function resolve (schema, switchSchema, ctx) {
   switchSchema = ctx.resolve(switchSchema);
@@ -1413,7 +1483,7 @@ types.boolean = function testBoolean (instance) {
   return typeof instance == 'boolean';
 };
 types.array = function testArray (instance) {
-  return instance instanceof Array;
+  return Array.isArray(instance);
 };
 types['null'] = function testNull (instance) {
   return instance === null;
@@ -2897,6 +2967,94 @@ module.exports = {
   isNullOrUndefined: function(arg) {
     return arg == null;
   }
+};
+
+},{}],"extend":[function(require,module,exports){
+'use strict';
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
+
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = target[name];
+				copy = options[name];
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						target[name] = extend(deep, clone, copy);
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						target[name] = copy;
+					}
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
 };
 
 },{}],"jsonschema":[function(require,module,exports){

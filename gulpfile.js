@@ -45,7 +45,8 @@ gulp.task("vendor:js", function(cb) {
     pump([
         browserify({
             require: [
-                "jsonschema"
+                "extend",
+                "jsonschema",
             ]
         }).bundle(),
         source("vendor.js"),
