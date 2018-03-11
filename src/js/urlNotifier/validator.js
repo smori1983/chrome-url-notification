@@ -33,7 +33,7 @@ urlNotifier.validator = (function() {
         return {
             "type": "array",
             "items": { "$ref": "/item" },
-         };
+        };
     };
 
     var patternTemplate = function() {

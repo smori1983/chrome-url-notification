@@ -36,7 +36,6 @@ var util = (function() {
                 timeoutId = null;
                 hide();
             }, 3000);
-
         };
 
         var hide = function() {
