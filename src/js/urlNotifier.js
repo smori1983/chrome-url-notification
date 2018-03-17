@@ -208,33 +208,12 @@ urlNotifier.importer = (function() {
 var urlNotifier = urlNotifier || {};
 
 urlNotifier.migration = (function() {
-    var key = {
-        version: "version",
-        pattern: "pattern"
-    };
-
     var hasVersion = function() {
-        var version = localStorage.getItem(key.version);
-
-        if (version === null) {
-            return false;
-        }
-
-        return /^\d+$/.test(version);
+        return urlNotifier.storage.hasVersion();
     };
 
     var currentVersion = function() {
-        var version = localStorage.getItem(key.version);
-
-        if (version === null) {
-            return 0;
-        }
-
-        if (/^\d+$/.test(version)) {
-            return parseInt(version, 10);
-        }
-
-        return 0;
+        return urlNotifier.storage.currentVersion();
     };
 
     var shouldMigrate = function() {
@@ -243,16 +222,12 @@ urlNotifier.migration = (function() {
 
     var migrateFrom = function(currentVersion) {
         var result = [];
-        var data;
 
-        if ((data = localStorage.getItem(key.pattern)) !== null) {
-            JSON.parse(data).forEach(function(item) {
-                result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
-            });
-        }
+        urlNotifier.storage.getAll().forEach(function(item) {
+            result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
+        });
 
-        localStorage.setItem(key.pattern, JSON.stringify(result));
-        localStorage.setItem(key.version, currentVersion + 1);
+        urlNotifier.storage.replace(currentVersion + 1, result);
     };
 
     return {
@@ -324,7 +299,36 @@ var urlNotifier = urlNotifier || {};
 
 urlNotifier.storage = (function() {
     var key = {
-        pattern: "pattern"
+        version: "version",
+        pattern: "pattern",
+    };
+
+    var hasVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return false;
+        }
+
+        return /^\d+$/.test(version);
+    };
+
+    var currentVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return 0;
+        }
+
+        if (/^\d+$/.test(version)) {
+            return parseInt(version, 10);
+        }
+
+        return 0;
+    };
+
+    var updateVersion = function(version) {
+        localStorage.setItem(key.version, version);
     };
 
     var update = function(data) {
@@ -396,6 +400,13 @@ urlNotifier.storage = (function() {
     };
 
     return {
+        hasVersion: function() {
+            return hasVersion();
+        },
+        currentVersion: function() {
+            return currentVersion();
+        },
+
         getCount: function() {
             return getCount();
         },
@@ -426,6 +437,11 @@ urlNotifier.storage = (function() {
 
         deleteAll: function() {
             deleteAll();
+        },
+
+        replace: function(version, pattern) {
+            updateVersion(version);
+            update(pattern);
         }
     };
 })();
