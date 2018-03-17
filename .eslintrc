@@ -4,6 +4,7 @@
         "browser": true
     },
     "globals": {
+        "_": true,
         "chrome": true,
         "Clipboard": true,
         "localStorage": true,
