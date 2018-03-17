@@ -186,34 +186,10 @@ var importComponent = (function() {
                 return;
             }
 
-            importJson(json);
+            urlNotifier.importer.importJson(json);
 
             modal.hide();
             patternListComponent.show();
-        };
-    })();
-
-    var importJson = (function() {
-        var prepare = function(item) {
-            return {
-                url: item.url,
-                msg: item.msg,
-                backgroundColor: item.backgroundColor
-            };
-        };
-
-        var addOrUpdate = function(data) {
-            if (urlNotifier.storage.findByUrl(data.url)) {
-                urlNotifier.storage.updatePattern(data.url, data);
-            } else {
-                urlNotifier.storage.addPattern(data);
-            }
-        };
-
-        return function(json) {
-            json.pattern.forEach(function(item) {
-                addOrUpdate(prepare(item));
-            });
         };
     })();
 
