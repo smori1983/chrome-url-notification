@@ -1,7 +1,7 @@
-QUnit.module("urlNotifier.validator.importJson.v1", {
+QUnit.module("urlNotification.validator.importJson.v2", {
     beforeEach: function() {
         this.isValid = function(json) {
-            return urlNotifier.validator.forImportJson(json);
+            return urlNotification.validator.forImportJson(json);
         };
     },
     afterEach: function() {
@@ -196,20 +196,160 @@ QUnit.test("import json - error - pattern - backgroundColor is not hex color", f
     }));
 });
 
+QUnit.test("import json - error - pattern - displayPosition is not defined", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222"                         }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111"                            },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - displayPosition is null", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: null  }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: null     },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - displayPosition is bool", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: true  }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: false    },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - displayPosition is number", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: 123   }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: 123      },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - displayPosition is empty string", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: ""    }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: ""       },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
+QUnit.test("import json - error - pattern - displayPosition is invalid string", function(assert) {
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "foo" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "Bottom" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "BOTTOM" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "bar"    },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "Top"    },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+
+    assert.notOk(this.isValid({
+        version: 2,
+        pattern: [
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "TOP"    },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
+        ]
+    }));
+});
+
 QUnit.test("import json - ok", function(assert) {
     assert.ok(this.isValid({
-        version: 1,
+        version: 2,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "000000" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top"    },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "bottom" }
         ]
     }));
 
     assert.ok(this.isValid({
-        version: 1,
+        version: 2,
         pattern: [
-            { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-            { url: "sample2", msg: "sample2", backgroundColor: "ffffff" }
+            { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "bottom" },
+            { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top"    }
         ]
     }));
 });

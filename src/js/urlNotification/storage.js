@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.storage = (function() {
+urlNotification.storage = (function() {
     var key = {
         version: "version",
         pattern: "pattern",

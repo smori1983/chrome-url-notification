@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.validator = (function() {
+urlNotification.validator = (function() {
     var extend = require("extend");
 
     var create = function() {
@@ -15,7 +15,7 @@ urlNotifier.validator = (function() {
                     "required": true,
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": urlNotifier.config.version()
+                    "maximum": urlNotification.config.version()
                 },
                 "pattern": {
                     "required": true,

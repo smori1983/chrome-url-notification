@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.config = (function() {
+urlNotification.config = (function() {
     var version = 2;
 
     /**

@@ -1,4 +1,4 @@
-QUnit.module("urlNotifier.importer.v2", {
+QUnit.module("urlNotification.importer.v2", {
     beforeEach: function() {
         localStorage.clear();
     },
@@ -19,9 +19,9 @@ QUnit.test("import v2 - case 1", function(assert) {
         ],
     };
 
-    urlNotifier.importer.importJson(json);
+    urlNotification.importer.importJson(json);
 
-    var allData = urlNotifier.storage.getAll();
+    var allData = urlNotification.storage.getAll();
 
     assert.equal(allData.length, 1);
 
@@ -44,9 +44,9 @@ QUnit.test("import v2 - case 2", function(assert) {
         ],
     };
 
-    urlNotifier.importer.importJson(json);
+    urlNotification.importer.importJson(json);
 
-    var allData = urlNotifier.storage.getAll();
+    var allData = urlNotification.storage.getAll();
 
     assert.equal(allData.length, 1);
 

@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.importer = (function() {
+urlNotification.importer = (function() {
     var _ = require("lodash");
 
     var prepareFor1 = function(item) {
@@ -29,17 +29,17 @@ urlNotifier.importer = (function() {
         var result = [];
 
         pattern.forEach(function(item) {
-            result.push(urlNotifier.migrationExecuter.from(version, item));
+            result.push(urlNotification.migrationExecuter.from(version, item));
         });
 
         return result;
     };
 
     var addOrUpdate = function(data) {
-        if (urlNotifier.storage.findByUrl(data.url)) {
-            urlNotifier.storage.updatePattern(data.url, data);
+        if (urlNotification.storage.findByUrl(data.url)) {
+            urlNotification.storage.updatePattern(data.url, data);
         } else {
-            urlNotifier.storage.addPattern(data);
+            urlNotification.storage.addPattern(data);
         }
     };
 
@@ -48,7 +48,7 @@ urlNotifier.importer = (function() {
 
         console.info("Import start.");
 
-        while (urlNotifier.config.version() > json.version) {
+        while (urlNotification.config.version() > json.version) {
             console.info("Migrate from scheme version " + json.version);
 
             json.pattern = migrate(json.pattern, json.version);

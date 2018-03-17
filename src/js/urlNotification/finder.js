@@ -1,9 +1,9 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.finder = (function() {
+urlNotification.finder = (function() {
 
     var find = function(url) {
-        var i, len, patterns = urlNotifier.storage.getAll();
+        var i, len, patterns = urlNotification.storage.getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (makeRegExp(patterns[i].url).test(url)) {

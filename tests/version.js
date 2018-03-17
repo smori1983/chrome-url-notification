@@ -1,4 +1,4 @@
-QUnit.module("urlNotifier.migration", {
+QUnit.module("urlNotification.migration", {
     beforeEach: function() {
         localStorage.clear();
     },
@@ -7,62 +7,62 @@ QUnit.module("urlNotifier.migration", {
     }
 });
 
-QUnit.test("urlNotifier.migration.hasVersion - キーなし", function(assert) {
-    var result = urlNotifier.migration.hasVersion();
+QUnit.test("urlNotification.migration.hasVersion - キーなし", function(assert) {
+    var result = urlNotification.migration.hasVersion();
 
     assert.equal(result, false);
 });
 
-QUnit.test("urlNotifier.migration.hasVersion - キーあり - 不正値", function(assert) {
+QUnit.test("urlNotification.migration.hasVersion - キーあり - 不正値", function(assert) {
     localStorage.setItem("version", 1.1);
 
-    var result = urlNotifier.migration.hasVersion();
+    var result = urlNotification.migration.hasVersion();
 
     assert.equal(result, false);
 });
 
-QUnit.test("urlNotifier.migration.hasVersion - キーあり - 正常値", function(assert) {
+QUnit.test("urlNotification.migration.hasVersion - キーあり - 正常値", function(assert) {
     localStorage.setItem("version", 1);
 
-    var result = urlNotifier.migration.hasVersion();
+    var result = urlNotification.migration.hasVersion();
 
     assert.equal(result, true);
 });
 
 
-QUnit.module("urlNotifier.migration.0to1", {
+QUnit.module("urlNotification.migration.0to1", {
     beforeEach: function() {
         localStorage.clear();
 
-        urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+        urlNotification.storage.addPattern({ url: "http://example.com/1", msg: "1" });
     },
     afterEach: function() {
         localStorage.clear();
     }
 });
 
-QUnit.test("urlNotifier.migration - version 0", function(assert) {
-    var result = urlNotifier.migration.currentVersion();
+QUnit.test("urlNotification.migration - version 0", function(assert) {
+    var result = urlNotification.migration.currentVersion();
 
     assert.equal(result, 0);
 });
 
-QUnit.test("urlNotifier.migration - version 0 to 1", function(assert) {
+QUnit.test("urlNotification.migration - version 0 to 1", function(assert) {
     var expectedBefore = [
         { url: "http://example.com/1", msg: "1" }
     ];
 
-    assert.propEqual(urlNotifier.storage.getAll(), expectedBefore);
+    assert.propEqual(urlNotification.storage.getAll(), expectedBefore);
 
-    assert.equal(urlNotifier.migration.shouldMigrate(), true);
+    assert.equal(urlNotification.migration.shouldMigrate(), true);
 
-    urlNotifier.migration.migrateFrom(0);
+    urlNotification.migration.migrateFrom(0);
 
     var expectedAfter = [
         { url: "http://example.com/1", msg: "1", backgroundColor: "000000" }
     ];
 
-    assert.propEqual(urlNotifier.storage.getAll(), expectedAfter);
+    assert.propEqual(urlNotification.storage.getAll(), expectedAfter);
 
-    assert.equal(urlNotifier.migration.currentVersion(), 1);
+    assert.equal(urlNotification.migration.currentVersion(), 1);
 });

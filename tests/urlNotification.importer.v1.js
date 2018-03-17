@@ -1,4 +1,4 @@
-QUnit.module("urlNotifier.importer.v1", {
+QUnit.module("urlNotification.importer.v1", {
     beforeEach: function() {
         localStorage.clear();
     },
@@ -18,9 +18,9 @@ QUnit.test("import v1 and migrate to v2", function(assert) {
         ],
     };
 
-    urlNotifier.importer.importJson(json);
+    urlNotification.importer.importJson(json);
 
-    var allData = urlNotifier.storage.getAll();
+    var allData = urlNotification.storage.getAll();
 
     assert.equal(allData.length, 1);
 

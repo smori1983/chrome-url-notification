@@ -1,7 +1,7 @@
 QUnit.module("vendor.jsonschema", {
     beforeEach: function() {
         this.isValid = function(json) {
-            return urlNotifier.validator.forImportJson(json);
+            return urlNotification.validator.forImportJson(json);
         };
     },
     afterEach: function() {

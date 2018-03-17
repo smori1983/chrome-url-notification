@@ -66,8 +66,10 @@ gulp.task("make", ["concat"]);
 
 gulp.task("concat", function(cb) {
     pump([
-        gulp.src("./src/js/urlNotifier/*.js"),
-        concat("urlNotifier.js"),
+        gulp.src([
+            "./src/js/urlNotification/*.js",
+        ]),
+        concat("urlNotification.js"),
         gulp.dest("./src/js")
     ], cb);
 });
@@ -93,7 +95,7 @@ gulp.task("lint", function() {
     pump([
         gulp.src([
             "src/js/**/*.js",
-            "!src/js/urlNotifier.js",
+            "!src/js/urlNotification.js",
             "!src/js/jquery-1.9.1.min.js",
             "!src/js/vendor.js",
             "tests/**/*.js",

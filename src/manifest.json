@@ -17,7 +17,7 @@
     "background": {
         "scripts": [
             "js/vendor.js",
-            "js/urlNotifier.js",
+            "js/urlNotification.js",
             "js/background.js"
         ],
         "persistent": false

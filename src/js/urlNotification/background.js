@@ -1,9 +1,9 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.background = (function() {
+urlNotification.background = (function() {
     var migrate = function() {
-        while (urlNotifier.migration.shouldMigrate()) {
-            urlNotifier.migration.migrateFrom(urlNotifier.migration.currentVersion());
+        while (urlNotification.migration.shouldMigrate()) {
+            urlNotification.migration.migrateFrom(urlNotification.migration.currentVersion());
         }
     };
 
@@ -14,7 +14,7 @@ urlNotifier.background = (function() {
             data: null
         };
 
-        if ((item = urlNotifier.finder.findFor(pattern)) !== null) {
+        if ((item = urlNotification.finder.findFor(pattern)) !== null) {
             result.matched = true;
             result.data = {
                 message: item.msg,

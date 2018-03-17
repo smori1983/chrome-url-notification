@@ -1,9 +1,9 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.background = (function() {
+urlNotification.background = (function() {
     var migrate = function() {
-        while (urlNotifier.migration.shouldMigrate()) {
-            urlNotifier.migration.migrateFrom(urlNotifier.migration.currentVersion());
+        while (urlNotification.migration.shouldMigrate()) {
+            urlNotification.migration.migrateFrom(urlNotification.migration.currentVersion());
         }
     };
 
@@ -14,7 +14,7 @@ urlNotifier.background = (function() {
             data: null
         };
 
-        if ((item = urlNotifier.finder.findFor(pattern)) !== null) {
+        if ((item = urlNotification.finder.findFor(pattern)) !== null) {
             result.matched = true;
             result.data = {
                 message: item.msg,
@@ -37,9 +37,9 @@ urlNotifier.background = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.config = (function() {
+urlNotification.config = (function() {
     var version = 2;
 
     /**
@@ -65,9 +65,9 @@ urlNotifier.config = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.data = (function() {
+urlNotification.data = (function() {
     var sortByUrl = function(patterns) {
         return patterns.sort(function(a, b) {
             return (a.url < b.url) ? -1 : 1;
@@ -94,12 +94,12 @@ urlNotifier.data = (function() {
     }
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.finder = (function() {
+urlNotification.finder = (function() {
 
     var find = function(url) {
-        var i, len, patterns = urlNotifier.storage.getAll();
+        var i, len, patterns = urlNotification.storage.getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (makeRegExp(patterns[i].url).test(url)) {
@@ -131,9 +131,9 @@ urlNotifier.finder = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.importer = (function() {
+urlNotification.importer = (function() {
     var _ = require("lodash");
 
     var prepareFor1 = function(item) {
@@ -162,17 +162,17 @@ urlNotifier.importer = (function() {
         var result = [];
 
         pattern.forEach(function(item) {
-            result.push(urlNotifier.migrationExecuter.from(version, item));
+            result.push(urlNotification.migrationExecuter.from(version, item));
         });
 
         return result;
     };
 
     var addOrUpdate = function(data) {
-        if (urlNotifier.storage.findByUrl(data.url)) {
-            urlNotifier.storage.updatePattern(data.url, data);
+        if (urlNotification.storage.findByUrl(data.url)) {
+            urlNotification.storage.updatePattern(data.url, data);
         } else {
-            urlNotifier.storage.addPattern(data);
+            urlNotification.storage.addPattern(data);
         }
     };
 
@@ -181,7 +181,7 @@ urlNotifier.importer = (function() {
 
         console.info("Import start.");
 
-        while (urlNotifier.config.version() > json.version) {
+        while (urlNotification.config.version() > json.version) {
             console.info("Migrate from scheme version " + json.version);
 
             json.pattern = migrate(json.pattern, json.version);
@@ -205,29 +205,29 @@ urlNotifier.importer = (function() {
     }
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migration = (function() {
+urlNotification.migration = (function() {
     var hasVersion = function() {
-        return urlNotifier.storage.hasVersion();
+        return urlNotification.storage.hasVersion();
     };
 
     var currentVersion = function() {
-        return urlNotifier.storage.currentVersion();
+        return urlNotification.storage.currentVersion();
     };
 
     var shouldMigrate = function() {
-        return currentVersion() < urlNotifier.config.version();
+        return currentVersion() < urlNotification.config.version();
     };
 
     var migrateFrom = function(currentVersion) {
         var result = [];
 
-        urlNotifier.storage.getAll().forEach(function(item) {
-            result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
+        urlNotification.storage.getAll().forEach(function(item) {
+            result.push(urlNotification.migrationExecuter.from(currentVersion, item));
         });
 
-        urlNotifier.storage.replace(currentVersion + 1, result);
+        urlNotification.storage.replace(currentVersion + 1, result);
     };
 
     return {
@@ -246,9 +246,9 @@ urlNotifier.migration = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migrationExecuter = (function() {
+urlNotification.migrationExecuter = (function() {
     /**
      * Migration from 0 to 1
      *
@@ -256,7 +256,7 @@ urlNotifier.migrationExecuter = (function() {
      */
     var for0 = function(item) {
         if (typeof item.backgroundColor === "undefined") {
-            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+            item.backgroundColor = urlNotification.config.defaultBackgroundColor();
         }
 
         return item;
@@ -269,7 +269,7 @@ urlNotifier.migrationExecuter = (function() {
      */
     var for1 = function(item) {
         if (typeof item.displayPosition === "undefined") {
-            item.displayPosition = urlNotifier.config.defaultDisplayPosition();
+            item.displayPosition = urlNotification.config.defaultDisplayPosition();
         }
 
         return item;
@@ -295,9 +295,9 @@ urlNotifier.migrationExecuter = (function() {
     }
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.storage = (function() {
+urlNotification.storage = (function() {
     var key = {
         version: "version",
         pattern: "pattern",
@@ -446,9 +446,9 @@ urlNotifier.storage = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.validator = (function() {
+urlNotification.validator = (function() {
     var extend = require("extend");
 
     var create = function() {
@@ -463,7 +463,7 @@ urlNotifier.validator = (function() {
                     "required": true,
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": urlNotifier.config.version()
+                    "maximum": urlNotification.config.version()
                 },
                 "pattern": {
                     "required": true,

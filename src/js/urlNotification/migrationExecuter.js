@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migrationExecuter = (function() {
+urlNotification.migrationExecuter = (function() {
     /**
      * Migration from 0 to 1
      *
@@ -8,7 +8,7 @@ urlNotifier.migrationExecuter = (function() {
      */
     var for0 = function(item) {
         if (typeof item.backgroundColor === "undefined") {
-            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+            item.backgroundColor = urlNotification.config.defaultBackgroundColor();
         }
 
         return item;
@@ -21,7 +21,7 @@ urlNotifier.migrationExecuter = (function() {
      */
     var for1 = function(item) {
         if (typeof item.displayPosition === "undefined") {
-            item.displayPosition = urlNotifier.config.defaultDisplayPosition();
+            item.displayPosition = urlNotification.config.defaultDisplayPosition();
         }
 
         return item;

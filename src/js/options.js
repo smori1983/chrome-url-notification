@@ -110,8 +110,8 @@ var exportComponent = (function() {
 
     var show = function() {
         var data = {
-            version: urlNotifier.config.version(),
-            pattern: urlNotifier.data.sortByMessage(urlNotifier.storage.getAll())
+            version: urlNotification.config.version(),
+            pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll())
         };
         var jsonString = JSON.stringify(data, null, 4);
 
@@ -180,13 +180,13 @@ var importComponent = (function() {
                 return;
             }
 
-            if (urlNotifier.validator.forImportJson(json) === false) {
+            if (urlNotification.validator.forImportJson(json) === false) {
                 message.show(error.invalidJson);
 
                 return;
             }
 
-            urlNotifier.importer.importJson(json);
+            urlNotification.importer.importJson(json);
 
             modal.hide();
             patternListComponent.show();
@@ -202,7 +202,7 @@ var importComponent = (function() {
 var patternListComponent = (function() {
     var show = function() {
         var listArea = $("#js_list_pattern");
-        var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
+        var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
         $("#js_pattern_list_badge").text(sorted.length);
 
@@ -311,8 +311,8 @@ var patternForm = (function() {
         return {
             url: "",
             message: "",
-            backgroundColor: urlNotifier.config.defaultBackgroundColor(),
-            displayPosition: urlNotifier.config.defaultDisplayPosition(),
+            backgroundColor: urlNotification.config.defaultBackgroundColor(),
+            displayPosition: urlNotification.config.defaultDisplayPosition(),
         };
     };
 
@@ -389,22 +389,22 @@ var patternForm = (function() {
             };
 
             if (mode === "add") {
-                if (urlNotifier.storage.findByUrl(url)) {
+                if (urlNotification.storage.findByUrl(url)) {
                     message.show(error.duplicated);
                     return;
                 }
 
-                urlNotifier.storage.addPattern(saveData);
+                urlNotification.storage.addPattern(saveData);
                 end();
             }
 
             if (mode === "edit") {
-                if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
+                if (original.url !== url && urlNotification.storage.findByUrl(url)) {
                     message.show(error.duplicated);
                     return;
                 }
 
-                urlNotifier.storage.updatePattern(original.url, saveData);
+                urlNotification.storage.updatePattern(original.url, saveData);
                 end();
             }
         };
@@ -466,7 +466,7 @@ var deleteForm = (function() {
     };
 
     var submit = function() {
-        urlNotifier.storage.deletePattern({
+        urlNotification.storage.deletePattern({
             url: current.pattern
         });
         modal.hide();

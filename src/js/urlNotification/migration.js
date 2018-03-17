@@ -1,26 +1,26 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migration = (function() {
+urlNotification.migration = (function() {
     var hasVersion = function() {
-        return urlNotifier.storage.hasVersion();
+        return urlNotification.storage.hasVersion();
     };
 
     var currentVersion = function() {
-        return urlNotifier.storage.currentVersion();
+        return urlNotification.storage.currentVersion();
     };
 
     var shouldMigrate = function() {
-        return currentVersion() < urlNotifier.config.version();
+        return currentVersion() < urlNotification.config.version();
     };
 
     var migrateFrom = function(currentVersion) {
         var result = [];
 
-        urlNotifier.storage.getAll().forEach(function(item) {
-            result.push(urlNotifier.migrationExecuter.from(currentVersion, item));
+        urlNotification.storage.getAll().forEach(function(item) {
+            result.push(urlNotification.migrationExecuter.from(currentVersion, item));
         });
 
-        urlNotifier.storage.replace(currentVersion + 1, result);
+        urlNotification.storage.replace(currentVersion + 1, result);
     };
 
     return {
