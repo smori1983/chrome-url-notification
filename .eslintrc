@@ -13,7 +13,7 @@
         "urlNotifier": true
     },
     "rules": {
-        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-console": ["error", { "allow": ["info", "warn", "error"] }],
         "eqeqeq": "error"
     }
 }
