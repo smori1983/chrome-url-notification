@@ -47,6 +47,7 @@ gulp.task("vendor:js", function(cb) {
             require: [
                 "extend",
                 "jsonschema",
+                "lodash",
             ]
         }).bundle(),
         source("vendor.js"),

@@ -27,12 +27,15 @@
     "gulp-eslint": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
-    "jsonschema": "*",
     "node-qunit-phantomjs": "*",
     "pump": "*",
     "run-sequence": "*",
     "sprintf-js": "*",
     "vinyl-source-stream": "*",
     "watch": "*"
+  },
+  "dependencies": {
+    "jsonschema": "*",
+    "lodash": "^4.17.5"
   }
 }
