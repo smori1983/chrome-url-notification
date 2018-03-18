@@ -1,12 +1,12 @@
-QUnit.module("urlNotifier.background", {
+QUnit.module("urlNotification.background", {
     beforeEach: function() {
         localStorage.clear();
 
-        urlNotifier.storage.addPattern({ url: "http://example.com/1", msg: "1" });
-        urlNotifier.storage.addPattern({ url: "http://example.com/2", msg: "2" });
-        urlNotifier.storage.addPattern({ url: "http://example.com/3", msg: "3" });
+        urlNotification.storage.addPattern({ url: "http://example.com/1", msg: "1" });
+        urlNotification.storage.addPattern({ url: "http://example.com/2", msg: "2" });
+        urlNotification.storage.addPattern({ url: "http://example.com/3", msg: "3" });
 
-        urlNotifier.background.migrate();
+        urlNotification.background.migrate();
     },
     afterEach: function() {
         localStorage.clear();
@@ -14,19 +14,20 @@ QUnit.module("urlNotifier.background", {
 });
 
 QUnit.test("background.find() - 該当データなし", function(assert) {
-    var result = urlNotifier.background.find("hoge");
+    var result = urlNotification.background.find("hoge");
 
     assert.equal(result.matched, false);
     assert.equal(result.data, null);
 });
 
 QUnit.test("background.find() - 該当データあり", function(assert) {
-    var result = urlNotifier.background.find("http://example.com/1");
+    var result = urlNotification.background.find("http://example.com/1");
 
     var expectedData = {
         message: "1",
         backgroundColor: "000000",
-        fontColor: "ffffff"
+        fontColor: "ffffff",
+        displayPosition: "top",
     };
 
     assert.equal(result.matched, true);

@@ -1,9 +1,9 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.finder = (function() {
+urlNotification.finder = (function() {
 
     var find = function(url) {
-        var i, len, patterns = urlNotifier.storage.getAll();
+        var i, len, patterns = urlNotification.storage.getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (makeRegExp(patterns[i].url).test(url)) {
@@ -20,11 +20,11 @@ urlNotifier.finder = (function() {
 
     var convertForMatching = function(url) {
         return url.
-            replace(/\/|\.|\-|\+|\?/g, function(matched) {
+            replace(/\/|\.|-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
-                return "[0-9a-zA-Z\-_]+";
+                return "[0-9a-zA-Z-_]+";
             });
     };
 

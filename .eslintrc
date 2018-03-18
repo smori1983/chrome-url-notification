@@ -4,13 +4,17 @@
         "browser": true
     },
     "globals": {
+        "_": true,
         "chrome": true,
+        "Clipboard": true,
         "localStorage": true,
         "$": true,
         "QUnit": true,
-        "urlNotifier": true
+        "require": true,
+        "urlNotification": true
     },
     "rules": {
+        "no-console": ["error", { "allow": ["info", "warn", "error"] }],
         "eqeqeq": "error"
     }
 }

@@ -1,6 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.data = (function() {
+urlNotification.data = (function() {
     var sortByUrl = function(patterns) {
         return patterns.sort(function(a, b) {
             return (a.url < b.url) ? -1 : 1;

@@ -1,4 +1,4 @@
-QUnit.module("urlNotifier.data", {
+QUnit.module("urlNotification.data", {
     beforeEach: function() {
         localStorage.clear();
     },
@@ -14,7 +14,7 @@ QUnit.test("URLソート 整数の比較", function(assert) {
         { url: "http://example.com/3", msg: "3" }
     ];
 
-    var sorted = urlNotifier.data.sortByUrl(patterns);
+    var sorted = urlNotification.data.sortByUrl(patterns);
 
     assert.equal(3, sorted.length);
     assert.equal(sorted[0].msg, "1");
@@ -29,7 +29,7 @@ QUnit.test("URLソート 整数と'*'の比較", function(assert) {
         { url: "http://example.com/*", msg: "*" }
     ];
 
-    var sorted = urlNotifier.data.sortByUrl(patterns);
+    var sorted = urlNotification.data.sortByUrl(patterns);
 
     assert.equal(3, sorted.length);
     assert.equal(sorted[0].msg, "*");
@@ -44,7 +44,7 @@ QUnit.test("メッセージソート", function(assert) {
         { url: "http://example.com/3", msg: "one" }
     ];
 
-    var sorted = urlNotifier.data.sortByMessage(patterns);
+    var sorted = urlNotification.data.sortByMessage(patterns);
 
     assert.equal(3, sorted.length);
     assert.equal("one", sorted[0].msg);

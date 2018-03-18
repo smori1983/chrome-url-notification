@@ -36,7 +36,6 @@ var util = (function() {
                 timeoutId = null;
                 hide();
             }, 3000);
-
         };
 
         var hide = function() {
@@ -111,8 +110,8 @@ var exportComponent = (function() {
 
     var show = function() {
         var data = {
-            version: urlNotifier.config.version(),
-            pattern: urlNotifier.data.sortByMessage(urlNotifier.storage.getAll())
+            version: urlNotification.config.version(),
+            pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll())
         };
         var jsonString = JSON.stringify(data, null, 4);
 
@@ -175,46 +174,22 @@ var importComponent = (function() {
             try {
                 json = JSON.parse(jsonText);
             } catch (e) {
-                console.log(e);
+                console.warn(e);
                 message.show(error.invalidJson);
 
                 return;
             }
 
-            if (urlNotifier.validator.forImportJson(json) === false) {
+            if (urlNotification.validator.forImportJson(json) === false) {
                 message.show(error.invalidJson);
 
                 return;
             }
 
-            importJson(json);
+            urlNotification.importer.importJson(json);
 
             modal.hide();
             patternListComponent.show();
-        };
-    })();
-
-    var importJson = (function() {
-        var prepare = function(item) {
-            return {
-                url: item.url,
-                msg: item.msg,
-                backgroundColor: item.backgroundColor
-            };
-        };
-
-        var addOrUpdate = function(data) {
-            if (urlNotifier.storage.findByUrl(data.url)) {
-                urlNotifier.storage.updatePattern(data.url, data);
-            } else {
-                urlNotifier.storage.addPattern(data);
-            }
-        };
-
-        return function(json) {
-            json.pattern.forEach(function(item) {
-                addOrUpdate(prepare(item));
-            });
         };
     })();
 
@@ -227,7 +202,7 @@ var importComponent = (function() {
 var patternListComponent = (function() {
     var show = function() {
         var listArea = $("#js_list_pattern");
-        var sorted = urlNotifier.data.sortByMessage(urlNotifier.storage.getAll());
+        var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
         $("#js_pattern_list_badge").text(sorted.length);
 
@@ -288,7 +263,8 @@ var patternListComponent = (function() {
                 patternForm.show("add", {
                     url: item.url,
                     message: item.msg,
-                    backgroundColor: item.backgroundColor
+                    backgroundColor: item.backgroundColor,
+                    displayPosition: item.displayPosition,
                 });
             });
         };
@@ -299,7 +275,8 @@ var patternListComponent = (function() {
                 patternForm.show("edit", {
                     url: item.url,
                     message: item.msg,
-                    backgroundColor: item.backgroundColor
+                    backgroundColor: item.backgroundColor,
+                    displayPosition: item.displayPosition,
                 });
             });
         };
@@ -334,7 +311,8 @@ var patternForm = (function() {
         return {
             url: "",
             message: "",
-            backgroundColor: urlNotifier.config.defaultBackgroundColor()
+            backgroundColor: urlNotification.config.defaultBackgroundColor(),
+            displayPosition: urlNotification.config.defaultDisplayPosition(),
         };
     };
 
@@ -347,6 +325,7 @@ var patternForm = (function() {
         $("#js_input_msg").val(formValues.message);
         $("#js_input_backgroundcolor").val("#" + formValues.backgroundColor);
         $("#js_colorpicker").colorpicker("setValue", "#" + formValues.backgroundColor);
+        $("input[name=display_position]").val([formValues.displayPosition]);
     };
 
     var modal = null;
@@ -395,8 +374,9 @@ var patternForm = (function() {
             var url = trimValue("#js_input_url");
             var msg = trimValue("#js_input_msg");
             var backgroundColor = trimValue("#js_input_backgroundcolor");
+            var displayPosition = trimValue("input[name=display_position]:checked");
 
-            if (url === "" || msg === "" || backgroundColor === "") {
+            if (url === "" || msg === "" || backgroundColor === "" || displayPosition === "") {
                 message.show(error.required);
                 return;
             }
@@ -404,26 +384,27 @@ var patternForm = (function() {
             var saveData = {
                 url: url,
                 msg: msg,
-                backgroundColor: backgroundColor.replace(/^#/, "")
+                backgroundColor: backgroundColor.replace(/^#/, ""),
+                displayPosition: displayPosition,
             };
 
             if (mode === "add") {
-                if (urlNotifier.storage.findByUrl(url)) {
+                if (urlNotification.storage.findByUrl(url)) {
                     message.show(error.duplicated);
                     return;
                 }
 
-                urlNotifier.storage.addPattern(saveData);
+                urlNotification.storage.addPattern(saveData);
                 end();
             }
 
             if (mode === "edit") {
-                if (original.url !== url && urlNotifier.storage.findByUrl(url)) {
+                if (original.url !== url && urlNotification.storage.findByUrl(url)) {
                     message.show(error.duplicated);
                     return;
                 }
 
-                urlNotifier.storage.updatePattern(original.url, saveData);
+                urlNotification.storage.updatePattern(original.url, saveData);
                 end();
             }
         };
@@ -453,6 +434,7 @@ var patternForm = (function() {
          * - url
          * - message
          * - backgroundColor
+         * - displayPosition
          */
         show: function(mode, formValues) {
             show(mode, formValues);
@@ -484,7 +466,7 @@ var deleteForm = (function() {
     };
 
     var submit = function() {
-        urlNotifier.storage.deletePattern({
+        urlNotification.storage.deletePattern({
             url: current.pattern
         });
         modal.hide();

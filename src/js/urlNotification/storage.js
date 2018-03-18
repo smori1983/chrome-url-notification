@@ -1,8 +1,37 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.storage = (function() {
+urlNotification.storage = (function() {
     var key = {
-        pattern: "pattern"
+        version: "version",
+        pattern: "pattern",
+    };
+
+    var hasVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return false;
+        }
+
+        return /^\d+$/.test(version);
+    };
+
+    var currentVersion = function() {
+        var version = localStorage.getItem(key.version);
+
+        if (version === null) {
+            return 0;
+        }
+
+        if (/^\d+$/.test(version)) {
+            return parseInt(version, 10);
+        }
+
+        return 0;
+    };
+
+    var updateVersion = function(version) {
+        localStorage.setItem(key.version, version);
     };
 
     var update = function(data) {
@@ -74,6 +103,13 @@ urlNotifier.storage = (function() {
     };
 
     return {
+        hasVersion: function() {
+            return hasVersion();
+        },
+        currentVersion: function() {
+            return currentVersion();
+        },
+
         getCount: function() {
             return getCount();
         },
@@ -104,6 +140,11 @@ urlNotifier.storage = (function() {
 
         deleteAll: function() {
             deleteAll();
+        },
+
+        replace: function(version, pattern) {
+            updateVersion(version);
+            update(pattern);
         }
     };
 })();

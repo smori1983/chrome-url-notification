@@ -4,7 +4,8 @@
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
-    "build": "gulp clean; gulp make; gulp dist;",
+    "build:prod": "cross-env EXTENSION_MODE=production gulp build",
+    "build:dev": "cross-env EXTENSION_MODE=development gulp build",
     "make": "gulp make",
     "vendor:js": "gulp vendor:js",
     "test": "gulp test",
@@ -17,18 +18,24 @@
   },
   "devDependencies": {
     "browserify": "*",
+    "cross-env": "*",
     "del": "*",
     "dotenv": "*",
+    "extend": "*",
     "gulp": "^3.9.1",
     "gulp-concat": "*",
     "gulp-eslint": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
-    "jsonschema": "*",
     "node-qunit-phantomjs": "*",
     "pump": "*",
+    "run-sequence": "*",
     "sprintf-js": "*",
-    "watch": "*",
-    "vinyl-source-stream": "*"
+    "vinyl-source-stream": "*",
+    "watch": "*"
+  },
+  "dependencies": {
+    "jsonschema": "*",
+    "lodash": "^4.17.5"
   }
 }

@@ -1,7 +1,7 @@
-QUnit.module("urlNotifier.validator.importJson.v1", {
+QUnit.module("urlNotification.validator.importJson.v1", {
     beforeEach: function() {
         this.isValid = function(json) {
-            return urlNotifier.validator.forImportJson(json);
+            return urlNotification.validator.forImportJson(json);
         };
     },
     afterEach: function() {

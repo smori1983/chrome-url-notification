@@ -1,8 +1,6 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migration = urlNotifier.migration || {};
-
-urlNotifier.migration.executer = (function() {
+urlNotification.migrationExecuter = (function() {
     /**
      * Migration from 0 to 1
      *
@@ -10,14 +8,28 @@ urlNotifier.migration.executer = (function() {
      */
     var for0 = function(item) {
         if (typeof item.backgroundColor === "undefined") {
-            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+            item.backgroundColor = urlNotification.config.defaultBackgroundColor();
+        }
+
+        return item;
+    };
+
+    /**
+     * Migration from 1 to 2
+     *
+     * - set default display position
+     */
+    var for1 = function(item) {
+        if (typeof item.displayPosition === "undefined") {
+            item.displayPosition = urlNotification.config.defaultDisplayPosition();
         }
 
         return item;
     };
 
     var converters = {
-        0: for0
+        0: for0,
+        1: for1,
     };
 
     var execute = function(fromVersion, item) {

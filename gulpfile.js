@@ -5,20 +5,49 @@ var gulp = require("gulp");
 var concat = require("gulp-concat");
 var del = require("del");
 var eslint = require("gulp-eslint");
+var fs = require("fs");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
 var qunit = require("node-qunit-phantomjs");
+var runSequence = require("run-sequence");
 var source = require("vinyl-source-stream");
 var sprintf = require("sprintf-js").sprintf;
 
-var dist = process.env.EXTENSION_DIST || "dist";
+var forProduction = (function() {
+    var mode = process.env.EXTENSION_MODE || "development";
+
+    return mode === "production";
+})();
+
+var dist = (function() {
+    var baseDir = process.env.EXTENSION_DIST || "dist";
+
+    if (forProduction) {
+        var manifest = JSON.parse(fs.readFileSync("src/manifest.json"));
+
+        return sprintf("%s/chrome-url-notification-v%s", baseDir, manifest.version);
+    } else {
+        return sprintf("%s/chrome-url-notification-dev", baseDir);
+    }
+})();
+
+gulp.task("build", function(cb) {
+    runSequence(
+        "clean",
+        "make",
+        "dist",
+        cb
+    );
+});
 
 gulp.task("vendor:js", function(cb) {
     pump([
         browserify({
             require: [
-                "jsonschema"
+                "extend",
+                "jsonschema",
+                "lodash",
             ]
         }).bundle(),
         source("vendor.js"),
@@ -26,8 +55,8 @@ gulp.task("vendor:js", function(cb) {
     ], cb);
 });
 
-gulp.task("clean", function(db) {
-    del.sync([
+gulp.task("clean", function(cb) {
+    return del([
         sprintf("%s/**", dist),
         sprintf("!%s", dist)
     ], { force: true });
@@ -37,8 +66,10 @@ gulp.task("make", ["concat"]);
 
 gulp.task("concat", function(cb) {
     pump([
-        gulp.src("./src/js/urlNotifier/*.js"),
-        concat("urlNotifier.js"),
+        gulp.src([
+            "./src/js/urlNotification/*.js",
+        ]),
+        concat("urlNotification.js"),
         gulp.dest("./src/js")
     ], cb);
 });
@@ -64,7 +95,7 @@ gulp.task("lint", function() {
     pump([
         gulp.src([
             "src/js/**/*.js",
-            "!src/js/urlNotifier.js",
+            "!src/js/urlNotification.js",
             "!src/js/jquery-1.9.1.min.js",
             "!src/js/vendor.js",
             "tests/**/*.js",

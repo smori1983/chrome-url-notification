@@ -1,9 +1,9 @@
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.background = (function() {
+urlNotification.background = (function() {
     var migrate = function() {
-        while (urlNotifier.migration.shouldMigrate()) {
-            urlNotifier.migration.migrateFrom(urlNotifier.migration.currentVersion());
+        while (urlNotification.migration.shouldMigrate()) {
+            urlNotification.migration.migrateFrom(urlNotification.migration.currentVersion());
         }
     };
 
@@ -14,12 +14,13 @@ urlNotifier.background = (function() {
             data: null
         };
 
-        if ((item = urlNotifier.finder.findFor(pattern)) !== null) {
+        if ((item = urlNotification.finder.findFor(pattern)) !== null) {
             result.matched = true;
             result.data = {
                 message: item.msg,
                 backgroundColor: item.backgroundColor,
-                fontColor: "ffffff"
+                fontColor: "ffffff",
+                displayPosition: item.displayPosition,
             };
         }
 
@@ -36,15 +37,20 @@ urlNotifier.background = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.config = (function() {
-    var version = 1;
+urlNotification.config = (function() {
+    var version = 2;
 
     /**
      * used for migration from 0 to 1
      */
     var defaultBackgroundColor = "000000";
+
+    /**
+     * used for migration from 1 to 2
+     */
+    var defaultDisplayPosition = "top";
 
     return {
         version: function() {
@@ -52,13 +58,16 @@ urlNotifier.config = (function() {
         },
         defaultBackgroundColor: function() {
             return defaultBackgroundColor;
+        },
+        defaultDisplayPosition: function() {
+            return defaultDisplayPosition;
         }
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.data = (function() {
+urlNotification.data = (function() {
     var sortByUrl = function(patterns) {
         return patterns.sort(function(a, b) {
             return (a.url < b.url) ? -1 : 1;
@@ -85,12 +94,12 @@ urlNotifier.data = (function() {
     }
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.finder = (function() {
+urlNotification.finder = (function() {
 
     var find = function(url) {
-        var i, len, patterns = urlNotifier.storage.getAll();
+        var i, len, patterns = urlNotification.storage.getAll();
 
         for (i = 0, len = patterns.length; i < len; i++) {
             if (makeRegExp(patterns[i].url).test(url)) {
@@ -107,11 +116,11 @@ urlNotifier.finder = (function() {
 
     var convertForMatching = function(url) {
         return url.
-            replace(/\/|\.|\-|\+|\?/g, function(matched) {
+            replace(/\/|\.|-|\+|\?/g, function(matched) {
                 return "\\" + matched;
             }).
             replace(/\*/g, function() {
-                return "[0-9a-zA-Z\-_]+";
+                return "[0-9a-zA-Z-_]+";
             });
     };
 
@@ -122,11 +131,124 @@ urlNotifier.finder = (function() {
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migration = urlNotifier.migration || {};
+urlNotification.importer = (function() {
+    var _ = require("lodash");
 
-urlNotifier.migration.executer = (function() {
+    var prepareFor1 = function(item) {
+        return {
+            url: item.url,
+            msg: item.msg,
+            backgroundColor: item.backgroundColor,
+        };
+    };
+
+    var prepareFor2 = function(item) {
+        return {
+            url: item.url,
+            msg: item.msg,
+            backgroundColor: item.backgroundColor,
+            displayPosition: item.displayPosition,
+        };
+    };
+
+    var prepares = {
+        1: prepareFor1,
+        2: prepareFor2,
+    };
+
+    var migrate = function(pattern, version) {
+        var result = [];
+
+        pattern.forEach(function(item) {
+            result.push(urlNotification.migrationExecuter.from(version, item));
+        });
+
+        return result;
+    };
+
+    var addOrUpdate = function(data) {
+        if (urlNotification.storage.findByUrl(data.url)) {
+            urlNotification.storage.updatePattern(data.url, data);
+        } else {
+            urlNotification.storage.addPattern(data);
+        }
+    };
+
+    var importJson = function(initialJson) {
+        var json = _.cloneDeep(initialJson);
+
+        console.info("Import start.");
+
+        while (urlNotification.config.version() > json.version) {
+            console.info("Migrate from scheme version " + json.version);
+
+            json.pattern = migrate(json.pattern, json.version);
+            json.version += 1;
+        }
+
+        json.pattern.forEach(function(item) {
+            addOrUpdate(prepares[json.version](item));
+        });
+
+        console.info("Import done.");
+    };
+
+    return {
+        /**
+         * Assumes that json is validated.
+         */
+        importJson: function(json) {
+            importJson(json);
+        }
+    }
+})();
+
+var urlNotification = urlNotification || {};
+
+urlNotification.migration = (function() {
+    var hasVersion = function() {
+        return urlNotification.storage.hasVersion();
+    };
+
+    var currentVersion = function() {
+        return urlNotification.storage.currentVersion();
+    };
+
+    var shouldMigrate = function() {
+        return currentVersion() < urlNotification.config.version();
+    };
+
+    var migrateFrom = function(currentVersion) {
+        var result = [];
+
+        urlNotification.storage.getAll().forEach(function(item) {
+            result.push(urlNotification.migrationExecuter.from(currentVersion, item));
+        });
+
+        urlNotification.storage.replace(currentVersion + 1, result);
+    };
+
+    return {
+        hasVersion: function() {
+            return hasVersion();
+        },
+        currentVersion: function() {
+            return currentVersion();
+        },
+        shouldMigrate: function() {
+            return shouldMigrate();
+        },
+        migrateFrom: function(currentVersion) {
+            migrateFrom(currentVersion);
+        }
+    };
+})();
+
+var urlNotification = urlNotification || {};
+
+urlNotification.migrationExecuter = (function() {
     /**
      * Migration from 0 to 1
      *
@@ -134,14 +256,28 @@ urlNotifier.migration.executer = (function() {
      */
     var for0 = function(item) {
         if (typeof item.backgroundColor === "undefined") {
-            item.backgroundColor = urlNotifier.config.defaultBackgroundColor();
+            item.backgroundColor = urlNotification.config.defaultBackgroundColor();
+        }
+
+        return item;
+    };
+
+    /**
+     * Migration from 1 to 2
+     *
+     * - set default display position
+     */
+    var for1 = function(item) {
+        if (typeof item.displayPosition === "undefined") {
+            item.displayPosition = urlNotification.config.defaultDisplayPosition();
         }
 
         return item;
     };
 
     var converters = {
-        0: for0
+        0: for0,
+        1: for1,
     };
 
     var execute = function(fromVersion, item) {
@@ -159,12 +295,12 @@ urlNotifier.migration.executer = (function() {
     }
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.migration = (function() {
+urlNotification.storage = (function() {
     var key = {
         version: "version",
-        pattern: "pattern"
+        pattern: "pattern",
     };
 
     var hasVersion = function() {
@@ -185,51 +321,14 @@ urlNotifier.migration = (function() {
         }
 
         if (/^\d+$/.test(version)) {
-            return version;
+            return parseInt(version, 10);
         }
 
         return 0;
     };
 
-    var shouldMigrate = function() {
-        return currentVersion() < urlNotifier.config.version();
-    };
-
-    var migrateFrom = function(currentVersion) {
-        var result = [];
-        var data;
-
-        if ((data = localStorage.getItem(key.pattern)) !== null) {
-            JSON.parse(data).forEach(function(item) {
-                result.push(urlNotifier.migration.executer.from(currentVersion, item));
-            });
-        }
-
-        localStorage.setItem(key.pattern, JSON.stringify(result));
-        localStorage.setItem(key.version, currentVersion + 1);
-    };
-
-    return {
-        hasVersion: function() {
-            return hasVersion();
-        },
-        currentVersion: function() {
-            return currentVersion();
-        },
-        shouldMigrate: function() {
-            return shouldMigrate();
-        },
-        migrateFrom: function(currentVersion) {
-            migrateFrom(currentVersion);
-        }
-    };
-})();
-
-var urlNotifier = urlNotifier || {};
-
-urlNotifier.storage = (function() {
-    var key = {
-        pattern: "pattern"
+    var updateVersion = function(version) {
+        localStorage.setItem(key.version, version);
     };
 
     var update = function(data) {
@@ -301,6 +400,13 @@ urlNotifier.storage = (function() {
     };
 
     return {
+        hasVersion: function() {
+            return hasVersion();
+        },
+        currentVersion: function() {
+            return currentVersion();
+        },
+
         getCount: function() {
             return getCount();
         },
@@ -331,13 +437,20 @@ urlNotifier.storage = (function() {
 
         deleteAll: function() {
             deleteAll();
+        },
+
+        replace: function(version, pattern) {
+            updateVersion(version);
+            update(pattern);
         }
     };
 })();
 
-var urlNotifier = urlNotifier || {};
+var urlNotification = urlNotification || {};
 
-urlNotifier.validator = (function() {
+urlNotification.validator = (function() {
+    var extend = require("extend");
+
     var create = function() {
         return new (require("jsonschema").Validator)();
     };
@@ -350,7 +463,7 @@ urlNotifier.validator = (function() {
                     "required": true,
                     "type": "integer",
                     "minimum": 1,
-                    "maximum": urlNotifier.config.version()
+                    "maximum": urlNotification.config.version()
                 },
                 "pattern": {
                     "required": true,
@@ -367,35 +480,54 @@ urlNotifier.validator = (function() {
     var patternBase = function() {
         return {
             "type": "array",
-            "items": { "$ref": "/item" }
-         };
+            "items": { "$ref": "/item" },
+        };
+    };
+
+    var patternTemplate = function() {
+        return {
+            "id": "/item",
+            "properties": {},
+        };
     };
 
     var patternV1 = function() {
-        return {
-            "id": "/item",
+        return extend(patternTemplate(), {
             "properties": {
                 "url": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "msg": {
                     "required": true,
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
                 },
                 "backgroundColor": {
                     "required": true,
                     "type": "string",
-                    "pattern": /^[0-9a-f]{6}$/i
-                }
-            }
-        };
+                    "pattern": /^[0-9a-f]{6}$/i,
+                },
+            },
+        });
+    };
+
+    var patternV2 = function() {
+        return extend(patternV1(), {
+            "properties": {
+                "displayPosition": {
+                    "required": true,
+                    "type": "string",
+                    "pattern": /^(bottom|top)$/,
+                },
+            },
+        });
     };
 
     var patterns = {
-        1: patternV1
+        1: patternV1,
+        2: patternV2,
     };
 
     var patternFor = function(version) {
