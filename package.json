@@ -35,7 +35,7 @@
     "watch": "*"
   },
   "dependencies": {
-    "jsonschema": "*",
+    "jsonschema": "^1.2.4",
     "lodash": "^4.17.5"
   }
 }
