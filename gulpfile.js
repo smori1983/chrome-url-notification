@@ -10,7 +10,6 @@ var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
 var qunit = require("node-qunit-phantomjs");
-var runSequence = require("run-sequence");
 var source = require("vinyl-source-stream");
 var sprintf = require("sprintf-js").sprintf;
 
@@ -31,15 +30,6 @@ var dist = (function() {
         return sprintf("%s/chrome-url-notification-dev", baseDir);
     }
 })();
-
-gulp.task("build", function(cb) {
-    runSequence(
-        "clean",
-        "make",
-        "dist",
-        cb
-    );
-});
 
 gulp.task("vendor:js", function(cb) {
     pump([
@@ -62,8 +52,6 @@ gulp.task("clean", function(cb) {
     ], { force: true });
 });
 
-gulp.task("make", ["concat"]);
-
 gulp.task("concat", function(cb) {
     pump([
         gulp.src([
@@ -73,6 +61,8 @@ gulp.task("concat", function(cb) {
         gulp.dest("./src/js")
     ], cb);
 });
+
+gulp.task("make", gulp.series("concat"));
 
 gulp.task("dist", function(cb) {
     pump([
@@ -87,11 +77,9 @@ gulp.task("dist", function(cb) {
     ], cb);
 });
 
-gulp.task("test", ["lint"], function() {
-    qunit("./tests/test.html");
-});
+gulp.task("build", gulp.series("clean", "make", "dist"));
 
-gulp.task("lint", function() {
+gulp.task("lint", function(cb) {
     pump([
         gulp.src([
             "src/js/**/*.js",
@@ -105,4 +93,10 @@ gulp.task("lint", function() {
         eslint.format(),
         eslint.failAfterError()
     ]);
+    cb();
 });
+
+gulp.task("test", gulp.series("lint", function(cb) {
+    qunit("./tests/test.html");
+    cb();
+}));
