@@ -10,7 +10,6 @@ var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var pump = require("pump");
 var qunit = require("node-qunit-phantomjs");
-var runSequence = require("run-sequence");
 var source = require("vinyl-source-stream");
 var sprintf = require("sprintf-js").sprintf;
 
