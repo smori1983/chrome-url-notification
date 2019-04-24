@@ -1,25 +1,25 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.validator = (function() {
-  var extend = require("extend");
+  var extend = require('extend');
 
   var create = function() {
-    return new (require("jsonschema").Validator)();
+    return new (require('jsonschema').Validator)();
   };
 
   var importJsonEssential = function(json) {
     var schema = {
-      "type": "object",
-      "properties": {
-        "version": {
-          "required": true,
-          "type": "integer",
-          "minimum": 1,
-          "maximum": urlNotification.config.version(),
+      'type': 'object',
+      'properties': {
+        'version': {
+          'required': true,
+          'type': 'integer',
+          'minimum': 1,
+          'maximum': urlNotification.config.version(),
         },
-        "pattern": {
-          "required": true,
-          "type": "array",
+        'pattern': {
+          'required': true,
+          'type': 'array',
         },
       },
     };
@@ -31,35 +31,35 @@ urlNotification.validator = (function() {
 
   var patternBase = function() {
     return {
-      "type": "array",
-      "items": { "$ref": "/item" },
+      'type': 'array',
+      'items': { '$ref': '/item' },
     };
   };
 
   var patternTemplate = function() {
     return {
-      "id": "/item",
-      "properties": {},
+      'id': '/item',
+      'properties': {},
     };
   };
 
   var patternV1 = function() {
     return extend(patternTemplate(), {
-      "properties": {
-        "url": {
-          "required": true,
-          "type": "string",
-          "minLength": 1,
+      'properties': {
+        'url': {
+          'required': true,
+          'type': 'string',
+          'minLength': 1,
         },
-        "msg": {
-          "required": true,
-          "type": "string",
-          "minLength": 1,
+        'msg': {
+          'required': true,
+          'type': 'string',
+          'minLength': 1,
         },
-        "backgroundColor": {
-          "required": true,
-          "type": "string",
-          "pattern": /^[0-9a-f]{6}$/i,
+        'backgroundColor': {
+          'required': true,
+          'type': 'string',
+          'pattern': /^[0-9a-f]{6}$/i,
         },
       },
     });
@@ -67,11 +67,11 @@ urlNotification.validator = (function() {
 
   var patternV2 = function() {
     return extend(patternV1(), {
-      "properties": {
-        "displayPosition": {
-          "required": true,
-          "type": "string",
-          "pattern": /^(bottom|top)$/,
+      'properties': {
+        'displayPosition': {
+          'required': true,
+          'type': 'string',
+          'pattern': /^(bottom|top)$/,
         },
       },
     });
@@ -97,7 +97,7 @@ urlNotification.validator = (function() {
       return false;
     }
 
-    validator.addSchema(patternFor(json.version), "/item");
+    validator.addSchema(patternFor(json.version), '/item');
 
     return validator.validate(json.pattern, patternBase()).valid;
   };

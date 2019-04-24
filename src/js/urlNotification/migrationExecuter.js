@@ -7,7 +7,7 @@ urlNotification.migrationExecuter = (function() {
    * - set default background color
    */
   var for0 = function(item) {
-    if (typeof item.backgroundColor === "undefined") {
+    if (typeof item.backgroundColor === 'undefined') {
       item.backgroundColor = urlNotification.config.defaultBackgroundColor();
     }
 
@@ -20,7 +20,7 @@ urlNotification.migrationExecuter = (function() {
    * - set default display position
    */
   var for1 = function(item) {
-    if (typeof item.displayPosition === "undefined") {
+    if (typeof item.displayPosition === 'undefined') {
       item.displayPosition = urlNotification.config.defaultDisplayPosition();
     }
 

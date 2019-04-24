@@ -1,4 +1,4 @@
-QUnit.module("urlNotification.importer.v2", {
+QUnit.module('urlNotification.importer.v2', {
   beforeEach: function() {
     localStorage.clear();
   },
@@ -6,15 +6,15 @@ QUnit.module("urlNotification.importer.v2", {
   },
 });
 
-QUnit.test("import v2 - case 1", function(assert) {
+QUnit.test('import v2 - case 1', function(assert) {
   var json = {
     version: 2,
     pattern: [
       {
-        url: "http://example.com/1",
-        msg: "1",
-        backgroundColor: "111111",
-        displayPosition: "top",
+        url: 'http://example.com/1',
+        msg: '1',
+        backgroundColor: '111111',
+        displayPosition: 'top',
       },
     ],
   };
@@ -25,21 +25,21 @@ QUnit.test("import v2 - case 1", function(assert) {
 
   assert.equal(allData.length, 1);
 
-  assert.equal(allData[0].url, "http://example.com/1");
-  assert.equal(allData[0].msg, "1");
-  assert.equal(allData[0].backgroundColor, "111111");
-  assert.equal(allData[0].displayPosition, "top");
+  assert.equal(allData[0].url, 'http://example.com/1');
+  assert.equal(allData[0].msg, '1');
+  assert.equal(allData[0].backgroundColor, '111111');
+  assert.equal(allData[0].displayPosition, 'top');
 });
 
-QUnit.test("import v2 - case 2", function(assert) {
+QUnit.test('import v2 - case 2', function(assert) {
   var json = {
     version: 2,
     pattern: [
       {
-        url: "http://example.com/2",
-        msg: "2",
-        backgroundColor: "222222",
-        displayPosition: "bottom",
+        url: 'http://example.com/2',
+        msg: '2',
+        backgroundColor: '222222',
+        displayPosition: 'bottom',
       },
     ],
   };
@@ -50,8 +50,8 @@ QUnit.test("import v2 - case 2", function(assert) {
 
   assert.equal(allData.length, 1);
 
-  assert.equal(allData[0].url, "http://example.com/2");
-  assert.equal(allData[0].msg, "2");
-  assert.equal(allData[0].backgroundColor, "222222");
-  assert.equal(allData[0].displayPosition, "bottom");
+  assert.equal(allData[0].url, 'http://example.com/2');
+  assert.equal(allData[0].msg, '2');
+  assert.equal(allData[0].backgroundColor, '222222');
+  assert.equal(allData[0].displayPosition, 'bottom');
 });

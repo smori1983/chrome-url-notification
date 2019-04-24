@@ -1,7 +1,7 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.importer = (function() {
-  var _ = require("lodash");
+  var _ = require('lodash');
 
   var prepareFor1 = function(item) {
     return {
@@ -46,10 +46,10 @@ urlNotification.importer = (function() {
   var importJson = function(initialJson) {
     var json = _.cloneDeep(initialJson);
 
-    console.info("Import start.");
+    console.info('Import start.');
 
     while (urlNotification.config.version() > json.version) {
-      console.info("Migrate from scheme version " + json.version);
+      console.info('Migrate from scheme version ' + json.version);
 
       json.pattern = migrate(json.pattern, json.version);
       json.version += 1;
@@ -59,7 +59,7 @@ urlNotification.importer = (function() {
       addOrUpdate(prepares[json.version](item));
     });
 
-    console.info("Import done.");
+    console.info('Import done.');
   };
 
   return {

@@ -2,8 +2,8 @@ var urlNotification = urlNotification || {};
 
 urlNotification.storage = (function() {
   var key = {
-    version: "version",
-    pattern: "pattern",
+    version: 'version',
+    pattern: 'pattern',
   };
 
   var hasVersion = function() {

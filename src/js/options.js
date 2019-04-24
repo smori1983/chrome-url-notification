@@ -9,11 +9,11 @@ var util = (function() {
     });
 
     var show = function() {
-      $(selector).modal("show");
+      $(selector).modal('show');
     };
 
     var hide = function() {
-      $(selector).modal("hide");
+      $(selector).modal('hide');
     };
 
     return {
@@ -57,21 +57,21 @@ var util = (function() {
 
 var headerComponent = (function() {
   var showVersion = function() {
-    $("#js_version").text("Ver. " + chrome.runtime.getManifest().version);
+    $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
   };
 
   var initEventHandlers = function() {
-    $("#js_button_add_pattern").click(function(e) {
+    $('#js_button_add_pattern').click(function(e) {
       e.preventDefault();
-      patternForm.show("add", {});
+      patternForm.show('add', {});
     });
 
-    $("#js_button_export").click(function(e) {
+    $('#js_button_export').click(function(e) {
       e.preventDefault();
       exportComponent.show();
     });
 
-    $("#js_button_import").click(function(e) {
+    $('#js_button_import').click(function(e) {
       e.preventDefault();
       importComponent.show();
     });
@@ -89,23 +89,23 @@ var exportComponent = (function() {
   var modal = null;
 
   var init = function() {
-    var clipboard = new Clipboard("#js_export_copy");
-    var message = util.buildMessage("#js_export_message");
+    var clipboard = new Clipboard('#js_export_copy');
+    var message = util.buildMessage('#js_export_message');
 
-    clipboard.on("success", function(e) {
+    clipboard.on('success', function(e) {
       e.clearSelection();
-      message.show("コピーしました。");
+      message.show('コピーしました。');
     });
 
-    modal = util.modal("#js_modal_export", {
-      "shown.bs.modal": function() {
-        $("#js_export_display").scrollTop(0);
+    modal = util.modal('#js_modal_export', {
+      'shown.bs.modal': function() {
+        $('#js_export_display').scrollTop(0);
       },
     });
   };
 
   var bindValues = function(values) {
-    $("#js_export_display").html(values.jsonString);
+    $('#js_export_display').html(values.jsonString);
   };
 
   var show = function() {
@@ -130,9 +130,9 @@ var importComponent = (function() {
   var modal = null;
 
   var init = function() {
-    modal = util.modal("#js_modal_import", {
-      "shown.bs.modal": function() {
-        $("#js_form_import_json").focus();
+    modal = util.modal('#js_modal_import', {
+      'shown.bs.modal': function() {
+        $('#js_form_import_json').focus();
       },
     });
   };
@@ -140,7 +140,7 @@ var importComponent = (function() {
   var show = function() {
     clear();
 
-    util.rebind("#js_form_import", "submit", function(e) {
+    util.rebind('#js_form_import', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
@@ -149,19 +149,19 @@ var importComponent = (function() {
   };
 
   var clear = function() {
-    $("#js_form_import_json").val("");
+    $('#js_form_import_json').val('');
   };
 
   var submit = (function() {
     var error = {
-      required: "フォームが未入力です。",
-      invalidJson: "JSONテキストが正しくありません。",
+      required: 'フォームが未入力です。',
+      invalidJson: 'JSONテキストが正しくありません。',
     };
 
-    var message = util.buildMessage("#js_import_message");
+    var message = util.buildMessage('#js_import_message');
 
     return function() {
-      var jsonText = $("#js_form_import_json").val().trim();
+      var jsonText = $('#js_form_import_json').val().trim();
 
       if (jsonText.length === 0) {
         message.show(error.required);
@@ -201,10 +201,10 @@ var importComponent = (function() {
 
 var patternListComponent = (function() {
   var show = function() {
-    var listArea = $("#js_list_pattern");
+    var listArea = $('#js_list_pattern');
     var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
-    $("#js_pattern_list_badge").text(sorted.length);
+    $('#js_pattern_list_badge').text(sorted.length);
 
     listArea.empty();
     $.each(sorted, function(idx, item) {
@@ -214,31 +214,31 @@ var patternListComponent = (function() {
 
   var makeRow = (function() {
     var row = function() {
-      return $("<tr>");
+      return $('<tr>');
     };
 
     var column = function() {
-      return $("<td>");
+      return $('<td>');
     };
 
     var button = function(clazz, text) {
-      return $("<button>").
-        addClass("btn btn-sm").
+      return $('<button>').
+        addClass('btn btn-sm').
         addClass(clazz).
         text(text);
     };
 
     var listMessage = function(item) {
-      return $("<div>").
-        addClass("list-message").
+      return $('<div>').
+        addClass('list-message').
         css(listMessageCss(item)).
         text(item.msg);
     };
 
     var listMessageCss = function(item) {
       return {
-        "background-color": "#" + item.backgroundColor,
-        "color": "#ffffff",
+        'background-color': '#' + item.backgroundColor,
+        'color': '#ffffff',
       };
     };
 
@@ -251,16 +251,16 @@ var patternListComponent = (function() {
     };
 
     var actionColumn = function(item) {
-      return column().addClass("action").
+      return column().addClass('action').
         append(copyButton(item)).
         append(editButton(item)).
         append(deleteButton(item));
     };
 
     var copyButton = function(item) {
-      return button("btn-default", "コピー").click(function(e) {
+      return button('btn-default', 'コピー').click(function(e) {
         e.preventDefault();
-        patternForm.show("add", {
+        patternForm.show('add', {
           url: item.url,
           message: item.msg,
           backgroundColor: item.backgroundColor,
@@ -270,9 +270,9 @@ var patternListComponent = (function() {
     };
 
     var editButton = function(item) {
-      return button("btn-primary", "編集").click(function(e) {
+      return button('btn-primary', '編集').click(function(e) {
         e.preventDefault();
-        patternForm.show("edit", {
+        patternForm.show('edit', {
           url: item.url,
           message: item.msg,
           backgroundColor: item.backgroundColor,
@@ -282,7 +282,7 @@ var patternListComponent = (function() {
     };
 
     var deleteButton = function(item) {
-      return button("btn-danger", "削除").click(function(e) {
+      return button('btn-danger', '削除').click(function(e) {
         e.preventDefault();
         deleteForm.show({
           pattern: item.url,
@@ -309,8 +309,8 @@ var patternListComponent = (function() {
 var patternForm = (function() {
   var defaultValues = function() {
     return {
-      url: "",
-      message: "",
+      url: '',
+      message: '',
       backgroundColor: urlNotification.config.defaultBackgroundColor(),
       displayPosition: urlNotification.config.defaultDisplayPosition(),
     };
@@ -321,11 +321,11 @@ var patternForm = (function() {
   var original = null;
 
   var bindValues = function(formValues) {
-    $("#js_input_url").val(formValues.url);
-    $("#js_input_msg").val(formValues.message);
-    $("#js_input_backgroundcolor").val("#" + formValues.backgroundColor);
-    $("#js_colorpicker").colorpicker("setValue", "#" + formValues.backgroundColor);
-    $("input[name=display_position]").val([formValues.displayPosition]);
+    $('#js_input_url').val(formValues.url);
+    $('#js_input_msg').val(formValues.message);
+    $('#js_input_backgroundcolor').val('#' + formValues.backgroundColor);
+    $('#js_colorpicker').colorpicker('setValue', '#' + formValues.backgroundColor);
+    $('input[name=display_position]').val([formValues.displayPosition]);
   };
 
   var modal = null;
@@ -336,12 +336,12 @@ var patternForm = (function() {
 
     bindValues($.extend(defaultValues(), original));
 
-    util.rebind("#js_input_clear", "click", function(e) {
+    util.rebind('#js_input_clear', 'click', function(e) {
       e.preventDefault();
       clear();
     });
 
-    util.rebind("#js_form_pattern", "submit", function(e) {
+    util.rebind('#js_form_pattern', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
@@ -355,15 +355,15 @@ var patternForm = (function() {
 
   var submit = (function() {
     var error = {
-      required: "未入力の項目があります。",
-      duplicated: "入力されたURLパターンは既に登録されています。",
+      required: '未入力の項目があります。',
+      duplicated: '入力されたURLパターンは既に登録されています。',
     };
 
     var trimValue = function(selector) {
       return $(selector).val().trim();
     };
 
-    var message = util.buildMessage("#js_pattern_message");
+    var message = util.buildMessage('#js_pattern_message');
 
     var end = function() {
       modal.hide();
@@ -371,12 +371,12 @@ var patternForm = (function() {
     };
 
     return function() {
-      var url = trimValue("#js_input_url");
-      var msg = trimValue("#js_input_msg");
-      var backgroundColor = trimValue("#js_input_backgroundcolor");
-      var displayPosition = trimValue("input[name=display_position]:checked");
+      var url = trimValue('#js_input_url');
+      var msg = trimValue('#js_input_msg');
+      var backgroundColor = trimValue('#js_input_backgroundcolor');
+      var displayPosition = trimValue('input[name=display_position]:checked');
 
-      if (url === "" || msg === "" || backgroundColor === "" || displayPosition === "") {
+      if (url === '' || msg === '' || backgroundColor === '' || displayPosition === '') {
         message.show(error.required);
         return;
       }
@@ -384,11 +384,11 @@ var patternForm = (function() {
       var saveData = {
         url: url,
         msg: msg,
-        backgroundColor: backgroundColor.replace(/^#/, ""),
+        backgroundColor: backgroundColor.replace(/^#/, ''),
         displayPosition: displayPosition,
       };
 
-      if (mode === "add") {
+      if (mode === 'add') {
         if (urlNotification.storage.findByUrl(url)) {
           message.show(error.duplicated);
           return;
@@ -398,7 +398,7 @@ var patternForm = (function() {
         end();
       }
 
-      if (mode === "edit") {
+      if (mode === 'edit') {
         if (original.url !== url && urlNotification.storage.findByUrl(url)) {
           message.show(error.duplicated);
           return;
@@ -411,15 +411,15 @@ var patternForm = (function() {
   })();
 
   var init = function() {
-    modal = util.modal("#js_modal_pattern", {
-      "shown.bs.modal": function() {
-        $("#js_input_url").focus();
+    modal = util.modal('#js_modal_pattern', {
+      'shown.bs.modal': function() {
+        $('#js_input_url').focus();
       },
     });
 
-    $("#js_colorpicker").colorpicker({
-      align: "left",
-      format: "hex",
+    $('#js_colorpicker').colorpicker({
+      align: 'left',
+      format: 'hex',
     });
   };
 
@@ -446,8 +446,8 @@ var deleteForm = (function() {
   var current = null;
 
   var bindValues = function(item) {
-    $("#js_form_delete_pattern").text(item.pattern);
-    $("#js_form_delete_message").text(item.message);
+    $('#js_form_delete_pattern').text(item.pattern);
+    $('#js_form_delete_message').text(item.message);
   };
 
   var modal = null;
@@ -457,7 +457,7 @@ var deleteForm = (function() {
 
     bindValues(current);
 
-    util.rebind("#js_form_delete", "submit", function(e) {
+    util.rebind('#js_form_delete', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
@@ -474,7 +474,7 @@ var deleteForm = (function() {
   };
 
   var init = function() {
-    modal = util.modal("#js_modal_delete");
+    modal = util.modal('#js_modal_delete');
   };
 
   return {
@@ -493,7 +493,7 @@ var deleteForm = (function() {
 })();
 
 $(function() {
-  $.validator.addMethod("hexColor", function(value, element) {
+  $.validator.addMethod('hexColor', function(value, element) {
     return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
   });
 
