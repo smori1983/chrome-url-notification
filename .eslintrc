@@ -1,48 +1,48 @@
 {
-    "extends": "eslint:recommended",
-    "env": {
-        "browser": true
-    },
-    "globals": {
-        "_": true,
-        "chrome": true,
-        "Clipboard": true,
-        "localStorage": true,
-        "$": true,
-        "QUnit": true,
-        "require": true,
-        "urlNotification": true
-    },
-    "rules": {
-        "array-bracket-spacing": ["error", "never"],
-        "block-scoped-var": "error",
-        "brace-style": ["error", "1tbs"],
-        "comma-dangle": ["error", {
-            "arrays": "always-multiline",
-            "objects": "always-multiline",
-            "functions": "never"
-        }],
-        "comma-spacing": ["error", {
-            "before": false,
-            "after": true
-        }],
-        "comma-style": ["error", "last"],
-        "computed-property-spacing": ["error", "never"],
-        "curly": ["error", "all"],
-        "eol-last": ["error", "always"],
-        "eqeqeq": "error",
-        "func-call-spacing": ["error", "never"],
-        "indent": ["error", 2],
-        "no-console": ["error", {
-            "allow": ["info", "warn", "error"]
-        }],
-        "no-undef-init": "error",
-        "no-undefined": "error",
-        "no-unused-vars": ["error", {
-            "vars": "all",
-            "args": "none",
-            "caughtErrors": "none"
-        }],
-        "quotes": ["error", "single"]
-    }
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "_": true,
+    "chrome": true,
+    "Clipboard": true,
+    "localStorage": true,
+    "$": true,
+    "QUnit": true,
+    "require": true,
+    "urlNotification": true
+  },
+  "rules": {
+    "array-bracket-spacing": ["error", "never"],
+    "block-scoped-var": "error",
+    "brace-style": ["error", "1tbs"],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "functions": "never"
+    }],
+    "comma-spacing": ["error", {
+      "before": false,
+      "after": true
+    }],
+    "comma-style": ["error", "last"],
+    "computed-property-spacing": ["error", "never"],
+    "curly": ["error", "all"],
+    "eol-last": ["error", "always"],
+    "eqeqeq": "error",
+    "func-call-spacing": ["error", "never"],
+    "indent": ["error", 2],
+    "no-console": ["error", {
+      "allow": ["info", "warn", "error"]
+    }],
+    "no-undef-init": "error",
+    "no-undefined": "error",
+    "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "none",
+      "caughtErrors": "none"
+    }],
+    "quotes": ["error", "single"]
+  }
 }
