@@ -1,150 +1,150 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.storage = (function() {
-    var key = {
-        version: "version",
-        pattern: "pattern",
-    };
+  var key = {
+    version: "version",
+    pattern: "pattern",
+  };
 
-    var hasVersion = function() {
-        var version = localStorage.getItem(key.version);
+  var hasVersion = function() {
+    var version = localStorage.getItem(key.version);
 
-        if (version === null) {
-            return false;
-        }
+    if (version === null) {
+      return false;
+    }
 
-        return /^\d+$/.test(version);
-    };
+    return /^\d+$/.test(version);
+  };
 
-    var currentVersion = function() {
-        var version = localStorage.getItem(key.version);
+  var currentVersion = function() {
+    var version = localStorage.getItem(key.version);
 
-        if (version === null) {
-            return 0;
-        }
+    if (version === null) {
+      return 0;
+    }
 
-        if (/^\d+$/.test(version)) {
-            return parseInt(version, 10);
-        }
+    if (/^\d+$/.test(version)) {
+      return parseInt(version, 10);
+    }
 
-        return 0;
-    };
+    return 0;
+  };
 
-    var updateVersion = function(version) {
-        localStorage.setItem(key.version, version);
-    };
+  var updateVersion = function(version) {
+    localStorage.setItem(key.version, version);
+  };
 
-    var update = function(data) {
-        localStorage.setItem(key.pattern, JSON.stringify(data));
-    };
+  var update = function(data) {
+    localStorage.setItem(key.pattern, JSON.stringify(data));
+  };
 
-    var getCount = function() {
-        return getAll().length;
-    };
+  var getCount = function() {
+    return getAll().length;
+  };
 
-    var getAll = function() {
-        var result = [], data;
+  var getAll = function() {
+    var result = [], data;
 
-        if ((data = localStorage.getItem(key.pattern)) !== null) {
-            JSON.parse(data).forEach(function(item) {
-                result.push(item);
-            });
-        }
+    if ((data = localStorage.getItem(key.pattern)) !== null) {
+      JSON.parse(data).forEach(function(item) {
+        result.push(item);
+      });
+    }
 
-        return result;
-    };
+    return result;
+  };
 
-    var findByUrl = function(url) {
-        var i, len, patterns = getAll();
+  var findByUrl = function(url) {
+    var i, len, patterns = getAll();
 
-        for (i = 0, len = patterns.length; i < len; i++) {
-            if (patterns[i].url === url) {
-                return patterns[i];
-            }
-        }
+    for (i = 0, len = patterns.length; i < len; i++) {
+      if (patterns[i].url === url) {
+        return patterns[i];
+      }
+    }
 
-        return null;
-    };
+    return null;
+  };
 
-    var addPattern = function(pattern) {
-        if (findByUrl(pattern.url)) {
-            return;
-        }
+  var addPattern = function(pattern) {
+    if (findByUrl(pattern.url)) {
+      return;
+    }
 
-        var data = getAll();
+    var data = getAll();
 
-        data.push(pattern);
-        update(data);
-    };
+    data.push(pattern);
+    update(data);
+  };
 
-    var updatePattern = function(originalUrl, pattern) {
-        if (findByUrl(originalUrl) === null) {
-            return;
-        }
+  var updatePattern = function(originalUrl, pattern) {
+    if (findByUrl(originalUrl) === null) {
+      return;
+    }
 
-        deletePattern({ url: originalUrl });
-        addPattern(pattern);
-    };
+    deletePattern({ url: originalUrl });
+    addPattern(pattern);
+  };
 
-    var deletePattern = function(pattern) {
-        var newData = [];
+  var deletePattern = function(pattern) {
+    var newData = [];
 
-        getAll().forEach(function(item) {
-            if (item.url !== pattern.url) {
-                newData.push(item);
-            }
-        });
+    getAll().forEach(function(item) {
+      if (item.url !== pattern.url) {
+        newData.push(item);
+      }
+    });
 
-        update(newData);
-    };
+    update(newData);
+  };
 
-    var deleteAll = function() {
-        update([]);
-    };
+  var deleteAll = function() {
+    update([]);
+  };
 
-    return {
-        hasVersion: function() {
-            return hasVersion();
-        },
-        currentVersion: function() {
-            return currentVersion();
-        },
+  return {
+    hasVersion: function() {
+      return hasVersion();
+    },
+    currentVersion: function() {
+      return currentVersion();
+    },
 
-        getCount: function() {
-            return getCount();
-        },
+    getCount: function() {
+      return getCount();
+    },
 
-        getAll: function() {
-            return getAll();
-        },
+    getAll: function() {
+      return getAll();
+    },
 
-        findByUrl: function(url) {
-            return findByUrl(url);
-        },
+    findByUrl: function(url) {
+      return findByUrl(url);
+    },
 
-        addPattern: function(pattern) {
-            addPattern(pattern);
-        },
+    addPattern: function(pattern) {
+      addPattern(pattern);
+    },
 
-        updatePattern: function(url, pattern) {
-            updatePattern(url, pattern);
-        },
+    updatePattern: function(url, pattern) {
+      updatePattern(url, pattern);
+    },
 
-        /**
-         * pattern
-         * - url
-         */
-        deletePattern: function(pattern) {
-            deletePattern(pattern);
-        },
+    /**
+     * pattern
+     * - url
+     */
+    deletePattern: function(pattern) {
+      deletePattern(pattern);
+    },
 
-        deleteAll: function() {
-            deleteAll();
-        },
+    deleteAll: function() {
+      deleteAll();
+    },
 
-        replace: function(version, pattern) {
-            updateVersion(version);
-            update(pattern);
-        }
-    };
+    replace: function(version, pattern) {
+      updateVersion(version);
+      update(pattern);
+    }
+  };
 })();
