@@ -31,18 +31,26 @@ urlNotification.background = (function() {
 
     if ((item = urlNotification.finder.findFor(pattern)) !== null) {
       result.matched = true;
-      result.data = {
-        message: item.msg,
-        backgroundColor: item.backgroundColor,
-        fontColor: 'ffffff',
-        displayPosition: item.displayPosition,
-      };
+      result.data = createData(item);
     } else {
       result.matched = false;
       result.data = null;
     }
 
     return result;
+  };
+
+  /**
+   * @param {PatternItem} item
+   * @returns {FindResultData}
+   */
+  var createData = function(item) {
+    return {
+      message: item.msg,
+      backgroundColor: item.backgroundColor,
+      fontColor: 'ffffff',
+      displayPosition: item.displayPosition,
+    };
   };
 
   return {
