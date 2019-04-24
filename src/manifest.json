@@ -3,7 +3,7 @@
 
     "name": "Chrome URL Notification",
     "description": "Chrome URL Notification",
-    "version": "2.0.0",
+    "version": "2.1.0",
 
     "content_scripts": [{
         "matches": ["https://*/*", "http://*/*"],
