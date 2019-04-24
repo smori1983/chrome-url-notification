@@ -24,17 +24,9 @@ urlNotification.migration = (function() {
   };
 
   return {
-    hasVersion: function() {
-      return hasVersion();
-    },
-    currentVersion: function() {
-      return currentVersion();
-    },
-    shouldMigrate: function() {
-      return shouldMigrate();
-    },
-    migrateFrom: function(currentVersion) {
-      migrateFrom(currentVersion);
-    },
+    hasVersion: hasVersion,
+    currentVersion: currentVersion,
+    shouldMigrate: shouldMigrate,
+    migrateFrom: migrateFrom,
   };
 })();

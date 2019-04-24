@@ -103,17 +103,7 @@ urlNotification.validator = (function() {
   };
 
   return {
-    /**
-     * @return bool
-     */
-    forImportJsonEssential: function(json) {
-      return importJsonEssential(json);
-    },
-    /**
-     * @return bool
-     */
-    forImportJson: function(json) {
-      return importJson(json);
-    },
+    forImportJsonEssential: importJsonEssential,
+    forImportJson: importJson,
   };
 })();

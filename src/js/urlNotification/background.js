@@ -28,11 +28,7 @@ urlNotification.background = (function() {
   };
 
   return {
-    migrate: function() {
-      migrate();
-    },
-    find: function(pattern) {
-      return find(pattern);
-    },
+    migrate: migrate,
+    find: find,
   };
 })();

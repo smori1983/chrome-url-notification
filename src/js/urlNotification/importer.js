@@ -63,11 +63,6 @@ urlNotification.importer = (function() {
   };
 
   return {
-    /**
-     * Assumes that json is validated.
-     */
-    importJson: function(json) {
-      importJson(json);
-    },
-  }
+    importJson: importJson,
+  };
 })();

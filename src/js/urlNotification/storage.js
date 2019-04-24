@@ -103,45 +103,15 @@ urlNotification.storage = (function() {
   };
 
   return {
-    hasVersion: function() {
-      return hasVersion();
-    },
-    currentVersion: function() {
-      return currentVersion();
-    },
-
-    getCount: function() {
-      return getCount();
-    },
-
-    getAll: function() {
-      return getAll();
-    },
-
-    findByUrl: function(url) {
-      return findByUrl(url);
-    },
-
-    addPattern: function(pattern) {
-      addPattern(pattern);
-    },
-
-    updatePattern: function(url, pattern) {
-      updatePattern(url, pattern);
-    },
-
-    /**
-     * pattern
-     * - url
-     */
-    deletePattern: function(pattern) {
-      deletePattern(pattern);
-    },
-
-    deleteAll: function() {
-      deleteAll();
-    },
-
+    hasVersion: hasVersion,
+    currentVersion: currentVersion,
+    getCount: getCount,
+    getAll: getAll,
+    findByUrl: findByUrl,
+    addPattern: addPattern,
+    updatePattern: updatePattern,
+    deletePattern: deletePattern,
+    deleteAll: deleteAll,
     replace: function(version, pattern) {
       updateVersion(version);
       update(pattern);

@@ -18,11 +18,7 @@ urlNotification.data = (function() {
   };
 
   return {
-    sortByUrl: function(patterns) {
-      return sortByUrl(patterns);
-    },
-    sortByMessage: function(patterns) {
-      return sortByMessage(patterns);
-    },
-  }
+    sortByUrl: sortByUrl,
+    sortByMessage: sortByMessage,
+  };
 })();
