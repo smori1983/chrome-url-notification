@@ -1,5 +1,19 @@
 var urlNotification = urlNotification || {};
 
+/**
+ * @typedef {object} FindResult
+ * @property {boolean} matched
+ * @property {(FindResultData|null)} data Depends on the value of matched
+ */
+
+/**
+ * @typedef {object} FindResultData
+ * @property {string} message
+ * @property {string} backgroundColor
+ * @property {string} fontColor
+ * @property {string} displayPosition
+ */
+
 urlNotification.background = (function() {
   var migrate = function() {
     while (urlNotification.migration.shouldMigrate()) {
@@ -7,6 +21,10 @@ urlNotification.background = (function() {
     }
   };
 
+  /**
+   * @param {string} pattern
+   * @return {FindResult}
+   */
   var find = function(pattern) {
     var item;
     var result = {};

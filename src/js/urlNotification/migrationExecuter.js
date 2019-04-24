@@ -32,6 +32,11 @@ urlNotification.migrationExecuter = (function() {
     1: for1,
   };
 
+  /**
+   * @param {number} fromVersion
+   * @param {PatternItem} item
+   * @returns {PatternItem}
+   */
   var execute = function(fromVersion, item) {
     if (converters.hasOwnProperty(fromVersion)) {
       return converters[fromVersion](item);

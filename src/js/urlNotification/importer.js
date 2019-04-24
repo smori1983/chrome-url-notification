@@ -43,6 +43,11 @@ urlNotification.importer = (function() {
     }
   };
 
+  /**
+   * Assumes that json is validated.
+   *
+   * @param {object} initialJson
+   */
   var importJson = function(initialJson) {
     var json = _.cloneDeep(initialJson);
 
