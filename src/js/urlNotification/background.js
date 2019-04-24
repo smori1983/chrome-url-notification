@@ -9,10 +9,7 @@ urlNotification.background = (function() {
 
   var find = function(pattern) {
     var item;
-    var result = {
-      matched: false,
-      data: null,
-    };
+    var result = {};
 
     if ((item = urlNotification.finder.findFor(pattern)) !== null) {
       result.matched = true;
@@ -22,6 +19,9 @@ urlNotification.background = (function() {
         fontColor: 'ffffff',
         displayPosition: item.displayPosition,
       };
+    } else {
+      result.matched = false;
+      result.data = null;
     }
 
     return result;
