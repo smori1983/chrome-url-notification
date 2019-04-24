@@ -4,7 +4,7 @@ QUnit.module("urlNotification.migration", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("urlNotification.migration.hasVersion - キーなし", function(assert) {
@@ -38,7 +38,7 @@ QUnit.module("urlNotification.migration.0to1", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("urlNotification.migration - version 0", function(assert) {
@@ -49,7 +49,7 @@ QUnit.test("urlNotification.migration - version 0", function(assert) {
 
 QUnit.test("urlNotification.migration - version 0 to 1", function(assert) {
   var expectedBefore = [
-    { url: "http://example.com/1", msg: "1" }
+    { url: "http://example.com/1", msg: "1" },
   ];
 
   assert.propEqual(urlNotification.storage.getAll(), expectedBefore);
@@ -59,7 +59,7 @@ QUnit.test("urlNotification.migration - version 0 to 1", function(assert) {
   urlNotification.migration.migrateFrom(0);
 
   var expectedAfter = [
-    { url: "http://example.com/1", msg: "1", backgroundColor: "000000" }
+    { url: "http://example.com/1", msg: "1", backgroundColor: "000000" },
   ];
 
   assert.propEqual(urlNotification.storage.getAll(), expectedAfter);

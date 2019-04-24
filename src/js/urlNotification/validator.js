@@ -15,13 +15,13 @@ urlNotification.validator = (function() {
           "required": true,
           "type": "integer",
           "minimum": 1,
-          "maximum": urlNotification.config.version()
+          "maximum": urlNotification.config.version(),
         },
         "pattern": {
           "required": true,
           "type": "array",
-        }
-      }
+        },
+      },
     };
 
     var validator = create();
@@ -114,6 +114,6 @@ urlNotification.validator = (function() {
      */
     forImportJson: function(json) {
       return importJson(json);
-    }
+    },
   };
 })();

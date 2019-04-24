@@ -3,7 +3,7 @@ QUnit.module("urlNotification.importer.v2", {
     localStorage.clear();
   },
   afterEach: function() {
-  }
+  },
 });
 
 QUnit.test("import v2 - case 1", function(assert) {
@@ -15,7 +15,7 @@ QUnit.test("import v2 - case 1", function(assert) {
         msg: "1",
         backgroundColor: "111111",
         displayPosition: "top",
-      }
+      },
     ],
   };
 
@@ -40,7 +40,7 @@ QUnit.test("import v2 - case 2", function(assert) {
         msg: "2",
         backgroundColor: "222222",
         displayPosition: "bottom",
-      }
+      },
     ],
   };
 

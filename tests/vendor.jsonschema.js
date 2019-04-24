@@ -5,7 +5,7 @@ QUnit.module("vendor.jsonschema", {
     };
   },
   afterEach: function() {
-  }
+  },
 });
 
 QUnit.test("import json - error - array", function(assert) {
@@ -20,14 +20,14 @@ QUnit.test("import json - error - version not defined", function(assert) {
   assert.notOk(this.isValid({
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
 QUnit.test("import json - error - pattern not defined", function(assert) {
   assert.notOk(this.isValid({
-    version: 1
+    version: 1,
   }));
 });
 
@@ -36,8 +36,8 @@ QUnit.test("import json - error - version is null", function(assert) {
     version: null,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -46,8 +46,8 @@ QUnit.test("import json - error - version is true", function(assert) {
     version: true,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -56,8 +56,8 @@ QUnit.test("import json - error - version is false", function(assert) {
     version: false,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -66,8 +66,8 @@ QUnit.test("import json - error - version is string of integer", function(assert
     version: "1",
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -76,8 +76,8 @@ QUnit.test("import json - error - version is float", function(assert) {
     version: 1.1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -86,51 +86,51 @@ QUnit.test("import json - error - version is out of range", function(assert) {
     version: 0,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 
   assert.notOk(this.isValid({
     version: 2,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
 QUnit.test("import json - error - pattern is null", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: null
+    pattern: null,
   }));
 });
 
 QUnit.test("import json - error - pattern is true", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: true
+    pattern: true,
   }));
 });
 
 QUnit.test("import json - error - pattern is false", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: false
+    pattern: false,
   }));
 });
 
 QUnit.test("import json - error - pattern is string", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: "hoge"
+    pattern: "hoge",
   }));
 });
 
 QUnit.test("import json - error - pattern is object", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111" }
+    pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111" },
   }));
 });
 
@@ -139,8 +139,8 @@ QUnit.test("import json - error - pattern - url is not defined", function(assert
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      {                 msg: "sample2", backgroundColor: "222222" }
-    ]
+      {                 msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -149,8 +149,8 @@ QUnit.test("import json - error - pattern - url is null", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: null,      msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: null,      msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -159,8 +159,8 @@ QUnit.test("import json - error - pattern - url is true", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: true,      msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: true,      msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -169,8 +169,8 @@ QUnit.test("import json - error - pattern - url is false", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: false,     msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: false,     msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -179,8 +179,8 @@ QUnit.test("import json - error - pattern - url is number", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: 100,       msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: 100,       msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -189,8 +189,8 @@ QUnit.test("import json - error - pattern - url is empty string", function(asser
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "",        msg: "sample2", backgroundColor: "222222" }
-    ]
+      { url: "",        msg: "sample2", backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -199,8 +199,8 @@ QUnit.test("import json - error - pattern - msg is not defined", function(assert
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2",                 backgroundColor: "222222" }
-    ]
+      { url: "sample2",                 backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -209,8 +209,8 @@ QUnit.test("import json - error - pattern - msg is null", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: null,      backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: null,      backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -219,8 +219,8 @@ QUnit.test("import json - error - pattern - msg is true", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: true,      backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: true,      backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -229,8 +229,8 @@ QUnit.test("import json - error - pattern - msg is false", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: false,     backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: false,     backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -239,8 +239,8 @@ QUnit.test("import json - error - pattern - msg is number", function(assert) {
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: 100,       backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: 100,       backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -249,8 +249,8 @@ QUnit.test("import json - error - pattern - msg is empty string", function(asser
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "",        backgroundColor: "222222" }
-    ]
+      { url: "sample2", msg: "",        backgroundColor: "222222" },
+    ],
   }));
 });
 
@@ -259,8 +259,8 @@ QUnit.test("import json - error - pattern - backgroundColor is not defined", fun
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2"                            }
-    ]
+      { url: "sample2", msg: "sample2"                            },
+    ],
   }));
 });
 
@@ -269,8 +269,8 @@ QUnit.test("import json - error - pattern - backgroundColor is null", function(a
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: null     }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: null     },
+    ],
   }));
 });
 
@@ -279,8 +279,8 @@ QUnit.test("import json - error - pattern - backgroundColor is true", function(a
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: true     }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: true     },
+    ],
   }));
 });
 
@@ -289,8 +289,8 @@ QUnit.test("import json - error - pattern - backgroundColor is false", function(
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: false    }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: false    },
+    ],
   }));
 });
 
@@ -299,8 +299,8 @@ QUnit.test("import json - error - pattern - backgroundColor is empty string", fu
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: ""       }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: ""       },
+    ],
   }));
 });
 
@@ -309,15 +309,15 @@ QUnit.test("import json - error - pattern - backgroundColor is not hex color", f
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "12345z" }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "12345z" },
+    ],
   }));
 
   assert.notOk(this.isValid({
     version: 1,
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111" },
-      { url: "sample2", msg: "sample2", backgroundColor: "black"  }
-    ]
+      { url: "sample2", msg: "sample2", backgroundColor: "black"  },
+    ],
   }));
 });

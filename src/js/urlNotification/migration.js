@@ -35,6 +35,6 @@ urlNotification.migration = (function() {
     },
     migrateFrom: function(currentVersion) {
       migrateFrom(currentVersion);
-    }
+    },
   };
 })();

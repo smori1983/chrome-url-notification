@@ -7,7 +7,7 @@ QUnit.module("urlNotification.background.migrate.from.0", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("migrate", function(assert) {
@@ -15,7 +15,7 @@ QUnit.test("migrate", function(assert) {
 
   var expected = [
     { url: "http://example.com/1", msg: "1", backgroundColor: "000000", displayPosition: "top" },
-    { url: "http://example.com/2", msg: "2", backgroundColor: "222222", displayPosition: "top" }
+    { url: "http://example.com/2", msg: "2", backgroundColor: "222222", displayPosition: "top" },
   ];
 
   assert.propEqual(urlNotification.storage.getAll(), expected);

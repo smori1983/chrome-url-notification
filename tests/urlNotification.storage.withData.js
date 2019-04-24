@@ -8,7 +8,7 @@ QUnit.module("urlNotification.storage.withData", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("全データ削除", function(assert) {
@@ -49,7 +49,7 @@ QUnit.test("URLで検索 該当データあり", function(assert) {
 QUnit.test("データ更新 - 該当データ無し", function(assert) {
   urlNotification.storage.updatePattern("http://example.com", {
     url: "http://example.com",
-    msg: "!"
+    msg: "!",
   });
 
   assert.equal(3, urlNotification.storage.getCount());
@@ -61,7 +61,7 @@ QUnit.test("データ更新 - 該当データ無し", function(assert) {
 QUnit.test("データ更新 - 該当データ有り", function(assert) {
   urlNotification.storage.updatePattern("http://example.com/2", {
     url: "http://example.com/2",
-    msg: "!"
+    msg: "!",
   });
 
   assert.equal(3, urlNotification.storage.getCount());

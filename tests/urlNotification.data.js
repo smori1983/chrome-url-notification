@@ -4,14 +4,14 @@ QUnit.module("urlNotification.data", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("URLソート 整数の比較", function(assert) {
   var patterns = [
     { url: "http://example.com/2", msg: "2" },
     { url: "http://example.com/1", msg: "1" },
-    { url: "http://example.com/3", msg: "3" }
+    { url: "http://example.com/3", msg: "3" },
   ];
 
   var sorted = urlNotification.data.sortByUrl(patterns);
@@ -26,7 +26,7 @@ QUnit.test("URLソート 整数と'*'の比較", function(assert) {
   var patterns = [
     { url: "http://example.com/2", msg: "2" },
     { url: "http://example.com/1", msg: "1" },
-    { url: "http://example.com/*", msg: "*" }
+    { url: "http://example.com/*", msg: "*" },
   ];
 
   var sorted = urlNotification.data.sortByUrl(patterns);
@@ -41,7 +41,7 @@ QUnit.test("メッセージソート", function(assert) {
   var patterns = [
     { url: "http://example.com/2", msg: "two" },
     { url: "http://example.com/1", msg: "three" },
-    { url: "http://example.com/3", msg: "one" }
+    { url: "http://example.com/3", msg: "one" },
   ];
 
   var sorted = urlNotification.data.sortByMessage(patterns);

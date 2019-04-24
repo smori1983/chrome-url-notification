@@ -68,6 +68,6 @@ urlNotification.importer = (function() {
      */
     importJson: function(json) {
       importJson(json);
-    }
+    },
   }
 })();

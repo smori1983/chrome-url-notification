@@ -10,7 +10,7 @@ QUnit.module("urlNotification.background", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("background.find() - 該当データなし", function(assert) {

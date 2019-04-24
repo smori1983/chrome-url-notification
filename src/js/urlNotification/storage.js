@@ -145,6 +145,6 @@ urlNotification.storage = (function() {
     replace: function(version, pattern) {
       updateVersion(version);
       update(pattern);
-    }
+    },
   };
 })();

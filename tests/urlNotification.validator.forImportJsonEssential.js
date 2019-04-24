@@ -5,7 +5,7 @@ QUnit.module("urlNotification.validator.forImportJsonEssential", {
     };
   },
   afterEach: function() {
-  }
+  },
 });
 
 QUnit.test("import json - error - array", function(assert) {
@@ -21,13 +21,13 @@ QUnit.test("import json - error - version not defined", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
 QUnit.test("import json - error - pattern not defined", function(assert) {
   assert.notOk(this.isValid({
-    version: 1
+    version: 1,
   }));
 });
 
@@ -37,7 +37,7 @@ QUnit.test("import json - error - version is null", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
@@ -47,7 +47,7 @@ QUnit.test("import json - error - version is true", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
@@ -57,7 +57,7 @@ QUnit.test("import json - error - version is false", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
@@ -67,7 +67,7 @@ QUnit.test("import json - error - version is string of integer", function(assert
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
@@ -77,7 +77,7 @@ QUnit.test("import json - error - version is float", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
@@ -87,7 +87,7 @@ QUnit.test("import json - error - version is out of range", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 
   assert.notOk(this.isValid({
@@ -95,48 +95,48 @@ QUnit.test("import json - error - version is out of range", function(assert) {
     pattern: [
       { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
       { url: "sample2", msg: "sample2", backgroundColor: "222222", displayPosition: "top" },
-    ]
+    ],
   }));
 });
 
 QUnit.test("import json - error - pattern is null", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: null
+    pattern: null,
   }));
 });
 
 QUnit.test("import json - error - pattern is true", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: true
+    pattern: true,
   }));
 });
 
 QUnit.test("import json - error - pattern is false", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: false
+    pattern: false,
   }));
 });
 
 QUnit.test("import json - error - pattern is string", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: "hoge"
+    pattern: "hoge",
   }));
 });
 
 QUnit.test("import json - error - pattern is object", function(assert) {
   assert.notOk(this.isValid({
     version: 1,
-    pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" }
+    pattern: { url: "sample1", msg: "sample1", backgroundColor: "111111", displayPosition: "top" },
   }));
 });
 
 QUnit.test("import json - ok", function(assert) {
   assert.ok(this.isValid({
     version: 1,
-    pattern: []
+    pattern: [],
   }));
 });

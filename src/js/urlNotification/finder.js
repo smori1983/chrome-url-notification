@@ -31,6 +31,6 @@ urlNotification.finder = (function() {
   return {
     findFor: function(url) {
       return find(url);
-    }
+    },
   };
 })();

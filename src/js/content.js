@@ -1,7 +1,7 @@
 $(function() {
 
   chrome.runtime.sendMessage({
-    url: location.href
+    url: location.href,
   }, function(response) {
     if (response.matched === false) {
       return;
@@ -22,7 +22,7 @@ $(function() {
         textAlign:  "center",
         zIndex:     "99999999",
 
-        webkitUserSelect: "none"
+        webkitUserSelect: "none",
       };
 
       result[response.data.displayPosition] = "0px";
@@ -40,11 +40,11 @@ $(function() {
       // workaround for "position: fixed;" page.
       //
       $("body").css({
-        marginTop: (height + $("body").offset().top) + "px"
+        marginTop: (height + $("body").offset().top) + "px",
       }).append(container);
     } else if (response.data.displayPosition === "bottom") {
       $("body").css({
-        marginBottom: height + "px"
+        marginBottom: height + "px",
       }).append(container);
     }
   });

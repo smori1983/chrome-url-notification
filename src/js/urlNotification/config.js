@@ -22,6 +22,6 @@ urlNotification.config = (function() {
     },
     defaultDisplayPosition: function() {
       return defaultDisplayPosition;
-    }
+    },
   };
 })();

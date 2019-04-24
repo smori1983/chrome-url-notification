@@ -7,7 +7,7 @@ QUnit.module("urlNotification.background.migrate.from.1", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("migrate", function(assert) {

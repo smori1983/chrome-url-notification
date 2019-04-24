@@ -11,7 +11,7 @@ urlNotification.background = (function() {
     var item;
     var result = {
       matched: false,
-      data: null
+      data: null,
     };
 
     if ((item = urlNotification.finder.findFor(pattern)) !== null) {
@@ -33,6 +33,6 @@ urlNotification.background = (function() {
     },
     find: function(pattern) {
       return find(pattern);
-    }
+    },
   };
 })();

@@ -43,6 +43,6 @@ urlNotification.migrationExecuter = (function() {
   return {
     from: function(verstion, item) {
       return execute(verstion, item);
-    }
+    },
   }
 })();

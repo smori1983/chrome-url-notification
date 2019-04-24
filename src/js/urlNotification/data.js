@@ -23,6 +23,6 @@ urlNotification.data = (function() {
     },
     sortByMessage: function(patterns) {
       return sortByMessage(patterns);
-    }
+    },
   }
 })();

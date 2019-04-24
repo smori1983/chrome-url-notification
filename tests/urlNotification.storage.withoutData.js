@@ -4,7 +4,7 @@ QUnit.module("urlNotification.storage.withoutData", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("全件取得 - ローカルストレージにデータなし", function(assert) {

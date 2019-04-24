@@ -3,7 +3,7 @@ QUnit.module("urlNotification.importer.v1", {
     localStorage.clear();
   },
   afterEach: function() {
-  }
+  },
 });
 
 QUnit.test("import v1 and migrate to v2", function(assert) {
@@ -14,7 +14,7 @@ QUnit.test("import v1 and migrate to v2", function(assert) {
         url: "http://example.com/1",
         msg: "1",
         backgroundColor: "111111",
-      }
+      },
     ],
   };
 

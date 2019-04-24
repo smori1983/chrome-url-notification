@@ -14,6 +14,11 @@
         "urlNotification": true
     },
     "rules": {
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "functions": "never"
+        }],
         "indent": ["error", 2],
         "no-console": ["error", { "allow": ["info", "warn", "error"] }],
         "eqeqeq": "error"

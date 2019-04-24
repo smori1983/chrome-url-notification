@@ -18,7 +18,7 @@ var util = (function() {
 
     return {
       show: show,
-      hide: hide
+      hide: hide,
     };
   };
 
@@ -44,14 +44,14 @@ var util = (function() {
 
     return {
       show: show,
-      hide: hide
+      hide: hide,
     };
   };
 
   return {
     rebind: rebind,
     modal: modal,
-    buildMessage: buildMessage
+    buildMessage: buildMessage,
   };
 })();
 
@@ -81,7 +81,7 @@ var headerComponent = (function() {
     init: function() {
       initEventHandlers();
       showVersion();
-    }
+    },
   };
 })();
 
@@ -100,7 +100,7 @@ var exportComponent = (function() {
     modal = util.modal("#js_modal_export", {
       "shown.bs.modal": function() {
         $("#js_export_display").scrollTop(0);
-      }
+      },
     });
   };
 
@@ -111,7 +111,7 @@ var exportComponent = (function() {
   var show = function() {
     var data = {
       version: urlNotification.config.version(),
-      pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll())
+      pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
     };
     var jsonString = JSON.stringify(data, null, 4);
 
@@ -122,7 +122,7 @@ var exportComponent = (function() {
 
   return {
     init: init,
-    show: show
+    show: show,
   };
 })();
 
@@ -133,7 +133,7 @@ var importComponent = (function() {
     modal = util.modal("#js_modal_import", {
       "shown.bs.modal": function() {
         $("#js_form_import_json").focus();
-      }
+      },
     });
   };
 
@@ -155,7 +155,7 @@ var importComponent = (function() {
   var submit = (function() {
     var error = {
       required: "フォームが未入力です。",
-      invalidJson: "JSONテキストが正しくありません。"
+      invalidJson: "JSONテキストが正しくありません。",
     };
 
     var message = util.buildMessage("#js_import_message");
@@ -195,7 +195,7 @@ var importComponent = (function() {
 
   return {
     init: init,
-    show: show
+    show: show,
   };
 })();
 
@@ -238,7 +238,7 @@ var patternListComponent = (function() {
     var listMessageCss = function(item) {
       return {
         "background-color": "#" + item.backgroundColor,
-        "color": "#ffffff"
+        "color": "#ffffff",
       };
     };
 
@@ -286,7 +286,7 @@ var patternListComponent = (function() {
         e.preventDefault();
         deleteForm.show({
           pattern: item.url,
-          message: item.msg
+          message: item.msg,
         });
       });
     };
@@ -302,7 +302,7 @@ var patternListComponent = (function() {
   return {
     show: function() {
       show();
-    }
+    },
   };
 })();
 
@@ -356,7 +356,7 @@ var patternForm = (function() {
   var submit = (function() {
     var error = {
       required: "未入力の項目があります。",
-      duplicated: "入力されたURLパターンは既に登録されています。"
+      duplicated: "入力されたURLパターンは既に登録されています。",
     };
 
     var trimValue = function(selector) {
@@ -414,12 +414,12 @@ var patternForm = (function() {
     modal = util.modal("#js_modal_pattern", {
       "shown.bs.modal": function() {
         $("#js_input_url").focus();
-      }
+      },
     });
 
     $("#js_colorpicker").colorpicker({
       align: "left",
-      format: "hex"
+      format: "hex",
     });
   };
 
@@ -438,7 +438,7 @@ var patternForm = (function() {
      */
     show: function(mode, formValues) {
       show(mode, formValues);
-    }
+    },
   };
 })();
 
@@ -467,7 +467,7 @@ var deleteForm = (function() {
 
   var submit = function() {
     urlNotification.storage.deletePattern({
-      url: current.pattern
+      url: current.pattern,
     });
     modal.hide();
     patternListComponent.show();
@@ -488,7 +488,7 @@ var deleteForm = (function() {
      */
     show: function(item) {
       show(item);
-    }
+    },
   };
 })();
 

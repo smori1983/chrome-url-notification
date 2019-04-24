@@ -15,7 +15,7 @@ QUnit.module("urlNotification.finder", {
   },
   afterEach: function() {
     localStorage.clear();
-  }
+  },
 });
 
 QUnit.test("URLで検索 該当データなし", function(assert) {
