@@ -466,9 +466,7 @@ var deleteForm = (function() {
   };
 
   var submit = function() {
-    urlNotification.storage.deletePattern({
-      url: current.pattern,
-    });
+    urlNotification.storage.deletePattern(current.pattern);
     modal.hide();
     patternListComponent.show();
   };
