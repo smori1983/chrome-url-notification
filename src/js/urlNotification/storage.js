@@ -119,18 +119,18 @@ urlNotification.storage = (function() {
       return;
     }
 
-    deletePattern({ url: originalUrl });
+    deletePattern(originalUrl);
     addPattern(pattern);
   };
 
   /**
-   * @param {PatternItem} pattern
+   * @param {string} url
    */
-  var deletePattern = function(pattern) {
+  var deletePattern = function(url) {
     var newData = [];
 
     getAll().forEach(function(item) {
-      if (item.url !== pattern.url) {
+      if (item.url !== url) {
         newData.push(item);
       }
     });
