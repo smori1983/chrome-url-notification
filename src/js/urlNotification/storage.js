@@ -124,13 +124,14 @@ urlNotification.storage = (function() {
   };
 
   /**
-   * @param {PatternItem} pattern
+   * @param {PatternItem|string} pattern
    */
   var deletePattern = function(pattern) {
     var newData = [];
+    var url = (typeof pattern === 'object') ? pattern.url : pattern;
 
     getAll().forEach(function(item) {
-      if (item.url !== pattern.url) {
+      if (item.url !== url) {
         newData.push(item);
       }
     });
