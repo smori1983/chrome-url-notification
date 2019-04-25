@@ -119,7 +119,7 @@ urlNotification.storage = (function() {
       return;
     }
 
-    deletePattern({ url: originalUrl });
+    deletePattern(originalUrl);
     addPattern(pattern);
   };
 
