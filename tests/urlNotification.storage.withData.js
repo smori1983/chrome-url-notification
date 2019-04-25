@@ -18,13 +18,13 @@ QUnit.test('全データ削除', function(assert) {
 });
 
 QUnit.test('1件削除 - 該当データ有り', function(assert) {
-  urlNotification.storage.deletePattern({ url: 'http://example.com/1' });
+  urlNotification.storage.deletePattern('http://example.com/1');
 
   assert.equal(2, urlNotification.storage.getCount());
 });
 
 QUnit.test('1件削除 - 該当データ無し', function(assert) {
-  urlNotification.storage.deletePattern({ url: 'http://example.com' });
+  urlNotification.storage.deletePattern('http://example.com');
 
   assert.equal(3, urlNotification.storage.getCount());
 });
