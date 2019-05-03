@@ -9,6 +9,7 @@
     "make": "gulp make",
     "vendor:js": "gulp vendor:js",
     "test": "gulp test",
+    "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
     "lint": "gulp lint"
   },
