@@ -7,6 +7,10 @@ urlNotification.validator = (function() {
     return new (require('jsonschema').Validator)();
   };
 
+  /**
+   * @param {object} json
+   * @returns {boolean}
+   */
   var importJsonEssential = function(json) {
     var schema = {
       'type': 'object',
@@ -90,6 +94,10 @@ urlNotification.validator = (function() {
     return {};
   };
 
+  /**
+   * @param {object} json
+   * @returns {boolean}
+   */
   var importJson = function(json) {
     var validator = create();
 
@@ -103,17 +111,7 @@ urlNotification.validator = (function() {
   };
 
   return {
-    /**
-     * @return bool
-     */
-    forImportJsonEssential: function(json) {
-      return importJsonEssential(json);
-    },
-    /**
-     * @return bool
-     */
-    forImportJson: function(json) {
-      return importJson(json);
-    },
+    forImportJsonEssential: importJsonEssential,
+    forImportJson: importJson,
   };
 })();

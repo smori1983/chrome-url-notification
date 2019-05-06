@@ -43,6 +43,11 @@ urlNotification.importer = (function() {
     }
   };
 
+  /**
+   * Assumes that json is validated.
+   *
+   * @param {object} initialJson
+   */
   var importJson = function(initialJson) {
     var json = _.cloneDeep(initialJson);
 
@@ -63,11 +68,6 @@ urlNotification.importer = (function() {
   };
 
   return {
-    /**
-     * Assumes that json is validated.
-     */
-    importJson: function(json) {
-      importJson(json);
-    },
-  }
+    importJson: importJson,
+  };
 })();

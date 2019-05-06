@@ -9,6 +9,7 @@
     "make": "gulp make",
     "vendor:js": "gulp vendor:js",
     "test": "gulp test",
+    "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
     "lint": "gulp lint"
   },
@@ -17,6 +18,7 @@
     "url": "git+https://github.com/smori1983/chrome-url-notification.git"
   },
   "devDependencies": {
+    "@types/chrome": "0.0.83",
     "browserify": "^16.2.3",
     "cross-env": "^5.2.0",
     "del": "^4.1.0",

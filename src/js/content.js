@@ -1,8 +1,9 @@
 $(function() {
 
-  chrome.runtime.sendMessage({
-    url: location.href,
-  }, function(response) {
+  /**
+   * @param {FindResult} response
+   */
+  var process = function(response) {
     if (response.matched === false) {
       return;
     }
@@ -47,6 +48,8 @@ $(function() {
         marginBottom: height + 'px',
       }).append(container);
     }
-  });
+  };
+
+  chrome.runtime.sendMessage({ url: location.href }, process);
 
 });

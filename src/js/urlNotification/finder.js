@@ -1,7 +1,10 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.finder = (function() {
-
+  /**
+   * @param {string} url
+   * @returns {(PatternItem|null)}
+   */
   var find = function(url) {
     var i, len, patterns = urlNotification.storage.getAll();
 
@@ -29,8 +32,6 @@ urlNotification.finder = (function() {
   };
 
   return {
-    findFor: function(url) {
-      return find(url);
-    },
+    findFor: find,
   };
 })();
