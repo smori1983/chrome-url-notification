@@ -446,12 +446,10 @@ urlNotification.storage = (function() {
    * @param {PatternItem} pattern
    */
   var updatePattern = function(originalUrl, pattern) {
-    if (findByUrl(originalUrl) === null) {
-      return;
+    if (findByUrl(originalUrl)) {
+      deletePattern(originalUrl);
+      addPattern(pattern);
     }
-
-    deletePattern(originalUrl);
-    addPattern(pattern);
   };
 
   /**
