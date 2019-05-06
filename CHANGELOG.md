@@ -1,13 +1,22 @@
 # CHANGELOG
 
 
+## v2.2.0
+
+### Development
+
+- Add icons
+- Add JSDoc comments
+- Refactoring
+
+
 ## v2.1.0
 
 ### Development
 
 - Update version constraints of `package.json`
 - Update `gulp` (`v4`)
-- Update `eslint` rules.
+- Update `eslint` rules
 
 
 ## v2.0.0
