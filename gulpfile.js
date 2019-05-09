@@ -1,29 +1,29 @@
 require('dotenv').config();
 
-var browserify = require('browserify');
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var del = require('del');
-var eslint = require('gulp-eslint');
-var fs = require('fs');
-//var rename = require('gulp-rename');
-//var uglify = require('gulp-uglify');
-var pump = require('pump');
-var qunit = require('node-qunit-phantomjs');
-var source = require('vinyl-source-stream');
-var sprintf = require('sprintf-js').sprintf;
+const browserify = require('browserify');
+const gulp = require('gulp');
+const concat = require('gulp-concat');
+const del = require('del');
+const eslint = require('gulp-eslint');
+const fs = require('fs');
+//const rename = require('gulp-rename');
+//const uglify = require('gulp-uglify');
+const pump = require('pump');
+const qunit = require('node-qunit-phantomjs');
+const source = require('vinyl-source-stream');
+const sprintf = require('sprintf-js').sprintf;
 
-var forProduction = (function() {
-  var mode = process.env.EXTENSION_MODE || 'development';
+const forProduction = (function() {
+  const mode = process.env.EXTENSION_MODE || 'development';
 
   return mode === 'production';
 })();
 
-var dist = (function() {
-  var baseDir = process.env.EXTENSION_DIST || 'dist';
+const dist = (function() {
+  const baseDir = process.env.EXTENSION_DIST || 'dist';
 
   if (forProduction) {
-    var manifest = JSON.parse(fs.readFileSync('src/manifest.json'));
+    const manifest = JSON.parse(fs.readFileSync('src/manifest.json'));
 
     return sprintf('%s/chrome-url-notification-v%s', baseDir, manifest.version);
   } else {
