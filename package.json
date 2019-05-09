@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
+    "bootstrap-colorpicker": "^2.5.3",
     "jquery": "^3.4.1",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.5"
