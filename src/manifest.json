@@ -14,7 +14,7 @@
     "content_scripts": [{
         "matches": ["https://*/*", "http://*/*"],
         "js": [
-            "js/jquery-1.9.1.min.js",
+            "lib/jquery.slim.min.js",
             "js/content.js"
         ],
         "run_at": "document_end"
