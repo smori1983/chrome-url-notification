@@ -89,7 +89,7 @@ var exportComponent = (function() {
   var modal = null;
 
   var init = function() {
-    var clipboard = new Clipboard('#js_export_copy');
+    var clipboard = new ClipboardJS('#js_export_copy');
     var message = util.buildMessage('#js_export_message');
 
     clipboard.on('success', function(e) {

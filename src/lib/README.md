@@ -24,7 +24,6 @@ mkdir -p src/lib/bootstrap/js
 cp node_modules/bootstrap/dist/js/bootstrap.min.js src/lib/bootstrap/js/
 ```
 
-
 ## bootstrap-colorpicker
 
 `v2.5.3`
@@ -37,3 +36,11 @@ mkdir -p src/lib/bootstrap-colorpicker/js
 cp node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js src/lib/bootstrap-colorpicker/js/
 ```
 
+## clipboard
+
+`v2.0.4`
+
+```
+mkdir -p src/lib/clipboard
+cp node_modules/clipboard/dist/clipboard.min.js src/lib/clipboard/
+```
