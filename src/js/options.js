@@ -228,6 +228,9 @@ var patternListComponent = (function() {
         text(text);
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var listMessage = function(item) {
       return $('<div>').
         addClass('list-message').
@@ -235,6 +238,9 @@ var patternListComponent = (function() {
         text(item.msg);
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var listMessageCss = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
@@ -242,14 +248,23 @@ var patternListComponent = (function() {
       };
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var patternColumn = function(item) {
       return column().text(item.url);
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var messgeColumn = function(item) {
       return column().append(listMessage(item));
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var actionColumn = function(item) {
       return column().addClass('action').
         append(copyButton(item)).
@@ -257,6 +272,9 @@ var patternListComponent = (function() {
         append(deleteButton(item));
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var copyButton = function(item) {
       return button('btn-default', 'コピー').click(function(e) {
         e.preventDefault();
@@ -269,6 +287,9 @@ var patternListComponent = (function() {
       });
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var editButton = function(item) {
       return button('btn-primary', '編集').click(function(e) {
         e.preventDefault();
@@ -281,6 +302,9 @@ var patternListComponent = (function() {
       });
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     var deleteButton = function(item) {
       return button('btn-danger', '削除').click(function(e) {
         e.preventDefault();
@@ -291,6 +315,9 @@ var patternListComponent = (function() {
       });
     };
 
+    /**
+     * @param {PatternItem} item
+     */
     return function(item) {
       return row().
         append(patternColumn(item)).
@@ -300,11 +327,17 @@ var patternListComponent = (function() {
   })();
 
   return {
-    show: function() {
-      show();
-    },
+    show: show,
   };
 })();
+
+/**
+ * @typedef {object} FormValue
+ * @property {string} url
+ * @property {string} message
+ * @property {string} backgroundColor
+ * @property {string} displayPosition
+ */
 
 var patternForm = (function() {
   var defaultValues = function() {
@@ -330,6 +363,10 @@ var patternForm = (function() {
 
   var modal = null;
 
+  /**
+   * @param {string} argMode 'add' or 'edit'
+   * @param {FormValue} argOriginal
+   */
   var show = function(argMode, argOriginal) {
     mode = argMode;
     original = argOriginal;
@@ -424,27 +461,23 @@ var patternForm = (function() {
   };
 
   return {
-    init: function() {
-      init();
-    },
-    /**
-     * mode: "add" or "edit"
-     *
-     * formValues
-     * - url
-     * - message
-     * - backgroundColor
-     * - displayPosition
-     */
-    show: function(mode, formValues) {
-      show(mode, formValues);
-    },
+    init: init,
+    show: show,
   };
 })();
+
+/**
+ * @typedef {object} DeleteFormItem
+ * @property {string} pattern
+ * @property {string} message
+ */
 
 var deleteForm = (function() {
   var current = null;
 
+  /**
+   * @param {DeleteFormItem} item
+   */
   var bindValues = function(item) {
     $('#js_form_delete_pattern').text(item.pattern);
     $('#js_form_delete_message').text(item.message);
@@ -452,6 +485,9 @@ var deleteForm = (function() {
 
   var modal = null;
 
+  /**
+   * @param {DeleteFormItem} item
+   */
   var show = function(item) {
     current = item;
 
@@ -476,17 +512,8 @@ var deleteForm = (function() {
   };
 
   return {
-    init: function() {
-      init();
-    },
-    /**
-     * item
-     * - pattern
-     * - message
-     */
-    show: function(item) {
-      show(item);
-    },
+    init: init,
+    show: show,
   };
 })();
 
