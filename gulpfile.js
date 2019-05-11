@@ -87,7 +87,6 @@ gulp.task('lint', function(cb) {
       'gulpfile.js',
       'src/js/**/*.js',
       '!src/js/urlNotification.js',
-      '!src/js/jquery-1.9.1.min.js',
       '!src/js/vendor.js',
       'tests/**/*.js',
     ]),

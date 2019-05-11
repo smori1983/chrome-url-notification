@@ -201,7 +201,7 @@ var importComponent = (function() {
 
 var patternListComponent = (function() {
   var show = function() {
-    var listArea = $('#js_list_pattern');
+    var listArea = $('#js_list_pattern tbody');
     var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);
