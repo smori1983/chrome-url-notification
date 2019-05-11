@@ -8,6 +8,15 @@
 cp node_modules/jquery/dist/jquery.slim.min.js src/lib/
 ```
 
+## jquery-validation
+
+`v1.19.0`
+
+```
+mkdir -p src/lib/jquery-validation
+cp node_modules/jquery-validation/dist/jquery.validate.min.js src/lib/jquery-validation/
+```
+
 ## bootstrap
 
 `v3.4.1`

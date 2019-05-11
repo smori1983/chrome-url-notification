@@ -41,6 +41,7 @@
     "bootstrap-colorpicker": "^2.5.3",
     "clipboard": "^2.0.4",
     "jquery": "^3.4.1",
+    "jquery-validation": "^1.19.0",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.5"
   }
