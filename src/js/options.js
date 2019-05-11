@@ -89,7 +89,7 @@ var exportComponent = (function() {
   var modal = null;
 
   var init = function() {
-    var clipboard = new Clipboard('#js_export_copy');
+    var clipboard = new ClipboardJS('#js_export_copy');
     var message = util.buildMessage('#js_export_message');
 
     clipboard.on('success', function(e) {
@@ -201,7 +201,7 @@ var importComponent = (function() {
 
 var patternListComponent = (function() {
   var show = function() {
-    var listArea = $('#js_list_pattern');
+    var listArea = $('#js_list_pattern tbody');
     var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);

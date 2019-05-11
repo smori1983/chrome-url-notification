@@ -11,7 +11,7 @@
   "globals": {
     "_": true,
     "chrome": true,
-    "Clipboard": true,
+    "ClipboardJS": true,
     "localStorage": true,
     "$": true,
     "QUnit": true,
