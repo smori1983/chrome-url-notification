@@ -69,13 +69,19 @@ gulp.task('dist', function(cb) {
     gulp.src([
       'src/css/**',
       'src/html/**',
-      'src/image/**',
       'src/js/**',
       'src/lib/**/**',
       'src/plugin/**/**',
       'src/manifest.json',
     ], { base: 'src' }),
     gulp.dest(dist),
+  ], cb);
+
+  pump([
+    gulp.src([
+      sprintf('./src/%s/**', forProduction ? 'image' : 'image_dev'),
+    ]),
+    gulp.dest(sprintf('%s/image', dist)),
   ], cb);
 });
 
