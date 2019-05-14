@@ -71,7 +71,6 @@ gulp.task('dist', function(cb) {
       'src/html/**',
       'src/js/**',
       'src/lib/**/**',
-      'src/plugin/**/**',
       'src/manifest.json',
     ], { base: 'src' }),
     gulp.dest(dist),
