@@ -3,7 +3,7 @@
 
     "name": "Chrome URL Notification",
     "description": "Notify user when the URL matches the registered patterns.",
-    "version": "2.2.0",
+    "version": "2.3.0",
 
     "icons": {
         "16": "image/icon_16.png",
@@ -14,7 +14,7 @@
     "content_scripts": [{
         "matches": ["https://*/*", "http://*/*"],
         "js": [
-            "js/jquery-1.9.1.min.js",
+            "lib/jquery.slim.min.js",
             "js/content.js"
         ],
         "run_at": "document_end"

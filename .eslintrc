@@ -2,16 +2,19 @@
   "extends": "eslint:recommended",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
   },
   "globals": {
     "_": true,
     "chrome": true,
-    "Clipboard": true,
+    "ClipboardJS": true,
     "localStorage": true,
     "$": true,
     "QUnit": true,
-    "require": true,
     "urlNotification": true
   },
   "rules": {
