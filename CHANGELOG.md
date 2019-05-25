@@ -1,6 +1,18 @@
 # CHANGELOG
 
 
+## v2.3.0
+
+### Development
+
+- Update `jquery`
+- Update `jquery-validation`
+- Update `qunit`
+- Update `bootstrap`
+- Update `bootstrap-colorpicker`
+- Update `clipboard`
+
+
 ## v2.2.0
 
 ### Development
