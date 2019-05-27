@@ -70,6 +70,7 @@ gulp.task('dist', function(cb) {
       'src/css/**',
       'src/html/**',
       'src/js/**',
+      '!src/js/urlNotification/**',
       'src/lib/**/**',
       'src/manifest.json',
     ], { base: 'src' }),
