@@ -67,6 +67,7 @@ gulp.task('make', gulp.series('concat'));
 gulp.task('dist', function(cb) {
   pump([
     gulp.src([
+      'src/_locales/**',
       'src/css/**',
       'src/html/**',
       'src/js/**',
