@@ -11,6 +11,8 @@
         "128": "image/icon_128.png"
     },
 
+    "default_locale": "en",
+
     "content_scripts": [{
         "matches": ["https://*/*", "http://*/*"],
         "js": [
