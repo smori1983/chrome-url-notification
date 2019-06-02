@@ -18,15 +18,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" id="js_button_add_pattern">パターン追加</a></li>
-                    <li><a href="#" id="js_button_export">エクスポート</a></li>
-                    <li><a href="#" id="js_button_import">インポート</a></li>
+                    <li><a href="#" id="js_button_add_pattern" data-i18n="label_pattern_add"></a></li>
+                    <li><a href="#" id="js_button_export" data-i18n="label_export"></a></li>
+                    <li><a href="#" id="js_button_import" data-i18n="label_import"></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <h2>パターン一覧<span id="js_pattern_list_badge" class="badge"><!-- 0 --></span></h2>
+    <h2><span data-i18n="label_pattern_list">Pattern list</span><span id="js_pattern_list_badge" class="badge"><!-- 0 --></span></h2>
     <table id="js_list_pattern" class="table">
         <tbody></tbody>
     </table>
@@ -39,35 +39,35 @@
             <form id="js_form_pattern" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>URLパターン</label>
-                        <p class="small text-info">*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。</p>
-                        <input type="text" value="" id="js_input_url" class="form-control" placeholder="例: http://*.example.com/" />
+                        <label data-i18n="label_url_pattern"></label>
+                        <p class="small text-info" data-i18n="text_url_pattern"></p>
+                        <input type="text" value="" id="js_input_url" class="form-control" data-i18n-ph="ph_url_pattern" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label>メッセージ</label>
-                        <input type="text" value="" id="js_input_msg" class="form-control" placeholder="例: example.com本番サイトを閲覧中" />
+                        <label data-i18n="label_message"></label>
+                        <input type="text" value="" id="js_input_msg" class="form-control" data-i18n-ph="ph_message" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label>背景色</label>
+                        <label data-i18n="label_background_color"></label>
                         <div id="js_colorpicker" class="input-group colorpicker-component">
                             <span class="input-group-addon"><i><!-- // --></i></span>
                             <input type="text" value="" id="js_input_backgroundcolor" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>表示位置</label>
+                        <label data-i18n="label_display_position"></label>
                         <div id="js_input_display_position" class="input-group">
-                            <label class="radio-inline"><input type="radio" value="top" name="display_position">上</label>
-                            <label class="radio-inline"><input type="radio" value="bottom" name="display_position">下</label>
+                            <label class="radio-inline"><input type="radio" value="top" name="display_position"><span data-i18n="label_top"></span></label>
+                            <label class="radio-inline"><input type="radio" value="bottom" name="display_position"><span data-i18n="label_bottom"></span></label>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <span id="js_pattern_message" class="text-danger"></span>
-                    <input type="submit" class="btn btn-success" value="保存" />
-                    <input type="button" class="btn btn-warning" value="クリア" id="js_input_clear" />
-                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                    <input type="submit" class="btn btn-success" data-i18n-val="label_save" value="" />
+                    <input type="button" class="btn btn-warning" data-i18n-val="label_clear" value="" id="js_input_clear" />
+                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
@@ -80,17 +80,17 @@
             <form id="js_form_delete" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>URLパターン</label>
+                        <label data-i18n="label_url_pattern"></label>
                         <span id="js_form_delete_pattern" class="form-control"></span>
                     </div>
                     <div class="form-group">
-                        <label>メッセージ</label>
+                        <label data-i18n="label_message"></label>
                         <span id="js_form_delete_message" class="form-control"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-danger" value="削除" />
-                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                    <input type="submit" class="btn btn-danger" data-i18n-val="label_delete" value="" />
+                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
@@ -105,7 +105,7 @@
             </div>
             <div class="modal-footer">
                 <span id="js_export_message" class="text-success"></span>
-                <button id="js_export_copy" class="btn btn-default" data-clipboard-target="#js_export_display">コピー</button>
+                <button id="js_export_copy" class="btn btn-default" data-clipboard-target="#js_export_display" data-i18n="label_copy"></button>
             </div>
         </div>
     </div>
@@ -117,14 +117,14 @@
             <form id="js_form_import" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>JSONテキスト</label>
+                        <label data-i18n="label_json_text"></label>
                         <textarea id="js_form_import_json" class="form-control" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <span id="js_import_message" class="text-danger"></span>
-                    <input type="submit" class="btn btn-success" value="インポート" />
-                    <input type="button" class="btn btn-default" value="キャンセル" data-dismiss="modal" />
+                    <input type="submit" class="btn btn-success" data-i18n-val="label_import" value="" />
+                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>

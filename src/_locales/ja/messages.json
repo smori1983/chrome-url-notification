@@ -1,3 +1,77 @@
 {
-
+  "label_background_color": {
+    "message": "背景色"
+  },
+  "label_bottom": {
+    "message": "下"
+  },
+  "label_cancel": {
+    "message": "キャンセル"
+  },
+  "label_clear": {
+    "message": "クリア"
+  },
+  "label_copy": {
+    "message": "コピー"
+  },
+  "label_delete": {
+    "message": "削除"
+  },
+  "label_display_position": {
+    "message": "表示位置"
+  },
+  "label_edit": {
+    "message": "編集"
+  },
+  "label_export": {
+    "message": "エクスポート"
+  },
+  "label_import": {
+    "message": "インポート"
+  },
+  "label_json_text": {
+    "message": "JSON テキスト"
+  },
+  "label_message": {
+    "message": "メッセージ"
+  },
+  "label_pattern_add": {
+    "message": "追加"
+  },
+  "label_pattern_list": {
+    "message": "パターン一覧"
+  },
+  "label_save": {
+    "message": "保存"
+  },
+  "label_top": {
+    "message": "上"
+  },
+  "label_url_pattern": {
+    "message": "URLパターン"
+  },
+  "message_copy_done": {
+    "message": "コピーしました。"
+  },
+  "message_json_invalid": {
+    "message": "JSONテキストが正しくありません。"
+  },
+  "message_json_required": {
+    "message": "フォームが未入力です。"
+  },
+  "message_pattern_existing_url_pattern": {
+    "message": "入力されたURLパターンは既に登録されています。"
+  },
+  "message_pattern_required": {
+    "message": "未入力の項目があります。"
+  },
+  "ph_message": {
+    "message": "例: example.com 本番サイト"
+  },
+  "ph_url_pattern": {
+    "message": "例: http://*.example.com/"
+  },
+  "text_url_pattern": {
+    "message": "*を使用できます。1文字以上の半角英数字、ハイフン、アンダースコアにマッチします。"
+  }
 }
