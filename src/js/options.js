@@ -462,6 +462,19 @@ var patternForm = (function() {
       return $(selector).val().trim();
     };
 
+    var validatorConfig = {
+      rules: {
+        url: { required: true },
+        message: { required: true },
+        backgroundColor: { required: true, hexColor: true },
+        display_position: { required: true },
+      },
+      onfocusout: false,
+      onkeyup: false,
+      onclick: false,
+      showErrors: false
+    };
+
     var message = util.buildMessage('#js_pattern_message');
 
     var end = function() {
@@ -475,7 +488,9 @@ var patternForm = (function() {
       var backgroundColor = trimValue('#js_input_backgroundcolor');
       var displayPosition = trimValue('input[name=display_position]:checked');
 
-      if (url === '' || msg === '' || backgroundColor === '' || displayPosition === '') {
+      var validator = $("#js_form_pattern").validate(validatorConfig);
+
+      if (validator.form() === false) {
         message.show(error.required);
         return;
       }
@@ -567,7 +582,7 @@ var deleteForm = (function() {
 
 $(function() {
   $.validator.addMethod('hexColor', function(value, element) {
-    return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
+    return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
   });
 
   headerComponent.init();
