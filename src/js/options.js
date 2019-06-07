@@ -440,6 +440,14 @@ var patternForm = (function() {
 
   var modal = null;
 
+  var validator = null;
+
+  var resetValidator = function() {
+    if (validator) {
+      validator.destroy();
+    }
+  };
+
   /**
    * @param {string} argMode 'add' or 'edit'
    * @param {FormValue} argOriginal
@@ -450,6 +458,7 @@ var patternForm = (function() {
 
     current = $.extend(defaultValues(), original);
 
+    resetValidator();
     bindValues();
     modal.show();
   };
@@ -457,6 +466,7 @@ var patternForm = (function() {
   var clear = function() {
     current = defaultValues();
 
+    resetValidator();
     bindValues();
   };
 
@@ -480,7 +490,17 @@ var patternForm = (function() {
       onfocusout: false,
       onkeyup: false,
       onclick: false,
-      showErrors: false
+      errorClass: 'has-error',
+      errorElement: 'div',
+      errorPlacement: function(error, element) {
+        if (element.attr('name') === 'background_color') {
+          error.appendTo(element.parent().parent());
+        } else if (element.attr('name') === 'display_position') {
+          error.appendTo(element.parent().parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
     };
 
     var message = util.buildMessage('#js_pattern_message');
@@ -496,7 +516,7 @@ var patternForm = (function() {
       var backgroundColor = trimValue('#js_input_backgroundcolor');
       var displayPosition = trimValue('input[name=display_position]:checked');
 
-      var validator = $("#js_form_pattern").validate(validatorConfig);
+      validator = $("#js_form_pattern").validate(validatorConfig);
 
       if (validator.form() === false) {
         message.show(error.required);
