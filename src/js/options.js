@@ -114,8 +114,18 @@ var headerComponent = (function() {
   };
 })();
 
+/**
+ * @typedef {object} ExportFormItem
+ * @property {string} jsonString
+ */
+
 var exportComponent = (function() {
-  var modal = null;
+  var modal;
+
+  /**
+   * @type {ExportFormItem}
+   */
+  var current;
 
   var init = function() {
     var clipboard = new ClipboardJS('#js_export_copy');
@@ -133,8 +143,8 @@ var exportComponent = (function() {
     });
   };
 
-  var bindValues = function(values) {
-    $('#js_export_display').html(values.jsonString);
+  var bindValues = function() {
+    $('#js_export_display').html(current.jsonString);
   };
 
   var show = function() {
@@ -142,10 +152,12 @@ var exportComponent = (function() {
       version: urlNotification.config.version(),
       pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
     };
-    var jsonString = JSON.stringify(data, null, 4);
 
-    bindValues({ jsonString: jsonString });
+    current = {
+      jsonString: JSON.stringify(data, null, 4),
+    };
 
+    bindValues();
     modal.show();
   };
 
