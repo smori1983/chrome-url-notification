@@ -114,8 +114,18 @@ var headerComponent = (function() {
   };
 })();
 
+/**
+ * @typedef {object} ExportFormItem
+ * @property {string} jsonString
+ */
+
 var exportComponent = (function() {
-  var modal = null;
+  var modal;
+
+  /**
+   * @type {ExportFormItem}
+   */
+  var current;
 
   var init = function() {
     var clipboard = new ClipboardJS('#js_export_copy');
@@ -133,8 +143,8 @@ var exportComponent = (function() {
     });
   };
 
-  var bindValues = function(values) {
-    $('#js_export_display').html(values.jsonString);
+  var bindValues = function() {
+    $('#js_export_display').html(current.jsonString);
   };
 
   var show = function() {
@@ -142,10 +152,12 @@ var exportComponent = (function() {
       version: urlNotification.config.version(),
       pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
     };
-    var jsonString = JSON.stringify(data, null, 4);
 
-    bindValues({ jsonString: jsonString });
+    current = {
+      jsonString: JSON.stringify(data, null, 4),
+    };
 
+    bindValues();
     modal.show();
   };
 
@@ -164,16 +176,15 @@ var importComponent = (function() {
         $('#js_form_import_json').focus();
       },
     });
-  };
-
-  var show = function() {
-    clear();
 
     util.rebind('#js_form_import', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
+  };
 
+  var show = function() {
+    clear();
     modal.show();
   };
 
@@ -369,6 +380,35 @@ var patternListComponent = (function() {
  */
 
 var patternForm = (function() {
+
+  /**
+   * @type {FormValue}
+   */
+  var current;
+
+  var init = function() {
+    modal = util.modal('#js_modal_pattern', {
+      'shown.bs.modal': function() {
+        $('#js_input_url').focus();
+      },
+    });
+
+    $('#js_colorpicker').colorpicker({
+      align: 'left',
+      format: 'hex',
+    });
+
+    util.rebind('#js_input_clear', 'click', function(e) {
+      e.preventDefault();
+      clear();
+    });
+
+    util.rebind('#js_form_pattern', 'submit', function(e) {
+      e.preventDefault();
+      submit();
+    });
+  };
+
   var defaultValues = function() {
     return {
       url: '',
@@ -382,12 +422,12 @@ var patternForm = (function() {
 
   var original = null;
 
-  var bindValues = function(formValues) {
-    $('#js_input_url').val(formValues.url);
-    $('#js_input_msg').val(formValues.message);
-    $('#js_input_backgroundcolor').val('#' + formValues.backgroundColor);
-    $('#js_colorpicker').colorpicker('setValue', '#' + formValues.backgroundColor);
-    $('input[name=display_position]').val([formValues.displayPosition]);
+  var bindValues = function() {
+    $('#js_input_url').val(current.url);
+    $('#js_input_msg').val(current.message);
+    $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
+    $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
+    $('input[name=display_position]').val([current.displayPosition]);
   };
 
   var modal = null;
@@ -400,23 +440,16 @@ var patternForm = (function() {
     mode = argMode;
     original = argOriginal;
 
-    bindValues($.extend(defaultValues(), original));
+    current = $.extend(defaultValues(), original);
 
-    util.rebind('#js_input_clear', 'click', function(e) {
-      e.preventDefault();
-      clear();
-    });
-
-    util.rebind('#js_form_pattern', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-
+    bindValues();
     modal.show();
   };
 
   var clear = function() {
-    bindValues(defaultValues());
+    current = defaultValues();
+
+    bindValues();
   };
 
   var submit = (function() {
@@ -476,19 +509,6 @@ var patternForm = (function() {
     };
   })();
 
-  var init = function() {
-    modal = util.modal('#js_modal_pattern', {
-      'shown.bs.modal': function() {
-        $('#js_input_url').focus();
-      },
-    });
-
-    $('#js_colorpicker').colorpicker({
-      align: 'left',
-      format: 'hex',
-    });
-  };
-
   return {
     init: init,
     show: show,
@@ -502,17 +522,21 @@ var patternForm = (function() {
  */
 
 var deleteForm = (function() {
-  var current = null;
+  var modal;
 
   /**
-   * @param {DeleteFormItem} item
+   * @param {DeleteFormItem}
    */
-  var bindValues = function(item) {
-    $('#js_form_delete_pattern').text(item.pattern);
-    $('#js_form_delete_message').text(item.message);
-  };
+  var current;
 
-  var modal = null;
+  var init = function() {
+    modal = util.modal('#js_modal_delete');
+
+    util.rebind('#js_form_delete', 'submit', function(e) {
+      e.preventDefault();
+      submit();
+    });
+  };
 
   /**
    * @param {DeleteFormItem} item
@@ -520,24 +544,19 @@ var deleteForm = (function() {
   var show = function(item) {
     current = item;
 
-    bindValues(current);
-
-    util.rebind('#js_form_delete', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-
+    bindValues();
     modal.show();
+  };
+
+  var bindValues = function() {
+    $('#js_form_delete_pattern').text(current.pattern);
+    $('#js_form_delete_message').text(current.message);
   };
 
   var submit = function() {
     urlNotification.storage.deletePattern(current.pattern);
     modal.hide();
     patternListComponent.show();
-  };
-
-  var init = function() {
-    modal = util.modal('#js_modal_delete');
   };
 
   return {
