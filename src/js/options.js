@@ -467,7 +467,7 @@ var patternForm = (function() {
         url: { required: true },
         message: { required: true },
         backgroundColor: { required: true, hexColor: true },
-        display_position: { required: true },
+        display_position: { required: true, in: ['top', 'bottom'] },
       },
       onfocusout: false,
       onkeyup: false,
@@ -583,6 +583,10 @@ var deleteForm = (function() {
 $(function() {
   $.validator.addMethod('hexColor', function(value, element) {
     return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
+  });
+
+  $.validator.addMethod('in', function (value, element, params) {
+    return this.optional(element) || params.indexOf(value) >= 0;
   });
 
   headerComponent.init();
