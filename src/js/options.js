@@ -502,17 +502,21 @@ var patternForm = (function() {
  */
 
 var deleteForm = (function() {
-  var current = null;
+  var modal;
 
   /**
-   * @param {DeleteFormItem} item
+   * @param {DeleteFormItem}
    */
-  var bindValues = function(item) {
-    $('#js_form_delete_pattern').text(item.pattern);
-    $('#js_form_delete_message').text(item.message);
-  };
+  var current;
 
-  var modal = null;
+  var init = function() {
+    modal = util.modal('#js_modal_delete');
+
+    util.rebind('#js_form_delete', 'submit', function(e) {
+      e.preventDefault();
+      submit();
+    });
+  };
 
   /**
    * @param {DeleteFormItem} item
@@ -520,24 +524,19 @@ var deleteForm = (function() {
   var show = function(item) {
     current = item;
 
-    bindValues(current);
-
-    util.rebind('#js_form_delete', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-
+    bindValues();
     modal.show();
+  };
+
+  var bindValues = function() {
+    $('#js_form_delete_pattern').text(current.pattern);
+    $('#js_form_delete_message').text(current.message);
   };
 
   var submit = function() {
     urlNotification.storage.deletePattern(current.pattern);
     modal.hide();
     patternListComponent.show();
-  };
-
-  var init = function() {
-    modal = util.modal('#js_modal_delete');
   };
 
   return {
