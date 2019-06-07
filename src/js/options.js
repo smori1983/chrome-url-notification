@@ -176,16 +176,15 @@ var importComponent = (function() {
         $('#js_form_import_json').focus();
       },
     });
-  };
-
-  var show = function() {
-    clear();
 
     util.rebind('#js_form_import', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
+  };
 
+  var show = function() {
+    clear();
     modal.show();
   };
 
