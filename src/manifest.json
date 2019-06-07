@@ -3,13 +3,15 @@
 
     "name": "Chrome URL Notification",
     "description": "Notify user when the URL matches the registered patterns.",
-    "version": "2.3.0",
+    "version": "3.0.0",
 
     "icons": {
         "16": "image/icon_16.png",
         "48": "image/icon_48.png",
         "128": "image/icon_128.png"
     },
+
+    "default_locale": "en",
 
     "content_scripts": [{
         "matches": ["https://*/*", "http://*/*"],

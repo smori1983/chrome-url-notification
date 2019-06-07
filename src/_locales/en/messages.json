@@ -1,0 +1,77 @@
+{
+  "label_background_color": {
+    "message": "Background color"
+  },
+  "label_bottom": {
+    "message": "Bottom"
+  },
+  "label_cancel": {
+    "message": "Cancel"
+  },
+  "label_clear": {
+    "message": "Clear"
+  },
+  "label_copy": {
+    "message": "Copy"
+  },
+  "label_delete": {
+    "message": "Delete"
+  },
+  "label_display_position": {
+    "message": "Display position"
+  },
+  "label_edit": {
+    "message": "Edit"
+  },
+  "label_export": {
+    "message": "Export"
+  },
+  "label_import": {
+    "message": "Import"
+  },
+  "label_json_text": {
+    "message": "JSON text"
+  },
+  "label_message": {
+    "message": "Message"
+  },
+  "label_pattern_add": {
+    "message": "Add"
+  },
+  "label_pattern_list": {
+    "message": "Pattern list"
+  },
+  "label_save": {
+    "message": "Save"
+  },
+  "label_top": {
+    "message": "Top"
+  },
+  "label_url_pattern": {
+    "message": "URL pattern"
+  },
+  "message_copy_done": {
+    "message": "Copied."
+  },
+  "message_json_invalid": {
+    "message": "JSON text is invalid."
+  },
+  "message_json_required": {
+    "message": "JSON text is required."
+  },
+  "message_pattern_existing_url_pattern": {
+    "message": "URL pattern already exists."
+  },
+  "message_pattern_required": {
+    "message": "All fields are required."
+  },
+  "ph_message": {
+    "message": "e.g. example.com production site"
+  },
+  "ph_url_pattern": {
+    "message": "e.g. http://*.example.com/"
+  },
+  "text_url_pattern": {
+    "message": "* matches character(s) of alphabet, number, hyphen and underscore."
+  }
+}

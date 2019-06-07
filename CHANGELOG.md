@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v3.0.0
+
+### Feature
+
+- i18n
+  - en
+  - ja
+
+
 ## v2.3.0
 
 ### Development
