@@ -380,6 +380,35 @@ var patternListComponent = (function() {
  */
 
 var patternForm = (function() {
+
+  /**
+   * @type {FormValue}
+   */
+  var current;
+
+  var init = function() {
+    modal = util.modal('#js_modal_pattern', {
+      'shown.bs.modal': function() {
+        $('#js_input_url').focus();
+      },
+    });
+
+    $('#js_colorpicker').colorpicker({
+      align: 'left',
+      format: 'hex',
+    });
+
+    util.rebind('#js_input_clear', 'click', function(e) {
+      e.preventDefault();
+      clear();
+    });
+
+    util.rebind('#js_form_pattern', 'submit', function(e) {
+      e.preventDefault();
+      submit();
+    });
+  };
+
   var defaultValues = function() {
     return {
       url: '',
@@ -393,12 +422,12 @@ var patternForm = (function() {
 
   var original = null;
 
-  var bindValues = function(formValues) {
-    $('#js_input_url').val(formValues.url);
-    $('#js_input_msg').val(formValues.message);
-    $('#js_input_backgroundcolor').val('#' + formValues.backgroundColor);
-    $('#js_colorpicker').colorpicker('setValue', '#' + formValues.backgroundColor);
-    $('input[name=display_position]').val([formValues.displayPosition]);
+  var bindValues = function() {
+    $('#js_input_url').val(current.url);
+    $('#js_input_msg').val(current.message);
+    $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
+    $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
+    $('input[name=display_position]').val([current.displayPosition]);
   };
 
   var modal = null;
@@ -411,23 +440,16 @@ var patternForm = (function() {
     mode = argMode;
     original = argOriginal;
 
-    bindValues($.extend(defaultValues(), original));
+    current = $.extend(defaultValues(), original);
 
-    util.rebind('#js_input_clear', 'click', function(e) {
-      e.preventDefault();
-      clear();
-    });
-
-    util.rebind('#js_form_pattern', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-
+    bindValues();
     modal.show();
   };
 
   var clear = function() {
-    bindValues(defaultValues());
+    current = defaultValues();
+
+    bindValues();
   };
 
   var submit = (function() {
@@ -486,19 +508,6 @@ var patternForm = (function() {
       }
     };
   })();
-
-  var init = function() {
-    modal = util.modal('#js_modal_pattern', {
-      'shown.bs.modal': function() {
-        $('#js_input_url').focus();
-      },
-    });
-
-    $('#js_colorpicker').colorpicker({
-      align: 'left',
-      format: 'hex',
-    });
-  };
 
   return {
     init: init,
