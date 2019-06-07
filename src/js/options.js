@@ -407,6 +407,14 @@ var patternForm = (function() {
       e.preventDefault();
       submit();
     });
+
+    $.validator.addMethod('hexColor', function(value, element) {
+      return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
+    }, 'Invalid color index.');
+
+    $.validator.addMethod('in', function (value, element, params) {
+      return this.optional(element) || params.indexOf(value) >= 0;
+    }, 'Invalid choice.');
   };
 
   var defaultValues = function() {
@@ -581,14 +589,6 @@ var deleteForm = (function() {
 })();
 
 $(function() {
-  $.validator.addMethod('hexColor', function(value, element) {
-    return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
-  }, 'Invalid color index.');
-
-  $.validator.addMethod('in', function (value, element, params) {
-    return this.optional(element) || params.indexOf(value) >= 0;
-  }, 'Invalid choice.');
-
   headerComponent.init();
   exportComponent.init();
   importComponent.init();
