@@ -466,7 +466,7 @@ var patternForm = (function() {
       rules: {
         url: { required: true },
         message: { required: true },
-        backgroundColor: { required: true, hexColor: true },
+        background_color: { required: true, hexColor: true },
         display_position: { required: true, in: ['top', 'bottom'] },
       },
       onfocusout: false,
