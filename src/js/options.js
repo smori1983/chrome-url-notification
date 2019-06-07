@@ -55,6 +55,35 @@ var util = (function() {
   };
 })();
 
+var i18n = (function() {
+  var init = function() {
+    $('*[data-i18n]').each(function () {
+      $(this).text(get($(this).data('i18n')));
+    });
+
+    $('*[data-i18n-val]').each(function () {
+      $(this).val(get($(this).data('i18n-val')));
+    });
+
+    $('*[data-i18n-ph]').each(function () {
+      $(this).attr('placeholder', get($(this).data('i18n-ph')));
+    });
+  };
+
+  /**
+   * @param {string} key
+   * @returns {string}
+   */
+  var get = function(key) {
+    return chrome.i18n.getMessage(key);
+  };
+
+  return {
+    init: init,
+    get: get,
+  };
+})();
+
 var headerComponent = (function() {
   var showVersion = function() {
     $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
@@ -94,7 +123,7 @@ var exportComponent = (function() {
 
     clipboard.on('success', function(e) {
       e.clearSelection();
-      message.show('コピーしました。');
+      message.show(i18n.get('message_copy_done'));
     });
 
     modal = util.modal('#js_modal_export', {
@@ -154,8 +183,8 @@ var importComponent = (function() {
 
   var submit = (function() {
     var error = {
-      required: 'フォームが未入力です。',
-      invalidJson: 'JSONテキストが正しくありません。',
+      required: i18n.get('message_json_required'),
+      invalidJson: i18n.get('message_json_invalid'),
     };
 
     var message = util.buildMessage('#js_import_message');
@@ -276,7 +305,7 @@ var patternListComponent = (function() {
      * @param {PatternItem} item
      */
     var copyButton = function(item) {
-      return button('btn-default', 'コピー').click(function(e) {
+      return button('btn-default', i18n.get('label_copy')).click(function(e) {
         e.preventDefault();
         patternForm.show('add', {
           url: item.url,
@@ -291,7 +320,7 @@ var patternListComponent = (function() {
      * @param {PatternItem} item
      */
     var editButton = function(item) {
-      return button('btn-primary', '編集').click(function(e) {
+      return button('btn-primary', i18n.get('label_edit')).click(function(e) {
         e.preventDefault();
         patternForm.show('edit', {
           url: item.url,
@@ -306,7 +335,7 @@ var patternListComponent = (function() {
      * @param {PatternItem} item
      */
     var deleteButton = function(item) {
-      return button('btn-danger', '削除').click(function(e) {
+      return button('btn-danger', i18n.get('label_delete')).click(function(e) {
         e.preventDefault();
         deleteForm.show({
           pattern: item.url,
@@ -392,8 +421,8 @@ var patternForm = (function() {
 
   var submit = (function() {
     var error = {
-      required: '未入力の項目があります。',
-      duplicated: '入力されたURLパターンは既に登録されています。',
+      required: i18n.get('message_pattern_required'),
+      duplicated: i18n.get('message_pattern_existing_url_pattern'),
     };
 
     var trimValue = function(selector) {
@@ -528,4 +557,6 @@ $(function() {
   patternListComponent.show();
   patternForm.init();
   deleteForm.init();
+
+  i18n.init();
 });
