@@ -415,6 +415,20 @@ var patternForm = (function() {
     $.validator.addMethod('in', function (value, element, params) {
       return this.optional(element) || params.indexOf(value) >= 0;
     }, 'Invalid choice.');
+
+    $.validator.addMethod('existingUrl', function(value, element) {
+      var usable = true;
+
+      if (mode === 'add') {
+        usable = urlNotification.storage.findByUrl(value) === null;
+      }
+
+      if (mode === 'edit') {
+        usable = original.url === value || urlNotification.storage.findByUrl(value) === null;
+      }
+
+      return this.optional(element) || usable;
+    }, 'Existing URL.');
   };
 
   var defaultValues = function() {
@@ -482,7 +496,7 @@ var patternForm = (function() {
 
     var validatorConfig = {
       rules: {
-        url: { required: true },
+        url: { required: true, existingUrl: true },
         message: { required: true },
         background_color: { required: true, hexColor: true },
         display_position: { required: true, in: ['top', 'bottom'] },
