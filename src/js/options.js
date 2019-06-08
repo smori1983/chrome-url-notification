@@ -501,6 +501,23 @@ var patternForm = (function() {
         background_color: { required: true, hexColor: true },
         display_position: { required: true, in: ['top', 'bottom'] },
       },
+      messages: {
+        url: {
+          required: i18n.get('message_field_required'),
+          existingUrl: i18n.get('message_pattern_existing_url_pattern'),
+        },
+        message: {
+          required: i18n.get('message_field_required'),
+        },
+        background_color: {
+          required: i18n.get('message_field_required'),
+          hexColor: i18n.get('message_invalid_color_index'),
+        },
+        display_position: {
+          required: i18n.get('message_field_required'),
+          in: i18n.get('message_invalid_choice'),
+        },
+      },
       onfocusout: false,
       onkeyup: false,
       onclick: false,
