@@ -445,6 +445,9 @@ var patternForm = (function() {
     }, 'Existing URL.');
   };
 
+  /**
+   * @returns {FormValue}
+   */
   var defaultValues = function() {
     return {
       url: '',
