@@ -549,11 +549,6 @@ var patternForm = (function() {
       },
     };
 
-    var end = function() {
-      modal.hide();
-      patternListComponent.show();
-    };
-
     return function() {
       validator = $('#js_form_pattern').validate(validatorConfig);
 
@@ -570,13 +565,14 @@ var patternForm = (function() {
 
       if (mode === 'add') {
         urlNotification.storage.addPattern(saveData);
-        end();
       }
 
       if (mode === 'edit') {
         urlNotification.storage.updatePattern(original.url, saveData);
-        end();
       }
+
+      modal.hide();
+      patternListComponent.show();
     };
   })();
 
