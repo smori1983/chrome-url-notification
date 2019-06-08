@@ -555,7 +555,7 @@ var patternForm = (function() {
       var saveData = {
         url: trimValue('#js_input_url'),
         msg: trimValue('#js_input_msg'),
-        backgroundColor: trimValue('#js_input_backgroundcolor').replace(/^#/, ''),
+        backgroundColor: trimValue('#js_input_background_color').replace(/^#/, ''),
         displayPosition: trimValue('input[name=display_position]:checked'),
       };
 
