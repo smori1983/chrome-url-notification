@@ -496,10 +496,21 @@ var patternForm = (function() {
 
     var validatorConfig = {
       rules: {
-        url: { required: true, existingUrl: true },
-        message: { required: true },
-        background_color: { required: true, hexColor: true },
-        display_position: { required: true, in: ['top', 'bottom'] },
+        url: {
+          required: true,
+          existingUrl: true,
+        },
+        message: {
+          required:true,
+        },
+        background_color: {
+          required: true,
+          hexColor: true,
+        },
+        display_position: {
+          required: true,
+          in: ['top', 'bottom'],
+        },
       },
       messages: {
         url: {
