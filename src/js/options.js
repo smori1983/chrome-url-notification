@@ -381,10 +381,24 @@ var patternListComponent = (function() {
 
 var patternForm = (function() {
 
+  var modal;
+
+  /**
+   * @type {string}
+   */
+  var mode;
+
+  /**
+   * @type {FormValue}
+   */
+  var original;
+
   /**
    * @type {FormValue}
    */
   var current;
+
+  var validator;
 
   var init = function() {
     modal = util.modal('#js_modal_pattern', {
@@ -440,10 +454,6 @@ var patternForm = (function() {
     };
   };
 
-  var mode = null;
-
-  var original = null;
-
   var bindValues = function() {
     $('#js_input_url').val(current.url);
     $('#js_input_msg').val(current.message);
@@ -451,10 +461,6 @@ var patternForm = (function() {
     $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
     $('input[name=display_position]').val([current.displayPosition]);
   };
-
-  var modal = null;
-
-  var validator = null;
 
   var resetValidator = function() {
     if (validator) {
