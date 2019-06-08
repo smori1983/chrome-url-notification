@@ -48,7 +48,7 @@ urlNotification.validator = (function() {
   };
 
   var patternV1 = function() {
-    return extend(patternTemplate(), {
+    return extend(true, patternTemplate(), {
       'properties': {
         'url': {
           'required': true,
@@ -70,7 +70,7 @@ urlNotification.validator = (function() {
   };
 
   var patternV2 = function() {
-    return extend(patternV1(), {
+    return extend(true, patternV1(), {
       'properties': {
         'displayPosition': {
           'required': true,
