@@ -527,7 +527,7 @@ var patternForm = (function() {
       onfocusout: false,
       onkeyup: false,
       onclick: false,
-      errorClass: 'has-error',
+      errorClass: 'text-danger',
       errorElement: 'div',
       errorPlacement: function(error, element) {
         if (element.attr('name') === 'background_color') {
