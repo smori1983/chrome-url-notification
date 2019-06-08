@@ -53,6 +53,15 @@
   "message_copy_done": {
     "message": "Copied."
   },
+  "message_field_required": {
+    "message": "This field is required."
+  },
+  "message_invalid_choice": {
+    "message": "Invalid choice."
+  },
+  "message_invalid_color_index": {
+    "message": "Invalid color index."
+  },
   "message_json_invalid": {
     "message": "JSON text is invalid."
   },

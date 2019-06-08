@@ -407,6 +407,28 @@ var patternForm = (function() {
       e.preventDefault();
       submit();
     });
+
+    $.validator.addMethod('hexColor', function(value, element) {
+      return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
+    }, 'Invalid color index.');
+
+    $.validator.addMethod('in', function (value, element, params) {
+      return this.optional(element) || params.indexOf(value) >= 0;
+    }, 'Invalid choice.');
+
+    $.validator.addMethod('existingUrl', function(value, element) {
+      var usable = true;
+
+      if (mode === 'add') {
+        usable = urlNotification.storage.findByUrl(value) === null;
+      }
+
+      if (mode === 'edit') {
+        usable = original.url === value || urlNotification.storage.findByUrl(value) === null;
+      }
+
+      return this.optional(element) || usable;
+    }, 'Existing URL.');
   };
 
   var defaultValues = function() {
@@ -432,6 +454,14 @@ var patternForm = (function() {
 
   var modal = null;
 
+  var validator = null;
+
+  var resetValidator = function() {
+    if (validator) {
+      validator.destroy();
+    }
+  };
+
   /**
    * @param {string} argMode 'add' or 'edit'
    * @param {FormValue} argOriginal
@@ -442,6 +472,7 @@ var patternForm = (function() {
 
     current = $.extend(defaultValues(), original);
 
+    resetValidator();
     bindValues();
     modal.show();
   };
@@ -449,20 +480,65 @@ var patternForm = (function() {
   var clear = function() {
     current = defaultValues();
 
+    resetValidator();
     bindValues();
   };
 
   var submit = (function() {
-    var error = {
-      required: i18n.get('message_pattern_required'),
-      duplicated: i18n.get('message_pattern_existing_url_pattern'),
-    };
-
     var trimValue = function(selector) {
       return $(selector).val().trim();
     };
 
-    var message = util.buildMessage('#js_pattern_message');
+    var validatorConfig = {
+      rules: {
+        url: {
+          required: true,
+          existingUrl: true,
+        },
+        message: {
+          required:true,
+        },
+        background_color: {
+          required: true,
+          hexColor: true,
+        },
+        display_position: {
+          required: true,
+          in: ['top', 'bottom'],
+        },
+      },
+      messages: {
+        url: {
+          required: i18n.get('message_field_required'),
+          existingUrl: i18n.get('message_pattern_existing_url_pattern'),
+        },
+        message: {
+          required: i18n.get('message_field_required'),
+        },
+        background_color: {
+          required: i18n.get('message_field_required'),
+          hexColor: i18n.get('message_invalid_color_index'),
+        },
+        display_position: {
+          required: i18n.get('message_field_required'),
+          in: i18n.get('message_invalid_choice'),
+        },
+      },
+      onfocusout: false,
+      onkeyup: false,
+      onclick: false,
+      errorClass: 'text-danger',
+      errorElement: 'div',
+      errorPlacement: function(error, element) {
+        if (element.attr('name') === 'background_color') {
+          error.appendTo(element.parent().parent());
+        } else if (element.attr('name') === 'display_position') {
+          error.appendTo(element.parent().parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
+    };
 
     var end = function() {
       modal.hide();
@@ -470,39 +546,25 @@ var patternForm = (function() {
     };
 
     return function() {
-      var url = trimValue('#js_input_url');
-      var msg = trimValue('#js_input_msg');
-      var backgroundColor = trimValue('#js_input_backgroundcolor');
-      var displayPosition = trimValue('input[name=display_position]:checked');
+      validator = $('#js_form_pattern').validate(validatorConfig);
 
-      if (url === '' || msg === '' || backgroundColor === '' || displayPosition === '') {
-        message.show(error.required);
+      if (validator.form() === false) {
         return;
       }
 
       var saveData = {
-        url: url,
-        msg: msg,
-        backgroundColor: backgroundColor.replace(/^#/, ''),
-        displayPosition: displayPosition,
+        url: trimValue('#js_input_url'),
+        msg: trimValue('#js_input_msg'),
+        backgroundColor: trimValue('#js_input_background_color').replace(/^#/, ''),
+        displayPosition: trimValue('input[name=display_position]:checked'),
       };
 
       if (mode === 'add') {
-        if (urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
         urlNotification.storage.addPattern(saveData);
         end();
       }
 
       if (mode === 'edit') {
-        if (original.url !== url && urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
         urlNotification.storage.updatePattern(original.url, saveData);
         end();
       }
@@ -566,10 +628,6 @@ var deleteForm = (function() {
 })();
 
 $(function() {
-  $.validator.addMethod('hexColor', function(value, element) {
-    return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
-  });
-
   headerComponent.init();
   exportComponent.init();
   importComponent.init();
