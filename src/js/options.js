@@ -551,7 +551,7 @@ var patternForm = (function() {
       var backgroundColor = trimValue('#js_input_backgroundcolor');
       var displayPosition = trimValue('input[name=display_position]:checked');
 
-      validator = $("#js_form_pattern").validate(validatorConfig);
+      validator = $('#js_form_pattern').validate(validatorConfig);
 
       if (validator.form() === false) {
         return;
