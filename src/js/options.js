@@ -546,11 +546,6 @@ var patternForm = (function() {
     };
 
     return function() {
-      var url = trimValue('#js_input_url');
-      var msg = trimValue('#js_input_msg');
-      var backgroundColor = trimValue('#js_input_backgroundcolor');
-      var displayPosition = trimValue('input[name=display_position]:checked');
-
       validator = $('#js_form_pattern').validate(validatorConfig);
 
       if (validator.form() === false) {
@@ -558,10 +553,10 @@ var patternForm = (function() {
       }
 
       var saveData = {
-        url: url,
-        msg: msg,
-        backgroundColor: backgroundColor.replace(/^#/, ''),
-        displayPosition: displayPosition,
+        url: trimValue('#js_input_url'),
+        msg: trimValue('#js_input_msg'),
+        backgroundColor: trimValue('#js_input_backgroundcolor').replace(/^#/, ''),
+        displayPosition: trimValue('input[name=display_position]:checked'),
       };
 
       if (mode === 'add') {
