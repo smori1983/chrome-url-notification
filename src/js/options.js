@@ -381,10 +381,24 @@ var patternListComponent = (function() {
 
 var patternForm = (function() {
 
+  var modal;
+
+  /**
+   * @type {string}
+   */
+  var mode;
+
+  /**
+   * @type {FormValue}
+   */
+  var original;
+
   /**
    * @type {FormValue}
    */
   var current;
+
+  var validator;
 
   var init = function() {
     modal = util.modal('#js_modal_pattern', {
@@ -431,6 +445,9 @@ var patternForm = (function() {
     }, 'Existing URL.');
   };
 
+  /**
+   * @returns {FormValue}
+   */
   var defaultValues = function() {
     return {
       url: '',
@@ -440,10 +457,6 @@ var patternForm = (function() {
     };
   };
 
-  var mode = null;
-
-  var original = null;
-
   var bindValues = function() {
     $('#js_input_url').val(current.url);
     $('#js_input_msg').val(current.message);
@@ -451,10 +464,6 @@ var patternForm = (function() {
     $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
     $('input[name=display_position]').val([current.displayPosition]);
   };
-
-  var modal = null;
-
-  var validator = null;
 
   var resetValidator = function() {
     if (validator) {
@@ -540,11 +549,6 @@ var patternForm = (function() {
       },
     };
 
-    var end = function() {
-      modal.hide();
-      patternListComponent.show();
-    };
-
     return function() {
       validator = $('#js_form_pattern').validate(validatorConfig);
 
@@ -561,13 +565,14 @@ var patternForm = (function() {
 
       if (mode === 'add') {
         urlNotification.storage.addPattern(saveData);
-        end();
       }
 
       if (mode === 'edit') {
         urlNotification.storage.updatePattern(original.url, saveData);
-        end();
       }
+
+      modal.hide();
+      patternListComponent.show();
     };
   })();
 
