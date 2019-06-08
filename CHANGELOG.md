@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## next
+
+### Development
+
+- Use jquery validation
+
+
 ## v3.0.1
 
 ### Development
