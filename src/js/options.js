@@ -485,11 +485,6 @@ var patternForm = (function() {
   };
 
   var submit = (function() {
-    var error = {
-      required: i18n.get('message_pattern_required'),
-      duplicated: i18n.get('message_pattern_existing_url_pattern'),
-    };
-
     var trimValue = function(selector) {
       return $(selector).val().trim();
     };
@@ -545,8 +540,6 @@ var patternForm = (function() {
       },
     };
 
-    var message = util.buildMessage('#js_pattern_message');
-
     var end = function() {
       modal.hide();
       patternListComponent.show();
@@ -561,7 +554,6 @@ var patternForm = (function() {
       validator = $("#js_form_pattern").validate(validatorConfig);
 
       if (validator.form() === false) {
-        message.show(error.required);
         return;
       }
 
@@ -573,21 +565,11 @@ var patternForm = (function() {
       };
 
       if (mode === 'add') {
-        if (urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
         urlNotification.storage.addPattern(saveData);
         end();
       }
 
       if (mode === 'edit') {
-        if (original.url !== url && urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
         urlNotification.storage.updatePattern(original.url, saveData);
         end();
       }
