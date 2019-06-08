@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## v3.0.1
+
+### Development
+
+- Fix import json validation
+
+
 ## v3.0.0
 
 ### Feature
