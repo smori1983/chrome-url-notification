@@ -1,18 +1,20 @@
-var util = (function() {
-  var rebind = function(selector, eventName, callback) {
+'use strict';
+
+const util = (function() {
+  const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);
   };
 
-  var modal = function(selector, events) {
+  const modal = function(selector, events) {
     $.each($.extend({}, events), function(eventName, callback) {
       $(selector).on(eventName, callback);
     });
 
-    var show = function() {
+    const show = function() {
       $(selector).modal('show');
     };
 
-    var hide = function() {
+    const hide = function() {
       $(selector).modal('hide');
     };
 
@@ -22,10 +24,10 @@ var util = (function() {
     };
   };
 
-  var buildMessage = function(selector) {
-    var timeoutId = null;
+  const buildMessage = function(selector) {
+    let timeoutId = null;
 
-    var show = function(message) {
+    const show = function(message) {
       $(selector).text(message);
 
       if (timeoutId !== null) {
@@ -38,7 +40,7 @@ var util = (function() {
       }, 3000);
     };
 
-    var hide = function() {
+    const hide = function() {
       $(selector).empty();
     };
 
@@ -55,8 +57,8 @@ var util = (function() {
   };
 })();
 
-var i18n = (function() {
-  var init = function() {
+const i18n = (function() {
+  const init = function() {
     $('*[data-i18n]').each(function () {
       $(this).text(get($(this).data('i18n')));
     });
@@ -74,7 +76,7 @@ var i18n = (function() {
    * @param {string} key
    * @returns {string}
    */
-  var get = function(key) {
+  const get = function(key) {
     return chrome.i18n.getMessage(key);
   };
 
@@ -84,12 +86,12 @@ var i18n = (function() {
   };
 })();
 
-var headerComponent = (function() {
-  var showVersion = function() {
+const headerComponent = (function() {
+  const showVersion = function() {
     $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
   };
 
-  var initEventHandlers = function() {
+  const initEventHandlers = function() {
     $('#js_button_add_pattern').click(function(e) {
       e.preventDefault();
       patternForm.show('add', {});
@@ -119,17 +121,17 @@ var headerComponent = (function() {
  * @property {string} jsonString
  */
 
-var exportComponent = (function() {
-  var modal;
+const exportComponent = (function() {
+  let modal;
 
   /**
    * @type {ExportFormItem}
    */
-  var current;
+  let current;
 
-  var init = function() {
-    var clipboard = new ClipboardJS('#js_export_copy');
-    var message = util.buildMessage('#js_export_message');
+  const init = function() {
+    const clipboard = new ClipboardJS('#js_export_copy');
+    const message = util.buildMessage('#js_export_message');
 
     clipboard.on('success', function(e) {
       e.clearSelection();
@@ -143,12 +145,12 @@ var exportComponent = (function() {
     });
   };
 
-  var bindValues = function() {
+  const bindValues = function() {
     $('#js_export_display').html(current.jsonString);
   };
 
-  var show = function() {
-    var data = {
+  const show = function() {
+    const data = {
       version: urlNotification.config.version(),
       pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
     };
@@ -167,10 +169,10 @@ var exportComponent = (function() {
   };
 })();
 
-var importComponent = (function() {
-  var modal = null;
+const importComponent = (function() {
+  let modal = null;
 
-  var init = function() {
+  const init = function() {
     modal = util.modal('#js_modal_import', {
       'shown.bs.modal': function() {
         $('#js_form_import_json').focus();
@@ -183,25 +185,25 @@ var importComponent = (function() {
     });
   };
 
-  var show = function() {
+  const show = function() {
     clear();
     modal.show();
   };
 
-  var clear = function() {
+  const clear = function() {
     $('#js_form_import_json').val('');
   };
 
-  var submit = (function() {
-    var error = {
+  const submit = (function() {
+    const error = {
       required: i18n.get('message_json_required'),
       invalidJson: i18n.get('message_json_invalid'),
     };
 
-    var message = util.buildMessage('#js_import_message');
+    const message = util.buildMessage('#js_import_message');
 
     return function() {
-      var jsonText = $('#js_form_import_json').val().trim();
+      const jsonText = $('#js_form_import_json').val().trim();
 
       if (jsonText.length === 0) {
         message.show(error.required);
@@ -209,7 +211,7 @@ var importComponent = (function() {
         return;
       }
 
-      var json;
+      let json;
 
       try {
         json = JSON.parse(jsonText);
@@ -239,10 +241,10 @@ var importComponent = (function() {
   };
 })();
 
-var patternListComponent = (function() {
-  var show = function() {
-    var listArea = $('#js_list_pattern tbody');
-    var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
+const patternListComponent = (function() {
+  const show = function() {
+    const listArea = $('#js_list_pattern tbody');
+    const sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);
 
@@ -252,16 +254,16 @@ var patternListComponent = (function() {
     });
   };
 
-  var makeRow = (function() {
-    var row = function() {
+  const makeRow = (function() {
+    const row = function() {
       return $('<tr>');
     };
 
-    var column = function() {
+    const column = function() {
       return $('<td>');
     };
 
-    var button = function(clazz, text) {
+    const button = function(clazz, text) {
       return $('<button>').
         addClass('btn btn-sm').
         addClass(clazz).
@@ -271,7 +273,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var listMessage = function(item) {
+    const listMessage = function(item) {
       return $('<div>').
         addClass('list-message').
         css(listMessageCss(item)).
@@ -281,7 +283,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var listMessageCss = function(item) {
+    const listMessageCss = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
         'color': '#ffffff',
@@ -291,21 +293,21 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var patternColumn = function(item) {
+    const patternColumn = function(item) {
       return column().text(item.url);
     };
 
     /**
      * @param {PatternItem} item
      */
-    var messgeColumn = function(item) {
+    const messageColumn = function(item) {
       return column().append(listMessage(item));
     };
 
     /**
      * @param {PatternItem} item
      */
-    var actionColumn = function(item) {
+    const actionColumn = function(item) {
       return column().addClass('action').
         append(copyButton(item)).
         append(editButton(item)).
@@ -315,7 +317,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var copyButton = function(item) {
+    const copyButton = function(item) {
       return button('btn-default', i18n.get('label_copy')).click(function(e) {
         e.preventDefault();
         patternForm.show('add', {
@@ -330,7 +332,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var editButton = function(item) {
+    const editButton = function(item) {
       return button('btn-primary', i18n.get('label_edit')).click(function(e) {
         e.preventDefault();
         patternForm.show('edit', {
@@ -345,7 +347,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var deleteButton = function(item) {
+    const deleteButton = function(item) {
       return button('btn-danger', i18n.get('label_delete')).click(function(e) {
         e.preventDefault();
         deleteForm.show({
@@ -361,7 +363,7 @@ var patternListComponent = (function() {
     return function(item) {
       return row().
         append(patternColumn(item)).
-        append(messgeColumn(item)).
+        append(messageColumn(item)).
         append(actionColumn(item));
     };
   })();
@@ -379,28 +381,28 @@ var patternListComponent = (function() {
  * @property {string} displayPosition
  */
 
-var patternForm = (function() {
+const patternForm = (function() {
 
-  var modal;
+  let modal;
 
   /**
    * @type {string}
    */
-  var mode;
+  let mode;
 
   /**
    * @type {FormValue}
    */
-  var original;
+  let original;
 
   /**
    * @type {FormValue}
    */
-  var current;
+  let current;
 
-  var validator;
+  let validator;
 
-  var init = function() {
+  const init = function() {
     modal = util.modal('#js_modal_pattern', {
       'shown.bs.modal': function() {
         $('#js_input_url').focus();
@@ -431,7 +433,7 @@ var patternForm = (function() {
     }, 'Invalid choice.');
 
     $.validator.addMethod('existingUrl', function(value, element) {
-      var usable = true;
+      let usable = true;
 
       if (mode === 'add') {
         usable = urlNotification.storage.findByUrl(value) === null;
@@ -448,7 +450,7 @@ var patternForm = (function() {
   /**
    * @returns {FormValue}
    */
-  var defaultValues = function() {
+  const defaultValues = function() {
     return {
       url: '',
       message: '',
@@ -457,7 +459,7 @@ var patternForm = (function() {
     };
   };
 
-  var bindValues = function() {
+  const bindValues = function() {
     $('#js_input_url').val(current.url);
     $('#js_input_msg').val(current.message);
     $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
@@ -465,7 +467,7 @@ var patternForm = (function() {
     $('input[name=display_position]').val([current.displayPosition]);
   };
 
-  var resetValidator = function() {
+  const resetValidator = function() {
     if (validator) {
       validator.destroy();
     }
@@ -475,7 +477,7 @@ var patternForm = (function() {
    * @param {string} argMode 'add' or 'edit'
    * @param {FormValue} argOriginal
    */
-  var show = function(argMode, argOriginal) {
+  const show = function(argMode, argOriginal) {
     mode = argMode;
     original = argOriginal;
 
@@ -486,19 +488,19 @@ var patternForm = (function() {
     modal.show();
   };
 
-  var clear = function() {
+  const clear = function() {
     current = defaultValues();
 
     resetValidator();
     bindValues();
   };
 
-  var submit = (function() {
-    var trimValue = function(selector) {
+  const submit = (function() {
+    const trimValue = function(selector) {
       return $(selector).val().trim();
     };
 
-    var validatorConfig = {
+    const validatorConfig = {
       rules: {
         url: {
           required: true,
@@ -556,7 +558,7 @@ var patternForm = (function() {
         return;
       }
 
-      var saveData = {
+      const saveData = {
         url: trimValue('#js_input_url'),
         msg: trimValue('#js_input_msg'),
         backgroundColor: trimValue('#js_input_background_color').replace(/^#/, ''),
@@ -588,15 +590,15 @@ var patternForm = (function() {
  * @property {string} message
  */
 
-var deleteForm = (function() {
-  var modal;
+const deleteForm = (function() {
+  let modal;
 
   /**
    * @param {DeleteFormItem}
    */
-  var current;
+  let current;
 
-  var init = function() {
+  const init = function() {
     modal = util.modal('#js_modal_delete');
 
     util.rebind('#js_form_delete', 'submit', function(e) {
@@ -608,19 +610,19 @@ var deleteForm = (function() {
   /**
    * @param {DeleteFormItem} item
    */
-  var show = function(item) {
+  const show = function(item) {
     current = item;
 
     bindValues();
     modal.show();
   };
 
-  var bindValues = function() {
+  const bindValues = function() {
     $('#js_form_delete_pattern').text(current.pattern);
     $('#js_form_delete_message').text(current.message);
   };
 
-  var submit = function() {
+  const submit = function() {
     urlNotification.storage.deletePattern(current.pattern);
     modal.hide();
     patternListComponent.show();

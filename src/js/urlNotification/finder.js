@@ -5,8 +5,8 @@ urlNotification.finder = (function() {
    * @param {string} url
    * @returns {(PatternItem|null)}
    */
-  var find = function(url) {
-    var i, len, patterns = urlNotification.storage.getAll();
+  const find = function(url) {
+    let i, len, patterns = urlNotification.storage.getAll();
 
     for (i = 0, len = patterns.length; i < len; i++) {
       if (makeRegExp(patterns[i].url).test(url)) {
@@ -17,11 +17,11 @@ urlNotification.finder = (function() {
     return null;
   };
 
-  var makeRegExp = function(url) {
+  const makeRegExp = function(url) {
     return new RegExp(convertForMatching(url));
   };
 
-  var convertForMatching = function(url) {
+  const convertForMatching = function(url) {
     return url.
       replace(/[/.+\-?]/g, function(matched) {
         return '\\' + matched;

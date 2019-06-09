@@ -1,9 +1,9 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.importer = (function() {
-  var _ = require('lodash');
+  const _ = require('lodash');
 
-  var prepareFor1 = function(item) {
+  const prepareFor1 = function(item) {
     return {
       url: item.url,
       msg: item.msg,
@@ -11,7 +11,7 @@ urlNotification.importer = (function() {
     };
   };
 
-  var prepareFor2 = function(item) {
+  const prepareFor2 = function(item) {
     return {
       url: item.url,
       msg: item.msg,
@@ -20,13 +20,13 @@ urlNotification.importer = (function() {
     };
   };
 
-  var prepares = {
+  const prepares = {
     1: prepareFor1,
     2: prepareFor2,
   };
 
-  var migrate = function(pattern, version) {
-    var result = [];
+  const migrate = function(pattern, version) {
+    let result = [];
 
     pattern.forEach(function(item) {
       result.push(urlNotification.migrationExecuter.from(version, item));
@@ -35,7 +35,7 @@ urlNotification.importer = (function() {
     return result;
   };
 
-  var addOrUpdate = function(data) {
+  const addOrUpdate = function(data) {
     if (urlNotification.storage.findByUrl(data.url)) {
       urlNotification.storage.updatePattern(data.url, data);
     } else {
@@ -48,8 +48,8 @@ urlNotification.importer = (function() {
    *
    * @param {object} initialJson
    */
-  var importJson = function(initialJson) {
-    var json = _.cloneDeep(initialJson);
+  const importJson = function(initialJson) {
+    let json = _.cloneDeep(initialJson);
 
     console.info('Import start.');
 

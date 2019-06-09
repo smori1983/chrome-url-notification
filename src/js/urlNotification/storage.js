@@ -9,7 +9,7 @@ var urlNotification = urlNotification || {};
  */
 
 urlNotification.storage = (function() {
-  var key = {
+  const key = {
     version: 'version',
     pattern: 'pattern',
   };
@@ -17,15 +17,15 @@ urlNotification.storage = (function() {
   /**
    * @returns {boolean}
    */
-  var hasVersion = function() {
+  const hasVersion = function() {
     return isValidVersion(getVersion());
   };
 
   /**
    * @returns {number}
    */
-  var currentVersion = function() {
-    var version = getVersion();
+  const currentVersion = function() {
+    const version = getVersion();
 
     if (isValidVersion(version)) {
       return parseInt(version, 10);
@@ -34,14 +34,14 @@ urlNotification.storage = (function() {
     return 0;
   };
 
-  var getVersion = function() {
+  const getVersion = function() {
     return localStorage.getItem(key.version);
   };
 
   /**
    * @returns {boolean}
    */
-  var isValidVersion = function(value) {
+  const isValidVersion = function(value) {
     if (value === null) {
       return false;
     }
@@ -52,29 +52,29 @@ urlNotification.storage = (function() {
   /**
    * @param {number} version
    */
-  var updateVersion = function(version) {
+  const updateVersion = function(version) {
     localStorage.setItem(key.version, version);
   };
 
   /**
    * @param {PatternItem[]} data
    */
-  var update = function(data) {
+  const update = function(data) {
     localStorage.setItem(key.pattern, JSON.stringify(data));
   };
 
   /**
    * @returns {number}
    */
-  var getCount = function() {
+  const getCount = function() {
     return getAll().length;
   };
 
   /**
    * @returns {PatternItem[]}
    */
-  var getAll = function() {
-    var data = localStorage.getItem(key.pattern);
+  const getAll = function() {
+    const data = localStorage.getItem(key.pattern);
 
     if (data === null) {
       return [];
@@ -87,8 +87,8 @@ urlNotification.storage = (function() {
    * @param {string} url
    * @returns {(PatternItem|null)}
    */
-  var findByUrl = function(url) {
-    var i, len, patterns = getAll();
+  const findByUrl = function(url) {
+    let i, len, patterns = getAll();
 
     for (i = 0, len = patterns.length; i < len; i++) {
       if (patterns[i].url === url) {
@@ -102,12 +102,12 @@ urlNotification.storage = (function() {
   /**
    * @param {PatternItem} pattern
    */
-  var addPattern = function(pattern) {
+  const addPattern = function(pattern) {
     if (findByUrl(pattern.url)) {
       return;
     }
 
-    var data = getAll();
+    let data = getAll();
 
     data.push(pattern);
     update(data);
@@ -117,7 +117,7 @@ urlNotification.storage = (function() {
    * @param {string} originalUrl
    * @param {PatternItem} pattern
    */
-  var updatePattern = function(originalUrl, pattern) {
+  const updatePattern = function(originalUrl, pattern) {
     if (findByUrl(originalUrl)) {
       deletePattern(originalUrl);
       addPattern(pattern);
@@ -127,8 +127,8 @@ urlNotification.storage = (function() {
   /**
    * @param {string} url
    */
-  var deletePattern = function(url) {
-    var newData = [];
+  const deletePattern = function(url) {
+    let newData = [];
 
     getAll().forEach(function(item) {
       if (item.url !== url) {
@@ -139,7 +139,7 @@ urlNotification.storage = (function() {
     update(newData);
   };
 
-  var deleteAll = function() {
+  const deleteAll = function() {
     update([]);
   };
 

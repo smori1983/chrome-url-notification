@@ -4,29 +4,29 @@ urlNotification.migration = (function() {
   /**
    * @returns {boolean}
    */
-  var hasVersion = function() {
+  const hasVersion = function() {
     return urlNotification.storage.hasVersion();
   };
 
   /**
    * @returns {number}
    */
-  var currentVersion = function() {
+  const currentVersion = function() {
     return urlNotification.storage.currentVersion();
   };
 
   /**
    * @returns {boolean}
    */
-  var shouldMigrate = function() {
+  const shouldMigrate = function() {
     return currentVersion() < urlNotification.config.version();
   };
 
   /**
    * @param {number} currentVersion
    */
-  var migrateFrom = function(currentVersion) {
-    var result = [];
+  const migrateFrom = function(currentVersion) {
+    let result = [];
 
     urlNotification.storage.getAll().forEach(function(item) {
       result.push(urlNotification.migrationExecuter.from(currentVersion, item));

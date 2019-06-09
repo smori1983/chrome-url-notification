@@ -1,17 +1,19 @@
+'use strict';
+
 $(function() {
 
   /**
    * @param {FindResult} response
    */
-  var process = function(response) {
+  const process = function(response) {
     if (response.matched === false) {
       return;
     }
 
-    var height = 50;
+    const height = 50;
 
-    var createCss = function() {
-      var result = {
+    const createCss = function() {
+      const result = {
         position:   'fixed',
         left:       '0px',
         width:      '100%',
@@ -31,7 +33,7 @@ $(function() {
       return result;
     };
 
-    var container = $('<div>').
+    const container = $('<div>').
       attr('id', 'chrome-url-notification-container').
       css(createCss()).
       text(response.data.message);

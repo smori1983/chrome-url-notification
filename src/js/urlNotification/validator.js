@@ -1,9 +1,9 @@
 var urlNotification = urlNotification || {};
 
 urlNotification.validator = (function() {
-  var extend = require('extend');
+  const extend = require('extend');
 
-  var create = function() {
+  const create = function() {
     return new (require('jsonschema').Validator)();
   };
 
@@ -11,8 +11,8 @@ urlNotification.validator = (function() {
    * @param {object} json
    * @returns {boolean}
    */
-  var importJsonEssential = function(json) {
-    var schema = {
+  const importJsonEssential = function(json) {
+    const schema = {
       'type': 'object',
       'properties': {
         'version': {
@@ -28,26 +28,26 @@ urlNotification.validator = (function() {
       },
     };
 
-    var validator = create();
+    const validator = create();
 
     return validator.validate(json, schema).valid;
   };
 
-  var patternBase = function() {
+  const patternBase = function() {
     return {
       'type': 'array',
       'items': { '$ref': '/item' },
     };
   };
 
-  var patternTemplate = function() {
+  const patternTemplate = function() {
     return {
       'id': '/item',
       'properties': {},
     };
   };
 
-  var patternV1 = function() {
+  const patternV1 = function() {
     return extend(true, patternTemplate(), {
       'properties': {
         'url': {
@@ -69,7 +69,7 @@ urlNotification.validator = (function() {
     });
   };
 
-  var patternV2 = function() {
+  const patternV2 = function() {
     return extend(true, patternV1(), {
       'properties': {
         'displayPosition': {
@@ -81,12 +81,12 @@ urlNotification.validator = (function() {
     });
   };
 
-  var patterns = {
+  const patterns = {
     1: patternV1,
     2: patternV2,
   };
 
-  var patternFor = function(version) {
+  const patternFor = function(version) {
     if (patterns.hasOwnProperty(version)) {
       return patterns[version]();
     }
@@ -98,8 +98,8 @@ urlNotification.validator = (function() {
    * @param {object} json
    * @returns {boolean}
    */
-  var importJson = function(json) {
-    var validator = create();
+  const importJson = function(json) {
+    const validator = create();
 
     if (importJsonEssential(json) === false) {
       return false;
