@@ -18,13 +18,7 @@ urlNotification.storage = (function() {
    * @returns {boolean}
    */
   var hasVersion = function() {
-    var version = getVersion();
-
-    if (version === null) {
-      return false;
-    }
-
-    return /^\d+$/.test(version);
+    return isValidVersion(getVersion());
   };
 
   /**
@@ -33,11 +27,7 @@ urlNotification.storage = (function() {
   var currentVersion = function() {
     var version = getVersion();
 
-    if (version === null) {
-      return 0;
-    }
-
-    if (/^\d+$/.test(version)) {
+    if (isValidVersion(version)) {
       return parseInt(version, 10);
     }
 
@@ -46,6 +36,17 @@ urlNotification.storage = (function() {
 
   var getVersion = function() {
     return localStorage.getItem(key.version);
+  };
+
+  /**
+   * @returns {boolean}
+   */
+  var isValidVersion = function(value) {
+    if (value === null) {
+      return false;
+    }
+
+    return /^\d+$/.test(value);
   };
 
   /**
