@@ -18,7 +18,7 @@ urlNotification.storage = (function() {
    * @returns {boolean}
    */
   var hasVersion = function() {
-    var version = localStorage.getItem(key.version);
+    var version = getVersion();
 
     if (version === null) {
       return false;
@@ -31,7 +31,7 @@ urlNotification.storage = (function() {
    * @returns {number}
    */
   var currentVersion = function() {
-    var version = localStorage.getItem(key.version);
+    var version = getVersion();
 
     if (version === null) {
       return 0;
@@ -42,6 +42,10 @@ urlNotification.storage = (function() {
     }
 
     return 0;
+  };
+
+  var getVersion = function() {
+    return localStorage.getItem(key.version);
   };
 
   /**
