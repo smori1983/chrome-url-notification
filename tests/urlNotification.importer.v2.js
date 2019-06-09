@@ -7,7 +7,7 @@ QUnit.module('urlNotification.importer.v2', {
 });
 
 QUnit.test('import v2 - case 1', function(assert) {
-  var json = {
+  const json = {
     version: 2,
     pattern: [
       {
@@ -21,18 +21,18 @@ QUnit.test('import v2 - case 1', function(assert) {
 
   urlNotification.importer.importJson(json);
 
-  var allData = urlNotification.storage.getAll();
+  const allData = urlNotification.storage.getAll();
 
-  assert.equal(allData.length, 1);
+  assert.strictEqual(allData.length, 1);
 
-  assert.equal(allData[0].url, 'http://example.com/1');
-  assert.equal(allData[0].msg, '1');
-  assert.equal(allData[0].backgroundColor, '111111');
-  assert.equal(allData[0].displayPosition, 'top');
+  assert.strictEqual(allData[0].url, 'http://example.com/1');
+  assert.strictEqual(allData[0].msg, '1');
+  assert.strictEqual(allData[0].backgroundColor, '111111');
+  assert.strictEqual(allData[0].displayPosition, 'top');
 });
 
 QUnit.test('import v2 - case 2', function(assert) {
-  var json = {
+  const json = {
     version: 2,
     pattern: [
       {
@@ -46,12 +46,12 @@ QUnit.test('import v2 - case 2', function(assert) {
 
   urlNotification.importer.importJson(json);
 
-  var allData = urlNotification.storage.getAll();
+  const allData = urlNotification.storage.getAll();
 
-  assert.equal(allData.length, 1);
+  assert.strictEqual(allData.length, 1);
 
-  assert.equal(allData[0].url, 'http://example.com/2');
-  assert.equal(allData[0].msg, '2');
-  assert.equal(allData[0].backgroundColor, '222222');
-  assert.equal(allData[0].displayPosition, 'bottom');
+  assert.strictEqual(allData[0].url, 'http://example.com/2');
+  assert.strictEqual(allData[0].msg, '2');
+  assert.strictEqual(allData[0].backgroundColor, '222222');
+  assert.strictEqual(allData[0].displayPosition, 'bottom');
 });

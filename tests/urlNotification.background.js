@@ -14,23 +14,23 @@ QUnit.module('urlNotification.background', {
 });
 
 QUnit.test('background.find() - 該当データなし', function(assert) {
-  var result = urlNotification.background.find('hoge');
+  const result = urlNotification.background.find('foo');
 
-  assert.equal(result.matched, false);
-  assert.equal(result.data, null);
+  assert.strictEqual(result.matched, false);
+  assert.strictEqual(result.data, null);
 });
 
 QUnit.test('background.find() - 該当データあり', function(assert) {
-  var result = urlNotification.background.find('http://example.com/1');
+  const result = urlNotification.background.find('http://example.com/1');
 
-  var expectedData = {
+  const expectedData = {
     message: '1',
     backgroundColor: '000000',
     fontColor: 'ffffff',
     displayPosition: 'top',
   };
 
-  assert.equal(result.matched, true);
+  assert.strictEqual(result.matched, true);
   assert.propEqual(result.data, expectedData);
 });
 
