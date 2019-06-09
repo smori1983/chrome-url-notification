@@ -8,11 +8,11 @@ QUnit.module('urlNotification.storage.withoutData', {
 });
 
 QUnit.test('全件取得 - ローカルストレージにデータなし', function(assert) {
-  assert.equal(0, urlNotification.storage.getAll().length);
+  assert.strictEqual(urlNotification.storage.getAll().length, 0);
 });
 
 QUnit.test('初期状態の件数', function(assert) {
-  assert.equal(0, urlNotification.storage.getCount());
+  assert.strictEqual(urlNotification.storage.getCount(), 0);
 });
 
 QUnit.test('パターンの重複登録はできない', function(assert) {
@@ -20,5 +20,5 @@ QUnit.test('パターンの重複登録はできない', function(assert) {
   urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
   urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
 
-  assert.equal(1, urlNotification.storage.getCount());
+  assert.strictEqual(urlNotification.storage.getCount(), 1);
 });

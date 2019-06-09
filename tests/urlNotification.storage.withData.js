@@ -14,36 +14,36 @@ QUnit.module('urlNotification.storage.withData', {
 QUnit.test('全データ削除', function(assert) {
   urlNotification.storage.deleteAll();
 
-  assert.equal(0, urlNotification.storage.getCount());
+  assert.strictEqual(urlNotification.storage.getCount(), 0);
 });
 
 QUnit.test('1件削除 - 該当データ有り', function(assert) {
   urlNotification.storage.deletePattern('http://example.com/1');
 
-  assert.equal(2, urlNotification.storage.getCount());
+  assert.strictEqual(urlNotification.storage.getCount(), 2);
 });
 
 QUnit.test('1件削除 - 該当データ無し', function(assert) {
   urlNotification.storage.deletePattern('http://example.com');
 
-  assert.equal(3, urlNotification.storage.getCount());
+  assert.strictEqual(urlNotification.storage.getCount(), 3);
 });
 
 QUnit.test('全件取得', function(assert) {
-  var all = urlNotification.storage.getAll();
+  const all = urlNotification.storage.getAll();
 
-  assert.equal(3, all.length);
-  assert.equal('1', all[0].msg);
-  assert.equal('2', all[1].msg);
-  assert.equal('3', all[2].msg);
+  assert.strictEqual(all.length, 3);
+  assert.strictEqual(all[0].msg, '1');
+  assert.strictEqual(all[1].msg, '2');
+  assert.strictEqual(all[2].msg, '3');
 });
 
 QUnit.test('URLで検索 該当データなし', function(assert) {
-  assert.equal(null, urlNotification.storage.findByUrl('http://example.com/'));
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
 });
 
 QUnit.test('URLで検索 該当データあり', function(assert) {
-  assert.equal('2', urlNotification.storage.findByUrl('http://example.com/2').msg);
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '2');
 });
 
 QUnit.test('データ更新 - 該当データ無し', function(assert) {
@@ -52,10 +52,10 @@ QUnit.test('データ更新 - 該当データ無し', function(assert) {
     msg: '!',
   });
 
-  assert.equal(3, urlNotification.storage.getCount());
-  assert.equal('1', urlNotification.storage.findByUrl('http://example.com/1').msg);
-  assert.equal('2', urlNotification.storage.findByUrl('http://example.com/2').msg);
-  assert.equal('3', urlNotification.storage.findByUrl('http://example.com/3').msg);
+  assert.strictEqual(urlNotification.storage.getCount(), 3);
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/1').msg, '1');
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '2');
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/3').msg, '3');
 });
 
 QUnit.test('データ更新 - 該当データ有り', function(assert) {
@@ -64,8 +64,8 @@ QUnit.test('データ更新 - 該当データ有り', function(assert) {
     msg: '!',
   });
 
-  assert.equal(3, urlNotification.storage.getCount());
-  assert.equal('1', urlNotification.storage.findByUrl('http://example.com/1').msg);
-  assert.equal('!', urlNotification.storage.findByUrl('http://example.com/2').msg);
-  assert.equal('3', urlNotification.storage.findByUrl('http://example.com/3').msg);
+  assert.strictEqual(urlNotification.storage.getCount(), 3);
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/1').msg, '1');
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '!');
+  assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/3').msg, '3');
 });

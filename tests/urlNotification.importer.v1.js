@@ -7,7 +7,7 @@ QUnit.module('urlNotification.importer.v1', {
 });
 
 QUnit.test('import v1 and migrate to v2', function(assert) {
-  var json = {
+  const json = {
     version: 1,
     pattern: [
       {
@@ -20,12 +20,12 @@ QUnit.test('import v1 and migrate to v2', function(assert) {
 
   urlNotification.importer.importJson(json);
 
-  var allData = urlNotification.storage.getAll();
+  const allData = urlNotification.storage.getAll();
 
-  assert.equal(allData.length, 1);
+  assert.strictEqual(allData.length, 1);
 
-  assert.equal(allData[0].url, 'http://example.com/1');
-  assert.equal(allData[0].msg, '1');
-  assert.equal(allData[0].backgroundColor, '111111');
-  assert.equal(allData[0].displayPosition, 'top');
+  assert.strictEqual(allData[0].url, 'http://example.com/1');
+  assert.strictEqual(allData[0].msg, '1');
+  assert.strictEqual(allData[0].backgroundColor, '111111');
+  assert.strictEqual(allData[0].displayPosition, 'top');
 });
