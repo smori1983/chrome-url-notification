@@ -18,30 +18,35 @@ urlNotification.storage = (function() {
    * @returns {boolean}
    */
   var hasVersion = function() {
-    var version = localStorage.getItem(key.version);
-
-    if (version === null) {
-      return false;
-    }
-
-    return /^\d+$/.test(version);
+    return isValidVersion(getVersion());
   };
 
   /**
    * @returns {number}
    */
   var currentVersion = function() {
-    var version = localStorage.getItem(key.version);
+    var version = getVersion();
 
-    if (version === null) {
-      return 0;
-    }
-
-    if (/^\d+$/.test(version)) {
+    if (isValidVersion(version)) {
       return parseInt(version, 10);
     }
 
     return 0;
+  };
+
+  var getVersion = function() {
+    return localStorage.getItem(key.version);
+  };
+
+  /**
+   * @returns {boolean}
+   */
+  var isValidVersion = function(value) {
+    if (value === null) {
+      return false;
+    }
+
+    return /^\d+$/.test(value);
   };
 
   /**
@@ -69,15 +74,13 @@ urlNotification.storage = (function() {
    * @returns {PatternItem[]}
    */
   var getAll = function() {
-    var result = [], data;
+    var data = localStorage.getItem(key.pattern);
 
-    if ((data = localStorage.getItem(key.pattern)) !== null) {
-      JSON.parse(data).forEach(function(item) {
-        result.push(item);
-      });
+    if (data === null) {
+      return [];
     }
 
-    return result;
+    return JSON.parse(data);
   };
 
   /**

@@ -13,8 +13,16 @@ QUnit.test('urlNotification.migration.hasVersion - キーなし', function(asser
   assert.equal(result, false);
 });
 
-QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値', function(assert) {
+QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値 - 小数', function(assert) {
   localStorage.setItem('version', 1.1);
+
+  var result = urlNotification.migration.hasVersion();
+
+  assert.equal(result, false);
+});
+
+QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値 - 文字列', function(assert) {
+  localStorage.setItem('version', 'foo');
 
   var result = urlNotification.migration.hasVersion();
 
@@ -27,6 +35,36 @@ QUnit.test('urlNotification.migration.hasVersion - キーあり - 正常値', fu
   var result = urlNotification.migration.hasVersion();
 
   assert.equal(result, true);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーなし', function(assert) {
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 小数', function(assert) {
+  localStorage.setItem('version', 1.1);
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 文字列', function(assert) {
+  localStorage.setItem('version', 'foo');
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 正常値', function(assert) {
+  localStorage.setItem('version', 1);
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(1, result);
 });
 
 
