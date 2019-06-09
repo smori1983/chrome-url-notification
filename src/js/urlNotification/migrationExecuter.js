@@ -6,7 +6,7 @@ urlNotification.migrationExecuter = (function() {
    *
    * - set default background color
    */
-  var for0 = function(item) {
+  const for0 = function(item) {
     if (typeof item.backgroundColor === 'undefined') {
       item.backgroundColor = urlNotification.config.defaultBackgroundColor();
     }
@@ -19,7 +19,7 @@ urlNotification.migrationExecuter = (function() {
    *
    * - set default display position
    */
-  var for1 = function(item) {
+  const for1 = function(item) {
     if (typeof item.displayPosition === 'undefined') {
       item.displayPosition = urlNotification.config.defaultDisplayPosition();
     }
@@ -27,7 +27,7 @@ urlNotification.migrationExecuter = (function() {
     return item;
   };
 
-  var converters = {
+  const converters = {
     0: for0,
     1: for1,
   };
@@ -37,7 +37,7 @@ urlNotification.migrationExecuter = (function() {
    * @param {PatternItem} item
    * @returns {PatternItem}
    */
-  var execute = function(fromVersion, item) {
+  const execute = function(fromVersion, item) {
     if (converters.hasOwnProperty(fromVersion)) {
       return converters[fromVersion](item);
     }

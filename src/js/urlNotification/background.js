@@ -15,7 +15,7 @@ var urlNotification = urlNotification || {};
  */
 
 urlNotification.background = (function() {
-  var migrate = function() {
+  const migrate = function() {
     while (urlNotification.migration.shouldMigrate()) {
       urlNotification.migration.migrateFrom(urlNotification.migration.currentVersion());
     }
@@ -25,9 +25,9 @@ urlNotification.background = (function() {
    * @param {string} pattern
    * @return {FindResult}
    */
-  var find = function(pattern) {
-    var item;
-    var result = {};
+  const find = function(pattern) {
+    let item;
+    let result = {};
 
     if ((item = urlNotification.finder.findFor(pattern)) !== null) {
       result.matched = true;
@@ -44,7 +44,7 @@ urlNotification.background = (function() {
    * @param {PatternItem} item
    * @returns {FindResultData}
    */
-  var createData = function(item) {
+  const createData = function(item) {
     return {
       message: item.msg,
       backgroundColor: item.backgroundColor,
