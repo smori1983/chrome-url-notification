@@ -69,15 +69,13 @@ urlNotification.storage = (function() {
    * @returns {PatternItem[]}
    */
   var getAll = function() {
-    var result = [], data;
+    var data = localStorage.getItem(key.pattern);
 
-    if ((data = localStorage.getItem(key.pattern)) !== null) {
-      JSON.parse(data).forEach(function(item) {
-        result.push(item);
-      });
+    if (data === null) {
+      return [];
     }
 
-    return result;
+    return JSON.parse(data);
   };
 
   /**
