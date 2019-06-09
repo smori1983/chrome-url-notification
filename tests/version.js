@@ -37,6 +37,36 @@ QUnit.test('urlNotification.migration.hasVersion - キーあり - 正常値', fu
   assert.equal(result, true);
 });
 
+QUnit.test('urlNotification.migration.currentVersion - キーなし', function(assert) {
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 小数', function(assert) {
+  localStorage.setItem('version', 1.1);
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 文字列', function(assert) {
+  localStorage.setItem('version', 'foo');
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(0, result);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 正常値', function(assert) {
+  localStorage.setItem('version', 1);
+
+  var result = urlNotification.migration.currentVersion();
+
+  assert.strictEqual(1, result);
+});
+
 
 QUnit.module('urlNotification.migration.0to1', {
   beforeEach: function() {
