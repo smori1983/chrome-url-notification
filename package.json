@@ -6,8 +6,8 @@
   "scripts": {
     "build:prod": "cross-env EXTENSION_MODE=production gulp build",
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
-    "make": "gulp make",
-    "vendor:js": "gulp vendor:js",
+    "make:vendor:js": "gulp make:vendor:js",
+    "make:urlNotification": "gulp make:urlNotification",
     "test": "gulp test",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
