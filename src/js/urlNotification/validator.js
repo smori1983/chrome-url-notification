@@ -1,10 +1,11 @@
 'use strict';
 
+const Validator = require('jsonschema').Validator;
 const extend = require('extend');
 const config = require('./config');
 
 const create = function() {
-  return new (require('jsonschema').Validator)();
+  return new Validator();
 };
 
 /**
