@@ -1,4 +1,4 @@
-QUnit.module('vendor.extend', {
+QUnit.module('vendor.deepmerge', {
   beforeEach: function() {
     this.deepMerge = require('deepmerge');
   },
