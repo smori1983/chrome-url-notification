@@ -20835,6 +20835,7 @@ const patternTemplate = function() {
 
 const patternV1 = function() {
   return deepMerge(patternTemplate(), {
+    'type': 'object',
     'properties': {
       'url': {
         'type': 'string',
