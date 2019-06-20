@@ -1,5 +1,7 @@
 'use strict';
 
+const urlNotification = require('url-notification');
+
 const util = (function() {
   const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);

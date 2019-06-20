@@ -1,27 +1,43 @@
-var urlNotification = urlNotification || {};
+'use strict';
 
-urlNotification.config = (function() {
-  const version = 2;
+/**
+ * JSON schema version.
+ *
+ * @type {number}
+ */
+const version = 2;
 
-  /**
-   * used for migration from 0 to 1
-   */
-  const defaultBackgroundColor = '000000';
+/**
+ * Used for migration from 0 to 1
+ *
+ * @type {string}
+ */
+const defaultBackgroundColor = '000000';
 
-  /**
-   * used for migration from 1 to 2
-   */
-  const defaultDisplayPosition = 'top';
+/**
+ * Used for migration from 1 to 2
+ *
+ * @type {string}
+ */
+const defaultDisplayPosition = 'top';
 
-  return {
-    version: function() {
-      return version;
-    },
-    defaultBackgroundColor: function() {
-      return defaultBackgroundColor;
-    },
-    defaultDisplayPosition: function() {
-      return defaultDisplayPosition;
-    },
-  };
-})();
+/**
+ * @returns {number}
+ */
+module.exports.version = function() {
+  return version;
+};
+
+/**
+ * @returns {string}
+ */
+module.exports.defaultBackgroundColor = function() {
+  return defaultBackgroundColor;
+};
+
+/**
+ * @returns {string}
+ */
+module.exports.defaultDisplayPosition = function() {
+  return defaultDisplayPosition;
+};

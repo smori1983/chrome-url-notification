@@ -1,5 +1,7 @@
 (function() {
 
+  const urlNotification = require('url-notification');
+
   chrome.runtime.onInstalled.addListener(function() {
     urlNotification.background.migrate();
   });
