@@ -1,5 +1,7 @@
 QUnit.module('urlNotification.importer.v1', {
   beforeEach: function() {
+    this.urlNotification = require('url-notification');
+
     localStorage.clear();
   },
   afterEach: function() {
@@ -18,9 +20,9 @@ QUnit.test('import v1 and migrate to v2', function(assert) {
     ],
   };
 
-  urlNotification.importer.importJson(json);
+  this.urlNotification.importer.importJson(json);
 
-  const allData = urlNotification.storage.getAll();
+  const allData = this.urlNotification.storage.getAll();
 
   assert.strictEqual(allData.length, 1);
 
