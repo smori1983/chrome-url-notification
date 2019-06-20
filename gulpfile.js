@@ -35,7 +35,6 @@ gulp.task('make:vendor:js', function(cb) {
     browserify({
       require: [
         'deepmerge',
-        'extend',
         'jsonschema',
         'lodash',
       ],
