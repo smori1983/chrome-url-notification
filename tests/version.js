@@ -4,9 +4,6 @@ QUnit.module('urlNotification.migration', {
 
     localStorage.clear();
   },
-  afterEach: function() {
-    localStorage.clear();
-  },
 });
 
 QUnit.test('urlNotification.migration.hasVersion - キーなし', function(assert) {
@@ -77,9 +74,6 @@ QUnit.module('urlNotification.migration.0to1', {
     localStorage.clear();
 
     this.urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
-  },
-  afterEach: function() {
-    localStorage.clear();
   },
 });
 

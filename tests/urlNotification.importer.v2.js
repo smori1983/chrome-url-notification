@@ -4,8 +4,6 @@ QUnit.module('urlNotification.importer.v2', {
 
     localStorage.clear();
   },
-  afterEach: function() {
-  },
 });
 
 QUnit.test('import v2 - case 1', function(assert) {

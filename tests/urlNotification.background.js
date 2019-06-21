@@ -10,9 +10,6 @@ QUnit.module('urlNotification.background', {
 
     this.urlNotification.background.migrate();
   },
-  afterEach: function() {
-    localStorage.clear();
-  },
 });
 
 QUnit.test('background.find() - 該当データなし', function(assert) {

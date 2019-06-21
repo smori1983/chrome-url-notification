@@ -6,8 +6,6 @@ QUnit.module('vendor.jsonschema', {
       return this.urlNotification.validator.forImportJson(json);
     };
   },
-  afterEach: function() {
-  },
 });
 
 QUnit.test('import json - error - array', function(assert) {

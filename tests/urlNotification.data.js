@@ -4,9 +4,6 @@ QUnit.module('urlNotification.data', {
 
     localStorage.clear();
   },
-  afterEach: function() {
-    localStorage.clear();
-  },
 });
 
 QUnit.test('URLソート 整数の比較', function(assert) {

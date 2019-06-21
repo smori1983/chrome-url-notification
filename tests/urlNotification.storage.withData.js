@@ -8,9 +8,6 @@ QUnit.module('urlNotification.storage.withData', {
     this.urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2' });
     this.urlNotification.storage.addPattern({ url: 'http://example.com/3', msg: '3' });
   },
-  afterEach: function() {
-    localStorage.clear();
-  },
 });
 
 QUnit.test('全データ削除', function(assert) {
