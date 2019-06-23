@@ -1,7 +1,7 @@
 'use strict';
 
 const Validator = require('jsonschema').Validator;
-const extend = require('extend');
+const deepMerge = require('deepmerge');
 const config = require('./config');
 
 const create = function() {
@@ -17,16 +17,18 @@ const importJsonEssential = function(json) {
     'type': 'object',
     'properties': {
       'version': {
-        'required': true,
         'type': 'integer',
         'minimum': 1,
         'maximum': config.version(),
       },
       'pattern': {
-        'required': true,
         'type': 'array',
       },
     },
+    'required': [
+      'version',
+      'pattern',
+    ],
   };
 
   const validator = create();
@@ -49,36 +51,41 @@ const patternTemplate = function() {
 };
 
 const patternV1 = function() {
-  return extend(true, patternTemplate(), {
+  return deepMerge(patternTemplate(), {
+    'type': 'object',
     'properties': {
       'url': {
-        'required': true,
         'type': 'string',
         'minLength': 1,
       },
       'msg': {
-        'required': true,
         'type': 'string',
         'minLength': 1,
       },
       'backgroundColor': {
-        'required': true,
         'type': 'string',
         'pattern': /^[0-9a-f]{6}$/i,
       },
     },
+    'required': [
+      'url',
+      'msg',
+      'backgroundColor',
+    ],
   });
 };
 
 const patternV2 = function() {
-  return extend(true, patternV1(), {
+  return deepMerge(patternV1(), {
     'properties': {
       'displayPosition': {
-        'required': true,
         'type': 'string',
         'pattern': /^(bottom|top)$/,
       },
     },
+    'required': [
+      'displayPosition',
+    ],
   });
 };
 
