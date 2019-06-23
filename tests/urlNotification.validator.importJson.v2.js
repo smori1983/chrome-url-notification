@@ -6,8 +6,6 @@ QUnit.module('urlNotification.validator.importJson.v2', {
       return this.urlNotification.validator.forImportJson(json);
     };
   },
-  afterEach: function() {
-  },
 });
 
 QUnit.test('import json - error - pattern - url is not defined', function(assert) {

@@ -1,14 +1,11 @@
 QUnit.module('urlNotification.background.migrate.from.0', {
   beforeEach: function() {
-    this.urlNotification = require('url-notification');
-
     localStorage.clear();
+
+    this.urlNotification = require('url-notification');
 
     this.urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
     this.urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2', backgroundColor: '222222' });
-  },
-  afterEach: function() {
-    localStorage.clear();
   },
 });
 

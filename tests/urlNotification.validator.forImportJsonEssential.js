@@ -6,8 +6,6 @@ QUnit.module('urlNotification.validator.forImportJsonEssential', {
       return this.urlNotification.validator.forImportJsonEssential(json);
     };
   },
-  afterEach: function() {
-  },
 });
 
 QUnit.test('import json - error - array', function(assert) {

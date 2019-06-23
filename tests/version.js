@@ -1,11 +1,8 @@
 QUnit.module('urlNotification.migration', {
   beforeEach: function() {
-    this.urlNotification = require('url-notification');
+    localStorage.clear();
 
-    localStorage.clear();
-  },
-  afterEach: function() {
-    localStorage.clear();
+    this.urlNotification = require('url-notification');
   },
 });
 
@@ -72,14 +69,11 @@ QUnit.test('urlNotification.migration.currentVersion - キーあり - 正常値'
 
 QUnit.module('urlNotification.migration.0to1', {
   beforeEach: function() {
+    localStorage.clear();
+
     this.urlNotification = require('url-notification');
 
-    localStorage.clear();
-
     this.urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
-  },
-  afterEach: function() {
-    localStorage.clear();
   },
 });
 

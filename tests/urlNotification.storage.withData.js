@@ -1,15 +1,12 @@
 QUnit.module('urlNotification.storage.withData', {
   beforeEach: function() {
-    this.urlNotification = require('url-notification');
-
     localStorage.clear();
+
+    this.urlNotification = require('url-notification');
 
     this.urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
     this.urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2' });
     this.urlNotification.storage.addPattern({ url: 'http://example.com/3', msg: '3' });
-  },
-  afterEach: function() {
-    localStorage.clear();
   },
 });
 

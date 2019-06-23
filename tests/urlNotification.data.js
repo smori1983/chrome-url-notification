@@ -1,11 +1,8 @@
 QUnit.module('urlNotification.data', {
   beforeEach: function() {
-    this.urlNotification = require('url-notification');
+    localStorage.clear();
 
-    localStorage.clear();
-  },
-  afterEach: function() {
-    localStorage.clear();
+    this.urlNotification = require('url-notification');
   },
 });
 
