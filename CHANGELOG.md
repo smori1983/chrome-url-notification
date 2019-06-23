@@ -7,6 +7,7 @@
 
 - Refactoring
 - Use jquery validation
+- Fix jsonschema build code for data import
 
 
 ## v3.0.1
