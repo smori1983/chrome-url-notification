@@ -5,6 +5,7 @@
 
 ### Development
 
+- Refactoring
 - Use jquery validation
 
 
