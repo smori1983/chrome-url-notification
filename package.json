@@ -9,8 +9,10 @@
     "make:vendor:js": "gulp make:vendor:js",
     "make:urlNotification": "gulp make:urlNotification",
     "test": "gulp test",
+    "test:mocha": "mocha --require mock-local-storage test/",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
+    "watch:test:mocha": "watch 'npm run test:mocha' src/ test/ --interval=1 --ignoreDotFiles",
     "lint": "gulp lint"
   },
   "repository": {
