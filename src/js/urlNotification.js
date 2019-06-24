@@ -54,14 +54,26 @@ require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=
 		return typeof customMerge === 'function' ? customMerge : deepmerge
 	}
 
+	function getEnumerableOwnPropertySymbols(target) {
+		return Object.getOwnPropertySymbols
+			? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+				return target.propertyIsEnumerable(symbol)
+			})
+			: []
+	}
+
+	function getKeys(target) {
+		return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target))
+	}
+
 	function mergeObject(target, source, options) {
 		var destination = {};
 		if (options.isMergeableObject(target)) {
-			Object.keys(target).forEach(function(key) {
+			getKeys(target).forEach(function(key) {
 				destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
 			});
 		}
-		Object.keys(source).forEach(function(key) {
+		getKeys(source).forEach(function(key) {
 			if (!options.isMergeableObject(source[key]) || !target[key]) {
 				destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
 			} else {
