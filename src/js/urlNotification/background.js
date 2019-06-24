@@ -1,4 +1,7 @@
-var urlNotification = urlNotification || {};
+'use strict';
+
+const finder = require('./finder');
+const migration = require('./migration');
 
 /**
  * @typedef {object} FindResult
@@ -14,47 +17,43 @@ var urlNotification = urlNotification || {};
  * @property {string} displayPosition
  */
 
-urlNotification.background = (function() {
-  var migrate = function() {
-    while (urlNotification.migration.shouldMigrate()) {
-      urlNotification.migration.migrateFrom(urlNotification.migration.currentVersion());
-    }
-  };
+const migrate = function() {
+  while (migration.shouldMigrate()) {
+    migration.migrateFrom(migration.currentVersion());
+  }
+};
 
-  /**
-   * @param {string} pattern
-   * @return {FindResult}
-   */
-  var find = function(pattern) {
-    var item;
-    var result = {};
+/**
+ * @param {string} pattern
+ * @return {FindResult}
+ */
+const find = function(pattern) {
+  let item;
+  let result = {};
 
-    if ((item = urlNotification.finder.findFor(pattern)) !== null) {
-      result.matched = true;
-      result.data = createData(item);
-    } else {
-      result.matched = false;
-      result.data = null;
-    }
+  if ((item = finder.findFor(pattern)) !== null) {
+    result.matched = true;
+    result.data = createData(item);
+  } else {
+    result.matched = false;
+    result.data = null;
+  }
 
-    return result;
-  };
+  return result;
+};
 
-  /**
-   * @param {PatternItem} item
-   * @returns {FindResultData}
-   */
-  var createData = function(item) {
-    return {
-      message: item.msg,
-      backgroundColor: item.backgroundColor,
-      fontColor: 'ffffff',
-      displayPosition: item.displayPosition,
-    };
-  };
-
+/**
+ * @param {PatternItem} item
+ * @returns {FindResultData}
+ */
+const createData = function(item) {
   return {
-    migrate: migrate,
-    find: find,
+    message: item.msg,
+    backgroundColor: item.backgroundColor,
+    fontColor: 'ffffff',
+    displayPosition: item.displayPosition,
   };
-})();
+};
+
+module.exports.migrate = migrate;
+module.exports.find = find;

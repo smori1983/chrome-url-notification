@@ -53,6 +53,15 @@
   "message_copy_done": {
     "message": "コピーしました。"
   },
+  "message_field_required": {
+    "message": "入力必須です。"
+  },
+  "message_invalid_choice": {
+    "message": "選択内容が不正です。"
+  },
+  "message_invalid_color_index": {
+    "message": "カラーインデックスが不正です。"
+  },
   "message_json_invalid": {
     "message": "JSONテキストが正しくありません。"
   },

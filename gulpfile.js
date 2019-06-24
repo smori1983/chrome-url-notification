@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const browserify = require('browserify');
 const gulp = require('gulp');
-const concat = require('gulp-concat');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
@@ -31,11 +30,11 @@ const dist = (function() {
   }
 })();
 
-gulp.task('vendor:js', function(cb) {
+gulp.task('make:vendor:js', function(cb) {
   pump([
     browserify({
       require: [
-        'extend',
+        'deepmerge',
         'jsonschema',
         'lodash',
       ],
@@ -45,24 +44,22 @@ gulp.task('vendor:js', function(cb) {
   ], cb);
 });
 
-gulp.task('clean', function(cb) {
+gulp.task('make:urlNotification', function(cb) {
+  pump([
+    browserify()
+      .require('./src/js/urlNotification/main.js', { expose: 'url-notification' })
+      .bundle(),
+    source('urlNotification.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
+
+gulp.task('clean', function() {
   return del([
     sprintf('%s/**', dist),
     sprintf('!%s', dist),
   ], { force: true });
 });
-
-gulp.task('concat', function(cb) {
-  pump([
-    gulp.src([
-      './src/js/urlNotification/*.js',
-    ]),
-    concat('urlNotification.js'),
-    gulp.dest('./src/js'),
-  ], cb);
-});
-
-gulp.task('make', gulp.series('concat'));
 
 gulp.task('dist', function(cb) {
   pump([
@@ -86,7 +83,7 @@ gulp.task('dist', function(cb) {
   ], cb);
 });
 
-gulp.task('build', gulp.series('clean', 'make', 'dist'));
+gulp.task('build', gulp.series('clean', 'make:urlNotification', 'dist'));
 
 gulp.task('lint', function(cb) {
   pump([
@@ -104,7 +101,7 @@ gulp.task('lint', function(cb) {
   cb();
 });
 
-gulp.task('test', gulp.series('lint', function(cb) {
+gulp.task('test', gulp.series('lint', 'make:urlNotification', function(cb) {
   qunit('./tests/test.html');
   cb();
 }));

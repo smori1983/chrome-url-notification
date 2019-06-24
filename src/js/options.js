@@ -1,18 +1,22 @@
-var util = (function() {
-  var rebind = function(selector, eventName, callback) {
+'use strict';
+
+const urlNotification = require('url-notification');
+
+const util = (function() {
+  const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);
   };
 
-  var modal = function(selector, events) {
+  const modal = function(selector, events) {
     $.each($.extend({}, events), function(eventName, callback) {
       $(selector).on(eventName, callback);
     });
 
-    var show = function() {
+    const show = function() {
       $(selector).modal('show');
     };
 
-    var hide = function() {
+    const hide = function() {
       $(selector).modal('hide');
     };
 
@@ -22,10 +26,10 @@ var util = (function() {
     };
   };
 
-  var buildMessage = function(selector) {
-    var timeoutId = null;
+  const buildMessage = function(selector) {
+    let timeoutId = null;
 
-    var show = function(message) {
+    const show = function(message) {
       $(selector).text(message);
 
       if (timeoutId !== null) {
@@ -38,7 +42,7 @@ var util = (function() {
       }, 3000);
     };
 
-    var hide = function() {
+    const hide = function() {
       $(selector).empty();
     };
 
@@ -55,8 +59,8 @@ var util = (function() {
   };
 })();
 
-var i18n = (function() {
-  var init = function() {
+const i18n = (function() {
+  const init = function() {
     $('*[data-i18n]').each(function () {
       $(this).text(get($(this).data('i18n')));
     });
@@ -74,7 +78,7 @@ var i18n = (function() {
    * @param {string} key
    * @returns {string}
    */
-  var get = function(key) {
+  const get = function(key) {
     return chrome.i18n.getMessage(key);
   };
 
@@ -84,12 +88,12 @@ var i18n = (function() {
   };
 })();
 
-var headerComponent = (function() {
-  var showVersion = function() {
+const headerComponent = (function() {
+  const showVersion = function() {
     $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
   };
 
-  var initEventHandlers = function() {
+  const initEventHandlers = function() {
     $('#js_button_add_pattern').click(function(e) {
       e.preventDefault();
       patternForm.show('add', {});
@@ -114,12 +118,22 @@ var headerComponent = (function() {
   };
 })();
 
-var exportComponent = (function() {
-  var modal = null;
+/**
+ * @typedef {object} ExportFormItem
+ * @property {string} jsonString
+ */
 
-  var init = function() {
-    var clipboard = new ClipboardJS('#js_export_copy');
-    var message = util.buildMessage('#js_export_message');
+const exportComponent = (function() {
+  let modal;
+
+  /**
+   * @type {ExportFormItem}
+   */
+  let current;
+
+  const init = function() {
+    const clipboard = new ClipboardJS('#js_export_copy');
+    const message = util.buildMessage('#js_export_message');
 
     clipboard.on('success', function(e) {
       e.clearSelection();
@@ -133,19 +147,21 @@ var exportComponent = (function() {
     });
   };
 
-  var bindValues = function(values) {
-    $('#js_export_display').html(values.jsonString);
+  const bindValues = function() {
+    $('#js_export_display').html(current.jsonString);
   };
 
-  var show = function() {
-    var data = {
+  const show = function() {
+    const data = {
       version: urlNotification.config.version(),
       pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
     };
-    var jsonString = JSON.stringify(data, null, 4);
 
-    bindValues({ jsonString: jsonString });
+    current = {
+      jsonString: JSON.stringify(data, null, 4),
+    };
 
+    bindValues();
     modal.show();
   };
 
@@ -155,42 +171,41 @@ var exportComponent = (function() {
   };
 })();
 
-var importComponent = (function() {
-  var modal = null;
+const importComponent = (function() {
+  let modal = null;
 
-  var init = function() {
+  const init = function() {
     modal = util.modal('#js_modal_import', {
       'shown.bs.modal': function() {
         $('#js_form_import_json').focus();
       },
     });
-  };
-
-  var show = function() {
-    clear();
 
     util.rebind('#js_form_import', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
+  };
 
+  const show = function() {
+    clear();
     modal.show();
   };
 
-  var clear = function() {
+  const clear = function() {
     $('#js_form_import_json').val('');
   };
 
-  var submit = (function() {
-    var error = {
+  const submit = (function() {
+    const error = {
       required: i18n.get('message_json_required'),
       invalidJson: i18n.get('message_json_invalid'),
     };
 
-    var message = util.buildMessage('#js_import_message');
+    const message = util.buildMessage('#js_import_message');
 
     return function() {
-      var jsonText = $('#js_form_import_json').val().trim();
+      const jsonText = $('#js_form_import_json').val().trim();
 
       if (jsonText.length === 0) {
         message.show(error.required);
@@ -198,7 +213,7 @@ var importComponent = (function() {
         return;
       }
 
-      var json;
+      let json;
 
       try {
         json = JSON.parse(jsonText);
@@ -228,10 +243,10 @@ var importComponent = (function() {
   };
 })();
 
-var patternListComponent = (function() {
-  var show = function() {
-    var listArea = $('#js_list_pattern tbody');
-    var sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
+const patternListComponent = (function() {
+  const show = function() {
+    const listArea = $('#js_list_pattern tbody');
+    const sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);
 
@@ -241,16 +256,16 @@ var patternListComponent = (function() {
     });
   };
 
-  var makeRow = (function() {
-    var row = function() {
+  const makeRow = (function() {
+    const row = function() {
       return $('<tr>');
     };
 
-    var column = function() {
+    const column = function() {
       return $('<td>');
     };
 
-    var button = function(clazz, text) {
+    const button = function(clazz, text) {
       return $('<button>').
         addClass('btn btn-sm').
         addClass(clazz).
@@ -260,7 +275,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var listMessage = function(item) {
+    const listMessage = function(item) {
       return $('<div>').
         addClass('list-message').
         css(listMessageCss(item)).
@@ -270,7 +285,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var listMessageCss = function(item) {
+    const listMessageCss = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
         'color': '#ffffff',
@@ -280,21 +295,21 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var patternColumn = function(item) {
+    const patternColumn = function(item) {
       return column().text(item.url);
     };
 
     /**
      * @param {PatternItem} item
      */
-    var messgeColumn = function(item) {
+    const messageColumn = function(item) {
       return column().append(listMessage(item));
     };
 
     /**
      * @param {PatternItem} item
      */
-    var actionColumn = function(item) {
+    const actionColumn = function(item) {
       return column().addClass('action').
         append(copyButton(item)).
         append(editButton(item)).
@@ -304,7 +319,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var copyButton = function(item) {
+    const copyButton = function(item) {
       return button('btn-default', i18n.get('label_copy')).click(function(e) {
         e.preventDefault();
         patternForm.show('add', {
@@ -319,7 +334,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var editButton = function(item) {
+    const editButton = function(item) {
       return button('btn-primary', i18n.get('label_edit')).click(function(e) {
         e.preventDefault();
         patternForm.show('edit', {
@@ -334,7 +349,7 @@ var patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    var deleteButton = function(item) {
+    const deleteButton = function(item) {
       return button('btn-danger', i18n.get('label_delete')).click(function(e) {
         e.preventDefault();
         deleteForm.show({
@@ -350,7 +365,7 @@ var patternListComponent = (function() {
     return function(item) {
       return row().
         append(patternColumn(item)).
-        append(messgeColumn(item)).
+        append(messageColumn(item)).
         append(actionColumn(item));
     };
   })();
@@ -368,39 +383,38 @@ var patternListComponent = (function() {
  * @property {string} displayPosition
  */
 
-var patternForm = (function() {
-  var defaultValues = function() {
-    return {
-      url: '',
-      message: '',
-      backgroundColor: urlNotification.config.defaultBackgroundColor(),
-      displayPosition: urlNotification.config.defaultDisplayPosition(),
-    };
-  };
+const patternForm = (function() {
 
-  var mode = null;
-
-  var original = null;
-
-  var bindValues = function(formValues) {
-    $('#js_input_url').val(formValues.url);
-    $('#js_input_msg').val(formValues.message);
-    $('#js_input_backgroundcolor').val('#' + formValues.backgroundColor);
-    $('#js_colorpicker').colorpicker('setValue', '#' + formValues.backgroundColor);
-    $('input[name=display_position]').val([formValues.displayPosition]);
-  };
-
-  var modal = null;
+  let modal;
 
   /**
-   * @param {string} argMode 'add' or 'edit'
-   * @param {FormValue} argOriginal
+   * @type {string}
    */
-  var show = function(argMode, argOriginal) {
-    mode = argMode;
-    original = argOriginal;
+  let mode;
 
-    bindValues($.extend(defaultValues(), original));
+  /**
+   * @type {FormValue}
+   */
+  let original;
+
+  /**
+   * @type {FormValue}
+   */
+  let current;
+
+  let validator;
+
+  const init = function() {
+    modal = util.modal('#js_modal_pattern', {
+      'shown.bs.modal': function() {
+        $('#js_input_url').focus();
+      },
+    });
+
+    $('#js_colorpicker').colorpicker({
+      align: 'left',
+      format: 'hex',
+    });
 
     util.rebind('#js_input_clear', 'click', function(e) {
       e.preventDefault();
@@ -412,82 +426,159 @@ var patternForm = (function() {
       submit();
     });
 
-    modal.show();
-  };
+    $.validator.addMethod('hexColor', function(value, element) {
+      return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
+    }, 'Invalid color index.');
 
-  var clear = function() {
-    bindValues(defaultValues());
-  };
+    $.validator.addMethod('in', function (value, element, params) {
+      return this.optional(element) || params.indexOf(value) >= 0;
+    }, 'Invalid choice.');
 
-  var submit = (function() {
-    var error = {
-      required: i18n.get('message_pattern_required'),
-      duplicated: i18n.get('message_pattern_existing_url_pattern'),
-    };
-
-    var trimValue = function(selector) {
-      return $(selector).val().trim();
-    };
-
-    var message = util.buildMessage('#js_pattern_message');
-
-    var end = function() {
-      modal.hide();
-      patternListComponent.show();
-    };
-
-    return function() {
-      var url = trimValue('#js_input_url');
-      var msg = trimValue('#js_input_msg');
-      var backgroundColor = trimValue('#js_input_backgroundcolor');
-      var displayPosition = trimValue('input[name=display_position]:checked');
-
-      if (url === '' || msg === '' || backgroundColor === '' || displayPosition === '') {
-        message.show(error.required);
-        return;
-      }
-
-      var saveData = {
-        url: url,
-        msg: msg,
-        backgroundColor: backgroundColor.replace(/^#/, ''),
-        displayPosition: displayPosition,
-      };
+    $.validator.addMethod('existingUrl', function(value, element) {
+      let usable = true;
 
       if (mode === 'add') {
-        if (urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
-        urlNotification.storage.addPattern(saveData);
-        end();
+        usable = urlNotification.storage.findByUrl(value) === null;
       }
 
       if (mode === 'edit') {
-        if (original.url !== url && urlNotification.storage.findByUrl(url)) {
-          message.show(error.duplicated);
-          return;
-        }
-
-        urlNotification.storage.updatePattern(original.url, saveData);
-        end();
+        usable = original.url === value || urlNotification.storage.findByUrl(value) === null;
       }
+
+      return this.optional(element) || usable;
+    }, 'Existing URL.');
+  };
+
+  /**
+   * @returns {FormValue}
+   */
+  const defaultValues = function() {
+    return {
+      url: '',
+      message: '',
+      backgroundColor: urlNotification.config.defaultBackgroundColor(),
+      displayPosition: urlNotification.config.defaultDisplayPosition(),
+    };
+  };
+
+  const bindValues = function() {
+    $('#js_input_url').val(current.url);
+    $('#js_input_msg').val(current.message);
+    $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
+    $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
+    $('input[name=display_position]').val([current.displayPosition]);
+  };
+
+  const resetValidator = function() {
+    if (validator) {
+      validator.destroy();
+    }
+  };
+
+  /**
+   * @param {string} argMode 'add' or 'edit'
+   * @param {FormValue} argOriginal
+   */
+  const show = function(argMode, argOriginal) {
+    mode = argMode;
+    original = argOriginal;
+
+    current = $.extend(defaultValues(), original);
+
+    resetValidator();
+    bindValues();
+    modal.show();
+  };
+
+  const clear = function() {
+    current = defaultValues();
+
+    resetValidator();
+    bindValues();
+  };
+
+  const submit = (function() {
+    const trimValue = function(selector) {
+      return $(selector).val().trim();
+    };
+
+    const validatorConfig = {
+      rules: {
+        url: {
+          required: true,
+          existingUrl: true,
+        },
+        message: {
+          required:true,
+        },
+        background_color: {
+          required: true,
+          hexColor: true,
+        },
+        display_position: {
+          required: true,
+          in: ['top', 'bottom'],
+        },
+      },
+      messages: {
+        url: {
+          required: i18n.get('message_field_required'),
+          existingUrl: i18n.get('message_pattern_existing_url_pattern'),
+        },
+        message: {
+          required: i18n.get('message_field_required'),
+        },
+        background_color: {
+          required: i18n.get('message_field_required'),
+          hexColor: i18n.get('message_invalid_color_index'),
+        },
+        display_position: {
+          required: i18n.get('message_field_required'),
+          in: i18n.get('message_invalid_choice'),
+        },
+      },
+      onfocusout: false,
+      onkeyup: false,
+      onclick: false,
+      errorClass: 'text-danger',
+      errorElement: 'div',
+      errorPlacement: function(error, element) {
+        if (element.attr('name') === 'background_color') {
+          error.appendTo(element.parent().parent());
+        } else if (element.attr('name') === 'display_position') {
+          error.appendTo(element.parent().parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
+    };
+
+    return function() {
+      validator = $('#js_form_pattern').validate(validatorConfig);
+
+      if (validator.form() === false) {
+        return;
+      }
+
+      const saveData = {
+        url: trimValue('#js_input_url'),
+        msg: trimValue('#js_input_msg'),
+        backgroundColor: trimValue('#js_input_background_color').replace(/^#/, ''),
+        displayPosition: trimValue('input[name=display_position]:checked'),
+      };
+
+      if (mode === 'add') {
+        urlNotification.storage.addPattern(saveData);
+      }
+
+      if (mode === 'edit') {
+        urlNotification.storage.updatePattern(original.url, saveData);
+      }
+
+      modal.hide();
+      patternListComponent.show();
     };
   })();
-
-  var init = function() {
-    modal = util.modal('#js_modal_pattern', {
-      'shown.bs.modal': function() {
-        $('#js_input_url').focus();
-      },
-    });
-
-    $('#js_colorpicker').colorpicker({
-      align: 'left',
-      format: 'hex',
-    });
-  };
 
   return {
     init: init,
@@ -501,43 +592,42 @@ var patternForm = (function() {
  * @property {string} message
  */
 
-var deleteForm = (function() {
-  var current = null;
+const deleteForm = (function() {
+  let modal;
 
   /**
-   * @param {DeleteFormItem} item
+   * @param {DeleteFormItem}
    */
-  var bindValues = function(item) {
-    $('#js_form_delete_pattern').text(item.pattern);
-    $('#js_form_delete_message').text(item.message);
-  };
+  let current;
 
-  var modal = null;
-
-  /**
-   * @param {DeleteFormItem} item
-   */
-  var show = function(item) {
-    current = item;
-
-    bindValues(current);
+  const init = function() {
+    modal = util.modal('#js_modal_delete');
 
     util.rebind('#js_form_delete', 'submit', function(e) {
       e.preventDefault();
       submit();
     });
+  };
 
+  /**
+   * @param {DeleteFormItem} item
+   */
+  const show = function(item) {
+    current = item;
+
+    bindValues();
     modal.show();
   };
 
-  var submit = function() {
+  const bindValues = function() {
+    $('#js_form_delete_pattern').text(current.pattern);
+    $('#js_form_delete_message').text(current.message);
+  };
+
+  const submit = function() {
     urlNotification.storage.deletePattern(current.pattern);
     modal.hide();
     patternListComponent.show();
-  };
-
-  var init = function() {
-    modal = util.modal('#js_modal_delete');
   };
 
   return {
@@ -547,10 +637,6 @@ var deleteForm = (function() {
 })();
 
 $(function() {
-  $.validator.addMethod('hexColor', function(value, element) {
-    return this.optional(element) || /^[0-9a-f]{6}$/i.test(value);
-  });
-
   headerComponent.init();
   exportComponent.init();
   importComponent.init();

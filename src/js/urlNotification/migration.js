@@ -1,44 +1,44 @@
-var urlNotification = urlNotification || {};
+'use strict';
 
-urlNotification.migration = (function() {
-  /**
-   * @returns {boolean}
-   */
-  var hasVersion = function() {
-    return urlNotification.storage.hasVersion();
-  };
+const config = require('./config');
+const storage = require('./storage');
+const migrationExecuter = require('./migrationExecuter');
 
-  /**
-   * @returns {number}
-   */
-  var currentVersion = function() {
-    return urlNotification.storage.currentVersion();
-  };
+/**
+ * @returns {boolean}
+ */
+const hasVersion = function() {
+  return storage.hasVersion();
+};
 
-  /**
-   * @returns {boolean}
-   */
-  var shouldMigrate = function() {
-    return currentVersion() < urlNotification.config.version();
-  };
+/**
+ * @returns {number}
+ */
+const currentVersion = function() {
+  return storage.currentVersion();
+};
 
-  /**
-   * @param {number} currentVersion
-   */
-  var migrateFrom = function(currentVersion) {
-    var result = [];
+/**
+ * @returns {boolean}
+ */
+const shouldMigrate = function() {
+  return currentVersion() < config.version();
+};
 
-    urlNotification.storage.getAll().forEach(function(item) {
-      result.push(urlNotification.migrationExecuter.from(currentVersion, item));
-    });
+/**
+ * @param {number} currentVersion
+ */
+const migrateFrom = function(currentVersion) {
+  let result = [];
 
-    urlNotification.storage.replace(currentVersion + 1, result);
-  };
+  storage.getAll().forEach(function(item) {
+    result.push(migrationExecuter.from(currentVersion, item));
+  });
 
-  return {
-    hasVersion: hasVersion,
-    currentVersion: currentVersion,
-    shouldMigrate: shouldMigrate,
-    migrateFrom: migrateFrom,
-  };
-})();
+  storage.replace(currentVersion + 1, result);
+};
+
+module.exports.hasVersion = hasVersion;
+module.exports.currentVersion = currentVersion;
+module.exports.shouldMigrate = shouldMigrate;
+module.exports.migrateFrom = migrateFrom;

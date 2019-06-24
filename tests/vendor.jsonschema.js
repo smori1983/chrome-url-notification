@@ -1,10 +1,10 @@
 QUnit.module('vendor.jsonschema', {
   beforeEach: function() {
+    this.urlNotification = require('url-notification');
+
     this.isValid = function(json) {
-      return urlNotification.validator.forImportJson(json);
+      return this.urlNotification.validator.forImportJson(json);
     };
-  },
-  afterEach: function() {
   },
 });
 

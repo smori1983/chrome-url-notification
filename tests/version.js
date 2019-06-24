@@ -1,32 +1,69 @@
 QUnit.module('urlNotification.migration', {
   beforeEach: function() {
     localStorage.clear();
-  },
-  afterEach: function() {
-    localStorage.clear();
+
+    this.urlNotification = require('url-notification');
   },
 });
 
 QUnit.test('urlNotification.migration.hasVersion - キーなし', function(assert) {
-  var result = urlNotification.migration.hasVersion();
+  const result = this.urlNotification.migration.hasVersion();
 
-  assert.equal(result, false);
+  assert.strictEqual(result, false);
 });
 
-QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値', function(assert) {
+QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値 - 小数', function(assert) {
   localStorage.setItem('version', 1.1);
 
-  var result = urlNotification.migration.hasVersion();
+  const result = this.urlNotification.migration.hasVersion();
 
-  assert.equal(result, false);
+  assert.strictEqual(result, false);
+});
+
+QUnit.test('urlNotification.migration.hasVersion - キーあり - 不正値 - 文字列', function(assert) {
+  localStorage.setItem('version', 'foo');
+
+  const result = this.urlNotification.migration.hasVersion();
+
+  assert.strictEqual(result, false);
 });
 
 QUnit.test('urlNotification.migration.hasVersion - キーあり - 正常値', function(assert) {
   localStorage.setItem('version', 1);
 
-  var result = urlNotification.migration.hasVersion();
+  const result = this.urlNotification.migration.hasVersion();
 
-  assert.equal(result, true);
+  assert.strictEqual(result, true);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーなし', function(assert) {
+  const result = this.urlNotification.migration.currentVersion();
+
+  assert.strictEqual(result, 0);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 小数', function(assert) {
+  localStorage.setItem('version', 1.1);
+
+  const result = this.urlNotification.migration.currentVersion();
+
+  assert.strictEqual(result, 0);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 不正値 - 文字列', function(assert) {
+  localStorage.setItem('version', 'foo');
+
+  const result = this.urlNotification.migration.currentVersion();
+
+  assert.strictEqual(result, 0);
+});
+
+QUnit.test('urlNotification.migration.currentVersion - キーあり - 正常値', function(assert) {
+  localStorage.setItem('version', 1);
+
+  const result = this.urlNotification.migration.currentVersion();
+
+  assert.strictEqual(result, 1);
 });
 
 
@@ -34,35 +71,34 @@ QUnit.module('urlNotification.migration.0to1', {
   beforeEach: function() {
     localStorage.clear();
 
-    urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
-  },
-  afterEach: function() {
-    localStorage.clear();
+    this.urlNotification = require('url-notification');
+
+    this.urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
   },
 });
 
 QUnit.test('urlNotification.migration - version 0', function(assert) {
-  var result = urlNotification.migration.currentVersion();
+  const result = this.urlNotification.migration.currentVersion();
 
-  assert.equal(result, 0);
+  assert.strictEqual(result, 0);
 });
 
 QUnit.test('urlNotification.migration - version 0 to 1', function(assert) {
-  var expectedBefore = [
+  const expectedBefore = [
     { url: 'http://example.com/1', msg: '1' },
   ];
 
-  assert.propEqual(urlNotification.storage.getAll(), expectedBefore);
+  assert.propEqual(this.urlNotification.storage.getAll(), expectedBefore);
 
-  assert.equal(urlNotification.migration.shouldMigrate(), true);
+  assert.strictEqual(this.urlNotification.migration.shouldMigrate(), true);
 
-  urlNotification.migration.migrateFrom(0);
+  this.urlNotification.migration.migrateFrom(0);
 
-  var expectedAfter = [
+  const expectedAfter = [
     { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
   ];
 
-  assert.propEqual(urlNotification.storage.getAll(), expectedAfter);
+  assert.propEqual(this.urlNotification.storage.getAll(), expectedAfter);
 
-  assert.equal(urlNotification.migration.currentVersion(), 1);
+  assert.strictEqual(this.urlNotification.migration.currentVersion(), 1);
 });

@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v3.1.0
+
+### Development
+
+- Refactoring
+- Use jquery validation
+- Fix jsonschema build code for data import
+
+
 ## v3.0.1
 
 ### Development

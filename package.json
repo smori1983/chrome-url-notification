@@ -1,13 +1,13 @@
 {
   "name": "chrome-url-notification",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
     "build:prod": "cross-env EXTENSION_MODE=production gulp build",
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
-    "make": "gulp make",
-    "vendor:js": "gulp vendor:js",
+    "make:vendor:js": "gulp make:vendor:js",
+    "make:urlNotification": "gulp make:urlNotification",
     "test": "gulp test",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
@@ -39,9 +39,9 @@
     "bootstrap": "^3.4.1",
     "bootstrap-colorpicker": "^2.5.3",
     "clipboard": "^2.0.4",
-    "extend": "^3.0.2",
+    "deepmerge": "^3.3.0",
     "jquery": "^3.4.1",
-    "jquery-validation": "^1.19.0",
+    "jquery-validation": "^1.19.1",
     "jsonschema": "^1.2.4",
     "lodash": "^4.17.5"
   }
