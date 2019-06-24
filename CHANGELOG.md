@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Change test framework to `mocha`
+
+
 ## v3.1.0
 
 ### Development
