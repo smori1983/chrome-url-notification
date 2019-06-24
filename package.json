@@ -8,10 +8,8 @@
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
     "make:vendor:js": "gulp make:vendor:js",
     "make:urlNotification": "gulp make:urlNotification",
-    "test": "gulp test",
     "test:mocha": "mocha --require mock-local-storage test/",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
-    "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
     "watch:test:mocha": "watch 'npm run test:mocha' src/ test/ --interval=1 --ignoreDotFiles",
     "lint": "gulp lint"
   },
@@ -32,9 +30,7 @@
     "gulp-uglify": "^3.0.2",
     "mocha": "^6.1.4",
     "mock-local-storage": "^1.1.8",
-    "node-qunit-phantomjs": "^2.0.1",
     "pump": "^3.0.0",
-    "qunit": "^2.9.2",
     "sprintf-js": "^1.1.2",
     "vinyl-source-stream": "^2.0.0",
     "watch": "^1.0.2"
