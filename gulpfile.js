@@ -8,7 +8,6 @@ const fs = require('fs');
 //const rename = require('gulp-rename');
 //const uglify = require('gulp-uglify');
 const pump = require('pump');
-const qunit = require('node-qunit-phantomjs');
 const source = require('vinyl-source-stream');
 const sprintf = require('sprintf-js').sprintf;
 
@@ -92,7 +91,7 @@ gulp.task('lint', function(cb) {
       'src/js/**/*.js',
       '!src/js/urlNotification.js',
       '!src/js/vendor.js',
-      'tests/**/*.js',
+      'test/**/*.js',
     ]),
     eslint({ useEslintrc: true }),
     eslint.format(),
@@ -100,8 +99,3 @@ gulp.task('lint', function(cb) {
   ]);
   cb();
 });
-
-gulp.task('test', gulp.series('lint', 'make:urlNotification', function(cb) {
-  qunit('./tests/test.html');
-  cb();
-}));
