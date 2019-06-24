@@ -5,7 +5,6 @@ const gulp = require('gulp');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
-//const rename = require('gulp-rename');
 //const uglify = require('gulp-uglify');
 const pump = require('pump');
 const source = require('vinyl-source-stream');
