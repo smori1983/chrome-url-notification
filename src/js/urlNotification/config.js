@@ -8,6 +8,11 @@
 const version = 2;
 
 /**
+ * @type {string}
+ */
+const defaultFontColor = 'ffffff';
+
+/**
  * Used for migration from 0 to 1
  *
  * @type {string}
@@ -26,6 +31,13 @@ const defaultDisplayPosition = 'top';
  */
 module.exports.version = function() {
   return version;
+};
+
+/**
+ * @returns {string}
+ */
+module.exports.defaultFontColor = function() {
+  return defaultFontColor;
 };
 
 /**
