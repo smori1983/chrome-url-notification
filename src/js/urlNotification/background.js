@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 
@@ -50,7 +51,7 @@ const createData = function(item) {
   return {
     message: item.msg,
     backgroundColor: item.backgroundColor,
-    fontColor: 'ffffff',
+    fontColor: config.defaultFontColor(),
     displayPosition: item.displayPosition,
   };
 };
