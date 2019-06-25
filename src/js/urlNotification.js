@@ -20445,7 +20445,7 @@ module.exports.findFor = find;
 
 const _ = require('lodash');
 const config = require('./config');
-const migrationExecuter = require('./migrationExecuter');
+const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
@@ -20487,7 +20487,7 @@ const migrate = function(pattern, version) {
   let result = [];
 
   pattern.forEach(function(item) {
-    result.push(migrationExecuter.from(version, item));
+    result.push(migrationExecutor.from(version, item));
   });
 
   return result;
@@ -20530,12 +20530,12 @@ const importJson = function(initialJson) {
 
 module.exports.importJson = importJson;
 
-},{"./config":15,"./migrationExecuter":20,"./storage":21,"lodash":7}],19:[function(require,module,exports){
+},{"./config":15,"./migrationExecutor":20,"./storage":21,"lodash":7}],19:[function(require,module,exports){
 'use strict';
 
 const config = require('./config');
 const storage = require('./storage');
-const migrationExecuter = require('./migrationExecuter');
+const migrationExecutor = require('./migrationExecutor');
 
 /**
  * @returns {boolean}
@@ -20565,7 +20565,7 @@ const migrateFrom = function(currentVersion) {
   let result = [];
 
   storage.getAll().forEach(function(item) {
-    result.push(migrationExecuter.from(currentVersion, item));
+    result.push(migrationExecutor.from(currentVersion, item));
   });
 
   storage.replace(currentVersion + 1, result);
@@ -20576,7 +20576,7 @@ module.exports.currentVersion = currentVersion;
 module.exports.shouldMigrate = shouldMigrate;
 module.exports.migrateFrom = migrateFrom;
 
-},{"./config":15,"./migrationExecuter":20,"./storage":21}],20:[function(require,module,exports){
+},{"./config":15,"./migrationExecutor":20,"./storage":21}],20:[function(require,module,exports){
 'use strict';
 
 const config = require('./config');
@@ -20926,11 +20926,11 @@ const urlNotification = {
   finder: require('./finder'),
   importer: require('./importer'),
   migration: require('./migration'),
-  migrationExecuter: require('./migrationExecuter'),
+  migrationExecutor: require('./migrationExecutor'),
   storage: require('./storage'),
   validator: require('./validator'),
 };
 
 module.exports = urlNotification;
 
-},{"./background":14,"./config":15,"./data":16,"./finder":17,"./importer":18,"./migration":19,"./migrationExecuter":20,"./storage":21,"./validator":22}]},{},[]);
+},{"./background":14,"./config":15,"./data":16,"./finder":17,"./importer":18,"./migration":19,"./migrationExecutor":20,"./storage":21,"./validator":22}]},{},[]);

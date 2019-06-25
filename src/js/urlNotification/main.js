@@ -7,7 +7,7 @@ const urlNotification = {
   finder: require('./finder'),
   importer: require('./importer'),
   migration: require('./migration'),
-  migrationExecuter: require('./migrationExecuter'),
+  migrationExecutor: require('./migrationExecutor'),
   storage: require('./storage'),
   validator: require('./validator'),
 };
