@@ -14,26 +14,20 @@ describe('vendor.jsonschema', function() {
     };
   });
 
-  it('import json - error - array', function () {
+  it('import json - error - argument is an array', function () {
     assert.ok(this.isInvalid([]));
   });
 
-  it('import json - error - no keys', function () {
+  it('import json - error - argument is an object but no keys', function () {
     assert.ok(this.isInvalid({}));
   });
 
-  it('import json - error - version not defined', function () {
+  it('import json - error - version is not defined', function () {
     assert.ok(this.isInvalid({
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
-    }));
-  });
-
-  it('import json - error - pattern not defined', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
     }));
   });
 
@@ -41,8 +35,8 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: null,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -51,8 +45,8 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: true,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -61,8 +55,8 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: false,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -71,8 +65,8 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: '1',
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -81,8 +75,8 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: 1.1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -91,17 +85,23 @@ describe('vendor.jsonschema', function() {
     assert.ok(this.isInvalid({
       version: 0,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
-      version: 2,
+      version: 3,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top' },
       ],
+    }));
+  });
+
+  it('import json - error - pattern is not defined', function () {
+    assert.ok(this.isInvalid({
+      version: 1,
     }));
   });
 
@@ -129,202 +129,20 @@ describe('vendor.jsonschema', function() {
   it('import json - error - pattern is string', function () {
     assert.ok(this.isInvalid({
       version: 1,
-      pattern: 'hoge',
+      pattern: 'dummy',
     }));
   });
 
-  it('import json - error - pattern is object', function () {
+  it('import json - error - pattern is not an array of object(s)', function () {
     assert.ok(this.isInvalid({
       version: 1,
-      pattern: {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-    }));
-  });
-
-  it('import json - error - pattern - url is not defined', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - url is null', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: null, msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - url is true', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: true, msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - url is false', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: false, msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - url is number', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 100, msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - url is empty string', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: '', msg: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is not defined', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is null', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: null, backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is true', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: true, backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is false', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: false, backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is number', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 100, backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - msg is empty string', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: '', backgroundColor: '222222'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is not defined', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2'},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is null', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: null},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is true', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: true},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is false', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: false},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is empty string', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: ''},
-      ],
-    }));
-  });
-
-  it('import json - error - pattern - backgroundColor is not hex color', function () {
-    assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '12345z'},
-      ],
+      pattern: { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
     }));
 
     assert.ok(this.isInvalid({
-      version: 1,
-      pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: 'black'},
-      ],
+      version: 2,
+      pattern: { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
     }));
   });
+
 });
