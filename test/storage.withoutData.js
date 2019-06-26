@@ -7,6 +7,8 @@ const urlNotification = require('../src/js/urlNotification/main');
 describe('urlNotification.storage.withoutData', function() {
   beforeEach(function () {
     localStorage.clear();
+
+    urlNotification.background.migrate();
   });
 
   it('全データ削除', function () {
