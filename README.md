@@ -1,6 +1,10 @@
 # Chrome URL Notification
 
 
+[![Build Status](https://travis-ci.org/smori1983/chrome-url-notification.svg?branch=master)](https://travis-ci.org/smori1983/chrome-url-notification)
+
+---
+
 ![add](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/add.png)
 
 ![list](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/list.png)
