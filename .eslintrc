@@ -14,7 +14,6 @@
     "ClipboardJS": true,
     "localStorage": true,
     "$": true,
-    "QUnit": true,
     "urlNotification": true
   },
   "rules": {

@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const config = require('./config');
-const migrationExecuter = require('./migrationExecuter');
+const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
@@ -44,7 +44,7 @@ const migrate = function(pattern, version) {
   let result = [];
 
   pattern.forEach(function(item) {
-    result.push(migrationExecuter.from(version, item));
+    result.push(migrationExecutor.from(version, item));
   });
 
   return result;

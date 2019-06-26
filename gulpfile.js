@@ -5,10 +5,7 @@ const gulp = require('gulp');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
-//const rename = require('gulp-rename');
-//const uglify = require('gulp-uglify');
 const pump = require('pump');
-const qunit = require('node-qunit-phantomjs');
 const source = require('vinyl-source-stream');
 const sprintf = require('sprintf-js').sprintf;
 
@@ -61,7 +58,7 @@ gulp.task('clean', function() {
   ], { force: true });
 });
 
-gulp.task('dist', function(cb) {
+gulp.task('dist:source', function(cb) {
   pump([
     gulp.src([
       'src/_locales/**',
@@ -75,6 +72,9 @@ gulp.task('dist', function(cb) {
     gulp.dest(dist),
   ], cb);
 
+});
+
+gulp.task('dist:icon', function(cb) {
   pump([
     gulp.src([
       sprintf('./src/%s/**', forProduction ? 'image' : 'image_dev'),
@@ -82,6 +82,8 @@ gulp.task('dist', function(cb) {
     gulp.dest(sprintf('%s/image', dist)),
   ], cb);
 });
+
+gulp.task('dist', gulp.series('dist:source', 'dist:icon'));
 
 gulp.task('build', gulp.series('clean', 'make:urlNotification', 'dist'));
 
@@ -92,7 +94,7 @@ gulp.task('lint', function(cb) {
       'src/js/**/*.js',
       '!src/js/urlNotification.js',
       '!src/js/vendor.js',
-      'tests/**/*.js',
+      'test/**/*.js',
     ]),
     eslint({ useEslintrc: true }),
     eslint.format(),
@@ -100,8 +102,3 @@ gulp.task('lint', function(cb) {
   ]);
   cb();
 });
-
-gulp.task('test', gulp.series('lint', 'make:urlNotification', function(cb) {
-  qunit('./tests/test.html');
-  cb();
-}));

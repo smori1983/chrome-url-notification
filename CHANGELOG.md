@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v3.2.0
+
+### Development
+
+- Change test framework to `mocha`
+- Introduce Travis CI
+
+
 ## v3.1.0
 
 ### Development

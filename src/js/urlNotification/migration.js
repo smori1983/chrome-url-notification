@@ -2,7 +2,7 @@
 
 const config = require('./config');
 const storage = require('./storage');
-const migrationExecuter = require('./migrationExecuter');
+const migrationExecutor = require('./migrationExecutor');
 
 /**
  * @returns {boolean}
@@ -32,7 +32,7 @@ const migrateFrom = function(currentVersion) {
   let result = [];
 
   storage.getAll().forEach(function(item) {
-    result.push(migrationExecuter.from(currentVersion, item));
+    result.push(migrationExecutor.from(currentVersion, item));
   });
 
   storage.replace(currentVersion + 1, result);

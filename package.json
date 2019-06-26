@@ -1,6 +1,6 @@
 {
   "name": "chrome-url-notification",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
@@ -8,9 +8,9 @@
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
     "make:vendor:js": "gulp make:vendor:js",
     "make:urlNotification": "gulp make:urlNotification",
-    "test": "gulp test",
+    "test": "mocha --require mock-local-storage test/",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
-    "watch:test": "watch 'npm run test' src/ tests/ --interval=1 --ignoreDotFiles",
+    "watch:test": "watch 'npm run test' src/ test/ --interval=1 --ignoreDotFiles",
     "lint": "gulp lint"
   },
   "repository": {
@@ -24,13 +24,10 @@
     "del": "^4.1.1",
     "dotenv": "^7.0.0",
     "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
     "gulp-eslint": "^5.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-uglify": "^3.0.2",
-    "node-qunit-phantomjs": "^2.0.1",
+    "mocha": "^6.1.4",
+    "mock-local-storage": "^1.1.8",
     "pump": "^3.0.0",
-    "qunit": "^2.9.2",
     "sprintf-js": "^1.1.2",
     "vinyl-source-stream": "^2.0.0",
     "watch": "^1.0.2"
