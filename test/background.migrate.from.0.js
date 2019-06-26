@@ -11,31 +11,39 @@ describe('background.migrate.from.0', function () {
     localStorage.clear();
   });
 
-  it('no data', function() {
-    urlNotification.background.migrate();
+  describe('no data', function() {
+    it('migrate', function () {
+      urlNotification.background.migrate();
 
-    const expected = [];
+      const expected = [];
 
-    assert.deepStrictEqual(urlNotification.storage.getAll(), expected);
+      assert.deepStrictEqual(urlNotification.storage.getAll(), expected);
 
-    assert.strictEqual(urlNotification.migration.currentVersion(), expectedVersion);
+      assert.strictEqual(urlNotification.migration.currentVersion(), expectedVersion);
+    });
   });
 
-  it('migrate', function() {
-    urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
-    urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2', backgroundColor: '222222' });
-    urlNotification.storage.addPattern({ url: 'http://example.com/3', msg: '3' });
+  describe('with data', function() {
+    beforeEach(function () {
+      localStorage.setItem('pattern', JSON.stringify([
+        { url: 'http://example.com/1', msg: '1' },
+        { url: 'http://example.com/2', msg: '2' },
+        { url: 'http://example.com/3', msg: '3' },
+      ]));
+    });
 
-    urlNotification.background.migrate();
+    it('migrate', function () {
+      urlNotification.background.migrate();
 
-    const expected = [
-      { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top' },
-      { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top' },
-      { url: 'http://example.com/3', msg: '3', backgroundColor: '000000', displayPosition: 'top' },
-    ];
+      const expected = [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top' },
+        { url: 'http://example.com/2', msg: '2', backgroundColor: '000000', displayPosition: 'top' },
+        { url: 'http://example.com/3', msg: '3', backgroundColor: '000000', displayPosition: 'top' },
+      ];
 
-    assert.deepStrictEqual(urlNotification.storage.getAll(), expected);
+      assert.deepStrictEqual(urlNotification.storage.getAll(), expected);
 
-    assert.strictEqual(urlNotification.migration.currentVersion(), expectedVersion);
+      assert.strictEqual(urlNotification.migration.currentVersion(), expectedVersion);
+    });
   });
 });
