@@ -11,6 +11,8 @@ describe('urlNotification.storage.withData', function() {
     urlNotification.storage.addPattern({url: 'http://example.com/1', msg: '1'});
     urlNotification.storage.addPattern({url: 'http://example.com/2', msg: '2'});
     urlNotification.storage.addPattern({url: 'http://example.com/3', msg: '3'});
+
+    urlNotification.background.migrate();
   });
 
   it('全データ削除', function () {
