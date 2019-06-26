@@ -20262,6 +20262,7 @@ module.exports = {
 },{}],14:[function(require,module,exports){
 'use strict';
 
+const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 
@@ -20312,7 +20313,7 @@ const createData = function(item) {
   return {
     message: item.msg,
     backgroundColor: item.backgroundColor,
-    fontColor: 'ffffff',
+    fontColor: config.defaultFontColor(),
     displayPosition: item.displayPosition,
   };
 };
@@ -20320,7 +20321,7 @@ const createData = function(item) {
 module.exports.migrate = migrate;
 module.exports.find = find;
 
-},{"./finder":17,"./migration":19}],15:[function(require,module,exports){
+},{"./config":15,"./finder":17,"./migration":19}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -20329,6 +20330,11 @@ module.exports.find = find;
  * @type {number}
  */
 const version = 2;
+
+/**
+ * @type {string}
+ */
+const defaultFontColor = 'ffffff';
 
 /**
  * Used for migration from 0 to 1
@@ -20349,6 +20355,13 @@ const defaultDisplayPosition = 'top';
  */
 module.exports.version = function() {
   return version;
+};
+
+/**
+ * @returns {string}
+ */
+module.exports.defaultFontColor = function() {
+  return defaultFontColor;
 };
 
 /**
