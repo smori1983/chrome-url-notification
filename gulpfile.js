@@ -58,7 +58,7 @@ gulp.task('clean', function() {
   ], { force: true });
 });
 
-gulp.task('dist', function(cb) {
+gulp.task('dist:source', function(cb) {
   pump([
     gulp.src([
       'src/_locales/**',
@@ -72,6 +72,9 @@ gulp.task('dist', function(cb) {
     gulp.dest(dist),
   ], cb);
 
+});
+
+gulp.task('dist:icon', function(cb) {
   pump([
     gulp.src([
       sprintf('./src/%s/**', forProduction ? 'image' : 'image_dev'),
@@ -79,6 +82,8 @@ gulp.task('dist', function(cb) {
     gulp.dest(sprintf('%s/image', dist)),
   ], cb);
 });
+
+gulp.task('dist', gulp.series('dist:source', 'dist:icon'));
 
 gulp.task('build', gulp.series('clean', 'make:urlNotification', 'dist'));
 
