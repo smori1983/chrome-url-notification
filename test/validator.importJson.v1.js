@@ -18,16 +18,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        {                 msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        {                 msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -36,16 +36,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: null, msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: null,      msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: null, msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: null,      msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -54,16 +54,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: true, msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: true,      msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: true, msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: true, msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -72,16 +72,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: false, msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: false, msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: false, msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: false,     msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -90,16 +90,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 100, msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 100,       msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 100, msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 100,       msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -108,16 +108,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: '', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: '',        msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: '', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: '',        msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -126,16 +126,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2',                 backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1',                 backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -144,16 +144,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: null, backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: null,      backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: null, backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: null,      backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -162,16 +162,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: true, backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: true,      backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: true, backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: true,      backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -180,16 +180,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: false, backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: false,     backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: false, backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: false,     backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -198,16 +198,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 100, backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 100,       backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 100, backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 100,       backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -216,16 +216,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: '', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: '',        backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: '', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: '',        backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -234,16 +234,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -252,16 +252,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: null},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: null },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: null},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: null },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -270,16 +270,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: true},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: true },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: true},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: true },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -288,16 +288,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: false},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: false },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: false},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: false },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -306,16 +306,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: ''},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: ''},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -324,32 +324,32 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '12345z'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '12345z' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: 'black'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: 'black' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '12345z'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '12345z' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
 
     assert.ok(this.isInvalid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: 'black'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '222222'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: 'black' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
       ],
     }));
   });
@@ -358,16 +358,16 @@ describe('urlNotification.validator.importJson.v1', function() {
     assert.ok(this.isValid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: '000000'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: '000000' },
       ],
     }));
 
     assert.ok(this.isValid({
       version: 1,
       pattern: [
-        {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-        {url: 'sample2', msg: 'sample2', backgroundColor: 'ffffff'},
+        { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        { url: 'sample2', msg: 'sample2', backgroundColor: 'ffffff' },
       ],
     }));
   });
