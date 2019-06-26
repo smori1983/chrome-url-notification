@@ -22,14 +22,14 @@ describe('urlNotification.migration', function() {
       assert.strictEqual(urlNotification.migration.currentVersion(), 0);
     });
 
-    it('urlNotification.migration.hasVersion - キーあり - 不正値 - 文字列', function () {
+    it('キーあり - 不正値 - 文字列', function () {
       localStorage.setItem('version', 'foo');
 
       assert.strictEqual(urlNotification.migration.hasVersion(), false);
       assert.strictEqual(urlNotification.migration.currentVersion(), 0);
     });
 
-    it('urlNotification.migration.hasVersion - キーあり - 正常値', function () {
+    it('キーあり - 正常値', function () {
       localStorage.setItem('version', '1');
 
       assert.strictEqual(urlNotification.migration.hasVersion(), true);

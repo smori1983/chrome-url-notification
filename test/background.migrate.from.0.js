@@ -6,7 +6,7 @@ const urlNotification = require('../src/js/urlNotification/main');
 
 const expectedVersion = 2;
 
-describe('background.migrate.from.0', function () {
+describe('urlNotification.background.migrate.from.0', function () {
   beforeEach(function() {
     localStorage.clear();
   });

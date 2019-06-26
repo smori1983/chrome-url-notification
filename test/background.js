@@ -4,7 +4,7 @@ const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
 
-describe('background', function () {
+describe('urlNotification.background', function () {
   beforeEach(function () {
     localStorage.clear();
 
@@ -15,14 +15,14 @@ describe('background', function () {
     urlNotification.background.migrate();
   });
 
-  it('background.find() - 該当データなし', function() {
+  it('find() - 該当データなし', function() {
     const result = urlNotification.background.find('foo');
 
     assert.strictEqual(result.matched, false);
     assert.strictEqual(result.data, null);
   });
 
-  it('background.find() - 該当データあり', function() {
+  it('find() - 該当データあり', function() {
     const result = urlNotification.background.find('http://example.com/1');
 
     const expectedData = {
