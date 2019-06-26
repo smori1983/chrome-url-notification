@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## Next
+## v3.2.0
 
 ### Development
 
