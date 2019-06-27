@@ -11,49 +11,59 @@ describe('urlNotification.storage.withoutData', function() {
     urlNotification.background.migrate();
   });
 
-  it('全データ削除', function () {
-    urlNotification.storage.deleteAll();
+  describe('削除', function () {
+    it('全件削除', function () {
+      urlNotification.storage.deleteAll();
 
-    assert.strictEqual(urlNotification.storage.getCount(), 0);
+      assert.strictEqual(urlNotification.storage.getCount(), 0);
+    });
+
+    it('1件削除 - 該当データ無し', function () {
+      urlNotification.storage.deletePattern('http://example.com/');
+
+      assert.strictEqual(urlNotification.storage.getCount(), 0);
+    });
   });
 
-  it('全件取得', function () {
-    assert.strictEqual(urlNotification.storage.getAll().length, 0);
+  describe('参照', function () {
+    it('全件取得', function () {
+      const all = urlNotification.storage.getAll();
+
+      assert.strictEqual(all.length, 0);
+    });
+
+    it('URLで検索 該当データなし', function () {
+      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
+    });
   });
 
-  it('初期状態の件数', function () {
-    assert.strictEqual(urlNotification.storage.getCount(), 0);
-  });
+  describe('更新', function () {
+    it('データ更新 - 該当データ無し', function () {
+      const item = {
+        url: 'http://example.com/',
+        msg: '!',
+        backgroundColor: '000000',
+        displayPosition: 'top',
+      };
 
-  it('URLで検索 該当データなし', function () {
-    assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
-  });
+      urlNotification.storage.updatePattern('http://example.com/', item);
 
-  it('データ更新 - 該当データ無し', function () {
-    const item = {
-      url: 'http://example.com/',
-      msg: '!',
-      backgroundColor: '000000',
-      displayPosition: 'top',
-    };
+      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
+    });
 
-    urlNotification.storage.updatePattern('http://example.com/', item);
+    it('パターンの重複登録はできない', function () {
+      const item = {
+        url: 'http://example.com/1',
+        msg: '1',
+        backgroundColor: '000000',
+        displayPosition: 'top',
+      };
 
-    assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
-  });
+      urlNotification.storage.addPattern(item);
+      urlNotification.storage.addPattern(item);
+      urlNotification.storage.addPattern(item);
 
-  it('パターンの重複登録はできない', function () {
-    const item = {
-      url: 'http://example.com/1',
-      msg: '1',
-      backgroundColor: '000000',
-      displayPosition: 'top',
-    };
-
-    urlNotification.storage.addPattern(item);
-    urlNotification.storage.addPattern(item);
-    urlNotification.storage.addPattern(item);
-
-    assert.strictEqual(urlNotification.storage.getCount(), 1);
+      assert.strictEqual(urlNotification.storage.getCount(), 1);
+    });
   });
 });
