@@ -36,7 +36,7 @@ $(function() {
     const $body = $('body');
 
     const $container = $('<div>')
-      .attr('id', 'chrome-url-notification-container')
+      .attr('id', 'chrome-url-notification-container-9b7414d403c1287ca963')
       .css(createCss())
       .text(response.data.message);
 
