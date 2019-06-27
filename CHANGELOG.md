@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## Next
+
+### Feature
+
+- The id attribute of DOM element injected by `content.js` become more conflict free
+
+
 ## v3.2.0
 
 ### Development
