@@ -33,7 +33,9 @@ $(function() {
       return result;
     };
 
-    const container = $('<div>')
+    const $body = $('body');
+
+    const $container = $('<div>')
       .attr('id', 'chrome-url-notification-container')
       .css(createCss())
       .text(response.data.message);
@@ -42,13 +44,13 @@ $(function() {
       //
       // workaround for "position: fixed;" page.
       //
-      $('body')
-        .css({ marginTop: (height + $('body').offset().top) + 'px' })
-        .append(container);
+      $body
+        .css({ marginTop: (height + $body.offset().top) + 'px' })
+        .append($container);
     } else if (response.data.displayPosition === 'bottom') {
-      $('body')
+      $body
         .css({ marginBottom: height + 'px' })
-        .append(container);
+        .append($container);
     }
   };
 
