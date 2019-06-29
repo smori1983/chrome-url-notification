@@ -245,15 +245,36 @@ const importComponent = (function() {
 
 const patternListComponent = (function() {
   const show = function() {
+    const headerArea = $('#js_list_pattern thead');
     const listArea = $('#js_list_pattern tbody');
     const sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);
 
+    headerArea.empty();
+    if (sorted.length > 0) {
+      makeHeader().appendTo(headerArea);
+    }
+
     listArea.empty();
     $.each(sorted, function(idx, item) {
       makeRow(item).appendTo(listArea);
     });
+  };
+
+  const makeHeader = function() {
+    const row = function() {
+      return $('<tr>');
+    };
+
+    const column = function(value) {
+      return $('<th>').text(value);
+    };
+
+    return row()
+      .append(column(i18n.get('label_url_pattern')))
+      .append(column(i18n.get('label_message')))
+      .append(column(i18n.get('label_operation')));
   };
 
   const makeRow = (function() {

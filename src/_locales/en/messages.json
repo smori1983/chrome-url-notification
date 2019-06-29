@@ -35,6 +35,9 @@
   "label_message": {
     "message": "Message"
   },
+  "label_operation": {
+    "message": "Operation"
+  },
   "label_pattern_add": {
     "message": "Add"
   },
