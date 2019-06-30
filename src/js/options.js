@@ -274,6 +274,7 @@ const patternListComponent = (function() {
     return row()
       .append(column(i18n.get('label_url_pattern')))
       .append(column(i18n.get('label_message')))
+      .append(column(i18n.get('label_display_position')))
       .append(column(i18n.get('label_operation')));
   };
 
@@ -326,6 +327,26 @@ const patternListComponent = (function() {
     const messageColumn = function(item) {
       return column().append(listMessage(item));
     };
+
+    const displayPositionColumn = (function() {
+      /**
+       * @param {PatternItem} item
+       */
+      const message = function(item) {
+        switch (item.displayPosition) {
+          case 'top': return i18n.get('label_top');
+          case 'bottom': return i18n.get('label_bottom');
+          default: return '';
+        }
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column().append(message(item));
+      };
+    })();
 
     /**
      * @param {PatternItem} item
@@ -387,6 +408,7 @@ const patternListComponent = (function() {
       return row().
         append(patternColumn(item)).
         append(messageColumn(item)).
+        append(displayPositionColumn(item)).
         append(actionColumn(item));
     };
   })();
