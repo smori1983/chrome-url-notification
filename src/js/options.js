@@ -344,10 +344,10 @@ const patternListComponent = (function() {
     })();
 
     const actionColumn = (function() {
-      const button = function(clazz, text) {
+      const button = function(className, text) {
         return $('<button>')
           .addClass('btn btn-sm')
-          .addClass(clazz)
+          .addClass(className)
           .text(text);
       };
 
