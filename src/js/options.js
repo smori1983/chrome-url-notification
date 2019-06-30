@@ -298,17 +298,17 @@ const patternListComponent = (function() {
       /**
        * @param {PatternItem} item
        */
-      const listMessage = function(item) {
+      const message = function(item) {
         return $('<div>')
           .addClass('list-message')
-          .css(listMessageCss(item))
+          .css(messageCss(item))
           .text(item.msg);
       };
 
       /**
        * @param {PatternItem} item
        */
-      const listMessageCss = function(item) {
+      const messageCss = function(item) {
         return {
           'background-color': '#' + item.backgroundColor,
           'color': '#' + urlNotification.config.defaultFontColor(),
@@ -319,7 +319,7 @@ const patternListComponent = (function() {
        * @param {PatternItem} item
        */
       return function(item) {
-        return column().append(listMessage(item));
+        return column().append(message(item));
       };
     })();
 
