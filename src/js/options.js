@@ -245,15 +245,38 @@ const importComponent = (function() {
 
 const patternListComponent = (function() {
   const show = function() {
+    const headerArea = $('#js_list_pattern thead');
     const listArea = $('#js_list_pattern tbody');
     const sorted = urlNotification.data.sortByMessage(urlNotification.storage.getAll());
 
     $('#js_pattern_list_badge').text(sorted.length);
 
+    headerArea.empty();
     listArea.empty();
+
+    if (sorted.length > 0) {
+      makeHeader().appendTo(headerArea);
+    }
+
     $.each(sorted, function(idx, item) {
       makeRow(item).appendTo(listArea);
     });
+  };
+
+  const makeHeader = function() {
+    const row = function() {
+      return $('<tr>');
+    };
+
+    const column = function(value) {
+      return $('<th>').text(value);
+    };
+
+    return row()
+      .append(column(i18n.get('label_url_pattern')))
+      .append(column(i18n.get('label_message')))
+      .append(column(i18n.get('label_display_position')))
+      .append(column(i18n.get('label_operation')));
   };
 
   const makeRow = (function() {
@@ -265,33 +288,6 @@ const patternListComponent = (function() {
       return $('<td>');
     };
 
-    const button = function(clazz, text) {
-      return $('<button>').
-        addClass('btn btn-sm').
-        addClass(clazz).
-        text(text);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
-    const listMessage = function(item) {
-      return $('<div>').
-        addClass('list-message').
-        css(listMessageCss(item)).
-        text(item.msg);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
-    const listMessageCss = function(item) {
-      return {
-        'background-color': '#' + item.backgroundColor,
-        'color': '#ffffff',
-      };
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -299,74 +295,130 @@ const patternListComponent = (function() {
       return column().text(item.url);
     };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const messageColumn = function(item) {
-      return column().append(listMessage(item));
-    };
+    const messageColumn = (function() {
+      /**
+       * @param {PatternItem} item
+       */
+      const message = function(item) {
+        return $('<div>')
+          .addClass('list-message')
+          .css(messageCss(item))
+          .text(item.msg);
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const actionColumn = function(item) {
-      return column().addClass('action').
-        append(copyButton(item)).
-        append(editButton(item)).
-        append(deleteButton(item));
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      const messageCss = function(item) {
+        return {
+          'background-color': '#' + item.backgroundColor,
+          'color': '#' + urlNotification.config.defaultFontColor(),
+        };
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const copyButton = function(item) {
-      return button('btn-default', i18n.get('label_copy')).click(function(e) {
-        e.preventDefault();
-        patternForm.show('add', {
-          url: item.url,
-          message: item.msg,
-          backgroundColor: item.backgroundColor,
-          displayPosition: item.displayPosition,
-        });
-      });
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column().append(message(item));
+      };
+    })();
 
-    /**
-     * @param {PatternItem} item
-     */
-    const editButton = function(item) {
-      return button('btn-primary', i18n.get('label_edit')).click(function(e) {
-        e.preventDefault();
-        patternForm.show('edit', {
-          url: item.url,
-          message: item.msg,
-          backgroundColor: item.backgroundColor,
-          displayPosition: item.displayPosition,
-        });
-      });
-    };
+    const displayPositionColumn = (function() {
+      /**
+       * @param {PatternItem} item
+       */
+      const message = function(item) {
+        switch (item.displayPosition) {
+          case 'top': return i18n.get('label_top');
+          case 'bottom': return i18n.get('label_bottom');
+          default: return '';
+        }
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const deleteButton = function(item) {
-      return button('btn-danger', i18n.get('label_delete')).click(function(e) {
-        e.preventDefault();
-        deleteForm.show({
-          pattern: item.url,
-          message: item.msg,
-        });
-      });
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column().text(message(item));
+      };
+    })();
+
+    const actionColumn = (function() {
+      const button = function(className, text) {
+        return $('<button>')
+          .addClass('btn btn-sm')
+          .addClass(className)
+          .text(text);
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      const copyButton = function(item) {
+        return button('btn-default', i18n.get('label_copy'))
+          .click(function(e) {
+            e.preventDefault();
+            patternForm.show('add', {
+              url: item.url,
+              message: item.msg,
+              backgroundColor: item.backgroundColor,
+              displayPosition: item.displayPosition,
+            });
+          });
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      const editButton = function(item) {
+        return button('btn-primary', i18n.get('label_edit'))
+          .click(function(e) {
+            e.preventDefault();
+            patternForm.show('edit', {
+              url: item.url,
+              message: item.msg,
+              backgroundColor: item.backgroundColor,
+              displayPosition: item.displayPosition,
+            });
+          });
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      const deleteButton = function(item) {
+        return button('btn-danger', i18n.get('label_delete'))
+          .click(function(e) {
+            e.preventDefault();
+            deleteForm.show({
+              pattern: item.url,
+              message: item.msg,
+            });
+          });
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column()
+          .addClass('action')
+          .append(copyButton(item))
+          .append(editButton(item))
+          .append(deleteButton(item));
+      }
+    })();
 
     /**
      * @param {PatternItem} item
      */
     return function(item) {
-      return row().
-        append(patternColumn(item)).
-        append(messageColumn(item)).
-        append(actionColumn(item));
+      return row()
+        .append(patternColumn(item))
+        .append(messageColumn(item))
+        .append(displayPositionColumn(item))
+        .append(actionColumn(item));
     };
   })();
 
