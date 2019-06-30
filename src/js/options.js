@@ -340,7 +340,7 @@ const patternListComponent = (function() {
        * @param {PatternItem} item
        */
       return function(item) {
-        return column().append(message(item));
+        return column().text(message(item));
       };
     })();
 
