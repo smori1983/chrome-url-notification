@@ -290,36 +290,38 @@ const patternListComponent = (function() {
     /**
      * @param {PatternItem} item
      */
-    const listMessage = function(item) {
-      return $('<div>').
-        addClass('list-message').
-        css(listMessageCss(item)).
-        text(item.msg);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
-    const listMessageCss = function(item) {
-      return {
-        'background-color': '#' + item.backgroundColor,
-        'color': '#' + urlNotification.config.defaultFontColor(),
-      };
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
     const patternColumn = function(item) {
       return column().text(item.url);
     };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const messageColumn = function(item) {
-      return column().append(listMessage(item));
-    };
+    const messageColumn = (function() {
+      /**
+       * @param {PatternItem} item
+       */
+      const listMessage = function(item) {
+        return $('<div>')
+          .addClass('list-message')
+          .css(listMessageCss(item))
+          .text(item.msg);
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      const listMessageCss = function(item) {
+        return {
+          'background-color': '#' + item.backgroundColor,
+          'color': '#' + urlNotification.config.defaultFontColor(),
+        };
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column().append(listMessage(item));
+      };
+    })();
 
     const displayPositionColumn = (function() {
       /**
