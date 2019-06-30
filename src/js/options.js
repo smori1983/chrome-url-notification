@@ -310,7 +310,7 @@ const patternListComponent = (function() {
     const listMessageCss = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
-        'color': '#ffffff',
+        'color': '#' + urlNotification.config.defaultFontColor(),
       };
     };
 
