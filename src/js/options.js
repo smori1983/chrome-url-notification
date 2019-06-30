@@ -287,13 +287,6 @@ const patternListComponent = (function() {
       return $('<td>');
     };
 
-    const button = function(clazz, text) {
-      return $('<button>').
-        addClass('btn btn-sm').
-        addClass(clazz).
-        text(text);
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -348,68 +341,81 @@ const patternListComponent = (function() {
       };
     })();
 
-    /**
-     * @param {PatternItem} item
-     */
-    const actionColumn = function(item) {
-      return column().addClass('action').
-        append(copyButton(item)).
-        append(editButton(item)).
-        append(deleteButton(item));
-    };
+    const actionColumn = (function() {
+      const button = function(clazz, text) {
+        return $('<button>')
+          .addClass('btn btn-sm')
+          .addClass(clazz)
+          .text(text);
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const copyButton = function(item) {
-      return button('btn-default', i18n.get('label_copy')).click(function(e) {
-        e.preventDefault();
-        patternForm.show('add', {
-          url: item.url,
-          message: item.msg,
-          backgroundColor: item.backgroundColor,
-          displayPosition: item.displayPosition,
-        });
-      });
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      const copyButton = function(item) {
+        return button('btn-default', i18n.get('label_copy'))
+          .click(function(e) {
+            e.preventDefault();
+            patternForm.show('add', {
+              url: item.url,
+              message: item.msg,
+              backgroundColor: item.backgroundColor,
+              displayPosition: item.displayPosition,
+            });
+          });
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const editButton = function(item) {
-      return button('btn-primary', i18n.get('label_edit')).click(function(e) {
-        e.preventDefault();
-        patternForm.show('edit', {
-          url: item.url,
-          message: item.msg,
-          backgroundColor: item.backgroundColor,
-          displayPosition: item.displayPosition,
-        });
-      });
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      const editButton = function(item) {
+        return button('btn-primary', i18n.get('label_edit'))
+          .click(function(e) {
+            e.preventDefault();
+            patternForm.show('edit', {
+              url: item.url,
+              message: item.msg,
+              backgroundColor: item.backgroundColor,
+              displayPosition: item.displayPosition,
+            });
+          });
+      };
 
-    /**
-     * @param {PatternItem} item
-     */
-    const deleteButton = function(item) {
-      return button('btn-danger', i18n.get('label_delete')).click(function(e) {
-        e.preventDefault();
-        deleteForm.show({
-          pattern: item.url,
-          message: item.msg,
-        });
-      });
-    };
+      /**
+       * @param {PatternItem} item
+       */
+      const deleteButton = function(item) {
+        return button('btn-danger', i18n.get('label_delete'))
+          .click(function(e) {
+            e.preventDefault();
+            deleteForm.show({
+              pattern: item.url,
+              message: item.msg,
+            });
+          });
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column()
+          .addClass('action')
+          .append(copyButton(item))
+          .append(editButton(item))
+          .append(deleteButton(item));
+      }
+    })();
 
     /**
      * @param {PatternItem} item
      */
     return function(item) {
-      return row().
-        append(patternColumn(item)).
-        append(messageColumn(item)).
-        append(displayPositionColumn(item)).
-        append(actionColumn(item));
+      return row()
+        .append(patternColumn(item))
+        .append(messageColumn(item))
+        .append(displayPositionColumn(item))
+        .append(actionColumn(item));
     };
   })();
 
