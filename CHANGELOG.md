@@ -5,6 +5,7 @@
 
 ### Feature
 
+- Show 'display position' in pattern list
 - The id attribute of DOM element injected by `content.js` become more conflict free
 
 
