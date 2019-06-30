@@ -252,11 +252,12 @@ const patternListComponent = (function() {
     $('#js_pattern_list_badge').text(sorted.length);
 
     headerArea.empty();
+    listArea.empty();
+
     if (sorted.length > 0) {
       makeHeader().appendTo(headerArea);
     }
 
-    listArea.empty();
     $.each(sorted, function(idx, item) {
       makeRow(item).appendTo(listArea);
     });
