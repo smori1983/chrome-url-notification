@@ -12,6 +12,7 @@ const migration = require('./migration');
 
 /**
  * @typedef {object} FindResultData
+ * @property {string} url
  * @property {string} message
  * @property {string} backgroundColor
  * @property {string} fontColor
@@ -49,6 +50,7 @@ const find = function(url) {
  */
 const createData = function(item) {
   return {
+    url: item.url,
     message: item.msg,
     backgroundColor: item.backgroundColor,
     fontColor: config.defaultFontColor(),

@@ -11,6 +11,7 @@ describe('urlNotification.background', function () {
     urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
     urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2' });
     urlNotification.storage.addPattern({ url: 'http://example.com/3', msg: '3' });
+    urlNotification.storage.addPattern({ url: 'http://example.com/item/*', msg: 'item' });
 
     urlNotification.background.migrate();
   });
@@ -26,7 +27,23 @@ describe('urlNotification.background', function () {
     const result = urlNotification.background.find('http://example.com/1');
 
     const expectedData = {
+      url: 'http://example.com/1',
       message: '1',
+      backgroundColor: '000000',
+      fontColor: 'ffffff',
+      displayPosition: 'top',
+    };
+
+    assert.strictEqual(result.matched, true);
+    assert.deepStrictEqual(result.data, expectedData);
+  });
+
+  it('find() - 該当データあり - パターンにマッチ', function() {
+    const result = urlNotification.background.find('http://example.com/item/5');
+
+    const expectedData = {
+      url: 'http://example.com/item/*',
+      message: 'item',
       backgroundColor: '000000',
       fontColor: 'ffffff',
       displayPosition: 'top',
