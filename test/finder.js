@@ -34,10 +34,10 @@ describe('urlNotification.finder', function() {
 
       const expected = {
         url: 'http://example.com/*',
-        msg: '*',
+        message: '*',
         backgroundColor: '000000',
         displayPosition: 'top',
-        status: 1,
+        fontColor: 'ffffff',
       };
 
       assert.deepStrictEqual(result, expected);
@@ -48,10 +48,10 @@ describe('urlNotification.finder', function() {
 
       const expected = {
         url: 'http://example.com/1',
-        msg: '1',
+        message: '1',
         backgroundColor: '000000',
         displayPosition: 'top',
-        status: 1,
+        fontColor: 'ffffff',
       };
 
       assert.deepStrictEqual(result, expected);
@@ -60,13 +60,13 @@ describe('urlNotification.finder', function() {
     it('URLで検索 エスケープ処理 : -', function () {
       const result = urlNotification.finder.findFor('http://abc-123.net/1.html');
 
-      assert.strictEqual(result.msg, 'abc-123-1');
+      assert.strictEqual(result.message, 'abc-123-1');
     });
 
     it('URLで検索 *パターンエスケープ処理 : -', function () {
       const result = urlNotification.finder.findFor('http://a-b-c.example.com/');
 
-      assert.strictEqual(result.msg, 'subdomain-1');
+      assert.strictEqual(result.message, 'subdomain-1');
     });
   });
 
@@ -84,7 +84,7 @@ describe('urlNotification.finder', function() {
     it('ステータスが 1 のパターン', function () {
       const result = urlNotification.finder.findFor('http://example.com/3');
 
-      assert.strictEqual(result.msg, '3');
+      assert.strictEqual(result.message, '3');
     });
 
     it('ステータスが 0 のパターン', function () {

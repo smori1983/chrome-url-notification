@@ -1,6 +1,5 @@
 'use strict';
 
-const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 
@@ -30,31 +29,11 @@ const migrate = function() {
  * @return {FindResult}
  */
 const find = function(url) {
-  let item;
-  let result = {};
+  const item = finder.findFor(url);
 
-  if ((item = finder.findFor(url)) !== null) {
-    result.matched = true;
-    result.data = createData(item);
-  } else {
-    result.matched = false;
-    result.data = null;
-  }
-
-  return result;
-};
-
-/**
- * @param {PatternItem} item
- * @returns {FindResultData}
- */
-const createData = function(item) {
   return {
-    url: item.url,
-    message: item.msg,
-    backgroundColor: item.backgroundColor,
-    fontColor: config.defaultFontColor(),
-    displayPosition: item.displayPosition,
+    matched: item !== null,
+    data: item,
   };
 };
 
