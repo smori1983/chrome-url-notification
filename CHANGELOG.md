@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## Next
+## v3.3.0
 
 ### Feature
 
