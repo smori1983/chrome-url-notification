@@ -35,7 +35,7 @@
     "eol-last": ["error", "always"],
     "eqeqeq": "error",
     "func-call-spacing": ["error", "never"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "no-console": ["error", {
       "allow": ["info", "warn", "error"]
     }],

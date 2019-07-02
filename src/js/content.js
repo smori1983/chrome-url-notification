@@ -33,22 +33,24 @@ $(function() {
       return result;
     };
 
-    const container = $('<div>').
-      attr('id', 'chrome-url-notification-container').
-      css(createCss()).
-      text(response.data.message);
+    const $body = $('body');
+
+    const $container = $('<div>')
+      .attr('id', 'chrome-url-notification-container-9b7414d403c1287ca963')
+      .css(createCss())
+      .text(response.data.message);
 
     if (response.data.displayPosition === 'top') {
       //
       // workaround for "position: fixed;" page.
       //
-      $('body').css({
-        marginTop: (height + $('body').offset().top) + 'px',
-      }).append(container);
+      $body
+        .css({ marginTop: (height + $body.offset().top) + 'px' })
+        .append($container);
     } else if (response.data.displayPosition === 'bottom') {
-      $('body').css({
-        marginBottom: height + 'px',
-      }).append(container);
+      $body
+        .css({ marginBottom: height + 'px' })
+        .append($container);
     }
   };
 

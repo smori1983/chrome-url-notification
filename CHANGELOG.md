@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v3.3.0
+
+### Feature
+
+- Show 'display position' in pattern list
+- The id attribute of DOM element injected by `content.js` become more conflict free
+
+
 ## v3.2.0
 
 ### Development

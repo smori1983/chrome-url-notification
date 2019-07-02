@@ -9,48 +9,68 @@ describe('urlNotification.data', function() {
     localStorage.clear();
   });
 
-  it('URLソート 整数の比較', function() {
-    const patterns = [
-      { url: 'http://example.com/2', msg: '2' },
-      { url: 'http://example.com/1', msg: '1' },
-      { url: 'http://example.com/3', msg: '3' },
-    ];
+  describe('URLソート', function() {
+    it('データなし', function () {
+      const patterns = [];
 
-    const sorted = urlNotification.data.sortByUrl(patterns);
+      const sorted = urlNotification.data.sortByUrl(patterns);
 
-    assert.strictEqual(sorted.length, 3);
-    assert.strictEqual(sorted[0].msg, '1');
-    assert.strictEqual(sorted[1].msg, '2');
-    assert.strictEqual(sorted[2].msg, '3');
+      assert.strictEqual(sorted.length, 0);
+    });
+
+    it('整数の比較', function () {
+      const patterns = [
+        { url: 'http://example.com/2', msg: '2' },
+        { url: 'http://example.com/1', msg: '1' },
+        { url: 'http://example.com/3', msg: '3' },
+      ];
+
+      const sorted = urlNotification.data.sortByUrl(patterns);
+
+      assert.strictEqual(sorted.length, 3);
+      assert.strictEqual(sorted[0].msg, '1');
+      assert.strictEqual(sorted[1].msg, '2');
+      assert.strictEqual(sorted[2].msg, '3');
+    });
+
+    it('整数と "*" の比較 : "*" が先に並ぶ', function () {
+      const patterns = [
+        { url: 'http://example.com/2', msg: '2' },
+        { url: 'http://example.com/1', msg: '1' },
+        { url: 'http://example.com/*', msg: '*' },
+      ];
+
+      const sorted = urlNotification.data.sortByUrl(patterns);
+
+      assert.strictEqual(sorted.length, 3);
+      assert.strictEqual(sorted[0].msg, '*');
+      assert.strictEqual(sorted[1].msg, '1');
+      assert.strictEqual(sorted[2].msg, '2');
+    });
   });
 
-  it('URLソート 整数と\'*\'の比較', function() {
-    const patterns = [
-      { url: 'http://example.com/2', msg: '2' },
-      { url: 'http://example.com/1', msg: '1' },
-      { url: 'http://example.com/*', msg: '*' },
-    ];
+  describe('メッセージソート', function() {
+    it('データなし', function() {
+      const patterns = [];
 
-    const sorted = urlNotification.data.sortByUrl(patterns);
+      const sorted = urlNotification.data.sortByMessage(patterns);
 
-    assert.strictEqual(sorted.length, 3);
-    assert.strictEqual(sorted[0].msg, '*');
-    assert.strictEqual(sorted[1].msg, '1');
-    assert.strictEqual(sorted[2].msg, '2');
-  });
+      assert.strictEqual(sorted.length, 0);
+    });
 
-  it('メッセージソート', function() {
-    const patterns = [
-      { url: 'http://example.com/2', msg: 'two' },
-      { url: 'http://example.com/1', msg: 'three' },
-      { url: 'http://example.com/3', msg: 'one' },
-    ];
+    it('アルファベット', function() {
+      const patterns = [
+        { url: 'http://example.com/2', msg: 'two' },
+        { url: 'http://example.com/1', msg: 'three' },
+        { url: 'http://example.com/3', msg: 'one' },
+      ];
 
-    const sorted = urlNotification.data.sortByMessage(patterns);
+      const sorted = urlNotification.data.sortByMessage(patterns);
 
-    assert.strictEqual(sorted.length, 3);
-    assert.strictEqual(sorted[0].msg, 'one');
-    assert.strictEqual(sorted[1].msg, 'three');
-    assert.strictEqual(sorted[2].msg, 'two');
+      assert.strictEqual(sorted.length, 3);
+      assert.strictEqual(sorted[0].msg, 'one');
+      assert.strictEqual(sorted[1].msg, 'three');
+      assert.strictEqual(sorted[2].msg, 'two');
+    });
   });
 });
