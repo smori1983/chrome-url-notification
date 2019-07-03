@@ -645,7 +645,7 @@ describe('urlNotification.validator.importJson.v2', function() {
       assert.ok(this.isValid({
         version: 2,
         pattern: [],
-      }))
+      }));
     });
   });
 });
