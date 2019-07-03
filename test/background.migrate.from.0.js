@@ -4,7 +4,7 @@ const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
 
-const expectedVersion = 2;
+const expectedVersion = 3;
 
 describe('urlNotification.background.migrate.from.0', function () {
   beforeEach(function() {
