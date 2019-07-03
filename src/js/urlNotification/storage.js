@@ -52,7 +52,7 @@ const isValidVersion = function(value) {
  * @param {number} version
  */
 const updateVersion = function(version) {
-  localStorage.setItem(key.version, version);
+  localStorage.setItem(key.version, version.toString());
 };
 
 /**
