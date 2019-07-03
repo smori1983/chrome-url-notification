@@ -6,6 +6,7 @@
  * @property {string} msg Added schema version: 0
  * @property {string} [backgroundColor] Added schema version: 1
  * @property {string} [displayPosition] Added schema version: 2
+ * @property {number} [status] Added schema version: 3
  */
 
 const key = {

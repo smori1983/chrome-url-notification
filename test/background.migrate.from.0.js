@@ -36,9 +36,9 @@ describe('urlNotification.background.migrate.from.0', function () {
       urlNotification.background.migrate();
 
       const expected = [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top' },
-        { url: 'http://example.com/2', msg: '2', backgroundColor: '000000', displayPosition: 'top' },
-        { url: 'http://example.com/3', msg: '3', backgroundColor: '000000', displayPosition: 'top' },
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/2', msg: '2', backgroundColor: '000000', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/3', msg: '3', backgroundColor: '000000', displayPosition: 'top', status: 1 },
       ];
 
       assert.deepStrictEqual(urlNotification.storage.getAll(), expected);

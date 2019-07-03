@@ -34,6 +34,7 @@ describe('urlNotification.finder', function() {
       msg: '*',
       backgroundColor: '000000',
       displayPosition: 'top',
+      status: 1,
     };
 
     assert.deepStrictEqual(result, expected);
@@ -47,6 +48,7 @@ describe('urlNotification.finder', function() {
       msg: '1',
       backgroundColor: '000000',
       displayPosition: 'top',
+      status: 1,
     };
 
     assert.deepStrictEqual(result, expected);
