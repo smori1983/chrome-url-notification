@@ -31,8 +31,6 @@ const prepareFor2 = function(item) {
 };
 
 /**
- * TODO: implement
- *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
@@ -42,7 +40,7 @@ const prepareFor3 = function(item) {
     msg: item.msg,
     backgroundColor: item.backgroundColor,
     displayPosition: item.displayPosition,
-    status: 'DUMMY',
+    status: item.status,
   };
 };
 

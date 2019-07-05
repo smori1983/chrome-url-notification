@@ -9,7 +9,7 @@ describe('urlNotification.importer.v2', function() {
     localStorage.clear();
   });
 
-  it('import v2 - case 1', function () {
+  it('import v2 and migrate to v3 - case 1', function () {
     const json = {
       version: 2,
       pattern: [
@@ -32,9 +32,10 @@ describe('urlNotification.importer.v2', function() {
     assert.strictEqual(allData[0].msg, '1');
     assert.strictEqual(allData[0].backgroundColor, '111111');
     assert.strictEqual(allData[0].displayPosition, 'top');
+    assert.strictEqual(allData[0].status, 1);
   });
 
-  it('import v2 - case 2', function () {
+  it('import v2 and migrate to v3 - case 2', function () {
     const json = {
       version: 2,
       pattern: [
@@ -57,5 +58,6 @@ describe('urlNotification.importer.v2', function() {
     assert.strictEqual(allData[0].msg, '2');
     assert.strictEqual(allData[0].backgroundColor, '222222');
     assert.strictEqual(allData[0].displayPosition, 'bottom');
+    assert.strictEqual(allData[0].status, 1);
   });
 });
