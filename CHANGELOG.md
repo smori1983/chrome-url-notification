@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## Next
+
+### Feature
+
+- Introduce 'status' field for each pattern
+  - User can disable pattern temporarily
+
+
 ## v3.3.0
 
 ### Feature
