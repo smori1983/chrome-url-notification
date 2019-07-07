@@ -263,7 +263,7 @@ const patternListComponent = (function() {
     });
   };
 
-  const makeHeader = function() {
+  const makeHeader = (function() {
     const row = function() {
       return $('<tr>');
     };
@@ -272,13 +272,15 @@ const patternListComponent = (function() {
       return $('<th>').text(value);
     };
 
-    return row()
-      .append(column(i18n.get('label_url_pattern')))
-      .append(column(i18n.get('label_message')))
-      .append(column(i18n.get('label_display_position')))
-      .append(column(i18n.get('label_enabled')))
-      .append(column(i18n.get('label_operation')));
-  };
+    return function() {
+      return row()
+        .append(column(i18n.get('label_url_pattern')))
+        .append(column(i18n.get('label_message')))
+        .append(column(i18n.get('label_display_position')))
+        .append(column(i18n.get('label_enabled')))
+        .append(column(i18n.get('label_operation')));
+    };
+  })();
 
   const makeRow = (function() {
     const row = function() {
