@@ -4,6 +4,8 @@ const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
 
+const currentVersion = 3;
+
 describe('urlNotification.finder', function() {
   describe('ステータスが全て1', function() {
     beforeEach(function () {
@@ -71,7 +73,7 @@ describe('urlNotification.finder', function() {
   describe('ステータスを考慮', function() {
     beforeEach(function () {
       localStorage.clear();
-      localStorage.setItem('version', '3');
+      localStorage.setItem('version', currentVersion.toString());
       localStorage.setItem('pattern', JSON.stringify([
         { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
         { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
