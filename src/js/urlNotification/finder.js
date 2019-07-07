@@ -23,7 +23,10 @@ const storage = require('./storage');
  * @returns {(FoundItem|null)}
  */
 const find = function(url) {
-  let i, len, patterns = storage.getAll();
+  let i, len;
+
+  /** @type {PatternItem[]} */
+  const patterns = storage.getAll();
 
   for (i = 0, len = patterns.length; i < len; i++) {
     if (patterns[i].status === 1 && makeRegExp(patterns[i].url).test(url)) {
