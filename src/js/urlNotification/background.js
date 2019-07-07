@@ -6,16 +6,7 @@ const migration = require('./migration');
 /**
  * @typedef {object} FindResult
  * @property {boolean} matched
- * @property {(FindResultData|null)} data Depends on the value of matched
- */
-
-/**
- * @typedef {object} FindResultData
- * @property {string} url
- * @property {string} message
- * @property {string} backgroundColor
- * @property {string} fontColor
- * @property {string} displayPosition
+ * @property {(FoundItem|null)} data Depends on the value of matched
  */
 
 const migrate = function() {
