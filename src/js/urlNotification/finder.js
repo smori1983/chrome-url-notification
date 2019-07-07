@@ -5,6 +5,10 @@ const storage = require('./storage');
 /**
  * Find pattern for content script.
  *
+ * Conditions:
+ * - PatternItem.status is 1
+ * - PatternItem.url matches url
+ *
  * @param {string} url
  * @returns {(PatternItem|null)}
  */

@@ -25,14 +25,14 @@ const migrate = function() {
 };
 
 /**
- * @param {string} pattern
+ * @param {string} url
  * @return {FindResult}
  */
-const find = function(pattern) {
+const find = function(url) {
   let item;
   let result = {};
 
-  if ((item = finder.findFor(pattern)) !== null) {
+  if ((item = finder.findFor(url)) !== null) {
     result.matched = true;
     result.data = createData(item);
   } else {
