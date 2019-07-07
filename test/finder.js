@@ -10,17 +10,17 @@ describe('urlNotification.finder', function() {
   describe('ステータスが全て1', function() {
     beforeEach(function () {
       localStorage.clear();
+      localStorage.setItem('version', currentVersion.toString());
+      localStorage.setItem('pattern', JSON.stringify([
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/2', msg: '2', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/*', msg: '*', backgroundColor: '111111', displayPosition: 'top', status: 1 },
 
-      urlNotification.storage.addPattern({ url: 'http://example.com/1', msg: '1' });
-      urlNotification.storage.addPattern({ url: 'http://example.com/2', msg: '2' });
-      urlNotification.storage.addPattern({ url: 'http://example.com/*', msg: '*' });
+        { url: 'http://abc-123.net/1', msg: 'abc-123-1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        { url: 'http://abc-123.net/*', msg: 'abc-123-0', backgroundColor: '111111', displayPosition: 'top', status: 1 },
 
-      urlNotification.storage.addPattern({ url: 'http://abc-123.net/1', msg: 'abc-123-1' });
-      urlNotification.storage.addPattern({ url: 'http://abc-123.net/*', msg: 'abc-123-0' });
-
-      urlNotification.storage.addPattern({ url: 'http://*.example.com/', msg: 'subdomain-1' });
-
-      urlNotification.background.migrate();
+        { url: 'http://*.example.com/', msg: 'subdomain-1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+      ]));
     });
 
     it('URLで検索 該当データなし', function () {
@@ -35,7 +35,7 @@ describe('urlNotification.finder', function() {
       const expected = {
         url: 'http://example.com/*',
         message: '*',
-        backgroundColor: '000000',
+        backgroundColor: '111111',
         displayPosition: 'top',
         fontColor: 'ffffff',
       };
@@ -49,7 +49,7 @@ describe('urlNotification.finder', function() {
       const expected = {
         url: 'http://example.com/1',
         message: '1',
-        backgroundColor: '000000',
+        backgroundColor: '111111',
         displayPosition: 'top',
         fontColor: 'ffffff',
       };
