@@ -258,7 +258,7 @@ const patternListComponent = (function() {
       makeHeader().appendTo(headerArea);
     }
 
-    $.each(sorted, function(idx, item) {
+    sorted.forEach(function(item) {
       makeRow(item).appendTo(listArea);
     });
   };
