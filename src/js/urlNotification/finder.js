@@ -50,11 +50,11 @@ const makeRegExp = function(url) {
  * @returns {string}
  */
 const convertForMatching = function(url) {
-  return url.
-    replace(/[/.+\-?]/g, function(matched) {
+  return url
+    .replace(/[/.+\-?]/g, function(matched) {
       return '\\' + matched;
-    }).
-    replace(/\*/g, function() {
+    })
+    .replace(/\*/g, function() {
       return '[0-9a-zA-Z-_]+';
     });
 };
