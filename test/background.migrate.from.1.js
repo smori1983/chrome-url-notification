@@ -4,7 +4,7 @@ const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
 
-const expectedVersion = 2;
+const expectedVersion = 3;
 
 describe('urlNotification.background.migrate.from.1', function() {
   beforeEach(function() {
@@ -36,9 +36,9 @@ describe('urlNotification.background.migrate.from.1', function() {
       urlNotification.background.migrate();
 
       const expected = [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top' },
-        { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top' },
-        { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top' },
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
       ];
 
       assert.deepStrictEqual(urlNotification.storage.getAll(), expected);

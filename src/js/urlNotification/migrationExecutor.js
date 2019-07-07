@@ -34,9 +34,26 @@ const for1 = function(item) {
   return item;
 };
 
+/**
+ * Migration from 2 to 3
+ *
+ * - Set default status
+ *
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const for2 = function(item) {
+  if (typeof item.status === 'undefined') {
+    item.status = config.defaultStatus();
+  }
+
+  return item;
+};
+
 const converters = {
   0: for0,
   1: for1,
+  2: for2,
 };
 
 /**

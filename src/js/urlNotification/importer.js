@@ -30,9 +30,24 @@ const prepareFor2 = function(item) {
   };
 };
 
+/**
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const prepareFor3 = function(item) {
+  return {
+    url: item.url,
+    msg: item.msg,
+    backgroundColor: item.backgroundColor,
+    displayPosition: item.displayPosition,
+    status: item.status,
+  };
+};
+
 const prepares = {
   1: prepareFor1,
   2: prepareFor2,
+  3: prepareFor3,
 };
 
 /**

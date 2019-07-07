@@ -101,4 +101,37 @@ describe('urlNotification.migration', function() {
       assert.strictEqual(urlNotification.migration.currentVersion(), 2);
     });
   });
+
+  describe('2to3', function() {
+    beforeEach(function() {
+      localStorage.setItem('version', '2');
+      localStorage.setItem('pattern', JSON.stringify([
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom' },
+      ]));
+    });
+
+    it('current version is 2', function() {
+      assert.strictEqual(urlNotification.migration.currentVersion(), 2);
+    });
+
+    it('execute migration', function() {
+      const expectedBefore = [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom' },
+      ];
+
+      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedBefore);
+
+      assert.strictEqual(urlNotification.migration.shouldMigrate(), true);
+
+      urlNotification.migration.migrateFrom(2);
+
+      const expectedAfter = [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom', status: 1 },
+      ];
+
+      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedAfter);
+
+      assert.strictEqual(urlNotification.migration.currentVersion(), 3);
+    });
+  });
 });
