@@ -20329,7 +20329,7 @@ module.exports.find = find;
  *
  * @type {number}
  */
-const version = 2;
+const version = 3;
 
 /**
  * @type {string}
@@ -20349,6 +20349,13 @@ const defaultBackgroundColor = '000000';
  * @type {string}
  */
 const defaultDisplayPosition = 'top';
+
+/**
+ * Used for migration from 2 to 3
+ *
+ * @type {number}
+ */
+const defaultStatus = 1;
 
 /**
  * @returns {number}
@@ -20376,6 +20383,13 @@ module.exports.defaultBackgroundColor = function() {
  */
 module.exports.defaultDisplayPosition = function() {
   return defaultDisplayPosition;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultStatus = function() {
+  return defaultStatus;
 };
 
 },{}],16:[function(require,module,exports){
@@ -20414,6 +20428,8 @@ module.exports.sortByMessage = sortByMessage;
 const storage = require('./storage');
 
 /**
+ * Find pattern for content script.
+ *
  * @param {string} url
  * @returns {(PatternItem|null)}
  */
@@ -20486,9 +20502,24 @@ const prepareFor2 = function(item) {
   };
 };
 
+/**
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const prepareFor3 = function(item) {
+  return {
+    url: item.url,
+    msg: item.msg,
+    backgroundColor: item.backgroundColor,
+    displayPosition: item.displayPosition,
+    status: item.status,
+  };
+};
+
 const prepares = {
   1: prepareFor1,
   2: prepareFor2,
+  3: prepareFor3,
 };
 
 /**
@@ -20626,9 +20657,26 @@ const for1 = function(item) {
   return item;
 };
 
+/**
+ * Migration from 2 to 3
+ *
+ * - Set default status
+ *
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const for2 = function(item) {
+  if (typeof item.status === 'undefined') {
+    item.status = config.defaultStatus();
+  }
+
+  return item;
+};
+
 const converters = {
   0: for0,
   1: for1,
+  2: for2,
 };
 
 /**
@@ -20655,6 +20703,7 @@ module.exports.from = execute;
  * @property {string} msg Added schema version: 0
  * @property {string} [backgroundColor] Added schema version: 1
  * @property {string} [displayPosition] Added schema version: 2
+ * @property {number} [status] Added schema version: 3
  */
 
 const key = {
@@ -20701,7 +20750,7 @@ const isValidVersion = function(value) {
  * @param {number} version
  */
 const updateVersion = function(version) {
-  localStorage.setItem(key.version, version);
+  localStorage.setItem(key.version, version.toString());
 };
 
 /**
@@ -20897,9 +20946,25 @@ const patternV2 = function() {
   });
 };
 
+const patternV3 = function() {
+  return deepMerge(patternV2(), {
+    'properties': {
+      'status': {
+        'type': 'integer',
+        'minimum': 0,
+        'maximum': 1,
+      },
+    },
+    'required': [
+      'status',
+    ],
+  });
+};
+
 const patterns = {
   1: patternV1,
   2: patternV2,
+  3: patternV3,
 };
 
 const patternFor = function(version) {
