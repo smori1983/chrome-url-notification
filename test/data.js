@@ -61,8 +61,8 @@ describe('urlNotification.data', function() {
     it('アルファベット', function() {
       const patterns = [
         { url: 'http://example.com/2', msg: 'two' },
-        { url: 'http://example.com/1', msg: 'three' },
         { url: 'http://example.com/3', msg: 'one' },
+        { url: 'http://example.com/1', msg: 'three' },
       ];
 
       const sorted = urlNotification.data.sortByMessage(patterns);
@@ -71,6 +71,21 @@ describe('urlNotification.data', function() {
       assert.strictEqual(sorted[0].msg, 'one');
       assert.strictEqual(sorted[1].msg, 'three');
       assert.strictEqual(sorted[2].msg, 'two');
+    });
+
+    it('メッセージが同一の場合はURLが比較される', function() {
+      const patterns = [
+        { url: 'http://example.com/3', msg: 'message' },
+        { url: 'http://example.com/1', msg: 'message' },
+        { url: 'http://example.com/2', msg: 'message' },
+      ];
+
+      const sorted = urlNotification.data.sortByMessage(patterns);
+
+      assert.strictEqual(sorted.length, 3);
+      assert.strictEqual(sorted[0].url, 'http://example.com/1');
+      assert.strictEqual(sorted[1].url, 'http://example.com/2');
+      assert.strictEqual(sorted[2].url, 'http://example.com/3');
     });
   });
 });
