@@ -5,15 +5,13 @@ const config = require('./config');
 /**
  * Migration from 0 to 1
  *
- * - Set default background color
+ * - Set default background color with no condition.
  *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
 const for0 = function(item) {
-  if (typeof item.backgroundColor === 'undefined') {
-    item.backgroundColor = config.defaultBackgroundColor();
-  }
+  item.backgroundColor = config.defaultBackgroundColor();
 
   return item;
 };
@@ -21,15 +19,13 @@ const for0 = function(item) {
 /**
  * Migration from 1 to 2
  *
- * - Set default display position
+ * - Set default display position with no condition.
  *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
 const for1 = function(item) {
-  if (typeof item.displayPosition === 'undefined') {
-    item.displayPosition = config.defaultDisplayPosition();
-  }
+  item.displayPosition = config.defaultDisplayPosition();
 
   return item;
 };
@@ -37,15 +33,13 @@ const for1 = function(item) {
 /**
  * Migration from 2 to 3
  *
- * - Set default status
+ * - Set default status with no condition.
  *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
 const for2 = function(item) {
-  if (typeof item.status === 'undefined') {
-    item.status = config.defaultStatus();
-  }
+  item.status = config.defaultStatus();
 
   return item;
 };

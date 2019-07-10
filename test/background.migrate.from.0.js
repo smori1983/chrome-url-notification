@@ -25,6 +25,7 @@ describe('urlNotification.background.migrate.from.0', function () {
 
   describe('with data', function() {
     beforeEach(function () {
+      localStorage.setItem('version', '');
       localStorage.setItem('pattern', JSON.stringify([
         { url: 'http://example.com/1', msg: '1' },
         { url: 'http://example.com/2', msg: '2' },
