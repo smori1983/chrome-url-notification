@@ -21,14 +21,16 @@ const migrate = function(pattern, version) {
 };
 
 /**
- * @param {PatternItem} data
+ * @param {PatternItem[]} patterns
  */
-const addOrUpdate = function(data) {
-  if (storage.findByUrl(data.url)) {
-    storage.updatePattern(data.url, data);
-  } else {
-    storage.addPattern(data);
-  }
+const addOrUpdate = function(patterns) {
+  patterns.forEach(function(pattern) {
+    if (storage.findByUrl(pattern.url)) {
+      storage.updatePattern(pattern.url, pattern);
+    } else {
+      storage.addPattern(pattern);
+    }
+  });
 };
 
 /**
@@ -48,9 +50,7 @@ const importJson = function(initialJson) {
     json.version += 1;
   }
 
-  json.pattern.forEach(function(item) {
-    addOrUpdate(item);
-  });
+  addOrUpdate(json.pattern);
 
   console.info('Import done.');
 };
