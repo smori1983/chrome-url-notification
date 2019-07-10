@@ -6,21 +6,25 @@ const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
- * @param {PatternItem[]} pattern
+ * Object edit phase using migrationExecutor.
+ *
+ * @param {PatternItem[]} patterns
  * @param {number} version
  * @returns {PatternItem[]}
  */
-const migrate = function(pattern, version) {
+const migrate = function(patterns, version) {
   let result = [];
 
-  pattern.forEach(function(item) {
-    result.push(migrationExecutor.from(version, item));
+  patterns.forEach(function(pattern) {
+    result.push(migrationExecutor.from(version, pattern));
   });
 
   return result;
 };
 
 /**
+ * Persistence phase using storage.
+ *
  * @param {PatternItem[]} patterns
  */
 const addOrUpdate = function(patterns) {
