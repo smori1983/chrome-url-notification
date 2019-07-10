@@ -3,6 +3,7 @@ const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.importer.v3', function() {
   beforeEach(function () {
@@ -65,8 +66,7 @@ describe('urlNotification.importer.v3', function() {
     });
 
     it('with existing data', function() {
-      localStorage.setItem('version', '3');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('3', [
         {
           url: 'http://example.com/1',
           msg: '1',
@@ -74,7 +74,7 @@ describe('urlNotification.importer.v3', function() {
           displayPosition: 'top',
           status: 1,
         },
-      ]));
+      ]);
 
       const json = {
         version: 3,

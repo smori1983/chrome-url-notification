@@ -3,15 +3,14 @@ const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 const currentVersion = 3;
 
 describe('urlNotification.finder', function() {
   describe('ステータスが全て1', function() {
     beforeEach(function () {
-      localStorage.clear();
-      localStorage.setItem('version', currentVersion.toString());
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage(currentVersion.toString(), [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
         { url: 'http://example.com/2', msg: '2', backgroundColor: '111111', displayPosition: 'top', status: 1 },
         { url: 'http://example.com/*', msg: '*', backgroundColor: '111111', displayPosition: 'top', status: 1 },
@@ -20,7 +19,7 @@ describe('urlNotification.finder', function() {
         { url: 'http://abc-123.net/*', msg: 'abc-123-0', backgroundColor: '111111', displayPosition: 'top', status: 1 },
 
         { url: 'http://*.example.com/', msg: 'subdomain-1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-      ]));
+      ]);
     });
 
     it('URLで検索 該当データなし', function () {
@@ -72,13 +71,11 @@ describe('urlNotification.finder', function() {
 
   describe('ステータスを考慮', function() {
     beforeEach(function () {
-      localStorage.clear();
-      localStorage.setItem('version', currentVersion.toString());
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage(currentVersion.toString(), [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
         { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
         { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
-      ]));
+      ]);
     });
 
     it('ステータスが 1 のパターン', function () {

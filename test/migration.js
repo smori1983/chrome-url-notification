@@ -3,6 +3,7 @@ const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.migration', function() {
   beforeEach(function () {
@@ -39,9 +40,9 @@ describe('urlNotification.migration', function() {
 
   describe('0to1', function () {
     beforeEach(function () {
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('', [
         { url: 'http://example.com/1', msg: '1' },
-      ]));
+      ]);
     });
 
     it('current version is 0', function () {
@@ -71,10 +72,9 @@ describe('urlNotification.migration', function() {
 
   describe('1to2', function() {
     beforeEach(function() {
-      localStorage.setItem('version', '1');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('1', [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
-      ]));
+      ]);
     });
 
     it('current version is 1', function() {
@@ -104,10 +104,9 @@ describe('urlNotification.migration', function() {
 
   describe('2to3', function() {
     beforeEach(function() {
-      localStorage.setItem('version', '2');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('2', [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom' },
-      ]));
+      ]);
     });
 
     it('current version is 2', function() {

@@ -3,6 +3,7 @@ const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 const expectedVersion = 3;
 
@@ -25,12 +26,11 @@ describe('urlNotification.background.migrate.from.0', function () {
 
   describe('with data', function() {
     beforeEach(function () {
-      localStorage.setItem('version', '');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('', [
         { url: 'http://example.com/1', msg: '1' },
         { url: 'http://example.com/2', msg: '2' },
         { url: 'http://example.com/3', msg: '3' },
-      ]));
+      ]);
     });
 
     it('migrate', function () {
