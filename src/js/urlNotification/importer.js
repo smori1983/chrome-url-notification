@@ -44,6 +44,12 @@ const prepareFor3 = function(item) {
   };
 };
 
+/**
+ * TODO: Consider to remove.
+ *
+ * In importJson(), before prepareForX() is called,
+ * JSON object is migrated to fit the latest schema.
+ */
 const prepares = {
   1: prepareFor1,
   2: prepareFor2,
