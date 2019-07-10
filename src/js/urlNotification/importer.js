@@ -6,29 +6,35 @@ const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
- * @param {PatternItem[]} pattern
+ * Object edit phase using migrationExecutor.
+ *
+ * @param {PatternItem[]} patterns
  * @param {number} version
  * @returns {PatternItem[]}
  */
-const migrate = function(pattern, version) {
+const migrate = function(patterns, version) {
   let result = [];
 
-  pattern.forEach(function(item) {
-    result.push(migrationExecutor.from(version, item));
+  patterns.forEach(function(pattern) {
+    result.push(migrationExecutor.from(version, pattern));
   });
 
   return result;
 };
 
 /**
- * @param {PatternItem} data
+ * Persistence phase using storage.
+ *
+ * @param {PatternItem[]} patterns
  */
-const addOrUpdate = function(data) {
-  if (storage.findByUrl(data.url)) {
-    storage.updatePattern(data.url, data);
-  } else {
-    storage.addPattern(data);
-  }
+const addOrUpdate = function(patterns) {
+  patterns.forEach(function(pattern) {
+    if (storage.findByUrl(pattern.url)) {
+      storage.updatePattern(pattern.url, pattern);
+    } else {
+      storage.addPattern(pattern);
+    }
+  });
 };
 
 /**
@@ -48,9 +54,7 @@ const importJson = function(initialJson) {
     json.version += 1;
   }
 
-  json.pattern.forEach(function(item) {
-    addOrUpdate(item);
-  });
+  addOrUpdate(json.pattern);
 
   console.info('Import done.');
 };
