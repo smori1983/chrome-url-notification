@@ -6,51 +6,6 @@ const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
- * @param {PatternItem} item
- * @returns {PatternItem}
- */
-const prepareFor1 = function(item) {
-  return {
-    url: item.url,
-    msg: item.msg,
-    backgroundColor: item.backgroundColor,
-  };
-};
-
-/**
- * @param {PatternItem} item
- * @returns {PatternItem}
- */
-const prepareFor2 = function(item) {
-  return {
-    url: item.url,
-    msg: item.msg,
-    backgroundColor: item.backgroundColor,
-    displayPosition: item.displayPosition,
-  };
-};
-
-/**
- * @param {PatternItem} item
- * @returns {PatternItem}
- */
-const prepareFor3 = function(item) {
-  return {
-    url: item.url,
-    msg: item.msg,
-    backgroundColor: item.backgroundColor,
-    displayPosition: item.displayPosition,
-    status: item.status,
-  };
-};
-
-const prepares = {
-  1: prepareFor1,
-  2: prepareFor2,
-  3: prepareFor3,
-};
-
-/**
  * @param {PatternItem[]} pattern
  * @param {number} version
  * @returns {PatternItem[]}
@@ -94,7 +49,7 @@ const importJson = function(initialJson) {
   }
 
   json.pattern.forEach(function(item) {
-    addOrUpdate(prepares[json.version](item));
+    addOrUpdate(item);
   });
 
   console.info('Import done.');

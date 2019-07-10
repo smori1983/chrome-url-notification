@@ -62,11 +62,7 @@ const converters = {
  * @returns {PatternItem}
  */
 const execute = function(fromVersion, item) {
-  if (converters.hasOwnProperty(fromVersion)) {
-    return converters[fromVersion](item);
-  }
-
-  return item;
+  return converters[fromVersion](item);
 };
 
 module.exports.from = execute;

@@ -111,11 +111,7 @@ const patterns = {
 };
 
 const patternFor = function(version) {
-  if (patterns.hasOwnProperty(version)) {
-    return patterns[version]();
-  }
-
-  return {};
+  return patterns[version]();
 };
 
 /**
