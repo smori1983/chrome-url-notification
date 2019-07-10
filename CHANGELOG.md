@@ -8,6 +8,10 @@
 - Introduce 'status' field for each pattern
   - User can disable pattern temporarily
 
+### Development
+
+- Introduce `istanbul`
+
 
 ## v3.3.0
 
