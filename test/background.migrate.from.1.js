@@ -5,8 +5,6 @@ const assert = require('assert');
 const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
 
-const expectedVersion = 3;
-
 describe('urlNotification.background.migrate.from.1', function() {
   describe('no data', function() {
     it('migrate', function () {
@@ -18,7 +16,7 @@ describe('urlNotification.background.migrate.from.1', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expected);
 
-      assert.strictEqual(SUT.migration.currentVersion(), expectedVersion);
+      assert.strictEqual(SUT.migration.currentVersion(), testUtil.currentVersion());
     });
   });
 
@@ -42,7 +40,7 @@ describe('urlNotification.background.migrate.from.1', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expected);
 
-      assert.strictEqual(SUT.migration.currentVersion(), expectedVersion);
+      assert.strictEqual(SUT.migration.currentVersion(), testUtil.currentVersion());
     });
   });
 });

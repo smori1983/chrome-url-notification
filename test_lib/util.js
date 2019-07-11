@@ -19,6 +19,13 @@ const setUpStorage = function(version, patterns) {
 };
 
 /**
+ * @returns {number}
+ */
+const currentVersion = function() {
+  return 3;
+};
+
+/**
  * @param {object} json
  * @returns {boolean}
  */
@@ -36,5 +43,6 @@ const isNotValidJson = function(json) {
 
 module.exports.clearStorage = clearStorage;
 module.exports.setUpStorage = setUpStorage;
+module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;
