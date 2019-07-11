@@ -1,5 +1,7 @@
 'use strict';
 
+const validator = require('../src/js/urlNotification/validator');
+
 const clearStorage = function() {
   localStorage.clear();
 };
@@ -16,5 +18,23 @@ const setUpStorage = function(version, patterns) {
   localStorage.setItem('pattern', JSON.stringify(patterns));
 };
 
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const isValidJson = function(json) {
+  return validator.forImportJson(json) === true;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const isNotValidJson = function(json) {
+  return validator.forImportJson(json) === false;
+};
+
 module.exports.clearStorage = clearStorage;
 module.exports.setUpStorage = setUpStorage;
+module.exports.isValidJson = isValidJson;
+module.exports.isNotValidJson = isNotValidJson;
