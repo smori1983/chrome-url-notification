@@ -22,6 +22,8 @@ const hasVersion = function() {
 };
 
 /**
+ * Gets the version stored in storage.
+ *
  * @returns {number}
  */
 const currentVersion = function() {
@@ -84,6 +86,8 @@ const getAll = function() {
 };
 
 /**
+ * Finds pattern item by exact match of URL pattern.
+ *
  * @param {string} url
  * @returns {(PatternItem|null)}
  */
