@@ -1,16 +1,14 @@
 const describe = require('mocha').describe;
-const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.importer.v1', function() {
-  beforeEach(function () {
-    localStorage.clear();
-  });
-
   describe('import v1 and migrate to v3', function() {
     it('without existing data', function () {
+      testUtil.clearStorage();
+
       const json = {
         version: 1,
         pattern: [
@@ -22,9 +20,9 @@ describe('urlNotification.importer.v1', function() {
         ],
       };
 
-      urlNotification.importer.importJson(json);
+      SUT.importer.importJson(json);
 
-      const allData = urlNotification.storage.getAll();
+      const allData = SUT.storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
@@ -36,14 +34,13 @@ describe('urlNotification.importer.v1', function() {
     });
 
     it('with existing data', function() {
-      localStorage.setItem('version', '1');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('1', [
         {
           url: 'http://example.com/1',
           msg: '1',
           backgroundColor: '111111',
         },
-      ]));
+      ]);
 
       const json = {
         version: 1,
@@ -56,9 +53,9 @@ describe('urlNotification.importer.v1', function() {
         ],
       };
 
-      urlNotification.importer.importJson(json);
+      SUT.importer.importJson(json);
 
-      const allData = urlNotification.storage.getAll();
+      const allData = SUT.storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 

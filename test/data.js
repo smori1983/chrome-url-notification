@@ -2,18 +2,19 @@ const describe = require('mocha').describe;
 const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.data', function() {
   beforeEach(function() {
-    localStorage.clear();
+    testUtil.clearStorage();
   });
 
   describe('URLソート', function() {
     it('データなし', function () {
       const patterns = [];
 
-      const sorted = urlNotification.data.sortByUrl(patterns);
+      const sorted = SUT.data.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 0);
     });
@@ -25,7 +26,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/3', msg: '3' },
       ];
 
-      const sorted = urlNotification.data.sortByUrl(patterns);
+      const sorted = SUT.data.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, '1');
@@ -40,7 +41,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/*', msg: '*' },
       ];
 
-      const sorted = urlNotification.data.sortByUrl(patterns);
+      const sorted = SUT.data.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, '*');
@@ -53,7 +54,7 @@ describe('urlNotification.data', function() {
     it('データなし', function() {
       const patterns = [];
 
-      const sorted = urlNotification.data.sortByMessage(patterns);
+      const sorted = SUT.data.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 0);
     });
@@ -65,7 +66,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/1', msg: 'three' },
       ];
 
-      const sorted = urlNotification.data.sortByMessage(patterns);
+      const sorted = SUT.data.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, 'one');
@@ -80,7 +81,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/2', msg: 'message' },
       ];
 
-      const sorted = urlNotification.data.sortByMessage(patterns);
+      const sorted = SUT.data.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].url, 'http://example.com/1');

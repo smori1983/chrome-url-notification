@@ -1,16 +1,14 @@
 const describe = require('mocha').describe;
-const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.importer.v3', function() {
-  beforeEach(function () {
-    localStorage.clear();
-  });
-
   describe('import v3', function () {
     it('without existing data - case 1 - status is 1', function () {
+      testUtil.clearStorage();
+
       const json = {
         version: 3,
         pattern: [
@@ -24,9 +22,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      urlNotification.importer.importJson(json);
+      SUT.importer.importJson(json);
 
-      const allData = urlNotification.storage.getAll();
+      const allData = SUT.storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
@@ -38,6 +36,8 @@ describe('urlNotification.importer.v3', function() {
     });
 
     it('without existing data - case 2 - status is 0', function () {
+      testUtil.clearStorage();
+
       const json = {
         version: 3,
         pattern: [
@@ -51,9 +51,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      urlNotification.importer.importJson(json);
+      SUT.importer.importJson(json);
 
-      const allData = urlNotification.storage.getAll();
+      const allData = SUT.storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
@@ -65,8 +65,7 @@ describe('urlNotification.importer.v3', function() {
     });
 
     it('with existing data', function() {
-      localStorage.setItem('version', '3');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('3', [
         {
           url: 'http://example.com/1',
           msg: '1',
@@ -74,7 +73,7 @@ describe('urlNotification.importer.v3', function() {
           displayPosition: 'top',
           status: 1,
         },
-      ]));
+      ]);
 
       const json = {
         version: 3,
@@ -89,9 +88,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      urlNotification.importer.importJson(json);
+      SUT.importer.importJson(json);
 
-      const allData = urlNotification.storage.getAll();
+      const allData = SUT.storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
