@@ -1,5 +1,9 @@
 'use strict';
 
+const clearStorage = function() {
+  localStorage.clear();
+};
+
 /**
  * Set up localStorage.
  *
@@ -12,4 +16,5 @@ const setUpStorage = function(version, patterns) {
   localStorage.setItem('pattern', JSON.stringify(patterns));
 };
 
+module.exports.clearStorage = clearStorage;
 module.exports.setUpStorage = setUpStorage;
