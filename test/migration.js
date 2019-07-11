@@ -6,32 +6,30 @@ const urlNotification = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
 
 describe('urlNotification.migration', function() {
-  beforeEach(function () {
-    localStorage.clear();
-  });
-
   describe('version', function () {
     it('キーなし', function () {
+      testUtil.clearStorage();
+
       assert.strictEqual(urlNotification.migration.hasVersion(), false);
       assert.strictEqual(urlNotification.migration.currentVersion(), 0);
     });
 
     it('キーあり - 不正値 - 小数', function () {
-      localStorage.setItem('version', '1.1');
+      testUtil.setUpStorage('1.1', []);
 
       assert.strictEqual(urlNotification.migration.hasVersion(), false);
       assert.strictEqual(urlNotification.migration.currentVersion(), 0);
     });
 
     it('キーあり - 不正値 - 文字列', function () {
-      localStorage.setItem('version', 'foo');
+      testUtil.setUpStorage('foo', []);
 
       assert.strictEqual(urlNotification.migration.hasVersion(), false);
       assert.strictEqual(urlNotification.migration.currentVersion(), 0);
     });
 
     it('キーあり - 正常値', function () {
-      localStorage.setItem('version', '1');
+      testUtil.setUpStorage('1', []);
 
       assert.strictEqual(urlNotification.migration.hasVersion(), true);
       assert.strictEqual(urlNotification.migration.currentVersion(), 1);
