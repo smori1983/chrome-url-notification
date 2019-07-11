@@ -2,7 +2,7 @@ const describe = require('mocha').describe;
 const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
 
 const currentVersion = 3;
@@ -18,14 +18,14 @@ describe('urlNotification.background', function () {
   });
 
   it('find() - 該当データなし', function() {
-    const result = urlNotification.background.find('foo');
+    const result = SUT.background.find('foo');
 
     assert.strictEqual(result.matched, false);
     assert.strictEqual(result.data, null);
   });
 
   it('find() - 該当データあり', function() {
-    const result = urlNotification.background.find('http://example.com/1');
+    const result = SUT.background.find('http://example.com/1');
 
     const expectedData = {
       url: 'http://example.com/1',
@@ -40,7 +40,7 @@ describe('urlNotification.background', function () {
   });
 
   it('find() - 該当データあり - パターンにマッチ', function() {
-    const result = urlNotification.background.find('http://example.com/item/5');
+    const result = SUT.background.find('http://example.com/item/5');
 
     const expectedData = {
       url: 'http://example.com/item/*',
