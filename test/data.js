@@ -3,10 +3,11 @@ const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.data', function() {
   beforeEach(function() {
-    localStorage.clear();
+    testUtil.clearStorage();
   });
 
   describe('URLソート', function() {

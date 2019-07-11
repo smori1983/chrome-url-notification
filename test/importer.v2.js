@@ -1,17 +1,14 @@
 const describe = require('mocha').describe;
-const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
 const urlNotification = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
 
 describe('urlNotification.importer.v2', function() {
-  beforeEach(function () {
-    localStorage.clear();
-  });
-
   describe('import v2 and migrate to v3 - case 1', function () {
     it('without existing data - case1', function () {
+      testUtil.clearStorage();
+
       const json = {
         version: 2,
         pattern: [
@@ -38,6 +35,8 @@ describe('urlNotification.importer.v2', function() {
     });
 
     it('without existing data - case2', function () {
+      testUtil.clearStorage();
+
       const json = {
         version: 2,
         pattern: [

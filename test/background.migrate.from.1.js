@@ -8,12 +8,10 @@ const testUtil = require('../test_lib/util');
 const expectedVersion = 3;
 
 describe('urlNotification.background.migrate.from.1', function() {
-  beforeEach(function() {
-    localStorage.clear();
-  });
-
   describe('no data', function() {
     it('migrate', function () {
+      testUtil.clearStorage();
+
       urlNotification.background.migrate();
 
       const expected = [];
