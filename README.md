@@ -2,8 +2,9 @@
 
 
 [![Build Status](https://travis-ci.org/smori1983/chrome-url-notification.svg?branch=master)](https://travis-ci.org/smori1983/chrome-url-notification)
+[![codecov](https://codecov.io/gh/smori1983/chrome-url-notification/branch/master/graph/badge.svg)](https://codecov.io/gh/smori1983/chrome-url-notification)
 
----
+---------
 
 ![add](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/add.png)
 
