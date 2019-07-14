@@ -11,6 +11,7 @@
 ### Development
 
 - Introduce `istanbul`
+- Introduce `codecov`
 
 
 ## v3.3.0
