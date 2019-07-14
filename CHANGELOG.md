@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v4.0.0
+
+### Feature
+
+- Introduce 'status' field for each pattern
+  - User can disable pattern temporarily
+
+### Development
+
+- Introduce `istanbul`
+- Introduce `codecov`
+
+
 ## v3.3.0
 
 ### Feature

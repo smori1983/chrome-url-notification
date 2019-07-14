@@ -258,12 +258,12 @@ const patternListComponent = (function() {
       makeHeader().appendTo(headerArea);
     }
 
-    $.each(sorted, function(idx, item) {
+    sorted.forEach(function(item) {
       makeRow(item).appendTo(listArea);
     });
   };
 
-  const makeHeader = function() {
+  const makeHeader = (function() {
     const row = function() {
       return $('<tr>');
     };
@@ -272,12 +272,15 @@ const patternListComponent = (function() {
       return $('<th>').text(value);
     };
 
-    return row()
-      .append(column(i18n.get('label_url_pattern')))
-      .append(column(i18n.get('label_message')))
-      .append(column(i18n.get('label_display_position')))
-      .append(column(i18n.get('label_operation')));
-  };
+    return function() {
+      return row()
+        .append(column(i18n.get('label_url_pattern')))
+        .append(column(i18n.get('label_message')))
+        .append(column(i18n.get('label_display_position')))
+        .append(column(i18n.get('label_enabled')))
+        .append(column(i18n.get('label_operation')));
+    };
+  })();
 
   const makeRow = (function() {
     const row = function() {
@@ -344,6 +347,22 @@ const patternListComponent = (function() {
       };
     })();
 
+    const statusColumn = (function() {
+      /**
+       * @param {PatternItem} item
+       */
+      const message = function(item) {
+        return item.status === 1 ? 'Y': 'n';
+      };
+
+      /**
+       * @param {PatternItem} item
+       */
+      return function(item) {
+        return column().text(message(item));
+      };
+    })();
+
     const actionColumn = (function() {
       const button = function(className, text) {
         return $('<button>')
@@ -364,6 +383,7 @@ const patternListComponent = (function() {
               message: item.msg,
               backgroundColor: item.backgroundColor,
               displayPosition: item.displayPosition,
+              status: item.status,
             });
           });
       };
@@ -380,6 +400,7 @@ const patternListComponent = (function() {
               message: item.msg,
               backgroundColor: item.backgroundColor,
               displayPosition: item.displayPosition,
+              status: item.status,
             });
           });
       };
@@ -418,6 +439,7 @@ const patternListComponent = (function() {
         .append(patternColumn(item))
         .append(messageColumn(item))
         .append(displayPositionColumn(item))
+        .append(statusColumn(item))
         .append(actionColumn(item));
     };
   })();
@@ -433,6 +455,7 @@ const patternListComponent = (function() {
  * @property {string} message
  * @property {string} backgroundColor
  * @property {string} displayPosition
+ * @property {number} status
  */
 
 const patternForm = (function() {
@@ -510,6 +533,7 @@ const patternForm = (function() {
       message: '',
       backgroundColor: urlNotification.config.defaultBackgroundColor(),
       displayPosition: urlNotification.config.defaultDisplayPosition(),
+      status: urlNotification.config.defaultStatus(),
     };
   };
 
@@ -519,6 +543,7 @@ const patternForm = (function() {
     $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
     $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
     $('input[name=display_position]').val([current.displayPosition]);
+    $('#js_input_status').prop('checked', current.status === 1);
   };
 
   const resetValidator = function() {
@@ -571,6 +596,10 @@ const patternForm = (function() {
           required: true,
           in: ['top', 'bottom'],
         },
+        status: {
+          required: false,
+          in: ['1'],
+        },
       },
       messages: {
         url: {
@@ -588,6 +617,10 @@ const patternForm = (function() {
           required: i18n.get('message_field_required'),
           in: i18n.get('message_invalid_choice'),
         },
+        status: {
+          required: i18n.get('message_field_required'),
+          in: i18n.get('message_invalid_choice'),
+        },
       },
       onfocusout: false,
       onkeyup: false,
@@ -598,6 +631,8 @@ const patternForm = (function() {
         if (element.attr('name') === 'background_color') {
           error.appendTo(element.parent().parent());
         } else if (element.attr('name') === 'display_position') {
+          error.appendTo(element.parent().parent());
+        } else if (element.attr('name') === 'status') {
           error.appendTo(element.parent().parent());
         } else {
           error.insertAfter(element);
@@ -617,6 +652,7 @@ const patternForm = (function() {
         msg: trimValue('#js_input_msg'),
         backgroundColor: trimValue('#js_input_background_color').replace(/^#/, ''),
         displayPosition: trimValue('input[name=display_position]:checked'),
+        status: $('#js_input_status').is(':checked') ? 1 : 0,
       };
 
       if (mode === 'add') {

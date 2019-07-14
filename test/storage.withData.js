@@ -2,42 +2,43 @@ const describe = require('mocha').describe;
 const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.storage.withData', function() {
   beforeEach(function () {
-    localStorage.clear();
+    testUtil.clearStorage();
 
-    urlNotification.storage.addPattern({url: 'http://example.com/1', msg: '1'});
-    urlNotification.storage.addPattern({url: 'http://example.com/2', msg: '2'});
-    urlNotification.storage.addPattern({url: 'http://example.com/3', msg: '3'});
+    SUT.storage.addPattern({url: 'http://example.com/1', msg: '1'});
+    SUT.storage.addPattern({url: 'http://example.com/2', msg: '2'});
+    SUT.storage.addPattern({url: 'http://example.com/3', msg: '3'});
 
-    urlNotification.background.migrate();
+    SUT.background.migrate();
   });
 
   describe('削除', function () {
     it('全件削除', function () {
-      urlNotification.storage.deleteAll();
+      SUT.storage.deleteAll();
 
-      assert.strictEqual(urlNotification.storage.getCount(), 0);
+      assert.strictEqual(SUT.storage.getCount(), 0);
     });
 
     it('1件削除 - 該当データ有り', function () {
-      urlNotification.storage.deletePattern('http://example.com/1');
+      SUT.storage.deletePattern('http://example.com/1');
 
-      assert.strictEqual(urlNotification.storage.getCount(), 2);
+      assert.strictEqual(SUT.storage.getCount(), 2);
     });
 
     it('1件削除 - 該当データ無し', function () {
-      urlNotification.storage.deletePattern('http://example.com/');
+      SUT.storage.deletePattern('http://example.com/');
 
-      assert.strictEqual(urlNotification.storage.getCount(), 3);
+      assert.strictEqual(SUT.storage.getCount(), 3);
     });
   });
 
   describe('参照', function () {
     it('全件取得', function () {
-      const all = urlNotification.storage.getAll();
+      const all = SUT.storage.getAll();
 
       assert.strictEqual(all.length, 3);
       assert.strictEqual(all[0].msg, '1');
@@ -46,37 +47,37 @@ describe('urlNotification.storage.withData', function() {
     });
 
     it('URLで検索 該当データなし', function () {
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/'), null);
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/'), null);
     });
 
     it('URLで検索 該当データあり', function () {
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '2');
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/2').msg, '2');
     });
   });
 
   describe('更新', function () {
     it('データ更新 - 該当データ無し', function () {
-      urlNotification.storage.updatePattern('http://example.com/', {
+      SUT.storage.updatePattern('http://example.com/', {
         url: 'http://example.com/',
         msg: '!',
       });
 
-      assert.strictEqual(urlNotification.storage.getCount(), 3);
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/1').msg, '1');
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '2');
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/3').msg, '3');
+      assert.strictEqual(SUT.storage.getCount(), 3);
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/1').msg, '1');
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/2').msg, '2');
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/3').msg, '3');
     });
 
     it('データ更新 - 該当データ有り', function () {
-      urlNotification.storage.updatePattern('http://example.com/2', {
+      SUT.storage.updatePattern('http://example.com/2', {
         url: 'http://example.com/2',
         msg: '!',
       });
 
-      assert.strictEqual(urlNotification.storage.getCount(), 3);
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/1').msg, '1');
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/2').msg, '!');
-      assert.strictEqual(urlNotification.storage.findByUrl('http://example.com/3').msg, '3');
+      assert.strictEqual(SUT.storage.getCount(), 3);
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/1').msg, '1');
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/2').msg, '!');
+      assert.strictEqual(SUT.storage.findByUrl('http://example.com/3').msg, '3');
     });
   });
 });

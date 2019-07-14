@@ -23,6 +23,9 @@
   "label_edit": {
     "message": "編集"
   },
+  "label_enabled": {
+    "message": "有効"
+  },
   "label_export": {
     "message": "エクスポート"
   },
@@ -46,6 +49,9 @@
   },
   "label_save": {
     "message": "保存"
+  },
+  "label_status": {
+    "message": "ステータス"
   },
   "label_top": {
     "message": "上"

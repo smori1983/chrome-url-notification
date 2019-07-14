@@ -5,7 +5,7 @@
  *
  * @type {number}
  */
-const version = 2;
+const version = 3;
 
 /**
  * @type {string}
@@ -25,6 +25,13 @@ const defaultBackgroundColor = '000000';
  * @type {string}
  */
 const defaultDisplayPosition = 'top';
+
+/**
+ * Used for migration from 2 to 3
+ *
+ * @type {number}
+ */
+const defaultStatus = 1;
 
 /**
  * @returns {number}
@@ -52,4 +59,11 @@ module.exports.defaultBackgroundColor = function() {
  */
 module.exports.defaultDisplayPosition = function() {
   return defaultDisplayPosition;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultStatus = function() {
+  return defaultStatus;
 };

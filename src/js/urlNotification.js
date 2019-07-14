@@ -1685,7 +1685,7 @@ module.exports = Validator;
 /**
  * @license
  * Lodash <https://lodash.com/>
- * Copyright JS Foundation and other contributors <https://js.foundation/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1696,7 +1696,7 @@ module.exports = Validator;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.11';
+  var VERSION = '4.17.14';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -4355,16 +4355,10 @@ module.exports = Validator;
         value.forEach(function(subValue) {
           result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
         });
-
-        return result;
-      }
-
-      if (isMap(value)) {
+      } else if (isMap(value)) {
         value.forEach(function(subValue, key) {
           result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
         });
-
-        return result;
       }
 
       var keysFunc = isFull
@@ -5288,8 +5282,8 @@ module.exports = Validator;
         return;
       }
       baseFor(source, function(srcValue, key) {
+        stack || (stack = new Stack);
         if (isObject(srcValue)) {
-          stack || (stack = new Stack);
           baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
         }
         else {
@@ -7106,7 +7100,7 @@ module.exports = Validator;
       return function(number, precision) {
         number = toNumber(number);
         precision = precision == null ? 0 : nativeMin(toInteger(precision), 292);
-        if (precision) {
+        if (precision && nativeIsFinite(number)) {
           // Shift with exponential notation to avoid floating-point issues.
           // See [MDN](https://mdn.io/round#Examples) for more details.
           var pair = (toString(number) + 'e').split('e'),
@@ -8289,7 +8283,7 @@ module.exports = Validator;
     }
 
     /**
-     * Gets the value at `key`, unless `key` is "__proto__".
+     * Gets the value at `key`, unless `key` is "__proto__" or "constructor".
      *
      * @private
      * @param {Object} object The object to query.
@@ -8297,6 +8291,10 @@ module.exports = Validator;
      * @returns {*} Returns the property value.
      */
     function safeGet(object, key) {
+      if (key === 'constructor' && typeof object[key] === 'function') {
+        return;
+      }
+
       if (key == '__proto__') {
         return;
       }
@@ -12097,6 +12095,7 @@ module.exports = Validator;
           }
           if (maxing) {
             // Handle invocations in a tight loop.
+            clearTimeout(timerId);
             timerId = setTimeout(timerExpired, wait);
             return invokeFunc(lastCallTime);
           }
@@ -16483,9 +16482,12 @@ module.exports = Validator;
       , 'g');
 
       // Use a sourceURL for easier debugging.
+      // The sourceURL gets injected into the source that's eval-ed, so be careful
+      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
+      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
       var sourceURL = '//# sourceURL=' +
-        ('sourceURL' in options
-          ? options.sourceURL
+        (hasOwnProperty.call(options, 'sourceURL')
+          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -16518,7 +16520,9 @@ module.exports = Validator;
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      var variable = options.variable;
+      // Like with sourceURL, we take care to not check the option's prototype,
+      // as this configuration is a code injection vector.
+      var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
       }
@@ -18723,10 +18727,11 @@ module.exports = Validator;
     baseForOwn(LazyWrapper.prototype, function(func, methodName) {
       var lodashFunc = lodash[methodName];
       if (lodashFunc) {
-        var key = (lodashFunc.name + ''),
-            names = realNames[key] || (realNames[key] = []);
-
-        names.push({ 'name': methodName, 'func': lodashFunc });
+        var key = lodashFunc.name + '';
+        if (!hasOwnProperty.call(realNames, key)) {
+          realNames[key] = [];
+        }
+        realNames[key].push({ 'name': methodName, 'func': lodashFunc });
       }
     });
 
@@ -20262,22 +20267,13 @@ module.exports = {
 },{}],14:[function(require,module,exports){
 'use strict';
 
-const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 
 /**
  * @typedef {object} FindResult
  * @property {boolean} matched
- * @property {(FindResultData|null)} data Depends on the value of matched
- */
-
-/**
- * @typedef {object} FindResultData
- * @property {string} message
- * @property {string} backgroundColor
- * @property {string} fontColor
- * @property {string} displayPosition
+ * @property {(FoundItem|null)} data Depends on the value of matched
  */
 
 const migrate = function() {
@@ -20287,41 +20283,22 @@ const migrate = function() {
 };
 
 /**
- * @param {string} pattern
+ * @param {string} url
  * @return {FindResult}
  */
-const find = function(pattern) {
-  let item;
-  let result = {};
+const find = function(url) {
+  const item = finder.findFor(url);
 
-  if ((item = finder.findFor(pattern)) !== null) {
-    result.matched = true;
-    result.data = createData(item);
-  } else {
-    result.matched = false;
-    result.data = null;
-  }
-
-  return result;
-};
-
-/**
- * @param {PatternItem} item
- * @returns {FindResultData}
- */
-const createData = function(item) {
   return {
-    message: item.msg,
-    backgroundColor: item.backgroundColor,
-    fontColor: config.defaultFontColor(),
-    displayPosition: item.displayPosition,
+    matched: item !== null,
+    data: item,
   };
 };
 
 module.exports.migrate = migrate;
 module.exports.find = find;
 
-},{"./config":15,"./finder":17,"./migration":19}],15:[function(require,module,exports){
+},{"./finder":17,"./migration":19}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -20329,7 +20306,7 @@ module.exports.find = find;
  *
  * @type {number}
  */
-const version = 2;
+const version = 3;
 
 /**
  * @type {string}
@@ -20349,6 +20326,13 @@ const defaultBackgroundColor = '000000';
  * @type {string}
  */
 const defaultDisplayPosition = 'top';
+
+/**
+ * Used for migration from 2 to 3
+ *
+ * @type {number}
+ */
+const defaultStatus = 1;
 
 /**
  * @returns {number}
@@ -20376,6 +20360,13 @@ module.exports.defaultBackgroundColor = function() {
  */
 module.exports.defaultDisplayPosition = function() {
   return defaultDisplayPosition;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultStatus = function() {
+  return defaultStatus;
 };
 
 },{}],16:[function(require,module,exports){
@@ -20411,18 +20402,37 @@ module.exports.sortByMessage = sortByMessage;
 },{}],17:[function(require,module,exports){
 'use strict';
 
+const config = require('./config');
 const storage = require('./storage');
 
 /**
+ * @typedef {object} FoundItem
+ * @property {string} url
+ * @property {string} message
+ * @property {string} backgroundColor
+ * @property {string} fontColor
+ * @property {string} displayPosition
+ */
+
+/**
+ * Find pattern for content script.
+ *
+ * Conditions:
+ * - PatternItem.status is 1
+ * - PatternItem.url matches url
+ *
  * @param {string} url
- * @returns {(PatternItem|null)}
+ * @returns {(FoundItem|null)}
  */
 const find = function(url) {
-  let i, len, patterns = storage.getAll();
+  let i, len;
+
+  /** @type {PatternItem[]} */
+  const patterns = storage.getAll();
 
   for (i = 0, len = patterns.length; i < len; i++) {
-    if (makeRegExp(patterns[i].url).test(url)) {
-      return patterns[i];
+    if (patterns[i].status === 1 && makeRegExp(patterns[i].url).test(url)) {
+      return createData(patterns[i]);
     }
   }
 
@@ -20442,18 +20452,32 @@ const makeRegExp = function(url) {
  * @returns {string}
  */
 const convertForMatching = function(url) {
-  return url.
-    replace(/[/.+\-?]/g, function(matched) {
+  return url
+    .replace(/[/.+\-?]/g, function(matched) {
       return '\\' + matched;
-    }).
-    replace(/\*/g, function() {
+    })
+    .replace(/\*/g, function() {
       return '[0-9a-zA-Z-_]+';
     });
 };
 
+/**
+ * @param {PatternItem} item
+ * @returns {FoundItem}
+ */
+const createData = function(item) {
+  return {
+    url: item.url,
+    message: item.msg,
+    backgroundColor: item.backgroundColor,
+    fontColor: config.defaultFontColor(),
+    displayPosition: item.displayPosition,
+  };
+};
+
 module.exports.findFor = find;
 
-},{"./storage":21}],18:[function(require,module,exports){
+},{"./config":15,"./storage":21}],18:[function(require,module,exports){
 'use strict';
 
 const _ = require('lodash');
@@ -20462,59 +20486,35 @@ const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
- * @param {PatternItem} item
- * @returns {PatternItem}
- */
-const prepareFor1 = function(item) {
-  return {
-    url: item.url,
-    msg: item.msg,
-    backgroundColor: item.backgroundColor,
-  };
-};
-
-/**
- * @param {PatternItem} item
- * @returns {PatternItem}
- */
-const prepareFor2 = function(item) {
-  return {
-    url: item.url,
-    msg: item.msg,
-    backgroundColor: item.backgroundColor,
-    displayPosition: item.displayPosition,
-  };
-};
-
-const prepares = {
-  1: prepareFor1,
-  2: prepareFor2,
-};
-
-/**
- * @param {PatternItem[]} pattern
+ * Object edit phase using migrationExecutor.
+ *
+ * @param {PatternItem[]} patterns
  * @param {number} version
  * @returns {PatternItem[]}
  */
-const migrate = function(pattern, version) {
+const migrate = function(patterns, version) {
   let result = [];
 
-  pattern.forEach(function(item) {
-    result.push(migrationExecutor.from(version, item));
+  patterns.forEach(function(pattern) {
+    result.push(migrationExecutor.from(version, pattern));
   });
 
   return result;
 };
 
 /**
- * @param {PatternItem} data
+ * Persistence phase using storage.
+ *
+ * @param {PatternItem[]} patterns
  */
-const addOrUpdate = function(data) {
-  if (storage.findByUrl(data.url)) {
-    storage.updatePattern(data.url, data);
-  } else {
-    storage.addPattern(data);
-  }
+const addOrUpdate = function(patterns) {
+  patterns.forEach(function(pattern) {
+    if (storage.findByUrl(pattern.url)) {
+      storage.updatePattern(pattern.url, pattern);
+    } else {
+      storage.addPattern(pattern);
+    }
+  });
 };
 
 /**
@@ -20534,9 +20534,7 @@ const importJson = function(initialJson) {
     json.version += 1;
   }
 
-  json.pattern.forEach(function(item) {
-    addOrUpdate(prepares[json.version](item));
-  });
+  addOrUpdate(json.pattern);
 
   console.info('Import done.');
 };
@@ -20597,15 +20595,13 @@ const config = require('./config');
 /**
  * Migration from 0 to 1
  *
- * - Set default background color
+ * - Set default background color with no condition.
  *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
 const for0 = function(item) {
-  if (typeof item.backgroundColor === 'undefined') {
-    item.backgroundColor = config.defaultBackgroundColor();
-  }
+  item.backgroundColor = config.defaultBackgroundColor();
 
   return item;
 };
@@ -20613,15 +20609,27 @@ const for0 = function(item) {
 /**
  * Migration from 1 to 2
  *
- * - Set default display position
+ * - Set default display position with no condition.
  *
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
 const for1 = function(item) {
-  if (typeof item.displayPosition === 'undefined') {
-    item.displayPosition = config.defaultDisplayPosition();
-  }
+  item.displayPosition = config.defaultDisplayPosition();
+
+  return item;
+};
+
+/**
+ * Migration from 2 to 3
+ *
+ * - Set default status with no condition.
+ *
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const for2 = function(item) {
+  item.status = config.defaultStatus();
 
   return item;
 };
@@ -20629,6 +20637,7 @@ const for1 = function(item) {
 const converters = {
   0: for0,
   1: for1,
+  2: for2,
 };
 
 /**
@@ -20637,11 +20646,7 @@ const converters = {
  * @returns {PatternItem}
  */
 const execute = function(fromVersion, item) {
-  if (converters.hasOwnProperty(fromVersion)) {
-    return converters[fromVersion](item);
-  }
-
-  return item;
+  return converters[fromVersion](item);
 };
 
 module.exports.from = execute;
@@ -20655,6 +20660,7 @@ module.exports.from = execute;
  * @property {string} msg Added schema version: 0
  * @property {string} [backgroundColor] Added schema version: 1
  * @property {string} [displayPosition] Added schema version: 2
+ * @property {number} [status] Added schema version: 3
  */
 
 const key = {
@@ -20670,6 +20676,8 @@ const hasVersion = function() {
 };
 
 /**
+ * Gets the version stored in storage.
+ *
  * @returns {number}
  */
 const currentVersion = function() {
@@ -20701,7 +20709,7 @@ const isValidVersion = function(value) {
  * @param {number} version
  */
 const updateVersion = function(version) {
-  localStorage.setItem(key.version, version);
+  localStorage.setItem(key.version, version.toString());
 };
 
 /**
@@ -20732,6 +20740,8 @@ const getAll = function() {
 };
 
 /**
+ * Finds pattern item by exact match of URL pattern.
+ *
  * @param {string} url
  * @returns {(PatternItem|null)}
  */
@@ -20897,17 +20907,29 @@ const patternV2 = function() {
   });
 };
 
+const patternV3 = function() {
+  return deepMerge(patternV2(), {
+    'properties': {
+      'status': {
+        'type': 'integer',
+        'minimum': 0,
+        'maximum': 1,
+      },
+    },
+    'required': [
+      'status',
+    ],
+  });
+};
+
 const patterns = {
   1: patternV1,
   2: patternV2,
+  3: patternV3,
 };
 
 const patternFor = function(version) {
-  if (patterns.hasOwnProperty(version)) {
-    return patterns[version]();
-  }
-
-  return {};
+  return patterns[version]();
 };
 
 /**

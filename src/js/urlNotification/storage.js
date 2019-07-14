@@ -6,6 +6,7 @@
  * @property {string} msg Added schema version: 0
  * @property {string} [backgroundColor] Added schema version: 1
  * @property {string} [displayPosition] Added schema version: 2
+ * @property {number} [status] Added schema version: 3
  */
 
 const key = {
@@ -21,6 +22,8 @@ const hasVersion = function() {
 };
 
 /**
+ * Gets the version stored in storage.
+ *
  * @returns {number}
  */
 const currentVersion = function() {
@@ -52,7 +55,7 @@ const isValidVersion = function(value) {
  * @param {number} version
  */
 const updateVersion = function(version) {
-  localStorage.setItem(key.version, version);
+  localStorage.setItem(key.version, version.toString());
 };
 
 /**
@@ -83,6 +86,8 @@ const getAll = function() {
 };
 
 /**
+ * Finds pattern item by exact match of URL pattern.
+ *
  * @param {string} url
  * @returns {(PatternItem|null)}
  */

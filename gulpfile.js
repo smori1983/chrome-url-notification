@@ -27,6 +27,13 @@ const dist = (function() {
   }
 })();
 
+gulp.task('clean', function() {
+  return del([
+    sprintf('%s/**', dist),
+    sprintf('!%s', dist),
+  ], { force: true });
+});
+
 gulp.task('make:vendor:js', function(cb) {
   pump([
     browserify({
@@ -49,13 +56,6 @@ gulp.task('make:urlNotification', function(cb) {
     source('urlNotification.js'),
     gulp.dest('src/js'),
   ], cb);
-});
-
-gulp.task('clean', function() {
-  return del([
-    sprintf('%s/**', dist),
-    sprintf('!%s', dist),
-  ], { force: true });
 });
 
 gulp.task('dist:source', function(cb) {
@@ -94,7 +94,8 @@ gulp.task('lint', function(cb) {
       'src/js/**/*.js',
       '!src/js/urlNotification.js',
       '!src/js/vendor.js',
-      'test/**/*.js',
+      'test/**/*',
+      'test_lib/**/*',
     ]),
     eslint({ useEslintrc: true }),
     eslint.format(),

@@ -1,21 +1,12 @@
 'use strict';
 
-const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 
 /**
  * @typedef {object} FindResult
  * @property {boolean} matched
- * @property {(FindResultData|null)} data Depends on the value of matched
- */
-
-/**
- * @typedef {object} FindResultData
- * @property {string} message
- * @property {string} backgroundColor
- * @property {string} fontColor
- * @property {string} displayPosition
+ * @property {(FoundItem|null)} data Depends on the value of matched
  */
 
 const migrate = function() {
@@ -25,34 +16,15 @@ const migrate = function() {
 };
 
 /**
- * @param {string} pattern
+ * @param {string} url
  * @return {FindResult}
  */
-const find = function(pattern) {
-  let item;
-  let result = {};
+const find = function(url) {
+  const item = finder.findFor(url);
 
-  if ((item = finder.findFor(pattern)) !== null) {
-    result.matched = true;
-    result.data = createData(item);
-  } else {
-    result.matched = false;
-    result.data = null;
-  }
-
-  return result;
-};
-
-/**
- * @param {PatternItem} item
- * @returns {FindResultData}
- */
-const createData = function(item) {
   return {
-    message: item.msg,
-    backgroundColor: item.backgroundColor,
-    fontColor: config.defaultFontColor(),
-    displayPosition: item.displayPosition,
+    matched: item !== null,
+    data: item,
   };
 };
 

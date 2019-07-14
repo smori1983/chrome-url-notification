@@ -23,6 +23,9 @@
   "label_edit": {
     "message": "Edit"
   },
+  "label_enabled": {
+    "message": "Enabled"
+  },
   "label_export": {
     "message": "Export"
   },
@@ -46,6 +49,9 @@
   },
   "label_save": {
     "message": "Save"
+  },
+  "label_status": {
+    "message": "Status"
   },
   "label_top": {
     "message": "Top"

@@ -2,50 +2,49 @@ const describe = require('mocha').describe;
 const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const assert = require('assert');
-const urlNotification = require('../src/js/urlNotification/main');
+const SUT = require('../src/js/urlNotification/main');
+const testUtil = require('../test_lib/util');
 
 describe('urlNotification.migration', function() {
-  beforeEach(function () {
-    localStorage.clear();
-  });
-
   describe('version', function () {
     it('キーなし', function () {
-      assert.strictEqual(urlNotification.migration.hasVersion(), false);
-      assert.strictEqual(urlNotification.migration.currentVersion(), 0);
+      testUtil.clearStorage();
+
+      assert.strictEqual(SUT.migration.hasVersion(), false);
+      assert.strictEqual(SUT.migration.currentVersion(), 0);
     });
 
     it('キーあり - 不正値 - 小数', function () {
-      localStorage.setItem('version', '1.1');
+      testUtil.setUpStorage('1.1', []);
 
-      assert.strictEqual(urlNotification.migration.hasVersion(), false);
-      assert.strictEqual(urlNotification.migration.currentVersion(), 0);
+      assert.strictEqual(SUT.migration.hasVersion(), false);
+      assert.strictEqual(SUT.migration.currentVersion(), 0);
     });
 
     it('キーあり - 不正値 - 文字列', function () {
-      localStorage.setItem('version', 'foo');
+      testUtil.setUpStorage('foo', []);
 
-      assert.strictEqual(urlNotification.migration.hasVersion(), false);
-      assert.strictEqual(urlNotification.migration.currentVersion(), 0);
+      assert.strictEqual(SUT.migration.hasVersion(), false);
+      assert.strictEqual(SUT.migration.currentVersion(), 0);
     });
 
     it('キーあり - 正常値', function () {
-      localStorage.setItem('version', '1');
+      testUtil.setUpStorage('1', []);
 
-      assert.strictEqual(urlNotification.migration.hasVersion(), true);
-      assert.strictEqual(urlNotification.migration.currentVersion(), 1);
+      assert.strictEqual(SUT.migration.hasVersion(), true);
+      assert.strictEqual(SUT.migration.currentVersion(), 1);
     });
   });
 
   describe('0to1', function () {
     beforeEach(function () {
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('', [
         { url: 'http://example.com/1', msg: '1' },
-      ]));
+      ]);
     });
 
     it('current version is 0', function () {
-      assert.strictEqual(urlNotification.migration.currentVersion(), 0);
+      assert.strictEqual(SUT.migration.currentVersion(), 0);
     });
 
     it('execute migration', function () {
@@ -53,32 +52,31 @@ describe('urlNotification.migration', function() {
         { url: 'http://example.com/1', msg: '1' },
       ];
 
-      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedBefore);
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
 
-      assert.strictEqual(urlNotification.migration.shouldMigrate(), true);
+      assert.strictEqual(SUT.migration.shouldMigrate(), true);
 
-      urlNotification.migration.migrateFrom(0);
+      SUT.migration.migrateFrom(0);
 
       const expectedAfter = [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
       ];
 
-      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedAfter);
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(urlNotification.migration.currentVersion(), 1);
+      assert.strictEqual(SUT.migration.currentVersion(), 1);
     });
   });
 
   describe('1to2', function() {
     beforeEach(function() {
-      localStorage.setItem('version', '1');
-      localStorage.setItem('pattern', JSON.stringify([
+      testUtil.setUpStorage('1', [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
-      ]));
+      ]);
     });
 
     it('current version is 1', function() {
-      assert.strictEqual(urlNotification.migration.currentVersion(), 1);
+      assert.strictEqual(SUT.migration.currentVersion(), 1);
     });
 
     it('execute migration', function() {
@@ -86,19 +84,51 @@ describe('urlNotification.migration', function() {
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
       ];
 
-      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedBefore);
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
 
-      assert.strictEqual(urlNotification.migration.shouldMigrate(), true);
+      assert.strictEqual(SUT.migration.shouldMigrate(), true);
 
-      urlNotification.migration.migrateFrom(1);
+      SUT.migration.migrateFrom(1);
 
       const expectedAfter = [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top' },
       ];
 
-      assert.deepStrictEqual(urlNotification.storage.getAll(), expectedAfter);
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(urlNotification.migration.currentVersion(), 2);
+      assert.strictEqual(SUT.migration.currentVersion(), 2);
+    });
+  });
+
+  describe('2to3', function() {
+    beforeEach(function() {
+      testUtil.setUpStorage('2', [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom' },
+      ]);
+    });
+
+    it('current version is 2', function() {
+      assert.strictEqual(SUT.migration.currentVersion(), 2);
+    });
+
+    it('execute migration', function() {
+      const expectedBefore = [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom' },
+      ];
+
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
+
+      assert.strictEqual(SUT.migration.shouldMigrate(), true);
+
+      SUT.migration.migrateFrom(2);
+
+      const expectedAfter = [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom', status: 1 },
+      ];
+
+      assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
+
+      assert.strictEqual(SUT.migration.currentVersion(), 3);
     });
   });
 });

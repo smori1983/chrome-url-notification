@@ -4,19 +4,20 @@ const assert = require('assert');
 const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
 
-describe('urlNotification.importer.v2', function() {
-  describe('import v2 and migrate to v3 - case 1', function () {
-    it('without existing data - case1', function () {
+describe('urlNotification.importer.v3', function() {
+  describe('import v3', function () {
+    it('without existing data - case 1 - status is 1', function () {
       testUtil.clearStorage();
 
       const json = {
-        version: 2,
+        version: 3,
         pattern: [
           {
             url: 'http://example.com/1',
             msg: '1',
             backgroundColor: '111111',
             displayPosition: 'top',
+            status: 1,
           },
         ],
       };
@@ -34,17 +35,18 @@ describe('urlNotification.importer.v2', function() {
       assert.strictEqual(allData[0].status, 1);
     });
 
-    it('without existing data - case2', function () {
+    it('without existing data - case 2 - status is 0', function () {
       testUtil.clearStorage();
 
       const json = {
-        version: 2,
+        version: 3,
         pattern: [
           {
             url: 'http://example.com/2',
             msg: '2',
             backgroundColor: '222222',
             displayPosition: 'bottom',
+            status: 0,
           },
         ],
       };
@@ -59,27 +61,29 @@ describe('urlNotification.importer.v2', function() {
       assert.strictEqual(allData[0].msg, '2');
       assert.strictEqual(allData[0].backgroundColor, '222222');
       assert.strictEqual(allData[0].displayPosition, 'bottom');
-      assert.strictEqual(allData[0].status, 1);
+      assert.strictEqual(allData[0].status, 0);
     });
 
-    it('with existing data', function () {
-      testUtil.setUpStorage('2', [
+    it('with existing data', function() {
+      testUtil.setUpStorage('3', [
         {
           url: 'http://example.com/1',
           msg: '1',
           backgroundColor: '111111',
           displayPosition: 'top',
+          status: 1,
         },
       ]);
 
       const json = {
-        version: 2,
+        version: 3,
         pattern: [
           {
             url: 'http://example.com/1',
             msg: '1-edit',
             backgroundColor: '222222',
             displayPosition: 'bottom',
+            status: 0,
           },
         ],
       };
@@ -94,7 +98,7 @@ describe('urlNotification.importer.v2', function() {
       assert.strictEqual(allData[0].msg, '1-edit');
       assert.strictEqual(allData[0].backgroundColor, '222222');
       assert.strictEqual(allData[0].displayPosition, 'bottom');
-      assert.strictEqual(allData[0].status, 1);
+      assert.strictEqual(allData[0].status, 0);
     });
   });
 });

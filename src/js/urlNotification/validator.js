@@ -89,17 +89,29 @@ const patternV2 = function() {
   });
 };
 
+const patternV3 = function() {
+  return deepMerge(patternV2(), {
+    'properties': {
+      'status': {
+        'type': 'integer',
+        'minimum': 0,
+        'maximum': 1,
+      },
+    },
+    'required': [
+      'status',
+    ],
+  });
+};
+
 const patterns = {
   1: patternV1,
   2: patternV2,
+  3: patternV3,
 };
 
 const patternFor = function(version) {
-  if (patterns.hasOwnProperty(version)) {
-    return patterns[version]();
-  }
-
-  return {};
+  return patterns[version]();
 };
 
 /**
