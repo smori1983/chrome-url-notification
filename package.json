@@ -12,7 +12,8 @@
     "test:coverage": "istanbul cover --print both _mocha -- test/ --require mock-local-storage",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ test/ --interval=1 --ignoreDotFiles",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "report:coverage": "istanbul cover _mocha -- test/ --require mock-local-storage && codecov"
   },
   "repository": {
     "type": "git",
