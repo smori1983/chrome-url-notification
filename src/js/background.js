@@ -1,13 +1,13 @@
 (function() {
 
-  const urlNotification = require('url-notification');
+  const background = require('url-notification').background;
 
   chrome.runtime.onInstalled.addListener(function() {
-    urlNotification.background.migrate();
+    background.migrate();
   });
 
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    sendResponse(urlNotification.background.find(request.url));
+    sendResponse(background.find(request.url));
   });
 
 })();
