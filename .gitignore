@@ -1,5 +1,6 @@
 *.swp
 /.env
 /.idea
+/coverage
 /dist
 /node_modules
