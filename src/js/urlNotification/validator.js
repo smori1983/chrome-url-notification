@@ -4,10 +4,6 @@ const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');
 
-const create = function() {
-  return new Validator();
-};
-
 const schemaForEssentialPart = function() {
   return {
     'type': 'object',
@@ -104,6 +100,10 @@ const patterns = {
 
 const patternFor = function(version) {
   return patterns[version]();
+};
+
+const create = function() {
+  return new Validator();
 };
 
 /**
