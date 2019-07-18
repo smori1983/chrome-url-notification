@@ -8,12 +8,8 @@ const create = function() {
   return new Validator();
 };
 
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const importJsonEssential = function(json) {
-  const schema = {
+const schemaForEssentialPart = function() {
+  return {
     'type': 'object',
     'properties': {
       'version': {
@@ -30,10 +26,16 @@ const importJsonEssential = function(json) {
       'pattern',
     ],
   };
+};
 
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const importJsonEssential = function(json) {
   const validator = create();
 
-  return validator.validate(json, schema).valid;
+  return validator.validate(json, schemaForEssentialPart()).valid;
 };
 
 const patternBase = function() {
