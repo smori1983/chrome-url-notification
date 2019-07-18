@@ -118,16 +118,24 @@ const patternFor = function(version) {
  * @param {object} json
  * @returns {boolean}
  */
-const importJson = function(json) {
+const validatePatternPart = function(json) {
   const validator = create();
-
-  if (importJsonEssential(json) === false) {
-    return false;
-  }
 
   validator.addSchema(patternFor(json.version), '/item');
 
   return validator.validate(json.pattern, patternBase()).valid;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const importJson = function(json) {
+  if (importJsonEssential(json) === false) {
+    return false;
+  }
+
+  return validatePatternPart(json);
 };
 
 module.exports.forImportJsonEssential = importJsonEssential;
