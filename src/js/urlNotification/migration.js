@@ -22,7 +22,7 @@ const currentVersion = function() {
  * @returns {boolean}
  */
 const shouldMigrate = function() {
-  return currentVersion() < config.version();
+  return config.version() > currentVersion();
 };
 
 /**
