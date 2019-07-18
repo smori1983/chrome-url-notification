@@ -132,17 +132,8 @@ const validatePatternPart = function(json) {
  * @param {object} json
  * @returns {boolean}
  */
-const importJsonEssential = function(json) {
-  return validateEssentialPart(json);
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
 const importJson = function(json) {
   return validateEssentialPart(json) && validatePatternPart(json);
 };
 
-module.exports.forImportJsonEssential = importJsonEssential;
 module.exports.forImportJson = importJson;
