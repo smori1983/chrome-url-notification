@@ -4,16 +4,8 @@ const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');
 
-const create = function() {
-  return new Validator();
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const importJsonEssential = function(json) {
-  const schema = {
+const schemaForEssentialPart = function() {
+  return {
     'type': 'object',
     'properties': {
       'version': {
@@ -30,10 +22,6 @@ const importJsonEssential = function(json) {
       'pattern',
     ],
   };
-
-  const validator = create();
-
-  return validator.validate(json, schema).valid;
 };
 
 const patternBase = function() {
@@ -114,20 +102,46 @@ const patternFor = function(version) {
   return patterns[version]();
 };
 
+const create = function() {
+  return new Validator();
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const validateEssentialPart = function(json) {
+  const validator = create();
+
+  return validator.validate(json, schemaForEssentialPart()).valid;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const validatePatternPart = function(json) {
+  const validator = create();
+
+  validator.addSchema(patternFor(json.version), '/item');
+
+  return validator.validate(json.pattern, patternBase()).valid;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const importJsonEssential = function(json) {
+  return validateEssentialPart(json);
+};
+
 /**
  * @param {object} json
  * @returns {boolean}
  */
 const importJson = function(json) {
-  const validator = create();
-
-  if (importJsonEssential(json) === false) {
-    return false;
-  }
-
-  validator.addSchema(patternFor(json.version), '/item');
-
-  return validator.validate(json.pattern, patternBase()).valid;
+  return validateEssentialPart(json) && validatePatternPart(json);
 };
 
 module.exports.forImportJsonEssential = importJsonEssential;
