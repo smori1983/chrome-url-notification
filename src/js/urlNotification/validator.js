@@ -141,11 +141,7 @@ const importJsonEssential = function(json) {
  * @returns {boolean}
  */
 const importJson = function(json) {
-  if (importJsonEssential(json) === false) {
-    return false;
-  }
-
-  return validatePatternPart(json);
+  return validateEssentialPart(json) && validatePatternPart(json);
 };
 
 module.exports.forImportJsonEssential = importJsonEssential;
