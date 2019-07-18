@@ -28,14 +28,6 @@ const schemaForEssentialPart = function() {
   };
 };
 
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const importJsonEssential = function(json) {
-  return validateEssentialPart(json);
-};
-
 const patternBase = function() {
   return {
     'type': 'array',
@@ -134,6 +126,14 @@ const validatePatternPart = function(json) {
   validator.addSchema(patternFor(json.version), '/item');
 
   return validator.validate(json.pattern, patternBase()).valid;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const importJsonEssential = function(json) {
+  return validateEssentialPart(json);
 };
 
 /**
