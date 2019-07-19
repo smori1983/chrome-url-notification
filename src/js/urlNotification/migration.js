@@ -26,6 +26,23 @@ const shouldMigrate = function() {
 };
 
 /**
+ * Object edit phase using migrationExecutor.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} version
+ * @returns {PatternItem[]}
+ */
+const migrate = function(patterns, version) {
+  let result = [];
+
+  patterns.forEach(function(pattern) {
+    result.push(migrationExecutor.from(version, pattern));
+  });
+
+  return result;
+};
+
+/**
  * @param {number} currentVersion
  */
 const migrateFrom = function(currentVersion) {
