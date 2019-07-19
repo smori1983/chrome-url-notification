@@ -13,13 +13,7 @@ const storage = require('./storage');
  * @returns {PatternItem[]}
  */
 const migrate = function(patterns, version) {
-  let result = [];
-
-  patterns.forEach(function(pattern) {
-    result.push(migrationExecutor.from(version, pattern));
-  });
-
-  return result;
+  return migrationExecutor.execute(patterns, version);
 };
 
 /**

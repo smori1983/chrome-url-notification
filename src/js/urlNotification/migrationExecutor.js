@@ -59,4 +59,22 @@ const executeFrom = function(fromVersion, pattern) {
   return converters[fromVersion](pattern);
 };
 
+/**
+ * Execute migration for passed patterns.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const execute = function(patterns, fromVersion) {
+  let result = [];
+
+  patterns.forEach(function(pattern) {
+    result.push(executeFrom(fromVersion, pattern));
+  });
+
+  return result;
+};
+
 module.exports.from = executeFrom;
+module.exports.execute = execute;
