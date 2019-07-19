@@ -51,7 +51,14 @@ const migrateFrom = function(currentVersion) {
   storage.replace(currentVersion + 1, result);
 };
 
+const execute = function() {
+  while (shouldMigrate()) {
+    migrateFrom(currentVersion());
+  }
+};
+
 module.exports.hasVersion = hasVersion;
 module.exports.currentVersion = currentVersion;
 module.exports.shouldMigrate = shouldMigrate;
 module.exports.migrateFrom = migrateFrom;
+module.exports.execute = execute;
