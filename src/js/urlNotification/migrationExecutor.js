@@ -51,11 +51,11 @@ const converters = {
 };
 
 /**
- * @param {number} fromVersion
  * @param {PatternItem} pattern
+ * @param {number} fromVersion
  * @returns {PatternItem}
  */
-const executeFrom = function(fromVersion, pattern) {
+const executeFrom = function(pattern, fromVersion) {
   return converters[fromVersion](pattern);
 };
 
@@ -70,7 +70,7 @@ const execute = function(patterns, fromVersion) {
   let result = [];
 
   patterns.forEach(function(pattern) {
-    result.push(executeFrom(fromVersion, pattern));
+    result.push(executeFrom(pattern, fromVersion));
   });
 
   return result;
