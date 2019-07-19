@@ -36,7 +36,7 @@ describe('urlNotification.migration', function() {
     });
   });
 
-  describe('0to1', function () {
+  describe('0to3', function () {
     beforeEach(function () {
       testUtil.setUpStorage('', [
         { url: 'http://example.com/1', msg: '1' },
@@ -54,21 +54,19 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
 
-      assert.strictEqual(SUT.migration.shouldMigrate(), true);
-
-      SUT.migration.migrateFrom(0);
+      SUT.migration.execute();
 
       const expectedAfter = [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top', status: 1 },
       ];
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(SUT.migration.currentVersion(), 1);
+      assert.strictEqual(SUT.migration.currentVersion(), 3);
     });
   });
 
-  describe('1to2', function() {
+  describe('1to3', function() {
     beforeEach(function() {
       testUtil.setUpStorage('1', [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000' },
@@ -86,17 +84,15 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
 
-      assert.strictEqual(SUT.migration.shouldMigrate(), true);
-
-      SUT.migration.migrateFrom(1);
+      SUT.migration.execute();
 
       const expectedAfter = [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top' },
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'top', status: 1 },
       ];
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(SUT.migration.currentVersion(), 2);
+      assert.strictEqual(SUT.migration.currentVersion(), 3);
     });
   });
 
@@ -118,9 +114,7 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedBefore);
 
-      assert.strictEqual(SUT.migration.shouldMigrate(), true);
-
-      SUT.migration.migrateFrom(2);
+      SUT.migration.execute();
 
       const expectedAfter = [
         { url: 'http://example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom', status: 1 },

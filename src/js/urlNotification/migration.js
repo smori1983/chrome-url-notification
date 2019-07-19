@@ -59,6 +59,4 @@ const execute = function() {
 
 module.exports.hasVersion = hasVersion;
 module.exports.currentVersion = currentVersion;
-module.exports.shouldMigrate = shouldMigrate;
-module.exports.migrateFrom = migrateFrom;
 module.exports.execute = execute;
