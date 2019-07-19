@@ -52,11 +52,11 @@ const converters = {
 
 /**
  * @param {number} fromVersion
- * @param {PatternItem} item
+ * @param {PatternItem} pattern
  * @returns {PatternItem}
  */
-const execute = function(fromVersion, item) {
-  return converters[fromVersion](item);
+const executeFrom = function(fromVersion, pattern) {
+  return converters[fromVersion](pattern);
 };
 
-module.exports.from = execute;
+module.exports.from = executeFrom;
