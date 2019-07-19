@@ -62,7 +62,7 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(SUT.migration.currentVersion(), 3);
+      assert.strictEqual(SUT.migration.currentVersion(), testUtil.currentVersion());
     });
   });
 
@@ -92,7 +92,7 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(SUT.migration.currentVersion(), 3);
+      assert.strictEqual(SUT.migration.currentVersion(), testUtil.currentVersion());
     });
   });
 
@@ -122,7 +122,7 @@ describe('urlNotification.migration', function() {
 
       assert.deepStrictEqual(SUT.storage.getAll(), expectedAfter);
 
-      assert.strictEqual(SUT.migration.currentVersion(), 3);
+      assert.strictEqual(SUT.migration.currentVersion(), testUtil.currentVersion());
     });
   });
 });
