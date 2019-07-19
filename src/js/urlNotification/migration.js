@@ -46,11 +46,7 @@ const migrate = function(patterns, version) {
  * @param {number} currentVersion
  */
 const migrateFrom = function(currentVersion) {
-  let result = [];
-
-  storage.getAll().forEach(function(item) {
-    result.push(migrationExecutor.from(currentVersion, item));
-  });
+  const result = migrate(storage.getAll(), currentVersion);
 
   storage.replace(currentVersion + 1, result);
 };
