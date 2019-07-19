@@ -76,5 +76,4 @@ const execute = function(patterns, fromVersion) {
   return result;
 };
 
-module.exports.from = executeFrom;
 module.exports.execute = execute;
