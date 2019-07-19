@@ -55,7 +55,7 @@ const converters = {
  * @param {number} fromVersion
  * @returns {PatternItem}
  */
-const executeFrom = function(pattern, fromVersion) {
+const executeOne = function(pattern, fromVersion) {
   return converters[fromVersion](pattern);
 };
 
@@ -70,7 +70,7 @@ const execute = function(patterns, fromVersion) {
   let result = [];
 
   patterns.forEach(function(pattern) {
-    result.push(executeFrom(pattern, fromVersion));
+    result.push(executeOne(pattern, fromVersion));
   });
 
   return result;
