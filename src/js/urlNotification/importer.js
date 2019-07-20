@@ -42,8 +42,6 @@ const importJson = function(initialJson) {
   console.info('Import start.');
 
   while (config.version() > json.version) {
-    console.info('Migrate from scheme version ' + json.version);
-
     json.pattern = migrate(json.pattern, json.version);
     json.version += 1;
   }
