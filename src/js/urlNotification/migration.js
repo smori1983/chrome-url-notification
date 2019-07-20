@@ -19,13 +19,6 @@ const currentVersion = function() {
 };
 
 /**
- * @returns {boolean}
- */
-const shouldMigrate = function() {
-  return config.version() > currentVersion();
-};
-
-/**
  * Object edit phase using migrationExecutor.
  *
  * @param {PatternItem[]} patterns
@@ -37,7 +30,7 @@ const migrate = function(patterns, version) {
 };
 
 const execute = function() {
-  while (shouldMigrate()) {
+  while (config.version() > currentVersion()) {
     const version = currentVersion();
 
     const result = migrate(storage.getAll(), version);
