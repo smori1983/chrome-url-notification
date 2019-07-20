@@ -36,18 +36,13 @@ const migrate = function(patterns, version) {
   return migrationExecutor.execute(patterns, version);
 };
 
-/**
- * @param {number} currentVersion
- */
-const migrateFrom = function(currentVersion) {
-  const result = migrate(storage.getAll(), currentVersion);
-
-  storage.replace(currentVersion + 1, result);
-};
-
 const execute = function() {
   while (shouldMigrate()) {
-    migrateFrom(currentVersion());
+    const version = currentVersion();
+
+    const result = migrate(storage.getAll(), version);
+
+    storage.replace(version + 1, result);
   }
 };
 
