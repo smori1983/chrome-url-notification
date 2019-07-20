@@ -60,7 +60,7 @@ const executeOne = function(pattern, fromVersion) {
 };
 
 /**
- * Execute migration for passed patterns.
+ * Execute migration of next 1 generation for passed patterns.
  *
  * @param {PatternItem[]} patterns
  * @param {number} fromVersion
