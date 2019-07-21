@@ -10,9 +10,7 @@ const migration = require('./migration');
  */
 
 const migrate = function() {
-  while (migration.shouldMigrate()) {
-    migration.migrateFrom(migration.currentVersion());
-  }
+  migration.execute();
 };
 
 /**

@@ -19,26 +19,23 @@ const currentVersion = function() {
 };
 
 /**
- * @returns {boolean}
+ * Persistence phase using storage.
+ *
+ * Assumes that patterns are fully migrated.
+ *
+ * @param {PatternItem[]} patterns
  */
-const shouldMigrate = function() {
-  return currentVersion() < config.version();
+const persist = function(patterns) {
+  storage.replace(config.version(), patterns);
 };
 
-/**
- * @param {number} currentVersion
- */
-const migrateFrom = function(currentVersion) {
-  let result = [];
+const execute = function() {
+  let version = currentVersion();
+  let patterns = storage.getAll();
 
-  storage.getAll().forEach(function(item) {
-    result.push(migrationExecutor.from(currentVersion, item));
-  });
-
-  storage.replace(currentVersion + 1, result);
+  persist(migrationExecutor.toLatest(patterns, version));
 };
 
 module.exports.hasVersion = hasVersion;
 module.exports.currentVersion = currentVersion;
-module.exports.shouldMigrate = shouldMigrate;
-module.exports.migrateFrom = migrateFrom;
+module.exports.execute = execute;

@@ -51,12 +51,46 @@ const converters = {
 };
 
 /**
+ * @param {PatternItem} pattern
  * @param {number} fromVersion
- * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const execute = function(fromVersion, item) {
-  return converters[fromVersion](item);
+const executeOne = function(pattern, fromVersion) {
+  return converters[fromVersion](pattern);
 };
 
-module.exports.from = execute;
+/**
+ * Execute migration of next 1 generation for passed patterns.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const execute = function(patterns, fromVersion) {
+  let result = [];
+
+  patterns.forEach(function(pattern) {
+    result.push(executeOne(pattern, fromVersion));
+  });
+
+  return result;
+};
+
+/**
+ * Migrate passed patterns to the latest generation.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const toLatest = function(patterns, fromVersion) {
+  let version = fromVersion;
+
+  for (; version < config.version(); version++) {
+    patterns = execute(patterns, version);
+  }
+
+  return patterns;
+};
+
+module.exports.toLatest = toLatest;
