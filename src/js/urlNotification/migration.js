@@ -26,13 +26,7 @@ const currentVersion = function() {
  * @returns {PatternItem[]}
  */
 const migrate = function(patterns, fromVersion) {
-  let version = fromVersion;
-
-  for (; version < config.version(); version++) {
-    patterns = migrationExecutor.execute(patterns, version);
-  }
-
-  return patterns;
+  return migrationExecutor.toLatest(patterns, fromVersion);
 };
 
 /**

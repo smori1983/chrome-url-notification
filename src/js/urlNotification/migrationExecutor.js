@@ -76,4 +76,22 @@ const execute = function(patterns, fromVersion) {
   return result;
 };
 
+/**
+ * Migrate passed patterns to the latest generation.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const toLatest = function(patterns, fromVersion) {
+  let version = fromVersion;
+
+  for (; version < config.version(); version++) {
+    patterns = execute(patterns, version);
+  }
+
+  return patterns;
+};
+
 module.exports.execute = execute;
+module.exports.toLatest = toLatest;

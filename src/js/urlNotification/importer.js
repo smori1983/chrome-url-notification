@@ -1,7 +1,6 @@
 'use strict';
 
 const _ = require('lodash');
-const config = require('./config');
 const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
@@ -13,13 +12,7 @@ const storage = require('./storage');
  * @returns {PatternItem[]}
  */
 const migrate = function(patterns, fromVersion) {
-  let version = fromVersion;
-
-  for (; version < config.version(); version++) {
-    patterns = migrationExecutor.execute(patterns, version);
-  }
-
-  return patterns;
+  return migrationExecutor.toLatest(patterns, fromVersion);
 };
 
 /**
