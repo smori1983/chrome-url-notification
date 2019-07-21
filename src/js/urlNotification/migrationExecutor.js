@@ -93,5 +93,4 @@ const toLatest = function(patterns, fromVersion) {
   return patterns;
 };
 
-module.exports.execute = execute;
 module.exports.toLatest = toLatest;
