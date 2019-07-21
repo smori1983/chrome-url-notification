@@ -84,9 +84,9 @@ const execute = function(patterns, fromVersion) {
  * @returns {PatternItem[]}
  */
 const toLatest = function(patterns, fromVersion) {
-  let version = fromVersion;
+  let version;
 
-  for (; version < config.version(); version++) {
+  for (version = fromVersion; version < config.version(); version++) {
     patterns = execute(patterns, version);
   }
 
