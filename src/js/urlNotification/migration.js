@@ -40,13 +40,14 @@ const persist = function(version, patterns) {
 };
 
 const execute = function() {
-  while (config.version() > currentVersion()) {
-    const version = currentVersion();
+  let version = currentVersion();
+  let patterns = storage.getAll();
 
-    const result = migrate(storage.getAll(), version);
-
-    persist(version + 1, result);
+  for (; version < config.version(); version++) {
+    patterns = migrate(patterns, version);
   }
+
+  persist(config.version(), patterns);
 };
 
 module.exports.hasVersion = hasVersion;
