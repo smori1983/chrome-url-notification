@@ -29,13 +29,23 @@ const migrate = function(patterns, version) {
   return migrationExecutor.execute(patterns, version);
 };
 
+/**
+ * Persistence phase using storage.
+ *
+ * @param {number} version
+ * @param {PatternItem[]} patterns
+ */
+const persist = function(version, patterns) {
+  storage.replace(version, patterns);
+};
+
 const execute = function() {
   while (config.version() > currentVersion()) {
     const version = currentVersion();
 
     const result = migrate(storage.getAll(), version);
 
-    storage.replace(version + 1, result);
+    persist(version + 1, result);
   }
 };
 
