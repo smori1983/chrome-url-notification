@@ -5,17 +5,6 @@ const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
 /**
- * Object edit phase using migrationExecutor.
- *
- * @param {PatternItem[]} patterns
- * @param {number} fromVersion
- * @returns {PatternItem[]}
- */
-const migrate = function(patterns, fromVersion) {
-  return migrationExecutor.toLatest(patterns, fromVersion);
-};
-
-/**
  * Persistence phase using storage.
  *
  * @param {PatternItem[]} patterns
@@ -42,9 +31,7 @@ const importJson = function(initialJson) {
 
   console.info('Import start.');
 
-  patterns = migrate(patterns, version);
-
-  persist(patterns);
+  persist(migrationExecutor.toLatest(patterns, version));
 
   console.info('Import done.');
 };

@@ -19,17 +19,6 @@ const currentVersion = function() {
 };
 
 /**
- * Object edit phase using migrationExecutor.
- *
- * @param {PatternItem[]} patterns
- * @param {number} fromVersion
- * @returns {PatternItem[]}
- */
-const migrate = function(patterns, fromVersion) {
-  return migrationExecutor.toLatest(patterns, fromVersion);
-};
-
-/**
  * Persistence phase using storage.
  *
  * Assumes that patterns are fully migrated.
@@ -44,9 +33,7 @@ const execute = function() {
   let version = currentVersion();
   let patterns = storage.getAll();
 
-  patterns = migrate(patterns, version);
-
-  persist(patterns);
+  persist(migrationExecutor.toLatest(patterns, version));
 };
 
 module.exports.hasVersion = hasVersion;
