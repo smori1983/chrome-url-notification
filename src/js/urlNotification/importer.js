@@ -38,15 +38,16 @@ const persist = function(patterns) {
  */
 const importJson = function(initialJson) {
   let json = _.cloneDeep(initialJson);
+  let version = json.version;
+  let patterns = json.pattern;
 
   console.info('Import start.');
 
-  while (config.version() > json.version) {
-    json.pattern = migrate(json.pattern, json.version);
-    json.version += 1;
+  for (; version < config.version(); version++) {
+    patterns = migrate(patterns, version);
   }
 
-  persist(json.pattern);
+  persist(patterns);
 
   console.info('Import done.');
 };
