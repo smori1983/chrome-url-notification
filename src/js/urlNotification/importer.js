@@ -21,7 +21,7 @@ const migrate = function(patterns, version) {
  *
  * @param {PatternItem[]} patterns
  */
-const addOrUpdate = function(patterns) {
+const persist = function(patterns) {
   patterns.forEach(function(pattern) {
     if (storage.findByUrl(pattern.url)) {
       storage.updatePattern(pattern.url, pattern);
@@ -46,7 +46,7 @@ const importJson = function(initialJson) {
     json.version += 1;
   }
 
-  addOrUpdate(json.pattern);
+  persist(json.pattern);
 
   console.info('Import done.');
 };
