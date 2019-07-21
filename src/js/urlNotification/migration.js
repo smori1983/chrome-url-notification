@@ -38,11 +38,12 @@ const migrate = function(patterns, fromVersion) {
 /**
  * Persistence phase using storage.
  *
- * @param {number} version
+ * Assumes that patterns are fully migrated.
+ *
  * @param {PatternItem[]} patterns
  */
-const persist = function(version, patterns) {
-  storage.replace(version, patterns);
+const persist = function(patterns) {
+  storage.replace(config.version(), patterns);
 };
 
 const execute = function() {
@@ -51,7 +52,7 @@ const execute = function() {
 
   patterns = migrate(patterns, version);
 
-  persist(config.version(), patterns);
+  persist(patterns);
 };
 
 module.exports.hasVersion = hasVersion;
