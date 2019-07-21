@@ -9,11 +9,17 @@ const storage = require('./storage');
  * Object edit phase using migrationExecutor.
  *
  * @param {PatternItem[]} patterns
- * @param {number} version
+ * @param {number} fromVersion
  * @returns {PatternItem[]}
  */
-const migrate = function(patterns, version) {
-  return migrationExecutor.execute(patterns, version);
+const migrate = function(patterns, fromVersion) {
+  let version = fromVersion;
+
+  for (; version < config.version(); version++) {
+    patterns = migrationExecutor.execute(patterns, version);
+  }
+
+  return patterns;
 };
 
 /**
@@ -43,9 +49,7 @@ const importJson = function(initialJson) {
 
   console.info('Import start.');
 
-  for (; version < config.version(); version++) {
-    patterns = migrate(patterns, version);
-  }
+  patterns = migrate(patterns, version);
 
   persist(patterns);
 
