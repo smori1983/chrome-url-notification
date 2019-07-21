@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Improve migration
+- Improve validation
+
+
 ## v4.0.0
 
 ### Feature
