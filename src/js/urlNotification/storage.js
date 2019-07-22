@@ -57,7 +57,7 @@ const saveVersion = function(version) {
 /**
  * @param {PatternItem[]} data
  */
-const update = function(data) {
+const savePattern = function(data) {
   localStorage.setItem(key.pattern, JSON.stringify(data));
 };
 
@@ -110,7 +110,7 @@ const addPattern = function(pattern) {
   let data = getAll();
 
   data.push(pattern);
-  update(data);
+  savePattern(data);
 };
 
 /**
@@ -136,11 +136,11 @@ const deletePattern = function(url) {
     }
   });
 
-  update(newData);
+  savePattern(newData);
 };
 
 const deleteAll = function() {
-  update([]);
+  savePattern([]);
 };
 
 module.exports.hasVersion = hasVersion;
@@ -154,5 +154,5 @@ module.exports.deletePattern = deletePattern;
 module.exports.deleteAll = deleteAll;
 module.exports.replace = function(version, pattern) {
   saveVersion(version);
-  update(pattern);
+  savePattern(pattern);
 };
