@@ -29,11 +29,7 @@ const importJson = function(initialJson) {
   let version = json.version;
   let patterns = json.pattern;
 
-  console.info('Import start.');
-
   persist(migrationExecutor.toLatest(patterns, version));
-
-  console.info('Import done.');
 };
 
 module.exports.importJson = importJson;
