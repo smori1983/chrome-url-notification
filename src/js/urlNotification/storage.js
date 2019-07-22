@@ -143,6 +143,15 @@ const deleteAll = function() {
   savePattern([]);
 };
 
+/**
+ * @param {number} version
+ * @param {PatternItem[]} patterns
+ */
+const replace = function(version, patterns) {
+  saveVersion(version);
+  savePattern(patterns);
+};
+
 module.exports.hasVersion = hasVersion;
 module.exports.currentVersion = currentVersion;
 module.exports.getCount = getCount;
@@ -152,7 +161,4 @@ module.exports.addPattern = addPattern;
 module.exports.updatePattern = updatePattern;
 module.exports.deletePattern = deletePattern;
 module.exports.deleteAll = deleteAll;
-module.exports.replace = function(version, pattern) {
-  saveVersion(version);
-  savePattern(pattern);
-};
+module.exports.replace = replace;
