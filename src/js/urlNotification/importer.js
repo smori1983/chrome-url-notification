@@ -26,10 +26,10 @@ const persist = function(patterns) {
  */
 const importJson = function(initialJson) {
   /** @type {ImportJson} */
-  let json = _.cloneDeep(initialJson);
+  const json = _.cloneDeep(initialJson);
 
-  let version = json.version;
-  let patterns = json.pattern;
+  const version = json.version;
+  const patterns = json.pattern;
 
   persist(migrationExecutor.toLatest(patterns, version));
 };

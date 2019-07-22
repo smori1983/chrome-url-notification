@@ -30,8 +30,8 @@ const persist = function(patterns) {
 };
 
 const execute = function() {
-  let version = currentVersion();
-  let patterns = storage.getAll();
+  const version = currentVersion();
+  const patterns = storage.getAll();
 
   persist(migrationExecutor.toLatest(patterns, version));
 };
