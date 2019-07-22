@@ -107,10 +107,7 @@ const addPattern = function(pattern) {
     return;
   }
 
-  let data = getAll();
-
-  data.push(pattern);
-  savePattern(data);
+  savePattern(getAll().concat(pattern));
 };
 
 /**
