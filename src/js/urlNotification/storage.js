@@ -50,7 +50,7 @@ const isValidVersion = function(value) {
 /**
  * @param {number} version
  */
-const updateVersion = function(version) {
+const saveVersion = function(version) {
   localStorage.setItem(key.version, version.toString());
 };
 
@@ -153,6 +153,6 @@ module.exports.updatePattern = updatePattern;
 module.exports.deletePattern = deletePattern;
 module.exports.deleteAll = deleteAll;
 module.exports.replace = function(version, pattern) {
-  updateVersion(version);
+  saveVersion(version);
   update(pattern);
 };
