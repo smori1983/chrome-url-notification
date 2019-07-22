@@ -22,10 +22,12 @@ const persist = function(patterns) {
 /**
  * Assumes that json is validated.
  *
- * @param {object} initialJson
+ * @param {ImportJson} initialJson
  */
 const importJson = function(initialJson) {
+  /** @type {ImportJson} */
   let json = _.cloneDeep(initialJson);
+
   let version = json.version;
   let patterns = json.pattern;
 
@@ -33,3 +35,9 @@ const importJson = function(initialJson) {
 };
 
 module.exports.importJson = importJson;
+
+/**
+ * @typedef {object} ImportJson
+ * @property {number} version
+ * @property {PatternItem[]} pattern
+ */
