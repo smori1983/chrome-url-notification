@@ -128,12 +128,8 @@ const updatePattern = function(originalUrl, pattern) {
  * @param {string} url
  */
 const deletePattern = function(url) {
-  let newData = [];
-
-  getAll().forEach(function(item) {
-    if (item.url !== url) {
-      newData.push(item);
-    }
+  const newData = getAll().filter(function(pattern) {
+    return pattern.url !== url;
   });
 
   savePattern(newData);
