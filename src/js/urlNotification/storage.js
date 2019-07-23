@@ -44,7 +44,7 @@ const getVersion = function() {
  * @returns {boolean}
  */
 const isValidVersion = function(value) {
-  return (value !== null) && (/^\d+$/.test(value));
+  return (typeof value === 'string') && (/^\d+$/.test(value));
 };
 
 /**
