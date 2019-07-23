@@ -1696,7 +1696,7 @@ module.exports = Validator;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.14';
+  var VERSION = '4.17.15';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -20277,9 +20277,7 @@ const migration = require('./migration');
  */
 
 const migrate = function() {
-  while (migration.shouldMigrate()) {
-    migration.migrateFrom(migration.currentVersion());
-  }
+  migration.execute();
 };
 
 /**
@@ -20480,34 +20478,15 @@ module.exports.findFor = find;
 },{"./config":15,"./storage":21}],18:[function(require,module,exports){
 'use strict';
 
-const _ = require('lodash');
-const config = require('./config');
 const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
-
-/**
- * Object edit phase using migrationExecutor.
- *
- * @param {PatternItem[]} patterns
- * @param {number} version
- * @returns {PatternItem[]}
- */
-const migrate = function(patterns, version) {
-  let result = [];
-
-  patterns.forEach(function(pattern) {
-    result.push(migrationExecutor.from(version, pattern));
-  });
-
-  return result;
-};
 
 /**
  * Persistence phase using storage.
  *
  * @param {PatternItem[]} patterns
  */
-const addOrUpdate = function(patterns) {
+const persist = function(patterns) {
   patterns.forEach(function(pattern) {
     if (storage.findByUrl(pattern.url)) {
       storage.updatePattern(pattern.url, pattern);
@@ -20520,28 +20499,24 @@ const addOrUpdate = function(patterns) {
 /**
  * Assumes that json is validated.
  *
- * @param {object} initialJson
+ * @param {ImportJson} json
  */
-const importJson = function(initialJson) {
-  let json = _.cloneDeep(initialJson);
+const importJson = function(json) {
+  const version = json.version;
+  const patterns = json.pattern;
 
-  console.info('Import start.');
-
-  while (config.version() > json.version) {
-    console.info('Migrate from scheme version ' + json.version);
-
-    json.pattern = migrate(json.pattern, json.version);
-    json.version += 1;
-  }
-
-  addOrUpdate(json.pattern);
-
-  console.info('Import done.');
+  persist(migrationExecutor.toLatest(patterns, version));
 };
 
 module.exports.importJson = importJson;
 
-},{"./config":15,"./migrationExecutor":20,"./storage":21,"lodash":7}],19:[function(require,module,exports){
+/**
+ * @typedef {object} ImportJson
+ * @property {number} version
+ * @property {PatternItem[]} pattern
+ */
+
+},{"./migrationExecutor":20,"./storage":21}],19:[function(require,module,exports){
 'use strict';
 
 const config = require('./config');
@@ -20563,33 +20538,31 @@ const currentVersion = function() {
 };
 
 /**
- * @returns {boolean}
+ * Persistence phase using storage.
+ *
+ * Assumes that patterns are fully migrated.
+ *
+ * @param {PatternItem[]} patterns
  */
-const shouldMigrate = function() {
-  return currentVersion() < config.version();
+const persist = function(patterns) {
+  storage.replace(config.version(), patterns);
 };
 
-/**
- * @param {number} currentVersion
- */
-const migrateFrom = function(currentVersion) {
-  let result = [];
+const execute = function() {
+  const version = currentVersion();
+  const patterns = storage.getAll();
 
-  storage.getAll().forEach(function(item) {
-    result.push(migrationExecutor.from(currentVersion, item));
-  });
-
-  storage.replace(currentVersion + 1, result);
+  persist(migrationExecutor.toLatest(patterns, version));
 };
 
 module.exports.hasVersion = hasVersion;
 module.exports.currentVersion = currentVersion;
-module.exports.shouldMigrate = shouldMigrate;
-module.exports.migrateFrom = migrateFrom;
+module.exports.execute = execute;
 
 },{"./config":15,"./migrationExecutor":20,"./storage":21}],20:[function(require,module,exports){
 'use strict';
 
+const _ = require('lodash');
 const config = require('./config');
 
 /**
@@ -20641,18 +20614,55 @@ const converters = {
 };
 
 /**
+ * @param {PatternItem} pattern
  * @param {number} fromVersion
- * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const execute = function(fromVersion, item) {
-  return converters[fromVersion](item);
+const executeOne = function(pattern, fromVersion) {
+  return converters[fromVersion](pattern);
 };
 
-module.exports.from = execute;
+/**
+ * Execute migration of next 1 generation for passed patterns.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const execute = function(patterns, fromVersion) {
+  let result = [];
 
-},{"./config":15}],21:[function(require,module,exports){
+  patterns.forEach(function(pattern) {
+    result.push(executeOne(pattern, fromVersion));
+  });
+
+  return result;
+};
+
+/**
+ * Migrate passed patterns to the latest generation.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const toLatest = function(patterns, fromVersion) {
+  let version;
+  let migrated = _.cloneDeep(patterns);
+
+  for (version = fromVersion; version < config.version(); version++) {
+    migrated = execute(migrated, version);
+  }
+
+  return migrated;
+};
+
+module.exports.toLatest = toLatest;
+
+},{"./config":15,"lodash":7}],21:[function(require,module,exports){
 'use strict';
+
+const util = require('./strageUtil');
 
 /**
  * @typedef {object} PatternItem
@@ -20672,7 +20682,7 @@ const key = {
  * @returns {boolean}
  */
 const hasVersion = function() {
-  return isValidVersion(getVersion());
+  return util.isValidStringAsVersion(getVersion());
 };
 
 /**
@@ -20683,7 +20693,7 @@ const hasVersion = function() {
 const currentVersion = function() {
   const version = getVersion();
 
-  if (isValidVersion(version)) {
+  if (util.isValidStringAsVersion(version)) {
     return parseInt(version, 10);
   }
 
@@ -20695,27 +20705,16 @@ const getVersion = function() {
 };
 
 /**
- * @returns {boolean}
- */
-const isValidVersion = function(value) {
-  if (value === null) {
-    return false;
-  }
-
-  return /^\d+$/.test(value);
-};
-
-/**
  * @param {number} version
  */
-const updateVersion = function(version) {
+const saveVersion = function(version) {
   localStorage.setItem(key.version, version.toString());
 };
 
 /**
  * @param {PatternItem[]} data
  */
-const update = function(data) {
+const savePattern = function(data) {
   localStorage.setItem(key.pattern, JSON.stringify(data));
 };
 
@@ -20765,10 +20764,7 @@ const addPattern = function(pattern) {
     return;
   }
 
-  let data = getAll();
-
-  data.push(pattern);
-  update(data);
+  savePattern(getAll().concat(pattern));
 };
 
 /**
@@ -20786,19 +20782,24 @@ const updatePattern = function(originalUrl, pattern) {
  * @param {string} url
  */
 const deletePattern = function(url) {
-  let newData = [];
-
-  getAll().forEach(function(item) {
-    if (item.url !== url) {
-      newData.push(item);
-    }
+  const newData = getAll().filter(function(pattern) {
+    return pattern.url !== url;
   });
 
-  update(newData);
+  savePattern(newData);
 };
 
 const deleteAll = function() {
-  update([]);
+  savePattern([]);
+};
+
+/**
+ * @param {number} version
+ * @param {PatternItem[]} patterns
+ */
+const replace = function(version, patterns) {
+  saveVersion(version);
+  savePattern(patterns);
 };
 
 module.exports.hasVersion = hasVersion;
@@ -20810,28 +20811,31 @@ module.exports.addPattern = addPattern;
 module.exports.updatePattern = updatePattern;
 module.exports.deletePattern = deletePattern;
 module.exports.deleteAll = deleteAll;
-module.exports.replace = function(version, pattern) {
-  updateVersion(version);
-  update(pattern);
+module.exports.replace = replace;
+
+},{"./strageUtil":22}],22:[function(require,module,exports){
+'use strict';
+
+/**
+ * Assumes passed value is fetched from local storage.
+ *
+ * @returns {boolean}
+ */
+const isValidStringAsVersion = function(value) {
+  return (typeof value === 'string') && (/^\d+$/.test(value));
 };
 
-},{}],22:[function(require,module,exports){
+module.exports.isValidStringAsVersion = isValidStringAsVersion;
+
+},{}],23:[function(require,module,exports){
 'use strict';
 
 const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');
 
-const create = function() {
-  return new Validator();
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const importJsonEssential = function(json) {
-  const schema = {
+const schemaForEssentialPart = function() {
+  return {
     'type': 'object',
     'properties': {
       'version': {
@@ -20848,10 +20852,6 @@ const importJsonEssential = function(json) {
       'pattern',
     ],
   };
-
-  const validator = create();
-
-  return validator.validate(json, schema).valid;
 };
 
 const patternBase = function() {
@@ -20932,23 +20932,40 @@ const patternFor = function(version) {
   return patterns[version]();
 };
 
+const create = function() {
+  return new Validator();
+};
+
 /**
  * @param {object} json
  * @returns {boolean}
  */
-const importJson = function(json) {
+const validateEssentialPart = function(json) {
   const validator = create();
 
-  if (importJsonEssential(json) === false) {
-    return false;
-  }
+  return validator.validate(json, schemaForEssentialPart()).valid;
+};
+
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const validatePatternPart = function(json) {
+  const validator = create();
 
   validator.addSchema(patternFor(json.version), '/item');
 
   return validator.validate(json.pattern, patternBase()).valid;
 };
 
-module.exports.forImportJsonEssential = importJsonEssential;
+/**
+ * @param {object} json
+ * @returns {boolean}
+ */
+const importJson = function(json) {
+  return validateEssentialPart(json) && validatePatternPart(json);
+};
+
 module.exports.forImportJson = importJson;
 
 },{"./config":15,"deepmerge":1,"jsonschema":4}],"url-notification":[function(require,module,exports){
@@ -20968,4 +20985,4 @@ const urlNotification = {
 
 module.exports = urlNotification;
 
-},{"./background":14,"./config":15,"./data":16,"./finder":17,"./importer":18,"./migration":19,"./migrationExecutor":20,"./storage":21,"./validator":22}]},{},[]);
+},{"./background":14,"./config":15,"./data":16,"./finder":17,"./importer":18,"./migration":19,"./migrationExecutor":20,"./storage":21,"./validator":23}]},{},[]);
