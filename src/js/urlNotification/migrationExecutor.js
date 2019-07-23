@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const config = require('./config');
 
 /**
@@ -51,12 +52,47 @@ const converters = {
 };
 
 /**
+ * @param {PatternItem} pattern
  * @param {number} fromVersion
- * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const execute = function(fromVersion, item) {
-  return converters[fromVersion](item);
+const executeOne = function(pattern, fromVersion) {
+  return converters[fromVersion](pattern);
 };
 
-module.exports.from = execute;
+/**
+ * Execute migration of next 1 generation for passed patterns.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const execute = function(patterns, fromVersion) {
+  let result = [];
+
+  patterns.forEach(function(pattern) {
+    result.push(executeOne(pattern, fromVersion));
+  });
+
+  return result;
+};
+
+/**
+ * Migrate passed patterns to the latest generation.
+ *
+ * @param {PatternItem[]} patterns
+ * @param {number} fromVersion
+ * @returns {PatternItem[]}
+ */
+const toLatest = function(patterns, fromVersion) {
+  let version;
+  let migrated = _.cloneDeep(patterns);
+
+  for (version = fromVersion; version < config.version(); version++) {
+    migrated = execute(migrated, version);
+  }
+
+  return migrated;
+};
+
+module.exports.toLatest = toLatest;

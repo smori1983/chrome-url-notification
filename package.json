@@ -1,6 +1,6 @@
 {
   "name": "chrome-url-notification",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/chrome": "0.0.83",
     "@types/jquery": "^3.3.30",
-    "@types/node": "^12.6.2",
+    "@types/node": "^12.6.8",
     "browserify": "^16.3.0",
     "codecov": "^3.5.0",
     "cross-env": "^5.2.0",
@@ -31,7 +31,7 @@
     "gulp": "^4.0.2",
     "gulp-eslint": "^5.0.0",
     "istanbul": "^0.4.5",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "mock-local-storage": "^1.1.8",
     "pump": "^3.0.0",
     "sprintf-js": "^1.1.2",
@@ -46,6 +46,6 @@
     "jquery": "^3.4.1",
     "jquery-validation": "^1.19.1",
     "jsonschema": "^1.2.4",
-    "lodash": "^4.17.14"
+    "lodash": "^4.17.15"
   }
 }
