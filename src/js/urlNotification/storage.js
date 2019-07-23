@@ -18,7 +18,7 @@ const key = {
  * @returns {boolean}
  */
 const hasVersion = function() {
-  return isValidVersion(getVersion());
+  return isValidStringAsVersion(getVersion());
 };
 
 /**
@@ -29,7 +29,7 @@ const hasVersion = function() {
 const currentVersion = function() {
   const version = getVersion();
 
-  if (isValidVersion(version)) {
+  if (isValidStringAsVersion(version)) {
     return parseInt(version, 10);
   }
 
@@ -43,7 +43,7 @@ const getVersion = function() {
 /**
  * @returns {boolean}
  */
-const isValidVersion = function(value) {
+const isValidStringAsVersion = function(value) {
   return (typeof value === 'string') && (/^\d+$/.test(value));
 };
 
