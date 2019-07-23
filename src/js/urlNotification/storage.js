@@ -1,5 +1,7 @@
 'use strict';
 
+const util = require('./strageUtil');
+
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -18,7 +20,7 @@ const key = {
  * @returns {boolean}
  */
 const hasVersion = function() {
-  return isValidStringAsVersion(getVersion());
+  return util.isValidStringAsVersion(getVersion());
 };
 
 /**
@@ -29,7 +31,7 @@ const hasVersion = function() {
 const currentVersion = function() {
   const version = getVersion();
 
-  if (isValidStringAsVersion(version)) {
+  if (util.isValidStringAsVersion(version)) {
     return parseInt(version, 10);
   }
 
@@ -38,13 +40,6 @@ const currentVersion = function() {
 
 const getVersion = function() {
   return localStorage.getItem(key.version);
-};
-
-/**
- * @returns {boolean}
- */
-const isValidStringAsVersion = function(value) {
-  return (typeof value === 'string') && (/^\d+$/.test(value));
 };
 
 /**
