@@ -1,5 +1,7 @@
 'use strict';
 
+const util = require('./strageUtil');
+
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -18,7 +20,7 @@ const key = {
  * @returns {boolean}
  */
 const hasVersion = function() {
-  return isValidVersion(getVersion());
+  return util.isValidStringAsVersion(getVersion());
 };
 
 /**
@@ -29,7 +31,7 @@ const hasVersion = function() {
 const currentVersion = function() {
   const version = getVersion();
 
-  if (isValidVersion(version)) {
+  if (util.isValidStringAsVersion(version)) {
     return parseInt(version, 10);
   }
 
@@ -41,27 +43,16 @@ const getVersion = function() {
 };
 
 /**
- * @returns {boolean}
- */
-const isValidVersion = function(value) {
-  if (value === null) {
-    return false;
-  }
-
-  return /^\d+$/.test(value);
-};
-
-/**
  * @param {number} version
  */
-const updateVersion = function(version) {
+const saveVersion = function(version) {
   localStorage.setItem(key.version, version.toString());
 };
 
 /**
  * @param {PatternItem[]} data
  */
-const update = function(data) {
+const savePattern = function(data) {
   localStorage.setItem(key.pattern, JSON.stringify(data));
 };
 
@@ -111,10 +102,7 @@ const addPattern = function(pattern) {
     return;
   }
 
-  let data = getAll();
-
-  data.push(pattern);
-  update(data);
+  savePattern(getAll().concat(pattern));
 };
 
 /**
@@ -132,19 +120,24 @@ const updatePattern = function(originalUrl, pattern) {
  * @param {string} url
  */
 const deletePattern = function(url) {
-  let newData = [];
-
-  getAll().forEach(function(item) {
-    if (item.url !== url) {
-      newData.push(item);
-    }
+  const newData = getAll().filter(function(pattern) {
+    return pattern.url !== url;
   });
 
-  update(newData);
+  savePattern(newData);
 };
 
 const deleteAll = function() {
-  update([]);
+  savePattern([]);
+};
+
+/**
+ * @param {number} version
+ * @param {PatternItem[]} patterns
+ */
+const replace = function(version, patterns) {
+  saveVersion(version);
+  savePattern(patterns);
 };
 
 module.exports.hasVersion = hasVersion;
@@ -156,7 +149,4 @@ module.exports.addPattern = addPattern;
 module.exports.updatePattern = updatePattern;
 module.exports.deletePattern = deletePattern;
 module.exports.deleteAll = deleteAll;
-module.exports.replace = function(version, pattern) {
-  updateVersion(version);
-  update(pattern);
-};
+module.exports.replace = replace;
