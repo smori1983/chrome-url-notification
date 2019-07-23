@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const config = require('./config');
 
 /**
@@ -85,12 +86,13 @@ const execute = function(patterns, fromVersion) {
  */
 const toLatest = function(patterns, fromVersion) {
   let version;
+  let migrated = _.cloneDeep(patterns);
 
   for (version = fromVersion; version < config.version(); version++) {
-    patterns = execute(patterns, version);
+    migrated = execute(migrated, version);
   }
 
-  return patterns;
+  return migrated;
 };
 
 module.exports.toLatest = toLatest;

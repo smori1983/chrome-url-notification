@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 
@@ -22,12 +21,9 @@ const persist = function(patterns) {
 /**
  * Assumes that json is validated.
  *
- * @param {ImportJson} initialJson
+ * @param {ImportJson} json
  */
-const importJson = function(initialJson) {
-  /** @type {ImportJson} */
-  const json = _.cloneDeep(initialJson);
-
+const importJson = function(json) {
   const version = json.version;
   const patterns = json.pattern;
 
