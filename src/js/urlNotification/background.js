@@ -15,10 +15,11 @@ const migrate = function() {
 
 /**
  * @param {string} url
+ * @param {FindOption} [option]
  * @return {FindResult}
  */
-const find = function(url) {
-  const item = finder.findFor(url);
+const find = function(url, option) {
+  const item = finder.findFor(url, option);
 
   return {
     matched: item !== null,

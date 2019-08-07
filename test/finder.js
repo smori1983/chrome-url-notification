@@ -88,4 +88,50 @@ describe('urlNotification.finder', function() {
       assert.strictEqual(result, null);
     });
   });
+
+  describe('find option - ignoreStatus', function() {
+    beforeEach(function () {
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+        { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
+      ]);
+    });
+
+    it('ignoreStatus not set and pattern exists with status is 1', function () {
+      const result = SUT.finder.findFor('http://example.com/1');
+
+      assert.strictEqual(result.message, '1');
+    });
+
+    it('ignoreStatus not set and pattern exists with status is 0', function () {
+      const result = SUT.finder.findFor('http://example.com/2');
+
+      assert.strictEqual(result, null);
+    });
+
+    it('ignoreStatus is true and pattern exists with status is 1', function () {
+      const result = SUT.finder.findFor('http://example.com/1', { ignoreStatus: true });
+
+      assert.strictEqual(result.message, '1');
+    });
+
+    it('ignoreStatus is true and pattern exists with status is 0', function () {
+      const result = SUT.finder.findFor('http://example.com/2', { ignoreStatus: true });
+
+      assert.strictEqual(result.message, '2');
+    });
+
+    it('ignoreStatus is false and pattern exists with status is 1', function () {
+      const result = SUT.finder.findFor('http://example.com/1', { ignoreStatus: false });
+
+      assert.strictEqual(result.message, '1');
+    });
+
+    it('ignoreStatus is false and pattern exists with status is 0', function () {
+      const result = SUT.finder.findFor('http://example.com/2', { ignoreStatus: false });
+
+      assert.strictEqual(result, null);
+    });
+  });
 });

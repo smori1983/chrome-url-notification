@@ -1,3 +1,9 @@
+/**
+ * @typedef BackgroundRequest
+ * @property {string} command
+ * @property {object} data
+ */
+
 (function() {
 
   const background = require('url-notification').background;
@@ -6,8 +12,14 @@
     background.migrate();
   });
 
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    sendResponse(background.find(request.url));
+  chrome.runtime.onMessage.addListener(function(/** @type {BackgroundRequest} */ request, sender, sendResponse) {
+    if (request.command === 'content_scripts:find') {
+      sendResponse(background.find(request.data.url, { ignoreStatus: false }));
+    }
+
+    if (request.command === 'browser_action:find') {
+      sendResponse(background.find(request.data.url, { ignoreStatus: true }));
+    }
   });
 
 })();

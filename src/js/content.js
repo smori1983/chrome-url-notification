@@ -3,6 +3,18 @@
 $(function() {
 
   /**
+   * @returns {BackgroundRequest}
+   */
+  const createRequest = function() {
+    return {
+      command: 'content_scripts:find',
+      data: {
+        url: location.href,
+      },
+    };
+  };
+
+  /**
    * @param {FindResult} response
    */
   const process = function(response) {
@@ -54,6 +66,6 @@ $(function() {
     }
   };
 
-  chrome.runtime.sendMessage({ url: location.href }, process);
+  chrome.runtime.sendMessage(createRequest(), process);
 
 });

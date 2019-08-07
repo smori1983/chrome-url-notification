@@ -2,6 +2,12 @@
 
 const config = require('./config');
 const storage = require('./storage');
+const deepMerge = require('deepmerge');
+
+/**
+ * @typedef {object} FindOption
+ * @property {boolean} ignoreStatus
+ */
 
 /**
  * @typedef {object} FoundItem
@@ -10,31 +16,50 @@ const storage = require('./storage');
  * @property {string} backgroundColor
  * @property {string} fontColor
  * @property {string} displayPosition
+ * @property {number} [status]
  */
 
 /**
  * Find pattern for content script.
  *
  * Conditions:
- * - PatternItem.status is 1
+ * - PatternItem.status is 1 (if option.ignoreStatus is false)
  * - PatternItem.url matches url
  *
  * @param {string} url
+ * @param {FindOption} [option]
  * @returns {(FoundItem|null)}
  */
-const find = function(url) {
+const find = function(url, option) {
   let i, len;
+
+  option = deepMerge(defaultFindOption(), option || {});
 
   /** @type {PatternItem[]} */
   const patterns = storage.getAll();
 
   for (i = 0, len = patterns.length; i < len; i++) {
-    if (patterns[i].status === 1 && makeRegExp(patterns[i].url).test(url)) {
-      return createData(patterns[i]);
+    if (makeRegExp(patterns[i].url).test(url)) {
+      if (option.ignoreStatus === true) {
+        return createData(patterns[i], option);
+      }
+
+      if (option.ignoreStatus === false && patterns[i].status === 1) {
+        return createData(patterns[i], option);
+      }
     }
   }
 
   return null;
+};
+
+/**
+ * @returns {FindOption}
+ */
+const defaultFindOption = function () {
+  return {
+    ignoreStatus: false,
+  };
 };
 
 /**
@@ -61,16 +86,21 @@ const convertForMatching = function(url) {
 
 /**
  * @param {PatternItem} item
+ * @param {FindOption} option
  * @returns {FoundItem}
  */
-const createData = function(item) {
-  return {
+const createData = function(item, option) {
+  const additional = option.ignoreStatus ? {
+    status: item.status,
+  } : {};
+
+  return deepMerge({
     url: item.url,
     message: item.msg,
     backgroundColor: item.backgroundColor,
     fontColor: config.defaultFontColor(),
     displayPosition: item.displayPosition,
-  };
+  }, additional);
 };
 
 module.exports.findFor = find;
