@@ -20,6 +20,10 @@
     if (request.command === 'browser_action:find') {
       sendResponse(background.find(request.data.url, { ignoreStatus: true }));
     }
+
+    if (request.command === 'browser_action:update:status') {
+      background.updatePattern(request.data.url, { status: request.data.status });
+    }
   });
 
 })();

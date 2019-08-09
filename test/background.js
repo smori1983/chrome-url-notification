@@ -52,4 +52,29 @@ describe('urlNotification.background', function () {
     assert.deepStrictEqual(result.data, expectedData);
   });
 
+  describe('updatePattern()', function () {
+    it('Call with non-existing pattern', function () {
+      const result = SUT.background.updatePattern('http://example.com/999', {
+        status: 0,
+      });
+
+      assert.strictEqual(result, false);
+    });
+
+    it('Normal case', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        status: 0,
+      });
+
+      assert.strictEqual(result, true);
+    });
+
+    it('Try to update with invalid value', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        status: 9,
+      });
+
+      assert.strictEqual(result, false);
+    });
+  });
 });
