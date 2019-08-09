@@ -57,8 +57,13 @@ $(function () {
   const optionsPath = chrome.runtime.getURL('html/options.html');
 
   $('<a>')
-    .attr('href', optionsPath)
-    .attr('target', '_blank')
+    .attr('href', '#')
     .text('Options')
+    .click(function(e) {
+      e.preventDefault();
+      chrome.tabs.create({
+        url: optionsPath,
+      });
+    })
     .appendTo($('#link_options'));
 });
