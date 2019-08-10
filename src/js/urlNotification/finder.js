@@ -40,11 +40,7 @@ const find = function(url, option) {
 
   for (i = 0, len = patterns.length; i < len; i++) {
     if (makeRegExp(patterns[i].url).test(url)) {
-      if (option.ignoreStatus === true) {
-        return createData(patterns[i], option);
-      }
-
-      if (option.ignoreStatus === false && patterns[i].status === 1) {
+      if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
         return createData(patterns[i], option);
       }
     }
