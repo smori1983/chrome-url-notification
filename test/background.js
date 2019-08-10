@@ -76,5 +76,13 @@ describe('urlNotification.background', function () {
 
       assert.strictEqual(result, false);
     });
+
+    it('Try to update with invalid key', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        foo: 'bar',
+      });
+
+      assert.strictEqual(result, false);
+    });
   });
 });
