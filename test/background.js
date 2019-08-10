@@ -31,6 +31,7 @@ describe('urlNotification.background', function () {
       backgroundColor: '111111',
       fontColor: 'ffffff',
       displayPosition: 'top',
+      status: 1,
     };
 
     assert.strictEqual(result.matched, true);
@@ -46,6 +47,7 @@ describe('urlNotification.background', function () {
       backgroundColor: '000000',
       fontColor: 'ffffff',
       displayPosition: 'top',
+      status: 1,
     };
 
     assert.strictEqual(result.matched, true);

@@ -16,7 +16,7 @@ const deepMerge = require('deepmerge');
  * @property {string} backgroundColor
  * @property {string} fontColor
  * @property {string} displayPosition
- * @property {number} [status]
+ * @property {number} status
  */
 
 /**
@@ -41,7 +41,7 @@ const find = function(url, option) {
   for (i = 0, len = patterns.length; i < len; i++) {
     if (makeRegExp(patterns[i].url).test(url)) {
       if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
-        return createData(patterns[i], option);
+        return createData(patterns[i]);
       }
     }
   }
@@ -82,21 +82,17 @@ const convertForMatching = function(url) {
 
 /**
  * @param {PatternItem} item
- * @param {FindOption} option
  * @returns {FoundItem}
  */
-const createData = function(item, option) {
-  const additional = option.ignoreStatus ? {
-    status: item.status,
-  } : {};
-
-  return deepMerge({
+const createData = function(item) {
+  return {
     url: item.url,
     message: item.msg,
     backgroundColor: item.backgroundColor,
     fontColor: config.defaultFontColor(),
     displayPosition: item.displayPosition,
-  }, additional);
+    status: item.status,
+  };
 };
 
 module.exports.findFor = find;
