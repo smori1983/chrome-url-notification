@@ -41,6 +41,9 @@
   "label_operation": {
     "message": "Operation"
   },
+  "label_options": {
+    "message": "Options"
+  },
   "label_pattern_add": {
     "message": "Add"
   },

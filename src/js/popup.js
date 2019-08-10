@@ -1,4 +1,9 @@
 $(function () {
+  $('#i18n_label_status').text(chrome.i18n.getMessage('label_status'));
+  $('#i18n_label_enabled').text(chrome.i18n.getMessage('label_enabled'));
+});
+
+$(function () {
 
   chrome.tabs.query({
     currentWindow: true,
@@ -58,7 +63,7 @@ $(function () {
 
   $('<a>')
     .attr('href', '#')
-    .text('Options')
+    .text(chrome.i18n.getMessage('label_options'))
     .click(function(e) {
       e.preventDefault();
       chrome.tabs.create({
