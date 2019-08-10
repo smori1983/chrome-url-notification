@@ -15,43 +15,45 @@ describe('urlNotification.background', function () {
     ]);
   });
 
-  it('find() - 該当データなし', function() {
-    const result = SUT.background.find('foo');
+  describe('find()', function() {
+    it('該当データなし', function () {
+      const result = SUT.background.find('foo');
 
-    assert.strictEqual(result.matched, false);
-    assert.strictEqual(result.data, null);
-  });
+      assert.strictEqual(result.matched, false);
+      assert.strictEqual(result.data, null);
+    });
 
-  it('find() - 該当データあり', function() {
-    const result = SUT.background.find('http://example.com/1');
+    it('該当データあり', function () {
+      const result = SUT.background.find('http://example.com/1');
 
-    const expectedData = {
-      url: 'http://example.com/1',
-      message: '1',
-      backgroundColor: '111111',
-      fontColor: 'ffffff',
-      displayPosition: 'top',
-      status: 1,
-    };
+      const expectedData = {
+        url: 'http://example.com/1',
+        message: '1',
+        backgroundColor: '111111',
+        fontColor: 'ffffff',
+        displayPosition: 'top',
+        status: 1,
+      };
 
-    assert.strictEqual(result.matched, true);
-    assert.deepStrictEqual(result.data, expectedData);
-  });
+      assert.strictEqual(result.matched, true);
+      assert.deepStrictEqual(result.data, expectedData);
+    });
 
-  it('find() - 該当データあり - パターンにマッチ', function() {
-    const result = SUT.background.find('http://example.com/item/5');
+    it('該当データあり - パターンにマッチ', function () {
+      const result = SUT.background.find('http://example.com/item/5');
 
-    const expectedData = {
-      url: 'http://example.com/item/*',
-      message: 'item',
-      backgroundColor: '000000',
-      fontColor: 'ffffff',
-      displayPosition: 'top',
-      status: 1,
-    };
+      const expectedData = {
+        url: 'http://example.com/item/*',
+        message: 'item',
+        backgroundColor: '000000',
+        fontColor: 'ffffff',
+        displayPosition: 'top',
+        status: 1,
+      };
 
-    assert.strictEqual(result.matched, true);
-    assert.deepStrictEqual(result.data, expectedData);
+      assert.strictEqual(result.matched, true);
+      assert.deepStrictEqual(result.data, expectedData);
+    });
   });
 
   describe('updatePattern()', function () {
