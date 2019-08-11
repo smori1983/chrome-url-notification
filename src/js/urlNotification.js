@@ -20267,8 +20267,12 @@ module.exports = {
 },{}],14:[function(require,module,exports){
 'use strict';
 
+const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
+const storage = require('./storage');
+const validator = require('./validator');
+const deepMerge = require('deepmerge');
 
 /**
  * @typedef {object} FindResult
@@ -20282,10 +20286,11 @@ const migrate = function() {
 
 /**
  * @param {string} url
+ * @param {FindOption} [option]
  * @return {FindResult}
  */
-const find = function(url) {
-  const item = finder.findFor(url);
+const find = function(url, option) {
+  const item = finder.findFor(url, option);
 
   return {
     matched: item !== null,
@@ -20293,10 +20298,39 @@ const find = function(url) {
   };
 };
 
+/**
+ * @param {string} url
+ * @param {object} data
+ * @returns {boolean} true if successfully updated
+ */
+const updatePattern = function(url, data) {
+  const item = storage.findByUrl(url);
+
+  if (item === null) {
+    return false;
+  }
+
+  const merged = deepMerge(item, data);
+
+  const dataForValidation = {
+    version: config.version(),
+    pattern: [merged],
+  };
+
+  if (validator.forImportJson(dataForValidation) === false) {
+    return false;
+  }
+
+  storage.updatePattern(url, merged);
+
+  return true;
+};
+
 module.exports.migrate = migrate;
 module.exports.find = find;
+module.exports.updatePattern = updatePattern;
 
-},{"./finder":17,"./migration":19}],15:[function(require,module,exports){
+},{"./config":15,"./finder":17,"./migration":19,"./storage":21,"./validator":23,"deepmerge":1}],15:[function(require,module,exports){
 'use strict';
 
 /**
@@ -20402,6 +20436,12 @@ module.exports.sortByMessage = sortByMessage;
 
 const config = require('./config');
 const storage = require('./storage');
+const deepMerge = require('deepmerge');
+
+/**
+ * @typedef {object} FindOption
+ * @property {boolean} ignoreStatus
+ */
 
 /**
  * @typedef {object} FoundItem
@@ -20410,31 +20450,46 @@ const storage = require('./storage');
  * @property {string} backgroundColor
  * @property {string} fontColor
  * @property {string} displayPosition
+ * @property {number} status
  */
 
 /**
  * Find pattern for content script.
  *
  * Conditions:
- * - PatternItem.status is 1
+ * - PatternItem.status is 1 (if option.ignoreStatus is false)
  * - PatternItem.url matches url
  *
  * @param {string} url
+ * @param {FindOption} [option]
  * @returns {(FoundItem|null)}
  */
-const find = function(url) {
+const find = function(url, option) {
   let i, len;
+
+  option = deepMerge(defaultFindOption(), option || {});
 
   /** @type {PatternItem[]} */
   const patterns = storage.getAll();
 
   for (i = 0, len = patterns.length; i < len; i++) {
-    if (patterns[i].status === 1 && makeRegExp(patterns[i].url).test(url)) {
-      return createData(patterns[i]);
+    if (makeRegExp(patterns[i].url).test(url)) {
+      if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
+        return createData(patterns[i]);
+      }
     }
   }
 
   return null;
+};
+
+/**
+ * @returns {FindOption}
+ */
+const defaultFindOption = function () {
+  return {
+    ignoreStatus: false,
+  };
 };
 
 /**
@@ -20470,12 +20525,13 @@ const createData = function(item) {
     backgroundColor: item.backgroundColor,
     fontColor: config.defaultFontColor(),
     displayPosition: item.displayPosition,
+    status: item.status,
   };
 };
 
 module.exports.findFor = find;
 
-},{"./config":15,"./storage":21}],18:[function(require,module,exports){
+},{"./config":15,"./storage":21,"deepmerge":1}],18:[function(require,module,exports){
 'use strict';
 
 const migrationExecutor = require('./migrationExecutor');
@@ -20865,6 +20921,7 @@ const patternTemplate = function() {
   return {
     'id': '/item',
     'properties': {},
+    'additionalProperties': false,
   };
 };
 
