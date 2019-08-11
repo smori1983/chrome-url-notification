@@ -15,41 +15,78 @@ describe('urlNotification.background', function () {
     ]);
   });
 
-  it('find() - 該当データなし', function() {
-    const result = SUT.background.find('foo');
+  describe('find()', function() {
+    it('該当データなし', function () {
+      const result = SUT.background.find('foo');
 
-    assert.strictEqual(result.matched, false);
-    assert.strictEqual(result.data, null);
+      assert.strictEqual(result.matched, false);
+      assert.strictEqual(result.data, null);
+    });
+
+    it('該当データあり', function () {
+      const result = SUT.background.find('http://example.com/1');
+
+      const expectedData = {
+        url: 'http://example.com/1',
+        message: '1',
+        backgroundColor: '111111',
+        fontColor: 'ffffff',
+        displayPosition: 'top',
+        status: 1,
+      };
+
+      assert.strictEqual(result.matched, true);
+      assert.deepStrictEqual(result.data, expectedData);
+    });
+
+    it('該当データあり - パターンにマッチ', function () {
+      const result = SUT.background.find('http://example.com/item/5');
+
+      const expectedData = {
+        url: 'http://example.com/item/*',
+        message: 'item',
+        backgroundColor: '000000',
+        fontColor: 'ffffff',
+        displayPosition: 'top',
+        status: 1,
+      };
+
+      assert.strictEqual(result.matched, true);
+      assert.deepStrictEqual(result.data, expectedData);
+    });
   });
 
-  it('find() - 該当データあり', function() {
-    const result = SUT.background.find('http://example.com/1');
+  describe('updatePattern()', function () {
+    it('Call with non-existing pattern', function () {
+      const result = SUT.background.updatePattern('http://example.com/999', {
+        status: 0,
+      });
 
-    const expectedData = {
-      url: 'http://example.com/1',
-      message: '1',
-      backgroundColor: '111111',
-      fontColor: 'ffffff',
-      displayPosition: 'top',
-    };
+      assert.strictEqual(result, false);
+    });
 
-    assert.strictEqual(result.matched, true);
-    assert.deepStrictEqual(result.data, expectedData);
+    it('Normal case', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        status: 0,
+      });
+
+      assert.strictEqual(result, true);
+    });
+
+    it('Try to update with invalid value', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        status: 9,
+      });
+
+      assert.strictEqual(result, false);
+    });
+
+    it('Try to update with invalid key', function () {
+      const result = SUT.background.updatePattern('http://example.com/1', {
+        foo: 'bar',
+      });
+
+      assert.strictEqual(result, false);
+    });
   });
-
-  it('find() - 該当データあり - パターンにマッチ', function() {
-    const result = SUT.background.find('http://example.com/item/5');
-
-    const expectedData = {
-      url: 'http://example.com/item/*',
-      message: 'item',
-      backgroundColor: '000000',
-      fontColor: 'ffffff',
-      displayPosition: 'top',
-    };
-
-    assert.strictEqual(result.matched, true);
-    assert.deepStrictEqual(result.data, expectedData);
-  });
-
 });
