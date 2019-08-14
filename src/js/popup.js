@@ -39,22 +39,14 @@ $(function () {
     $('#status')
       .prop('checked', response.data.status === 1)
       .click(function() {
-        updateStatus(response.data.url, $(this).prop('checked') ? 1 : 0);
+        chrome.runtime.sendMessage({
+          command: 'browser_action:update:status',
+          data: {
+            url: response.data.url,
+            status: $(this).prop('checked') ? 1 : 0,
+          },
+        });
       });
-  };
-
-  /**
-   * @param {string} url
-   * @param {number} status
-   */
-  const updateStatus = function(url, status) {
-    chrome.runtime.sendMessage({
-      command: 'browser_action:update:status',
-      data: {
-        url: url,
-        status: status,
-      },
-    });
   };
 });
 
