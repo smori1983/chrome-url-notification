@@ -41,6 +41,9 @@
   "label_operation": {
     "message": "操作"
   },
+  "label_options": {
+    "message": "オプション"
+  },
   "label_pattern_add": {
     "message": "追加"
   },

@@ -35,6 +35,7 @@ const patternTemplate = function() {
   return {
     'id': '/item',
     'properties': {},
+    'additionalProperties': false,
   };
 };
 

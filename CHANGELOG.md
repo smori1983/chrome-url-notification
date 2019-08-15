@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v5.0.0
+
+### Feature
+
+- Introduce browser action
+  - Show status change menu for pattern matched pages
+  - Show link to options page for all pages
+
+
 ## v4.1.0
 
 ### Development
