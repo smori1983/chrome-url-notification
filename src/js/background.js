@@ -1,5 +1,5 @@
 /**
- * @typedef BackgroundRequest
+ * @typedef {Object} BackgroundRequest
  * @property {string} command
  * @property {object} data
  */
