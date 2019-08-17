@@ -28,6 +28,9 @@
 
     if (request.command === 'browser_action:update:status') {
       background.updatePattern(request.data.url, { status: request.data.status });
+      sendResponse({
+        status: request.data.status,
+      });
     }
   };
 

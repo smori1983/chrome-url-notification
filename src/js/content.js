@@ -2,6 +2,8 @@
 
 $(function() {
 
+  const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
+
   /**
    * @param {string} url
    * @returns {BackgroundRequest}
@@ -49,7 +51,7 @@ $(function() {
     const $body = $('body');
 
     const $container = $('<div>')
-      .attr('id', 'chrome-url-notification-container-9b7414d403c1287ca963')
+      .attr('id', messageContainerId)
       .css(createCss())
       .text(response.data.message);
 
@@ -68,5 +70,18 @@ $(function() {
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
+
+  const onMessageListener = function(request) {
+    const selector = '#' + messageContainerId;
+    const status = request.data.status;
+
+    if (status === 1) {
+      $(selector).show();
+    } else {
+      $(selector).hide();
+    }
+  };
+
+  chrome.runtime.onMessage.addListener(onMessageListener);
 
 });
