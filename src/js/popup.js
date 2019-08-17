@@ -4,23 +4,15 @@ $(function () {
 });
 
 $(function () {
-
-  chrome.tabs.query({
-    currentWindow: true,
-    active: true,
-  }, function(tabs) {
-    chrome.runtime.sendMessage(createRequest(tabs), process);
-  });
-
   /**
-   * @param {chrome.tabs.Tab[]} tabs
+   * @param {string} url
    * @returns {BackgroundRequest}
    */
-  const createRequest = function(tabs) {
+  const createRequest = function(url) {
     return {
       command: 'browser_action:find',
       data: {
-        url: tabs[0].url,
+        url: url,
       },
     };
   };
@@ -47,6 +39,13 @@ $(function () {
         });
       });
   };
+
+  chrome.tabs.query({
+    currentWindow: true,
+    active: true,
+  }, function(tabs) {
+    chrome.runtime.sendMessage(createRequest(tabs[0].url), process);
+  });
 });
 
 $(function () {
