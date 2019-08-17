@@ -31,7 +31,6 @@ $(function () {
   const process = function(response) {
     if (response.matched === false) {
       $('#block_for_matched_page').hide();
-      $('#block_for_separator').hide();
 
       return;
     }
