@@ -102,15 +102,9 @@ $(function() {
       .css(createCss())
       .text(response.data.message);
 
-    if (response.data.displayPosition === 'top') {
-      $body
-        .css(cssForBody(response.data.status))
-        .append($container);
-    } else if (response.data.displayPosition === 'bottom') {
-      $body
-        .css(cssForBody(response.data.status))
-        .append($container);
-    }
+    $body
+      .css(cssForBody(response.data.status))
+      .append($container);
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
