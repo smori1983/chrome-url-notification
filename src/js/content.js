@@ -70,41 +70,44 @@ $(function() {
       return;
     }
 
-    const createCss = function() {
-      const result = {
-        position:   'fixed',
-        left:       '0px',
-        width:      '100%',
-        height:     height + 'px',
-        lineHeight: height + 'px',
-        background: '#' + response.data.backgroundColor,
-        color:      '#' + response.data.fontColor,
-        fontSize:   '16px',
-        textAlign:  'center',
-        zIndex:     '99999999',
-
-        webkitUserSelect: 'none',
-      };
-
-      result[response.data.displayPosition] = '0px';
-
-      if (response.data.status === 0) {
-        result.display = 'none';
-      }
-
-      return result;
-    };
-
     displayPosition = response.data.displayPosition;
 
     const $container = $('<div>')
       .attr('id', messageContainerId)
-      .css(createCss())
+      .css(createCss(response.data))
       .text(response.data.message);
 
     $body
       .css(cssForBody(response.data.status))
       .append($container);
+  };
+
+  /**
+   * @param {FoundItem} item
+   */
+  const createCss = function(item) {
+    const result = {
+      position:   'fixed',
+      left:       '0px',
+      width:      '100%',
+      height:     height + 'px',
+      lineHeight: height + 'px',
+      background: '#' + item.backgroundColor,
+      color:      '#' + item.fontColor,
+      fontSize:   '16px',
+      textAlign:  'center',
+      zIndex:     '99999999',
+
+      webkitUserSelect: 'none',
+    };
+
+    result[item.displayPosition] = '0px';
+
+    if (item.status === 0) {
+      result.display = 'none';
+    }
+
+    return result;
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
