@@ -35,7 +35,7 @@ $(function () {
       return;
     }
 
-    $('#status')
+    $('#pattern_status')
       .prop('checked', response.data.status === 1)
       .click(function() {
         chrome.runtime.sendMessage({
