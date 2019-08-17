@@ -19,7 +19,7 @@
    */
   const onMessageListener = function(request, sender, sendResponse) {
     if (request.command === 'content_scripts:find') {
-      sendResponse(background.find(request.data.url, { ignoreStatus: false }));
+      sendResponse(background.find(request.data.url, { ignoreStatus: true }));
     }
 
     if (request.command === 'browser_action:find') {

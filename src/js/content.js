@@ -4,6 +4,51 @@ $(function() {
 
   const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
 
+  const height = 50;
+
+  const $body = $('body');
+
+  // Keep original margin of body tag.
+  const bodyMargin = {
+    top: $body.css('marginTop'),
+    bottom: $body.css('marginBottom'),
+  };
+
+  // Keep value of display position of pattern item when content scripts were loaded.
+  let displayPosition;
+
+  const cssForBody = function(status) {
+    switch (displayPosition) {
+      case 'top':
+        return {
+          marginTop: marginTop(status),
+        };
+      case 'bottom':
+        return {
+          marginBottom: marginBottom(status),
+        };
+      default:
+        return {};
+    }
+  };
+
+  const marginTop = function(status) {
+    if (status === 1) {
+      // workaround for "position: fixed;" page.
+      return (height + $body.offset().top) + 'px';
+    } else {
+      return bodyMargin.top;
+    }
+  };
+
+  const marginBottom = function(status) {
+    if (status === 1) {
+      return height + 'px';
+    } else {
+      return bodyMargin.bottom;
+    }
+  };
+
   /**
    * @param {string} url
    * @returns {BackgroundRequest}
@@ -25,8 +70,6 @@ $(function() {
       return;
     }
 
-    const height = 50;
-
     const createCss = function() {
       const result = {
         position:   'fixed',
@@ -45,10 +88,14 @@ $(function() {
 
       result[response.data.displayPosition] = '0px';
 
+      if (response.data.status === 0) {
+        result.display = 'none';
+      }
+
       return result;
     };
 
-    const $body = $('body');
+    displayPosition = response.data.displayPosition;
 
     const $container = $('<div>')
       .attr('id', messageContainerId)
@@ -56,15 +103,12 @@ $(function() {
       .text(response.data.message);
 
     if (response.data.displayPosition === 'top') {
-      //
-      // workaround for "position: fixed;" page.
-      //
       $body
-        .css({ marginTop: (height + $body.offset().top) + 'px' })
+        .css(cssForBody(response.data.status))
         .append($container);
     } else if (response.data.displayPosition === 'bottom') {
       $body
-        .css({ marginBottom: height + 'px' })
+        .css(cssForBody(response.data.status))
         .append($container);
     }
   };
@@ -74,6 +118,8 @@ $(function() {
   const onMessageListener = function(request) {
     const selector = '#' + messageContainerId;
     const status = request.data.status;
+
+    $body.css(cssForBody(status));
 
     if (status === 1) {
       $(selector).show();
