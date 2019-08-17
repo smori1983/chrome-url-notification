@@ -4,23 +4,15 @@ $(function () {
 });
 
 $(function () {
-
-  chrome.tabs.query({
-    currentWindow: true,
-    active: true,
-  }, function(tabs) {
-    chrome.runtime.sendMessage(createRequest(tabs), process);
-  });
-
   /**
-   * @param {chrome.tabs.Tab[]} tabs
+   * @param {string} url
    * @returns {BackgroundRequest}
    */
-  const createRequest = function(tabs) {
+  const createRequest = function(url) {
     return {
       command: 'browser_action:find',
       data: {
-        url: tabs[0].url,
+        url: url,
       },
     };
   };
@@ -31,35 +23,51 @@ $(function () {
   const process = function(response) {
     if (response.matched === false) {
       $('#block_for_matched_page').hide();
-      $('#block_for_separator').hide();
 
       return;
     }
 
-    $('#status')
+    /**
+     * @param {string} url
+     * @param {number} status
+     * @returns {BackgroundRequest}
+     */
+    const createRequest = function(url, status) {
+      return {
+        command: 'browser_action:update:status',
+        data: {
+          url: url,
+          status: status,
+        },
+      };
+    };
+
+    $('#pattern_status')
       .prop('checked', response.data.status === 1)
       .click(function() {
-        chrome.runtime.sendMessage({
-          command: 'browser_action:update:status',
-          data: {
-            url: response.data.url,
-            status: $(this).prop('checked') ? 1 : 0,
-          },
-        });
+        const url = response.data.url;
+        const status = $(this).prop('checked') ? 1 : 0;
+
+        chrome.runtime.sendMessage(createRequest(url, status));
       });
   };
+
+  chrome.tabs.query({
+    currentWindow: true,
+    active: true,
+  }, function(tabs) {
+    chrome.runtime.sendMessage(createRequest(tabs[0].url), process);
+  });
 });
 
 $(function () {
-  const optionsPath = chrome.runtime.getURL('html/options.html');
-
   $('<a>')
     .attr('href', '#')
     .text(chrome.i18n.getMessage('label_options'))
     .click(function(e) {
       e.preventDefault();
       chrome.tabs.create({
-        url: optionsPath,
+        url: chrome.runtime.getURL('html/options.html'),
       });
     })
     .appendTo($('#link_options'));

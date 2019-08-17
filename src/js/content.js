@@ -3,13 +3,14 @@
 $(function() {
 
   /**
+   * @param {string} url
    * @returns {BackgroundRequest}
    */
-  const createRequest = function() {
+  const createRequest = function(url) {
     return {
       command: 'content_scripts:find',
       data: {
-        url: location.href,
+        url: url,
       },
     };
   };
@@ -66,6 +67,6 @@ $(function() {
     }
   };
 
-  chrome.runtime.sendMessage(createRequest(), process);
+  chrome.runtime.sendMessage(createRequest(location.href), process);
 
 });
