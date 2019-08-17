@@ -27,16 +27,28 @@ $(function () {
       return;
     }
 
+    /**
+     * @param {string} url
+     * @param {number} status
+     * @returns {BackgroundRequest}
+     */
+    const createRequest = function(url, status) {
+      return {
+        command: 'browser_action:update:status',
+        data: {
+          url: url,
+          status: status,
+        },
+      };
+    };
+
     $('#pattern_status')
       .prop('checked', response.data.status === 1)
       .click(function() {
-        chrome.runtime.sendMessage({
-          command: 'browser_action:update:status',
-          data: {
-            url: response.data.url,
-            status: $(this).prop('checked') ? 1 : 0,
-          },
-        });
+        const url = response.data.url;
+        const status = $(this).prop('checked') ? 1 : 0;
+
+        chrome.runtime.sendMessage(createRequest(url, status));
       });
   };
 
