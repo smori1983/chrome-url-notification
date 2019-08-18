@@ -123,19 +123,30 @@ $(function() {
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
 
+  /**
+   * @param {TabsRequest} request
+   */
   const onMessageListener = function(request) {
-    const selector = '#' + messageContainerId;
-    const status = request.data.status;
+    if (request.command === 'tab:notify:status') {
+      const selector = '#' + messageContainerId;
+      const status = request.data.status;
 
-    $body.css(cssForBody(patternItem.displayPosition, status));
+      $body.css(cssForBody(patternItem.displayPosition, status));
 
-    if (status === 1) {
-      $(selector).show();
-    } else {
-      $(selector).hide();
+      if (status === 1) {
+        $(selector).show();
+      } else {
+        $(selector).hide();
+      }
     }
   };
 
   chrome.runtime.onMessage.addListener(onMessageListener);
 
 });
+
+/**
+ * @typedef {Object} TabsRequest
+ * @property {string} command
+ * @property {Object} data
+ */
