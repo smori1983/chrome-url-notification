@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## Next
+
+### Feature
+
+- Update message area of matched page in conjunction with the browser action
+- Show badge text based on current status of pattern
+
+
 ## v5.0.0
 
 ### Feature
