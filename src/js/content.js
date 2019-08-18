@@ -61,6 +61,34 @@ $(function() {
   })();
 
   /**
+   * @param {FoundItem} item
+   */
+  const cssForMessage = function(item) {
+    const result = {
+      position:   'fixed',
+      left:       '0px',
+      width:      '100%',
+      height:     height + 'px',
+      lineHeight: height + 'px',
+      background: '#' + item.backgroundColor,
+      color:      '#' + item.fontColor,
+      fontSize:   '16px',
+      textAlign:  'center',
+      zIndex:     '99999999',
+
+      webkitUserSelect: 'none',
+    };
+
+    result[item.displayPosition] = '0px';
+
+    if (item.status === 0) {
+      result.display = 'none';
+    }
+
+    return result;
+  };
+
+  /**
    * @param {string} url
    * @returns {BackgroundRequest}
    */
@@ -85,40 +113,12 @@ $(function() {
 
     const $container = $('<div>')
       .attr('id', messageContainerId)
-      .css(createCss(patternItem))
+      .css(cssForMessage(patternItem))
       .text(patternItem.message);
 
     $body
       .css(cssForBody(patternItem.displayPosition, patternItem.status))
       .append($container);
-  };
-
-  /**
-   * @param {FoundItem} item
-   */
-  const createCss = function(item) {
-    const result = {
-      position:   'fixed',
-      left:       '0px',
-      width:      '100%',
-      height:     height + 'px',
-      lineHeight: height + 'px',
-      background: '#' + item.backgroundColor,
-      color:      '#' + item.fontColor,
-      fontSize:   '16px',
-      textAlign:  'center',
-      zIndex:     '99999999',
-
-      webkitUserSelect: 'none',
-    };
-
-    result[item.displayPosition] = '0px';
-
-    if (item.status === 0) {
-      result.display = 'none';
-    }
-
-    return result;
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
