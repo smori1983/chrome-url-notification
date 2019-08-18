@@ -4,6 +4,12 @@ $(function () {
 });
 
 $(function () {
+
+  /**
+   * @type {number}
+   */
+  let tabId;
+
   /**
    * @param {string} url
    * @returns {BackgroundRequest}
@@ -38,8 +44,18 @@ $(function () {
         data: {
           url: url,
           status: status,
+          tabId: tabId,
         },
       };
+    };
+
+    const process = function(response) {
+      chrome.tabs.sendMessage(tabId, {
+        command: 'tab:notify:status',
+        data: {
+          status: response.status,
+        },
+      });
     };
 
     $('#pattern_status')
@@ -48,14 +64,15 @@ $(function () {
         const url = response.data.url;
         const status = $(this).prop('checked') ? 1 : 0;
 
-        chrome.runtime.sendMessage(createRequest(url, status));
+        chrome.runtime.sendMessage(createRequest(url, status), process);
       });
   };
 
   chrome.tabs.query({
     currentWindow: true,
     active: true,
-  }, function(tabs) {
+  }, function(/** @type {chrome.tabs.Tab[]} */ tabs) {
+    tabId = tabs[0].id;
     chrome.runtime.sendMessage(createRequest(tabs[0].url), process);
   });
 });
