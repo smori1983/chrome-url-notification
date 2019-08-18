@@ -19,41 +19,46 @@ $(function() {
    */
   let patternItem;
 
-  /**
-   * @param {number} status The latest value should be passed.
-   * @returns {Object}
-   */
-  const cssForBody = function(status) {
-    switch (patternItem.displayPosition) {
-      case 'top':
-        return {
-          marginTop: marginTop(status),
-        };
-      case 'bottom':
-        return {
-          marginBottom: marginBottom(status),
-        };
-      default:
-        return {};
-    }
-  };
+  const cssForBody = (function() {
+    const marginTop = function(status) {
+      if (status === 1) {
+        // workaround for "position: fixed;" page.
+        return (height + $body.offset().top) + 'px';
+      } else {
+        return bodyMargin.top;
+      }
+    };
 
-  const marginTop = function(status) {
-    if (status === 1) {
-      // workaround for "position: fixed;" page.
-      return (height + $body.offset().top) + 'px';
-    } else {
-      return bodyMargin.top;
-    }
-  };
+    const marginBottom = function(status) {
+      if (status === 1) {
+        return height + 'px';
+      } else {
+        return bodyMargin.bottom;
+      }
+    };
 
-  const marginBottom = function(status) {
-    if (status === 1) {
-      return height + 'px';
-    } else {
-      return bodyMargin.bottom;
-    }
-  };
+    /**
+     * Determine CSS for body tag according to display position and current status.
+     *
+     * @param {string} displayPosition
+     * @param {number} status The latest value should be passed.
+     * @returns {Object}
+     */
+    return function(displayPosition, status) {
+      switch (displayPosition) {
+        case 'top':
+          return {
+            marginTop: marginTop(status),
+          };
+        case 'bottom':
+          return {
+            marginBottom: marginBottom(status),
+          };
+        default:
+          return {};
+      }
+    };
+  })();
 
   /**
    * @param {string} url
@@ -84,7 +89,7 @@ $(function() {
       .text(patternItem.message);
 
     $body
-      .css(cssForBody(patternItem.status))
+      .css(cssForBody(patternItem.displayPosition, patternItem.status))
       .append($container);
   };
 
@@ -122,7 +127,7 @@ $(function() {
     const selector = '#' + messageContainerId;
     const status = request.data.status;
 
-    $body.css(cssForBody(status));
+    $body.css(cssForBody(patternItem.displayPosition, status));
 
     if (status === 1) {
       $(selector).show();
