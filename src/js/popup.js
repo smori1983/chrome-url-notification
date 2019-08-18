@@ -44,6 +44,7 @@ $(function () {
         data: {
           url: url,
           status: status,
+          tabId: tabId,
         },
       };
     };
