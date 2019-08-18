@@ -14,11 +14,17 @@ $(function() {
     bottom: $body.css('marginBottom'),
   };
 
-  // Keep value of display position of pattern item when content scripts were loaded.
-  let displayPosition;
+  /**
+   * @type {FoundItem}
+   */
+  let patternItem;
 
+  /**
+   * @param {number} status The latest value should be passed.
+   * @returns {Object}
+   */
   const cssForBody = function(status) {
-    switch (displayPosition) {
+    switch (patternItem.displayPosition) {
       case 'top':
         return {
           marginTop: marginTop(status),
@@ -70,15 +76,15 @@ $(function() {
       return;
     }
 
-    displayPosition = response.data.displayPosition;
+    patternItem = response.data;
 
     const $container = $('<div>')
       .attr('id', messageContainerId)
-      .css(createCss(response.data))
-      .text(response.data.message);
+      .css(createCss(patternItem))
+      .text(patternItem.message);
 
     $body
-      .css(cssForBody(response.data.status))
+      .css(cssForBody(patternItem.status))
       .append($container);
   };
 
