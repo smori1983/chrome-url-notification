@@ -60,7 +60,7 @@ $(function () {
 
     $('#pattern_status')
       .prop('checked', response.data.status === 1)
-      .click(function() {
+      .on('click', function() {
         const url = response.data.url;
         const status = $(this).prop('checked') ? 1 : 0;
 
@@ -81,7 +81,7 @@ $(function () {
   $('<a>')
     .attr('href', '#')
     .text(chrome.i18n.getMessage('label_options'))
-    .click(function(e) {
+    .on('click', function(e) {
       e.preventDefault();
       chrome.tabs.create({
         url: chrome.runtime.getURL('html/options.html'),

@@ -94,17 +94,17 @@ const headerComponent = (function() {
   };
 
   const initEventHandlers = function() {
-    $('#js_button_add_pattern').click(function(e) {
+    $('#js_button_add_pattern').on('click', function(e) {
       e.preventDefault();
       patternForm.show('add', {});
     });
 
-    $('#js_button_export').click(function(e) {
+    $('#js_button_export').on('click', function(e) {
       e.preventDefault();
       exportComponent.show();
     });
 
-    $('#js_button_import').click(function(e) {
+    $('#js_button_import').on('click', function(e) {
       e.preventDefault();
       importComponent.show();
     });
@@ -177,7 +177,7 @@ const importComponent = (function() {
   const init = function() {
     modal = util.modal('#js_modal_import', {
       'shown.bs.modal': function() {
-        $('#js_form_import_json').focus();
+        $('#js_form_import_json').trigger('focus');
       },
     });
 
@@ -376,7 +376,7 @@ const patternListComponent = (function() {
        */
       const copyButton = function(item) {
         return button('btn-default', i18n.get('label_copy'))
-          .click(function(e) {
+          .on('click', function(e) {
             e.preventDefault();
             patternForm.show('add', {
               url: item.url,
@@ -393,7 +393,7 @@ const patternListComponent = (function() {
        */
       const editButton = function(item) {
         return button('btn-primary', i18n.get('label_edit'))
-          .click(function(e) {
+          .on('click', function(e) {
             e.preventDefault();
             patternForm.show('edit', {
               url: item.url,
@@ -410,7 +410,7 @@ const patternListComponent = (function() {
        */
       const deleteButton = function(item) {
         return button('btn-danger', i18n.get('label_delete'))
-          .click(function(e) {
+          .on('click', function(e) {
             e.preventDefault();
             deleteForm.show({
               pattern: item.url,
@@ -482,7 +482,7 @@ const patternForm = (function() {
   const init = function() {
     modal = util.modal('#js_modal_pattern', {
       'shown.bs.modal': function() {
-        $('#js_input_url').focus();
+        $('#js_input_url').trigger('focus');
       },
     });
 
