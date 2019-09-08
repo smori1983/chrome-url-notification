@@ -58,6 +58,18 @@ gulp.task('make:urlNotification', function(cb) {
   ], cb);
 });
 
+gulp.task('make:app:popup', function (cb) {
+  pump([
+    browserify([
+      './src/js/app/main.popup.js',
+    ]).bundle(),
+    source('popup.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
+
+gulp.task('make', gulp.series('make:urlNotification', 'make:app:popup'));
+
 gulp.task('dist:source', function(cb) {
   pump([
     gulp.src([
@@ -85,7 +97,7 @@ gulp.task('dist:icon', function(cb) {
 
 gulp.task('dist', gulp.series('dist:source', 'dist:icon'));
 
-gulp.task('build', gulp.series('clean', 'make:urlNotification', 'dist'));
+gulp.task('build', gulp.series('clean', 'make', 'dist'));
 
 gulp.task('lint', function(cb) {
   pump([
