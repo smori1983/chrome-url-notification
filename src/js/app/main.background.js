@@ -4,71 +4,67 @@
  * @property {object} data
  */
 
-(function() {
+const background = require('../urlNotification/background');
+const badge = require('./badge');
 
-  const background = require('../urlNotification/background');
-  const badge = require('./badge');
+const onInstalledListener = function() {
+  background.migrate();
+};
 
-  const onInstalledListener = function() {
-    background.migrate();
-  };
+chrome.runtime.onInstalled.addListener(onInstalledListener);
 
-  chrome.runtime.onInstalled.addListener(onInstalledListener);
+/**
+ * @param {BackgroundRequest} request
+ * @param {chrome.runtime.MessageSender} sender
+ * @param {function} sendResponse
+ */
+const contentScriptsFindListener = function(request, sender, sendResponse) {
+  if (request.command !== 'content_scripts:find') {
+    return;
+  }
 
-  /**
-   * @param {BackgroundRequest} request
-   * @param {chrome.runtime.MessageSender} sender
-   * @param {function} sendResponse
-   */
-  const contentScriptsFindListener = function(request, sender, sendResponse) {
-    if (request.command !== 'content_scripts:find') {
-      return;
-    }
+  const result = background.find(request.data.url, { ignoreStatus: true });
+  const status = result.matched ? result.data.status : null;
 
-    const result = background.find(request.data.url, {ignoreStatus: true});
-    const status = result.matched ? result.data.status : null;
+  badge.draw(sender.tab.id, result.matched, status);
 
-    badge.draw(sender.tab.id, result.matched, status);
+  sendResponse(result);
+};
 
-    sendResponse(result);
-  };
+/**
+ * @param {BackgroundRequest} request
+ * @param {chrome.runtime.MessageSender} sender
+ * @param {function} sendResponse
+ */
+const browserActionFindListener = function(request, sender, sendResponse) {
+  if (request.command !== 'browser_action:find') {
+    return;
+  }
 
-  /**
-   * @param {BackgroundRequest} request
-   * @param {chrome.runtime.MessageSender} sender
-   * @param {function} sendResponse
-   */
-  const browserActionFindListener = function(request, sender, sendResponse) {
-    if (request.command !== 'browser_action:find') {
-      return;
-    }
+  const findResult = background.find(request.data.url, { ignoreStatus: true });
 
-    const findResult = background.find(request.data.url, { ignoreStatus: true });
+  sendResponse(findResult);
+};
 
-    sendResponse(findResult);
-  };
+/**
+ * @param {BackgroundRequest} request
+ * @param {chrome.runtime.MessageSender} sender
+ * @param {function} sendResponse
+ */
+const browserActionUpdateStatusListener = function(request, sender, sendResponse) {
+  if (request.command !== 'browser_action:update:status') {
+    return;
+  }
 
-  /**
-   * @param {BackgroundRequest} request
-   * @param {chrome.runtime.MessageSender} sender
-   * @param {function} sendResponse
-   */
-  const browserActionUpdateStatusListener = function(request, sender, sendResponse) {
-    if (request.command !== 'browser_action:update:status') {
-      return;
-    }
+  background.updatePattern(request.data.url, { status: request.data.status });
 
-    background.updatePattern(request.data.url, { status: request.data.status });
+  badge.draw(request.data.tabId, true, request.data.status);
 
-    badge.draw(request.data.tabId, true, request.data.status);
+  sendResponse({
+    status: request.data.status,
+  });
+};
 
-    sendResponse({
-      status: request.data.status,
-    });
-  };
-
-  chrome.runtime.onMessage.addListener(contentScriptsFindListener);
-  chrome.runtime.onMessage.addListener(browserActionFindListener);
-  chrome.runtime.onMessage.addListener(browserActionUpdateStatusListener);
-
-})();
+chrome.runtime.onMessage.addListener(contentScriptsFindListener);
+chrome.runtime.onMessage.addListener(browserActionFindListener);
+chrome.runtime.onMessage.addListener(browserActionUpdateStatusListener);
