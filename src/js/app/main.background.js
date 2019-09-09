@@ -13,37 +13,62 @@
     background.migrate();
   };
 
+  chrome.runtime.onInstalled.addListener(onInstalledListener);
+
   /**
    * @param {BackgroundRequest} request
    * @param {chrome.runtime.MessageSender} sender
    * @param {function} sendResponse
    */
-  const onMessageListener = function(request, sender, sendResponse) {
-    if (request.command === 'content_scripts:find') {
-      const result = background.find(request.data.url, { ignoreStatus: true });
-      const status = result.matched ? result.data.status : null;
-
-      badge.draw(sender.tab.id, result.matched, status);
-
-      sendResponse(result);
+  const contentScriptsFindListener = function(request, sender, sendResponse) {
+    if (request.command !== 'content_scripts:find') {
+      return;
     }
 
-    if (request.command === 'browser_action:find') {
-      sendResponse(background.find(request.data.url, { ignoreStatus: true }));
-    }
+    const result = background.find(request.data.url, {ignoreStatus: true});
+    const status = result.matched ? result.data.status : null;
 
-    if (request.command === 'browser_action:update:status') {
-      background.updatePattern(request.data.url, { status: request.data.status });
+    badge.draw(sender.tab.id, result.matched, status);
 
-      badge.draw(request.data.tabId, true, request.data.status);
-
-      sendResponse({
-        status: request.data.status,
-      });
-    }
+    sendResponse(result);
   };
 
-  chrome.runtime.onInstalled.addListener(onInstalledListener);
-  chrome.runtime.onMessage.addListener(onMessageListener);
+  /**
+   * @param {BackgroundRequest} request
+   * @param {chrome.runtime.MessageSender} sender
+   * @param {function} sendResponse
+   */
+  const browserActionFindListener = function(request, sender, sendResponse) {
+    if (request.command !== 'browser_action:find') {
+      return;
+    }
+
+    const findResult = background.find(request.data.url, { ignoreStatus: true });
+
+    sendResponse(findResult);
+  };
+
+  /**
+   * @param {BackgroundRequest} request
+   * @param {chrome.runtime.MessageSender} sender
+   * @param {function} sendResponse
+   */
+  const browserActionUpdateStatusListener = function(request, sender, sendResponse) {
+    if (request.command !== 'browser_action:update:status') {
+      return;
+    }
+
+    background.updatePattern(request.data.url, { status: request.data.status });
+
+    badge.draw(request.data.tabId, true, request.data.status);
+
+    sendResponse({
+      status: request.data.status,
+    });
+  };
+
+  chrome.runtime.onMessage.addListener(contentScriptsFindListener);
+  chrome.runtime.onMessage.addListener(browserActionFindListener);
+  chrome.runtime.onMessage.addListener(browserActionUpdateStatusListener);
 
 })();
