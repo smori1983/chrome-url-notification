@@ -59,22 +59,24 @@ $(function() {
   /**
    * @param {TabsRequest} request
    */
-  const onMessageListener = function(request) {
-    if (request.command === 'tab:notify:status') {
-      const selector = '#' + messageContainerId;
-      const status = request.data.status;
+  const tabNotifyStatusListener = function(request) {
+    if (request.command !== 'tab:notify:status') {
+      return;
+    }
 
-      $body.css(css.forBody(patternItem.displayPosition, status));
+    const selector = '#' + messageContainerId;
+    const status = request.data.status;
 
-      if (status === 1) {
-        $(selector).show();
-      } else {
-        $(selector).hide();
-      }
+    $body.css(css.forBody(patternItem.displayPosition, status));
+
+    if (status === 1) {
+      $(selector).show();
+    } else {
+      $(selector).hide();
     }
   };
 
-  chrome.runtime.onMessage.addListener(onMessageListener);
+  chrome.runtime.onMessage.addListener(tabNotifyStatusListener);
 
 });
 
