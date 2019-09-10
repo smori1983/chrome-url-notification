@@ -44,21 +44,8 @@ $(function() {
 
     patternItem = response.data;
 
-    $('<div>')
-      .attr('id', messageContainerId)
-      .css(css.forMessage(patternItem))
-      .text(patternItem.message)
-      .appendTo($body);
-
-    const selector = '#' + messageContainerId;
-
-    if (patternItem.status === 1) {
-      $(selector).show();
-    } else {
-      $(selector).hide();
-    }
-
-    $body.css(css.forBody(patternItem.displayPosition, patternItem.status));
+    initUI(patternItem);
+    updateUI(patternItem.status);
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
@@ -71,15 +58,7 @@ $(function() {
       return;
     }
 
-    const selector = '#' + messageContainerId;
-
-    if (request.data.status === 1) {
-      $(selector).show();
-    } else {
-      $(selector).hide();
-    }
-
-    $body.css(css.forBody(patternItem.displayPosition, request.data.status));
+    updateUI(request.data.status);
   };
 
   chrome.runtime.onMessage.addListener(tabNotifyStatusListener);
