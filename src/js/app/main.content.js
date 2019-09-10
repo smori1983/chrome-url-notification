@@ -44,14 +44,21 @@ $(function() {
 
     patternItem = response.data;
 
-    const $container = $('<div>')
+    $('<div>')
       .attr('id', messageContainerId)
       .css(css.forMessage(patternItem))
-      .text(patternItem.message);
+      .text(patternItem.message)
+      .appendTo($body);
 
-    $body
-      .css(css.forBody(patternItem.displayPosition, patternItem.status))
-      .append($container);
+    const selector = '#' + messageContainerId;
+
+    if (patternItem.status === 1) {
+      $(selector).show();
+    } else {
+      $(selector).hide();
+    }
+
+    $body.css(css.forBody(patternItem.displayPosition, patternItem.status));
   };
 
   chrome.runtime.sendMessage(createRequest(location.href), process);
@@ -65,15 +72,14 @@ $(function() {
     }
 
     const selector = '#' + messageContainerId;
-    const status = request.data.status;
 
-    $body.css(css.forBody(patternItem.displayPosition, status));
-
-    if (status === 1) {
+    if (request.data.status === 1) {
       $(selector).show();
     } else {
       $(selector).hide();
     }
+
+    $body.css(css.forBody(patternItem.displayPosition, request.data.status));
   };
 
   chrome.runtime.onMessage.addListener(tabNotifyStatusListener);

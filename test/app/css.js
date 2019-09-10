@@ -71,7 +71,7 @@ describe('app.css', function () {
           status: 1,
         });
 
-        assert.strictEqual('undefined', typeof result.display);
+        assert.strictEqual('none', result.display);
       });
 
       it('status is 0', function () {

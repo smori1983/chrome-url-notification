@@ -52,9 +52,8 @@ const forMessage = function(item) {
 
   result[item.displayPosition] = '0px';
 
-  if (item.status === 0) {
-    result.display = 'none';
-  }
+  // Initially hide element regardless of status.
+  result.display = 'none';
 
   return result;
 };
