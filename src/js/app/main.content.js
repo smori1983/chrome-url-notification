@@ -84,6 +84,32 @@ $(function() {
 
   chrome.runtime.onMessage.addListener(tabNotifyStatusListener);
 
+  /**
+   * @param {FoundItem} item
+   */
+  const initUI = function(item) {
+    $('<div>')
+      .attr('id', messageContainerId)
+      .css(css.forMessage(item))
+      .text(item.message)
+      .appendTo($body);
+  };
+
+  /**
+   * @param {number} status
+   */
+  const updateUI = function(status) {
+    const selector = '#' + messageContainerId;
+
+    if (status === 1) {
+      $(selector).show();
+    } else {
+      $(selector).hide();
+    }
+
+    $body.css(css.forBody(patternItem.displayPosition, status));
+  };
+
 });
 
 /**
