@@ -15,11 +15,6 @@ const css = cssFactory.init({
 });
 
 /**
- * @type {FoundItem}
- */
-let patternItem;
-
-/**
  * @param {string} url
  * @returns {BackgroundRequest}
  */
@@ -40,10 +35,8 @@ const process = function(response) {
     return;
   }
 
-  patternItem = response.data;
-
-  initUI(patternItem);
-  updateUI(patternItem.status);
+  initUI(response.data);
+  updateUI(response.data);
 };
 
 chrome.runtime.sendMessage(createRequest(location.href), process);
@@ -56,7 +49,12 @@ const tabNotifyStatusListener = function(request) {
     return;
   }
 
-  updateUI(request.data.status);
+  /** @type {PatternItem|null} */
+  const item = request.data.item;
+
+  if (item) {
+    updateUI(item);
+  }
 };
 
 chrome.runtime.onMessage.addListener(tabNotifyStatusListener);
@@ -73,18 +71,18 @@ const initUI = function(item) {
 };
 
 /**
- * @param {number} status
+ * @param {PatternItem|FoundItem} item
  */
-const updateUI = function(status) {
+const updateUI = function(item) {
   const selector = '#' + messageContainerId;
 
-  if (status === 1) {
+  if (item.status === 1) {
     $(selector).show();
   } else {
     $(selector).hide();
   }
 
-  $body.css(css.forBody(patternItem.displayPosition, status));
+  $body.css(css.forBody(item.displayPosition, item.status));
 };
 
 /**

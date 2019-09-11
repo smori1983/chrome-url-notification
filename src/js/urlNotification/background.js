@@ -33,6 +33,14 @@ const find = function(url, option) {
 
 /**
  * @param {string} url
+ * @returns {PatternItem}
+ */
+const findByUrl = function(url) {
+  return storage.findByUrl(url);
+};
+
+/**
+ * @param {string} url
  * @param {object} data
  * @returns {boolean} true if successfully updated
  */
@@ -61,4 +69,5 @@ const updatePattern = function(url, data) {
 
 module.exports.migrate = migrate;
 module.exports.find = find;
+module.exports.findByUrl = findByUrl;
 module.exports.updatePattern = updatePattern;

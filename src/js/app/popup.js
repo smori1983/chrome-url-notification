@@ -27,6 +27,7 @@ const updateStatus = function(tabId, url, status) {
     chrome.tabs.sendMessage(tabId, {
       command: 'tab:notify:status',
       data: {
+        item: response.item,
         status: response.status,
       },
     });

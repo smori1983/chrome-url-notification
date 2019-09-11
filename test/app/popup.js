@@ -22,6 +22,19 @@ describe('popup', function () {
 
   describe('updateStatus', function () {
     it('update with 0', function () {
+      /** @type {FindResult} */
+      const result = {
+        matched: true,
+        data: {
+          url: 'https://example.com/',
+          message: 'message',
+          backgroundColor: '000000',
+          fontColor: 'ffffff',
+          displayPosition: 'top',
+          status: 0,
+        },
+      };
+
       chrome.runtime.sendMessage
         .withArgs({
           command: 'browser_action:update:status',
@@ -31,7 +44,7 @@ describe('popup', function () {
             tabId: 10001,
           },
         })
-        .callsArgWith(1, { status: 0});
+        .callsArgWith(1, { item: result, status: 0});
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
@@ -40,6 +53,7 @@ describe('popup', function () {
           .withArgs(10001, {
             command: 'tab:notify:status',
             data: {
+              item: result,
               status: 0,
             },
           })
@@ -48,6 +62,19 @@ describe('popup', function () {
     });
 
     it('update with 1', function () {
+      /** @type {FindResult} */
+      const result = {
+        matched: true,
+        data: {
+          url: 'https://example.com/',
+          message: 'message',
+          backgroundColor: '000000',
+          fontColor: 'ffffff',
+          displayPosition: 'top',
+          status: 1,
+        },
+      };
+
       chrome.runtime.sendMessage
         .withArgs({
           command: 'browser_action:update:status',
@@ -57,7 +84,7 @@ describe('popup', function () {
             tabId: 10002,
           },
         })
-        .callsArgWith(1, { status: 1});
+        .callsArgWith(1, { item: result, status: 1});
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
@@ -66,6 +93,7 @@ describe('popup', function () {
           .withArgs(10002, {
             command: 'tab:notify:status',
             data: {
+              item: result,
               status: 1,
             },
           })

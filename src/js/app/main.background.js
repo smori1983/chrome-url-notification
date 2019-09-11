@@ -60,7 +60,10 @@ const browserActionUpdateStatusListener = function(request, sender, sendResponse
 
   badge.draw(request.data.tabId, true, request.data.status);
 
+  const item = background.findByUrl(request.data.url);
+
   sendResponse({
+    item: item,
     status: request.data.status,
   });
 };
