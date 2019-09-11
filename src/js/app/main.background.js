@@ -56,6 +56,7 @@ const browserActionUpdateStatusListener = function(request, sender, sendResponse
     return;
   }
 
+  // TODO: Check return value.
   background.updatePattern(request.data.url, { status: request.data.status });
 
   badge.draw(request.data.tabId, true, request.data.status);
