@@ -1,9 +1,3 @@
-/**
- * @typedef {Object} BackgroundRequest
- * @property {string} command
- * @property {object} data
- */
-
 const background = require('../urlNotification/background');
 const badge = require('./badge');
 
@@ -14,7 +8,13 @@ const onInstalledListener = function() {
 chrome.runtime.onInstalled.addListener(onInstalledListener);
 
 /**
- * @param {BackgroundRequest} request
+ * @typedef {Object} MessageContentScriptsFind
+ * @property {string} command
+ * @property {{url: string}} data
+ */
+
+/**
+ * @param {MessageContentScriptsFind} request
  * @param {chrome.runtime.MessageSender} sender
  * @param {function} sendResponse
  */
@@ -32,7 +32,13 @@ const contentScriptsFindListener = function(request, sender, sendResponse) {
 };
 
 /**
- * @param {BackgroundRequest} request
+ * @typedef {Object} MessageBrowserActionFind
+ * @property {string} command
+ * @property {{url: string}} data
+ */
+
+/**
+ * @param {MessageBrowserActionFind} request
  * @param {chrome.runtime.MessageSender} sender
  * @param {function} sendResponse
  */
@@ -47,7 +53,13 @@ const browserActionFindListener = function(request, sender, sendResponse) {
 };
 
 /**
- * @param {BackgroundRequest} request
+ * @typedef {Object} MessageBrowserActionUpdateStatus
+ * @property {string} command
+ * @property {{url: string, status: number, tabId: number}} data
+ */
+
+/**
+ * @param {MessageBrowserActionUpdateStatus} request
  * @param {chrome.runtime.MessageSender} sender
  * @param {function} sendResponse
  */

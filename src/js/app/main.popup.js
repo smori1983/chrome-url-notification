@@ -15,7 +15,7 @@ $(function () {
 
   /**
    * @param {string} url
-   * @returns {BackgroundRequest}
+   * @returns {MessageBrowserActionFind}
    */
   const createRequest = function(url) {
     return {

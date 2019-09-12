@@ -4,7 +4,7 @@ const uiController = require('./uiController').init();
 
 /**
  * @param {string} url
- * @returns {BackgroundRequest}
+ * @returns {MessageContentScriptsFind}
  */
 const createRequest = function(url) {
   return {
@@ -30,25 +30,22 @@ const process = function(response) {
 chrome.runtime.sendMessage(createRequest(location.href), process);
 
 /**
- * @param {TabsRequest} request
+ * @typedef {Object} MessageTabNotifyStatus
+ * @property {string} command
+ * @property {{item: PatternItem|null, status: number}} data
+ */
+
+/**
+ * @param {MessageTabNotifyStatus} request
  */
 const tabNotifyStatusListener = function(request) {
   if (request.command !== 'tab:notify:status') {
     return;
   }
 
-  /** @type {PatternItem|null} */
-  const item = request.data.item;
-
-  if (item) {
-    uiController.updateUI(item);
+  if (request.data.item) {
+    uiController.updateUI(request.data.item);
   }
 };
 
 chrome.runtime.onMessage.addListener(tabNotifyStatusListener);
-
-/**
- * @typedef {Object} TabsRequest
- * @property {string} command
- * @property {Object} data
- */

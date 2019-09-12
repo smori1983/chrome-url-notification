@@ -10,7 +10,7 @@ const updateStatus = function(tabId, url, status) {
    * @param {number} tabId
    * @param {string} url
    * @param {number} status
-   * @returns {BackgroundRequest}
+   * @returns {MessageBrowserActionUpdateStatus}
    */
   const createRequest = function(tabId, url, status) {
     return {
