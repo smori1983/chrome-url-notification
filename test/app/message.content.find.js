@@ -9,7 +9,7 @@ const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.find');
 
-describe('message.content_scripts', function () {
+describe('message.content.find', function () {
   before(function() {
     global.chrome = chrome;
   });
