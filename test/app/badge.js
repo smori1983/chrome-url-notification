@@ -7,6 +7,20 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/main');
 const chrome = require('sinon-chrome');
 
+/**
+ * @param {string} text
+ * @param {number} tabId
+ * @returns {boolean}
+ */
+const setBadgeTextShould = function(text, tabId) {
+  return chrome.browserAction.setBadgeText
+    .withArgs({
+      text: text,
+      tabId: tabId,
+    })
+    .calledOnce;
+};
+
 describe('app.badge', function() {
   before(function () {
     global.chrome = chrome;
@@ -21,54 +35,26 @@ describe('app.badge', function() {
   });
 
   it('draw - matched and enabled', function () {
-    SUT.badge.draw(12345, true, 1);
+    SUT.badge.draw(10001, true, 1);
 
-    assert.ok(
-      chrome.browserAction.setBadgeText
-        .withArgs({
-          text: 'ON',
-          tabId: 12345,
-        })
-        .calledOnce
-    );
+    assert.ok(setBadgeTextShould('ON', 10001));
   });
 
   it('draw - matched and disabled', function () {
-    SUT.badge.draw(12345, true, 0);
+    SUT.badge.draw(10002, true, 0);
 
-    assert.ok(
-      chrome.browserAction.setBadgeText
-        .withArgs({
-          text: 'OFF',
-          tabId: 12345,
-        })
-        .calledOnce
-    );
+    assert.ok(setBadgeTextShould('OFF', 10002));
   });
 
   it('draw - not matched', function () {
-    SUT.badge.draw(12345, false, null);
+    SUT.badge.draw(10003, false, null);
 
-    assert.ok(
-      chrome.browserAction.setBadgeText
-        .withArgs({
-          text: '',
-          tabId: 12345,
-        })
-        .calledOnce
-    );
+    assert.ok(setBadgeTextShould('', 10003));
   });
 
   it('draw - when not matched status is not used', function () {
-    SUT.badge.draw(12345, false, 1);
+    SUT.badge.draw(10004, false, 1);
 
-    assert.ok(
-      chrome.browserAction.setBadgeText
-        .withArgs({
-          text: '',
-          tabId: 12345,
-        })
-        .calledOnce
-    );
+    assert.ok(setBadgeTextShould('', 10004));
   });
 });
