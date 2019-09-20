@@ -1,4 +1,4 @@
-const popup = require('./popup');
+const popupFind = require('./popup.find');
 const $ = require('jquery');
 
 $(function () {
@@ -7,51 +7,11 @@ $(function () {
 });
 
 $(function () {
-
-  /**
-   * @type {number}
-   */
-  let tabId;
-
-  /**
-   * @param {string} url
-   * @returns {MessageBrowserActionFind}
-   */
-  const createRequest = function(url) {
-    return {
-      command: 'browser_action:find',
-      data: {
-        url: url,
-      },
-    };
-  };
-
-  /**
-   * @param {FindResult} response
-   */
-  const process = function(response) {
-    if (response.matched === false) {
-      $('#block_for_matched_page').hide();
-
-      return;
-    }
-
-    $('#pattern_status')
-      .prop('checked', response.data.status === 1)
-      .on('click', function() {
-        const url = response.data.url;
-        const status = $(this).prop('checked') ? 1 : 0;
-
-        popup.updateStatus(tabId, url, status);
-      });
-  };
-
   chrome.tabs.query({
     currentWindow: true,
     active: true,
   }, function(/** @type {chrome.tabs.Tab[]} */ tabs) {
-    tabId = tabs[0].id;
-    chrome.runtime.sendMessage(createRequest(tabs[0].url), process);
+    popupFind.sendMessage(tabs[0]);
   });
 });
 
