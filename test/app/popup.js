@@ -7,6 +7,24 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/main').popup;
 const chrome = require('sinon-chrome');
 
+/**
+ * @param {number} tabId
+ * @param {FindResult} item
+ * @param {number} status
+ * @returns {boolean}
+ */
+const sendMessageForTabShould = function (tabId, item, status) {
+  return chrome.tabs.sendMessage
+    .withArgs(tabId, {
+      command: 'tab:notify:status',
+      data: {
+        item: item,
+        status: status,
+      },
+    })
+    .calledOnce;
+};
+
 describe('popup', function () {
   before(function () {
     global.chrome = chrome;
@@ -48,17 +66,7 @@ describe('popup', function () {
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
-      assert.ok(
-        chrome.tabs.sendMessage
-          .withArgs(10001, {
-            command: 'tab:notify:status',
-            data: {
-              item: result,
-              status: 0,
-            },
-          })
-          .calledOnce
-      );
+      assert.ok(sendMessageForTabShould(10001, result, 0));
     });
 
     it('update with 1', function () {
@@ -88,17 +96,7 @@ describe('popup', function () {
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
-      assert.ok(
-        chrome.tabs.sendMessage
-          .withArgs(10002, {
-            command: 'tab:notify:status',
-            data: {
-              item: result,
-              status: 1,
-            },
-          })
-          .calledOnce
-      );
+      assert.ok(sendMessageForTabShould(10002, result, 1));
     });
   });
 });
