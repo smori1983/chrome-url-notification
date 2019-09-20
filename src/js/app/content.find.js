@@ -20,10 +20,10 @@ const sendMessage = function() {
       return;
     }
 
-    const uiController = require('./uiController').init();
+    const ui = require('./content.ui').init();
 
-    uiController.initUI(response.data);
-    uiController.updateUI(response.data);
+    ui.initUI(response.data);
+    ui.updateUI(response.data);
   };
 
   chrome.runtime.sendMessage(createRequest(window.location.href), process);

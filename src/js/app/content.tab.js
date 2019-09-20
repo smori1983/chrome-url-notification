@@ -16,9 +16,9 @@ const listen = function () {
     }
 
     if (request.data.item) {
-      const uiController = require('./uiController').init();
+      const ui = require('./content.ui').init();
 
-      uiController.updateUI(request.data.item);
+      ui.updateUI(request.data.item);
     }
   };
 
