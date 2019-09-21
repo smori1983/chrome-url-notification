@@ -1,4 +1,4 @@
-const popup = require('./popup');
+const statusManager = require('./popup.status');
 
 /**
  * @param {chrome.tabs.Tab} tab
@@ -35,7 +35,7 @@ const sendMessage = function(tab) {
         const url = response.data.url;
         const status = $(this).prop('checked') ? 1 : 0;
 
-        popup.updateStatus(tab.id, url, status);
+        statusManager.updateStatus(tab.id, url, status);
       });
   };
 
