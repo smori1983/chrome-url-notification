@@ -38,9 +38,10 @@ describe('message.popup.find', function () {
 
     const $ = require('jquery');
 
+    /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 10001,
-      url: 'https://www.example.com/',
+      url: 'https://example.com/',
     };
 
     SUT.sendMessage(tab);
@@ -60,7 +61,7 @@ describe('message.popup.find', function () {
     assert.strictEqual($('#block_for_matched_page').css('display'), 'none');
   });
 
-  it('pattern matched status is 0', function() {
+  it('pattern matched and status is 0', function() {
     const dom = new JSDOM(html);
 
     global.window = dom.window;
@@ -68,9 +69,10 @@ describe('message.popup.find', function () {
 
     const $ = require('jquery');
 
+    /** @type {chrome.tabs.Tab} */
     const tab = {
-      id: 10002,
-      url: 'https://www.example.com/',
+      id: 20001,
+      url: 'https://example.com/',
     };
 
     SUT.sendMessage(tab);
@@ -85,7 +87,7 @@ describe('message.popup.find', function () {
       .callArgWith(1, {
         matched: true,
         data: {
-          url: 'https://example.cm/',
+          url: 'https://example.com/',
           message: 'message',
           backgroundColor: '000000',
           fontColor: 'ffffff',
@@ -98,7 +100,7 @@ describe('message.popup.find', function () {
     assert.strictEqual($('#pattern_status').prop('checked'), false);
   });
 
-  it('pattern matched status is 1', function() {
+  it('pattern matched and status is 0, then enable', function() {
     const dom = new JSDOM(html);
 
     global.window = dom.window;
@@ -106,9 +108,10 @@ describe('message.popup.find', function () {
 
     const $ = require('jquery');
 
+    /** @type {chrome.tabs.Tab} */
     const tab = {
-      id: 10002,
-      url: 'https://www.example.com/',
+      id: 20002,
+      url: 'https://example.com/',
     };
 
     SUT.sendMessage(tab);
@@ -123,7 +126,62 @@ describe('message.popup.find', function () {
       .callArgWith(1, {
         matched: true,
         data: {
-          url: 'https://example.cm/',
+          url: 'https://example.com/',
+          message: 'message',
+          backgroundColor: '000000',
+          fontColor: 'ffffff',
+          displayPosition: 'top',
+          status: 0,
+        },
+      });
+
+    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
+    assert.strictEqual($('#pattern_status').prop('checked'), false);
+
+    $('#pattern_status').trigger('click');
+
+    assert.ok(chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:update:status',
+        data: {
+          url: 'https://example.com/',
+          status: 1,
+          tabId: 20002,
+        },
+      })
+      .calledOnce);
+
+    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
+    assert.strictEqual($('#pattern_status').prop('checked'), true);
+  });
+
+  it('pattern matched status is 1', function() {
+    const dom = new JSDOM(html);
+
+    global.window = dom.window;
+    global.document = dom.window;
+
+    const $ = require('jquery');
+
+    /** @type {chrome.tabs.Tab} */
+    const tab = {
+      id: 30001,
+      url: 'https://example.com/',
+    };
+
+    SUT.sendMessage(tab);
+
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:find',
+        data: {
+          url: tab.url,
+        },
+      })
+      .callArgWith(1, {
+        matched: true,
+        data: {
+          url: 'https://example.com/',
           message: 'message',
           backgroundColor: '000000',
           fontColor: 'ffffff',
@@ -134,5 +192,60 @@ describe('message.popup.find', function () {
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), true);
+  });
+
+  it('pattern matched and status is 1, then disable', function() {
+    const dom = new JSDOM(html);
+
+    global.window = dom.window;
+    global.document = dom.window;
+
+    const $ = require('jquery');
+
+    /** @type {chrome.tabs.Tab} */
+    const tab = {
+      id: 30002,
+      url: 'https://example.com/',
+    };
+
+    SUT.sendMessage(tab);
+
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:find',
+        data: {
+          url: tab.url,
+        },
+      })
+      .callArgWith(1, {
+        matched: true,
+        data: {
+          url: 'https://example.com/',
+          message: 'message',
+          backgroundColor: '000000',
+          fontColor: 'ffffff',
+          displayPosition: 'top',
+          status: 1,
+        },
+      });
+
+    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
+    assert.strictEqual($('#pattern_status').prop('checked'), true);
+
+    $('#pattern_status').trigger('click');
+
+    assert.ok(chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:update:status',
+        data: {
+          url: 'https://example.com/',
+          status: 0,
+          tabId: 30002,
+        },
+      })
+      .calledOnce);
+
+    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
+    assert.strictEqual($('#pattern_status').prop('checked'), false);
   });
 });
