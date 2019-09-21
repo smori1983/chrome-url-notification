@@ -1,8 +1,4 @@
-const describe = require('mocha').describe;
-const before = require('mocha').before;
-const beforeEach = require('mocha').beforeEach;
-const after = require('mocha').after;
-const it = require('mocha').it;
+const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/popup.status');
 const chrome = require('sinon-chrome');

@@ -1,9 +1,4 @@
-const describe = require('mocha').describe;
-const before = require('mocha').before;
-const beforeEach = require('mocha').beforeEach;
-const after = require('mocha').after;
-const afterEach = require('mocha').afterEach;
-const it = require('mocha').it;
+const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
@@ -25,10 +20,6 @@ describe('message.content.tab', function () {
   beforeEach(function () {
     chrome.flush();
     delete require.cache[require.resolve('jquery')];
-  });
-
-  afterEach(function () {
-
   });
 
   after(function() {
