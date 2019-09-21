@@ -29,36 +29,6 @@ const marginBottom = function(pageInfo, status) {
 };
 
 /**
- * Determine CSS for message area.
- *
- * @param {FoundItem} item
- * @returns {Object}
- */
-const forMessage = function(item) {
-  const result = {
-    position:   'fixed',
-    left:       '0px',
-    width:      '100%',
-    height:     height + 'px',
-    lineHeight: height + 'px',
-    background: '#' + item.backgroundColor,
-    color:      '#' + item.fontColor,
-    fontSize:   '16px',
-    textAlign:  'center',
-    zIndex:     '99999999',
-
-    webkitUserSelect: 'none',
-  };
-
-  result[item.displayPosition] = '0px';
-
-  // Initially hide element regardless of status.
-  result.display = 'none';
-
-  return result;
-};
-
-/**
  * @param {PageInfo} pageInfo
  */
 const main = function(pageInfo) {
@@ -70,7 +40,7 @@ const main = function(pageInfo) {
      * @param {number} status The latest value should be passed.
      * @returns {Object}
      */
-    forBody: function(displayPosition, status) {
+    forBody: function (displayPosition, status) {
       switch (displayPosition) {
         case 'top':
           return {
@@ -84,7 +54,35 @@ const main = function(pageInfo) {
           return {};
       }
     },
-    forMessage: forMessage,
+    /**
+     * Determine CSS for message area.
+     *
+     * @param {FoundItem} item
+     * @returns {Object}
+     */
+    forMessage: function (item) {
+      const result = {
+        position: 'fixed',
+        left: '0px',
+        width: '100%',
+        height: height + 'px',
+        lineHeight: height + 'px',
+        background: '#' + item.backgroundColor,
+        color: '#' + item.fontColor,
+        fontSize: '16px',
+        textAlign: 'center',
+        zIndex: '99999999',
+
+        webkitUserSelect: 'none',
+      };
+
+      result[item.displayPosition] = '0px';
+
+      // Initially hide element regardless of status.
+      result.display = 'none';
+
+      return result;
+    },
   };
 };
 
