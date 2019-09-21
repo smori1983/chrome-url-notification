@@ -4,7 +4,7 @@ const beforeEach = require('mocha').beforeEach;
 const after = require('mocha').after;
 const it = require('mocha').it;
 const assert = require('assert');
-const SUT = require('../../src/js/app/main').popup;
+const SUT = require('../../src/js/app/popup');
 const chrome = require('sinon-chrome');
 
 /**
