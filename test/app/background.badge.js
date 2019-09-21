@@ -1,6 +1,6 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../../src/js/app/badge');
+const SUT = require('../../src/js/app/background.badge');
 const chrome = require('sinon-chrome');
 
 /**
