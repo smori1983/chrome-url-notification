@@ -1,11 +1,11 @@
 'use strict';
 
-const $ = require('jquery');
 const cssFactory = require('./css');
 
 const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
 
 const main = function () {
+  const $ = require('jquery');
   const $body = $('body');
 
   const css = cssFactory.init({
