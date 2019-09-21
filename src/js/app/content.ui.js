@@ -1,6 +1,6 @@
 'use strict';
 
-const cssFactory = require('./css');
+const cssFactory = require('./content.css');
 
 const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
 
