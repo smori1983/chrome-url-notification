@@ -7,4 +7,6 @@
 /node_modules
 /src/js/background.js
 /src/js/content.js
+/src/js/options.js
 /src/js/popup.js
+/src/js/vendor.js
