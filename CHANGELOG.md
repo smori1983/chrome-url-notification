@@ -1,6 +1,16 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Reimplement app codes
+  - background
+  - content
+  - popup
+
+
 ## v5.1.0
 
 ### Feature
