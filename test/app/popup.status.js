@@ -6,6 +6,25 @@ const testUtil = require('../../test_lib/util');
 
 /**
  * @param {number} tabId
+ * @param {string} url
+ * @param {number} status
+ * @param {FindResult} item
+ */
+const popupUpdateStatusMessage = function(tabId, url, status, item) {
+  chrome.runtime.sendMessage
+    .withArgs({
+      command: 'browser_action:update:status',
+      data: {
+        url: url,
+        status: status,
+        tabId: tabId,
+      },
+    })
+    .callsArgWith(1, { item: item, status: status });
+};
+
+/**
+ * @param {number} tabId
  * @param {FindResult} item
  * @param {number} status
  * @returns {boolean}
@@ -46,16 +65,7 @@ describe('popup', function () {
         }),
       };
 
-      chrome.runtime.sendMessage
-        .withArgs({
-          command: 'browser_action:update:status',
-          data: {
-            url: 'https://example.com/',
-            status: 0,
-            tabId: 10001,
-          },
-        })
-        .callsArgWith(1, { item: result, status: 0});
+      popupUpdateStatusMessage(10001, 'https://example.com/', 0, result);
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
@@ -72,16 +82,7 @@ describe('popup', function () {
         }),
       };
 
-      chrome.runtime.sendMessage
-        .withArgs({
-          command: 'browser_action:update:status',
-          data: {
-            url: 'https://example.net/',
-            status: 1,
-            tabId: 10002,
-          },
-        })
-        .callsArgWith(1, { item: result, status: 1});
+      popupUpdateStatusMessage(10002, 'https://example.net/', 1, result);
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
