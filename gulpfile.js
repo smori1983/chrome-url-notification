@@ -29,34 +29,53 @@ const dist = (function() {
 
 gulp.task('clean', function() {
   return del([
+    sprintf('%s/.*', dist),
     sprintf('%s/**', dist),
     sprintf('!%s', dist),
   ], { force: true });
 });
 
-gulp.task('make:vendor:js', function(cb) {
+gulp.task('make:background', function (cb) {
   pump([
-    browserify({
-      require: [
-        'deepmerge',
-        'jsonschema',
-        'lodash',
-      ],
-    }).bundle(),
-    source('vendor.js'),
+    browserify([
+      './src/js/app/main.background.js',
+    ]).bundle(),
+    source('background.js'),
     gulp.dest('src/js'),
   ], cb);
 });
 
-gulp.task('make:urlNotification', function(cb) {
+gulp.task('make:content', function (cb) {
   pump([
-    browserify()
-      .require('./src/js/urlNotification/main.js', { expose: 'url-notification' })
-      .bundle(),
-    source('urlNotification.js'),
+    browserify([
+      './src/js/app/main.content.js',
+    ]).bundle(),
+    source('content.js'),
     gulp.dest('src/js'),
   ], cb);
 });
+
+gulp.task('make:popup', function (cb) {
+  pump([
+    browserify([
+      './src/js/app/main.popup.js',
+    ]).bundle(),
+    source('popup.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
+
+gulp.task('make:options', function (cb) {
+  pump([
+    browserify([
+      './src/js/app/main.options.js',
+    ]).bundle(),
+    source('options.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
+
+gulp.task('make', gulp.series('make:background', 'make:content', 'make:popup', 'make:options'));
 
 gulp.task('dist:source', function(cb) {
   pump([
@@ -64,8 +83,7 @@ gulp.task('dist:source', function(cb) {
       'src/_locales/**',
       'src/css/**',
       'src/html/**',
-      'src/js/**',
-      '!src/js/urlNotification/**',
+      'src/js/*.js',
       'src/lib/**/**',
       'src/manifest.json',
     ], { base: 'src' }),
@@ -85,7 +103,7 @@ gulp.task('dist:icon', function(cb) {
 
 gulp.task('dist', gulp.series('dist:source', 'dist:icon'));
 
-gulp.task('build', gulp.series('clean', 'make:urlNotification', 'dist'));
+gulp.task('build', gulp.series('clean', 'make', 'dist'));
 
 gulp.task('lint', function(cb) {
   pump([
