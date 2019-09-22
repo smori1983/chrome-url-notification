@@ -4,6 +4,7 @@ const assert = require('assert');
 const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/popup.find');
+const testUtil = require('../../test_lib/util');
 
 const html = fs.readFileSync(__dirname + '/../../src/html/popup.html');
 
@@ -77,14 +78,9 @@ describe('message.popup.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        data: testUtil.makeFoundItem({
           status: 0,
-        },
+        }),
       });
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
@@ -116,14 +112,9 @@ describe('message.popup.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        data: testUtil.makeFoundItem({
           status: 0,
-        },
+        }),
       });
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
@@ -171,14 +162,9 @@ describe('message.popup.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        data: testUtil.makeFoundItem({
           status: 1,
-        },
+        }),
       });
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
@@ -210,14 +196,9 @@ describe('message.popup.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        data: testUtil.makeFoundItem({
           status: 1,
-        },
+        }),
       });
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');

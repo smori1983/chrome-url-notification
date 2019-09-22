@@ -2,6 +2,7 @@ const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/popup.status');
 const chrome = require('sinon-chrome');
+const testUtil = require('../../test_lib/util');
 
 /**
  * @param {number} tabId
@@ -39,14 +40,10 @@ describe('popup', function () {
       /** @type {FindResult} */
       const result = {
         matched: true,
-        data: {
+        data: testUtil.makeFoundItem({
           url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
           status: 0,
-        },
+        }),
       };
 
       chrome.runtime.sendMessage
@@ -69,14 +66,10 @@ describe('popup', function () {
       /** @type {FindResult} */
       const result = {
         matched: true,
-        data: {
+        data: testUtil.makeFoundItem({
           url: 'https://example.com/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
           status: 1,
-        },
+        }),
       };
 
       chrome.runtime.sendMessage

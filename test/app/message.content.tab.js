@@ -3,6 +3,7 @@ const assert = require('assert');
 const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.tab');
+const testUtil = require('../../test_lib/util');
 
 const html = `
 <html>
@@ -40,14 +41,10 @@ describe('message.content.tab', function () {
       .dispatch({
         command: 'tab:notify:status',
         data: {
-          item: {
-            url: 'https://example.com/',
-            msg: 'message',
-            backgroundColor: '000000',
+          item: testUtil.makeFoundItem({
             displayPosition: 'top',
             status: 0,
-          },
-          status: 0,
+          }),
         },
       });
 
@@ -70,14 +67,10 @@ describe('message.content.tab', function () {
       .dispatch({
         command: 'tab:notify:status',
         data: {
-          item: {
-            url: 'https://example.com/',
-            msg: 'message',
-            backgroundColor: '000000',
+          item: testUtil.makeFoundItem({
             displayPosition: 'bottom',
             status: 1,
-          },
-          status: 1,
+          }),
         },
       });
 

@@ -2,6 +2,7 @@ const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/content.css');
 const chrome = require('sinon-chrome');
+const testUtil = require('../../test_lib/util');
 
 const css = SUT.init({
   body: {
@@ -58,27 +59,17 @@ describe('app.css', function () {
   describe('forMessage', function() {
     describe('status', function( ) {
       it('status is 1', function () {
-        const result = css.forMessage({
-          url: 'https://example.com/',
-          message: 'example',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        const result = css.forMessage(testUtil.makeFoundItem({
           status: 1,
-        });
+        }));
 
         assert.strictEqual('none', result.display);
       });
 
       it('status is 0', function () {
-        const result = css.forMessage({
-          url: 'https://example.com/',
-          message: 'example',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        const result = css.forMessage(testUtil.makeFoundItem({
           status: 0,
-        });
+        }));
 
         assert.strictEqual('none', result.display);
       });

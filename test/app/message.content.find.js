@@ -3,6 +3,7 @@ const assert = require('assert');
 const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.find');
+const testUtil = require('../../test_lib/util');
 
 describe('message.content.find', function () {
   before(function() {
@@ -45,7 +46,7 @@ describe('message.content.find', function () {
     assert.strictEqual($('div').length, 0);
   });
 
-  it('pattern matched status is 0', function () {
+  it('pattern matched and status is 0', function () {
     const dom = new JSDOM('<html><body></body></html>', {
       url: 'https://example.com/',
     });
@@ -66,14 +67,9 @@ describe('message.content.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.cm/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'top',
+        data: testUtil.makeFoundItem({
           status: 0,
-        },
+        }),
       });
 
     const $container = $('div');
@@ -81,7 +77,7 @@ describe('message.content.find', function () {
     assert.strictEqual($container.css('display'), 'none');
   });
 
-  it('pattern matched status is 1', function () {
+  it('pattern matched and status is 1', function () {
     const dom = new JSDOM('<html><body></body></html>', {
       url: 'https://example.com/',
     });
@@ -102,14 +98,9 @@ describe('message.content.find', function () {
       })
       .callArgWith(1, {
         matched: true,
-        data: {
-          url: 'https://example.cm/',
-          message: 'message',
-          backgroundColor: '000000',
-          fontColor: 'ffffff',
-          displayPosition: 'bottom',
+        data: testUtil.makeFoundItem({
           status: 1,
-        },
+        }),
       });
 
     const $container = $('div');
