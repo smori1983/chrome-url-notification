@@ -34,17 +34,7 @@ gulp.task('clean', function() {
   ], { force: true });
 });
 
-gulp.task('make:urlNotification', function(cb) {
-  pump([
-    browserify()
-      .require('./src/js/urlNotification/main.js', { expose: 'url-notification' })
-      .bundle(),
-    source('urlNotification.js'),
-    gulp.dest('src/js'),
-  ], cb);
-});
-
-gulp.task('make:app:background', function (cb) {
+gulp.task('make:background', function (cb) {
   pump([
     browserify([
       './src/js/app/main.background.js',
@@ -54,7 +44,7 @@ gulp.task('make:app:background', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app:content', function (cb) {
+gulp.task('make:content', function (cb) {
   pump([
     browserify([
       './src/js/app/main.content.js',
@@ -64,7 +54,7 @@ gulp.task('make:app:content', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app:popup', function (cb) {
+gulp.task('make:popup', function (cb) {
   pump([
     browserify([
       './src/js/app/main.popup.js',
@@ -74,7 +64,7 @@ gulp.task('make:app:popup', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app:options', function (cb) {
+gulp.task('make:options', function (cb) {
   pump([
     browserify([
       './src/js/app/main.options.js',
@@ -84,9 +74,7 @@ gulp.task('make:app:options', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app', gulp.series('make:app:background', 'make:app:content', 'make:app:popup', 'make:app:options'));
-
-gulp.task('make', gulp.series('make:urlNotification', 'make:app'));
+gulp.task('make', gulp.series('make:background', 'make:content', 'make:popup', 'make:options'));
 
 gulp.task('dist:source', function(cb) {
   pump([
