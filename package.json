@@ -23,9 +23,9 @@
   "devDependencies": {
     "@types/chrome": "0.0.83",
     "@types/jquery": "^3.3.31",
-    "@types/node": "^12.7.3",
+    "@types/node": "^12.7.5",
     "browserify": "^16.5.0",
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.1",
     "cross-env": "^5.2.1",
     "del": "^4.1.1",
     "dotenv": "^7.0.0",
