@@ -88,7 +88,17 @@ gulp.task('make:app:popup', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app', gulp.series('make:app:background', 'make:app:content', 'make:app:popup'));
+gulp.task('make:app:options', function (cb) {
+  pump([
+    browserify([
+      './src/js/app/main.options.js',
+    ]).bundle(),
+    source('options.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
+
+gulp.task('make:app', gulp.series('make:app:background', 'make:app:content', 'make:app:popup', 'make:app:options'));
 
 gulp.task('make', gulp.series('make:urlNotification', 'make:app'));
 
