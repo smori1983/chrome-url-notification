@@ -6,7 +6,6 @@
   "scripts": {
     "build:prod": "cross-env EXTENSION_MODE=production gulp build",
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
-    "make:vendor:js": "gulp make:vendor:js",
     "make:urlNotification": "gulp make:urlNotification",
     "make": "gulp make",
     "test": "mocha --require mock-local-storage test/*",

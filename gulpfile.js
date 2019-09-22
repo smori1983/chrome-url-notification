@@ -34,20 +34,6 @@ gulp.task('clean', function() {
   ], { force: true });
 });
 
-gulp.task('make:vendor:js', function(cb) {
-  pump([
-    browserify({
-      require: [
-        'deepmerge',
-        'jsonschema',
-        'lodash',
-      ],
-    }).bundle(),
-    source('vendor.js'),
-    gulp.dest('src/js'),
-  ], cb);
-});
-
 gulp.task('make:urlNotification', function(cb) {
   pump([
     browserify()
