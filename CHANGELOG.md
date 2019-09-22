@@ -9,6 +9,8 @@
   - background
   - content
   - popup
+- Introduce `jsdom`
+- Introduce `sinon-chrome`
 
 
 ## v5.1.0
