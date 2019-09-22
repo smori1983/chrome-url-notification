@@ -29,6 +29,7 @@ const dist = (function() {
 
 gulp.task('clean', function() {
   return del([
+    sprintf('%s/.*', dist),
     sprintf('%s/**', dist),
     sprintf('!%s', dist),
   ], { force: true });
