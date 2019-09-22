@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## Next
+## v5.2.0
 
 ### Development
 
@@ -11,6 +11,8 @@
   - popup
 - Introduce `jsdom`
 - Introduce `sinon-chrome`
+- Update `gulp` tasks
+- Remove compiled files from source management
 
 
 ## v5.1.0
