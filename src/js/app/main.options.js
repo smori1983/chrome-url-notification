@@ -1,6 +1,13 @@
 'use strict';
 
-const urlNotification = require('url-notification');
+const $ = global.jQuery = require('jquery');
+require('jquery-validation');
+require('bootstrap');
+require('bootstrap-colorpicker');
+
+const ClipboardJS = require('clipboard');
+
+const urlNotification = require('./../urlNotification/main');
 
 const util = (function() {
   const rebind = function(selector, eventName, callback) {

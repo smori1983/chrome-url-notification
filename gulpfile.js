@@ -29,36 +29,13 @@ const dist = (function() {
 
 gulp.task('clean', function() {
   return del([
+    sprintf('%s/.*', dist),
     sprintf('%s/**', dist),
     sprintf('!%s', dist),
   ], { force: true });
 });
 
-gulp.task('make:vendor:js', function(cb) {
-  pump([
-    browserify({
-      require: [
-        'deepmerge',
-        'jsonschema',
-        'lodash',
-      ],
-    }).bundle(),
-    source('vendor.js'),
-    gulp.dest('src/js'),
-  ], cb);
-});
-
-gulp.task('make:urlNotification', function(cb) {
-  pump([
-    browserify()
-      .require('./src/js/urlNotification/main.js', { expose: 'url-notification' })
-      .bundle(),
-    source('urlNotification.js'),
-    gulp.dest('src/js'),
-  ], cb);
-});
-
-gulp.task('make:app:background', function (cb) {
+gulp.task('make:background', function (cb) {
   pump([
     browserify([
       './src/js/app/main.background.js',
@@ -68,7 +45,7 @@ gulp.task('make:app:background', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app:content', function (cb) {
+gulp.task('make:content', function (cb) {
   pump([
     browserify([
       './src/js/app/main.content.js',
@@ -78,7 +55,7 @@ gulp.task('make:app:content', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app:popup', function (cb) {
+gulp.task('make:popup', function (cb) {
   pump([
     browserify([
       './src/js/app/main.popup.js',
@@ -88,9 +65,17 @@ gulp.task('make:app:popup', function (cb) {
   ], cb);
 });
 
-gulp.task('make:app', gulp.series('make:app:background', 'make:app:content', 'make:app:popup'));
+gulp.task('make:options', function (cb) {
+  pump([
+    browserify([
+      './src/js/app/main.options.js',
+    ]).bundle(),
+    source('options.js'),
+    gulp.dest('src/js'),
+  ], cb);
+});
 
-gulp.task('make', gulp.series('make:urlNotification', 'make:app'));
+gulp.task('make', gulp.series('make:background', 'make:content', 'make:popup', 'make:options'));
 
 gulp.task('dist:source', function(cb) {
   pump([
@@ -98,8 +83,7 @@ gulp.task('dist:source', function(cb) {
       'src/_locales/**',
       'src/css/**',
       'src/html/**',
-      'src/js/**',
-      '!src/js/urlNotification/**',
+      'src/js/*.js',
       'src/lib/**/**',
       'src/manifest.json',
     ], { base: 'src' }),
