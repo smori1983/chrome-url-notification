@@ -13,6 +13,23 @@ const html = `
 </html>
 `;
 
+/**
+ * @param {string} displayPosition
+ * @param {number} status
+ */
+const tabNotifyDispatch = function(displayPosition, status) {
+  chrome.runtime.onMessage
+    .dispatch({
+      command: 'tab:notify:status',
+      data: {
+        item: testUtil.makeFoundItem({
+          displayPosition: displayPosition,
+          status: status,
+        }),
+      },
+    });
+};
+
 describe('message.content.tab', function () {
   before(function() {
     global.chrome = chrome;
@@ -37,16 +54,7 @@ describe('message.content.tab', function () {
 
     SUT.listen();
 
-    chrome.runtime.onMessage
-      .dispatch({
-        command: 'tab:notify:status',
-        data: {
-          item: testUtil.makeFoundItem({
-            displayPosition: 'top',
-            status: 0,
-          }),
-        },
-      });
+    tabNotifyDispatch('top', 0);
 
     // NOTE: default margin-top of <body> is 8px
     assert.strictEqual($('body').css('margin-top'), '8px');
@@ -63,16 +71,7 @@ describe('message.content.tab', function () {
 
     SUT.listen();
 
-    chrome.runtime.onMessage
-      .dispatch({
-        command: 'tab:notify:status',
-        data: {
-          item: testUtil.makeFoundItem({
-            displayPosition: 'bottom',
-            status: 1,
-          }),
-        },
-      });
+    tabNotifyDispatch('bottom', 1);
 
     assert.strictEqual($('body').css('margin-bottom'), '50px');
     assert.strictEqual($('div').css('display'), 'block');

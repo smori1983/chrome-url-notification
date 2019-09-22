@@ -8,6 +8,43 @@ const testUtil = require('../../test_lib/util');
 
 const html = fs.readFileSync(__dirname + '/../../src/html/popup.html');
 
+/**
+ * @param {chrome.tabs.Tab} tab
+ * @param {(FoundItem|null)} item
+ */
+const popupFindMessage = function(tab, item) {
+  chrome.runtime.sendMessage
+    .withArgs({
+      command: 'browser_action:find',
+      data: {
+        url: tab.url,
+      },
+    })
+    .callArgWith(1, {
+      matched: item !== null,
+      data: item,
+    });
+};
+
+/**
+ * @param {number} tabId
+ * @param {string} url
+ * @param {number} status
+ * @returns {boolean}
+ */
+const sendMessageShould = function(tabId, url, status) {
+  return chrome.runtime.sendMessage
+    .withArgs({
+      command: 'browser_action:update:status',
+      data: {
+        url: url,
+        status: status,
+        tabId: tabId,
+      },
+    })
+    .calledOnce;
+};
+
 describe('message.popup.find', function () {
   before(function () {
     global.chrome = chrome;
@@ -38,17 +75,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:find',
-        data: {
-          url: tab.url,
-        },
-      })
-      .callArgWith(1, {
-        matched: false,
-        data: null,
-      });
+    popupFindMessage(tab, null);
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'none');
   });
@@ -69,19 +96,9 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:find',
-        data: {
-          url: tab.url,
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 0,
-        }),
-      });
+    popupFindMessage(tab, testUtil.makeFoundItem({
+      status: 0,
+    }));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), false);
@@ -103,35 +120,16 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:find',
-        data: {
-          url: tab.url,
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 0,
-        }),
-      });
+    popupFindMessage(tab, testUtil.makeFoundItem({
+      status: 0,
+    }));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), false);
 
     $('#pattern_status').trigger('click');
 
-    assert.ok(chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:update:status',
-        data: {
-          url: 'https://example.com/',
-          status: 1,
-          tabId: 20002,
-        },
-      })
-      .calledOnce);
+    assert.ok(sendMessageShould(20002, 'https://example.com/', 1));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), true);
@@ -153,19 +151,9 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:find',
-        data: {
-          url: tab.url,
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 1,
-        }),
-      });
+    popupFindMessage(tab, testUtil.makeFoundItem({
+      status: 1,
+    }));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), true);
@@ -187,35 +175,16 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:find',
-        data: {
-          url: tab.url,
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 1,
-        }),
-      });
+    popupFindMessage(tab, testUtil.makeFoundItem({
+      status: 1,
+    }));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), true);
 
     $('#pattern_status').trigger('click');
 
-    assert.ok(chrome.runtime.sendMessage
-      .withArgs({
-        command: 'browser_action:update:status',
-        data: {
-          url: 'https://example.com/',
-          status: 0,
-          tabId: 30002,
-        },
-      })
-      .calledOnce);
+    assert.ok(sendMessageShould(30002, 'https://example.com/', 0));
 
     assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
     assert.strictEqual($('#pattern_status').prop('checked'), false);

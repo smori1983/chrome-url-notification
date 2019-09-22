@@ -5,6 +5,24 @@ const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.find');
 const testUtil = require('../../test_lib/util');
 
+/**
+ * @param {string} url
+ * @param {(FoundItem|null)} item
+ */
+const contentFindMessage = function(url, item) {
+  chrome.runtime.sendMessage
+    .withArgs({
+      command: 'content_scripts:find',
+      data: {
+        url: url,
+      },
+    })
+    .callArgWith(1, {
+      matched: item !== null,
+      data: item,
+    })
+};
+
 describe('message.content.find', function () {
   before(function() {
     global.chrome = chrome;
@@ -31,17 +49,7 @@ describe('message.content.find', function () {
 
     SUT.sendMessage();
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'content_scripts:find',
-        data: {
-          url: 'https://example.com/',
-        },
-      })
-      .callArgWith(1, {
-        matched: false,
-        data: null,
-      });
+    contentFindMessage('https://example.com/', null);
 
     assert.strictEqual($('div').length, 0);
   });
@@ -58,19 +66,9 @@ describe('message.content.find', function () {
 
     SUT.sendMessage();
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'content_scripts:find',
-        data: {
-          url: 'https://example.com/',
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 0,
-        }),
-      });
+    contentFindMessage('https://example.com/', testUtil.makeFoundItem({
+      status: 0,
+    }));
 
     const $container = $('div');
     assert.strictEqual($container.length, 1);
@@ -89,19 +87,9 @@ describe('message.content.find', function () {
 
     SUT.sendMessage();
 
-    chrome.runtime.sendMessage
-      .withArgs({
-        command: 'content_scripts:find',
-        data: {
-          url: 'https://example.com/',
-        },
-      })
-      .callArgWith(1, {
-        matched: true,
-        data: testUtil.makeFoundItem({
-          status: 1,
-        }),
-      });
+    contentFindMessage('https://example.com/', testUtil.makeFoundItem({
+      status: 1,
+    }));
 
     const $container = $('div');
     assert.strictEqual($container.length, 1);
