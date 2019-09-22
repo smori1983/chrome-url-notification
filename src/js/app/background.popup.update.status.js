@@ -30,4 +30,8 @@ const listener = function(request, sender, sendResponse) {
   });
 };
 
-module.exports.listener = listener;
+const listen = function () {
+  chrome.runtime.onMessage.addListener(listener);
+};
+
+module.exports.listen = listen;

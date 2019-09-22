@@ -4,4 +4,8 @@ const listener = function () {
   background.migrate();
 };
 
-module.exports.listener = listener;
+const listen = function () {
+  chrome.runtime.onInstalled.addListener(listener);
+};
+
+module.exports.listen = listen;

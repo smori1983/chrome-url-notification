@@ -21,4 +21,8 @@ const listener = function(request, sender, sendResponse) {
   sendResponse(findResult);
 };
 
-module.exports.listener = listener;
+const listen = function () {
+  chrome.runtime.onMessage.addListener(listener);
+};
+
+module.exports.listen = listen;
