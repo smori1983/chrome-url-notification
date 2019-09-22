@@ -11,21 +11,34 @@
 ![list](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/list.png)
 
 
-## 主な用途
+## Purpose
 
-ウェブサービス開発のお供に。
+- Poka-yoke
+- For development of web based application
 
 
-## 使用方法
+## Install
 
-URLのパターンと表示したいメッセージを登録します。
+[Chrome web store](https://chrome.google.com/webstore/detail/chrome-url-notification/gdnmbdajkmabbkejinjnjdobmkbfhonn)
 
-`https://*.example.com/` のように、`*` を使用できます。
 
-- 閲覧中のURLが登録されたパターンにマッチすると、メッセージが表示されます。
-- 表示位置は上部または下部を選択可能。
+## How to use
 
+Register data in options page.
+
+- URL pattern
+- message
+- background color
+- display position
+- status (enabled/disabled)
+
+
+## Message APIs
+
+![message.content](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/message.content.v5.2.png)
+
+![message.content](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/message.popup.v5.2.png)
 
 ## TODO
 
-`position: fixed` な要素が既に存在するページとは相性が悪い。
+Displaying message might not work well in pages that use `position:fixed`.
