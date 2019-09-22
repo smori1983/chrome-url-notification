@@ -38,7 +38,7 @@ describe('message.content.find', function () {
   });
 
   it('pattern not matched', function() {
-    const dom = new JSDOM('<html><body></body></html>', {
+    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
 
@@ -55,7 +55,7 @@ describe('message.content.find', function () {
   });
 
   it('pattern matched and status is 0', function () {
-    const dom = new JSDOM('<html><body></body></html>', {
+    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
 
@@ -76,7 +76,7 @@ describe('message.content.find', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    const dom = new JSDOM('<html><body></body></html>', {
+    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
 

@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const deepMerge = require('deepmerge');
 const validator = require('../src/js/urlNotification/validator');
 
@@ -43,6 +44,14 @@ const isNotValidJson = function(json) {
 };
 
 /**
+ * @param {string} path Relative path from project root.
+ * @returns {string}
+ */
+const getHtml = function(path) {
+  return fs.readFileSync(__dirname + '/../' + path).toString();
+};
+
+/**
  * @typedef {Object} FoundItemDiff
  * @property {string} [url]
  * @property {string} [message]
@@ -75,4 +84,5 @@ module.exports.setUpStorage = setUpStorage;
 module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;
+module.exports.getHtml = getHtml;
 module.exports.makeFoundItem = makeFoundItem;

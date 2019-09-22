@@ -5,14 +5,6 @@ const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.tab');
 const testUtil = require('../../test_lib/util');
 
-const html = `
-<html>
-<body>
-  <div id="chrome-url-notification-container-9b7414d403c1287ca963"></div>
-</body>
-</html>
-`;
-
 /**
  * @param {string} displayPosition
  * @param {number} status
@@ -45,7 +37,7 @@ describe('message.content.tab', function () {
   });
 
   it('pattern matched and status is 0', function () {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
 
     global.window = dom.window;
     global.document = dom.window;
@@ -62,7 +54,7 @@ describe('message.content.tab', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
 
     global.window = dom.window;
     global.document = dom.window;

@@ -1,12 +1,9 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
-const fs = require('fs');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
-
-const html = fs.readFileSync(__dirname + '/../../src/html/popup.html');
 
 /**
  * @param {chrome.tabs.Tab} tab
@@ -60,7 +57,7 @@ describe('message.popup.find', function () {
   });
 
   it('pattern not matched', function() {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
     global.document = dom.window;
@@ -81,7 +78,7 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0', function() {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
     global.document = dom.window;
@@ -105,7 +102,7 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0, then enable', function() {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
     global.document = dom.window;
@@ -136,7 +133,7 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched status is 1', function() {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
     global.document = dom.window;
@@ -160,7 +157,7 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 1, then disable', function() {
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
     global.document = dom.window;
