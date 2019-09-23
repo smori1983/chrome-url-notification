@@ -43,7 +43,7 @@ describe('message.content.find', function () {
     });
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -60,7 +60,7 @@ describe('message.content.find', function () {
     });
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -81,7 +81,7 @@ describe('message.content.find', function () {
     });
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 

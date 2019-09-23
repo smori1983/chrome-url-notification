@@ -40,7 +40,7 @@ describe('message.content.tab', function () {
     const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -57,7 +57,7 @@ describe('message.content.tab', function () {
     const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 

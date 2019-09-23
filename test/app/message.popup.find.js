@@ -60,7 +60,7 @@ describe('message.popup.find', function () {
     const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -81,7 +81,7 @@ describe('message.popup.find', function () {
     const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -105,7 +105,7 @@ describe('message.popup.find', function () {
     const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -136,7 +136,7 @@ describe('message.popup.find', function () {
     const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
@@ -160,7 +160,7 @@ describe('message.popup.find', function () {
     const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
 
     global.window = dom.window;
-    global.document = dom.window;
+    global.document = dom.window.document;
 
     const $ = require('jquery');
 
