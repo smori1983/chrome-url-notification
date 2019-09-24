@@ -9,41 +9,15 @@ const ClipboardJS = require('clipboard');
 
 const urlNotification = require('./../urlNotification/main');
 const modalFactory = require('./options.util.modal');
+const messageFactory = require('./options.util.message');
 
 const util = (function() {
   const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);
   };
 
-  const buildMessage = function(selector) {
-    let timeoutId = null;
-
-    const show = function(message) {
-      $(selector).text(message);
-
-      if (timeoutId !== null) {
-        window.clearTimeout(timeoutId);
-      }
-
-      timeoutId = window.setTimeout(function() {
-        timeoutId = null;
-        hide();
-      }, 3000);
-    };
-
-    const hide = function() {
-      $(selector).empty();
-    };
-
-    return {
-      show: show,
-      hide: hide,
-    };
-  };
-
   return {
     rebind: rebind,
-    buildMessage: buildMessage,
   };
 })();
 
@@ -121,7 +95,7 @@ const exportComponent = (function() {
 
   const init = function() {
     const clipboard = new ClipboardJS('#js_export_copy');
-    const message = util.buildMessage('#js_export_message');
+    const message = messageFactory.init('#js_export_message');
 
     clipboard.on('success', function(e) {
       e.clearSelection();
@@ -190,7 +164,7 @@ const importComponent = (function() {
       invalidJson: i18n.get('message_json_invalid'),
     };
 
-    const message = util.buildMessage('#js_import_message');
+    const message = messageFactory.init('#js_import_message');
 
     return function() {
       const jsonText = $('#js_form_import_json').val().trim();
