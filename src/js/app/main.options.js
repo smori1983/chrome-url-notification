@@ -8,29 +8,11 @@ require('bootstrap-colorpicker');
 const ClipboardJS = require('clipboard');
 
 const urlNotification = require('./../urlNotification/main');
+const modalFactory = require('./options.util.modal');
 
 const util = (function() {
   const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);
-  };
-
-  const modal = function(selector, events) {
-    $.each($.extend({}, events), function(eventName, callback) {
-      $(selector).on(eventName, callback);
-    });
-
-    const show = function() {
-      $(selector).modal('show');
-    };
-
-    const hide = function() {
-      $(selector).modal('hide');
-    };
-
-    return {
-      show: show,
-      hide: hide,
-    };
   };
 
   const buildMessage = function(selector) {
@@ -61,7 +43,6 @@ const util = (function() {
 
   return {
     rebind: rebind,
-    modal: modal,
     buildMessage: buildMessage,
   };
 })();
@@ -147,7 +128,7 @@ const exportComponent = (function() {
       message.show(i18n.get('message_copy_done'));
     });
 
-    modal = util.modal('#js_modal_export', {
+    modal = modalFactory.init('#js_modal_export', {
       'shown.bs.modal': function() {
         $('#js_export_display').scrollTop(0);
       },
@@ -182,7 +163,7 @@ const importComponent = (function() {
   let modal = null;
 
   const init = function() {
-    modal = util.modal('#js_modal_import', {
+    modal = modalFactory.init('#js_modal_import', {
       'shown.bs.modal': function() {
         $('#js_form_import_json').trigger('focus');
       },
@@ -487,7 +468,7 @@ const patternForm = (function() {
   let validator;
 
   const init = function() {
-    modal = util.modal('#js_modal_pattern', {
+    modal = modalFactory.init('#js_modal_pattern', {
       'shown.bs.modal': function() {
         $('#js_input_url').trigger('focus');
       },
@@ -696,7 +677,7 @@ const deleteForm = (function() {
   let current;
 
   const init = function() {
-    modal = util.modal('#js_modal_delete');
+    modal = modalFactory.init('#js_modal_delete');
 
     util.rebind('#js_form_delete', 'submit', function(e) {
       e.preventDefault();
