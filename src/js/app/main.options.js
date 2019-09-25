@@ -11,6 +11,8 @@ const urlNotification = require('./../urlNotification/main');
 const modalFactory = require('./options.util.modal');
 const messageFactory = require('./options.util.message');
 
+const deleteForm = require('./options.deleteForm');
+
 const util = (function() {
   const rebind = function(selector, eventName, callback) {
     $(selector).off(eventName).on(eventName, callback);
@@ -377,6 +379,8 @@ const patternListComponent = (function() {
             deleteForm.show({
               pattern: item.url,
               message: item.msg,
+            }, function () {
+              show();
             });
           });
       };
@@ -636,63 +640,12 @@ const patternForm = (function() {
   };
 })();
 
-/**
- * @typedef {object} DeleteFormItem
- * @property {string} pattern
- * @property {string} message
- */
-
-const deleteForm = (function() {
-  let modal;
-
-  /**
-   * @param {DeleteFormItem}
-   */
-  let current;
-
-  const init = function() {
-    modal = modalFactory.init('#js_modal_delete');
-
-    util.rebind('#js_form_delete', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-  };
-
-  /**
-   * @param {DeleteFormItem} item
-   */
-  const show = function(item) {
-    current = item;
-
-    bindValues();
-    modal.show();
-  };
-
-  const bindValues = function() {
-    $('#js_form_delete_pattern').text(current.pattern);
-    $('#js_form_delete_message').text(current.message);
-  };
-
-  const submit = function() {
-    urlNotification.storage.deletePattern(current.pattern);
-    modal.hide();
-    patternListComponent.show();
-  };
-
-  return {
-    init: init,
-    show: show,
-  };
-})();
-
 $(function() {
   headerComponent.init();
   exportComponent.init();
   importComponent.init();
   patternListComponent.show();
   patternForm.init();
-  deleteForm.init();
 
   i18n.init();
 });
