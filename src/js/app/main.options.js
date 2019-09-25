@@ -5,12 +5,11 @@ require('jquery-validation');
 require('bootstrap');
 require('bootstrap-colorpicker');
 
-const ClipboardJS = require('clipboard');
-
 const urlNotification = require('./../urlNotification/main');
 const modalFactory = require('./options.util.modal');
 const messageFactory = require('./options.util.message');
 
+const exportForm = require('./options.exportForm');
 const deleteForm = require('./options.deleteForm');
 
 const util = (function() {
@@ -65,7 +64,7 @@ const headerComponent = (function() {
 
     $('#js_button_export').on('click', function(e) {
       e.preventDefault();
-      exportComponent.show();
+      exportForm.show();
     });
 
     $('#js_button_import').on('click', function(e) {
@@ -79,59 +78,6 @@ const headerComponent = (function() {
       initEventHandlers();
       showVersion();
     },
-  };
-})();
-
-/**
- * @typedef {object} ExportFormItem
- * @property {string} jsonString
- */
-
-const exportComponent = (function() {
-  let modal;
-
-  /**
-   * @type {ExportFormItem}
-   */
-  let current;
-
-  const init = function() {
-    const clipboard = new ClipboardJS('#js_export_copy');
-    const message = messageFactory.init('#js_export_message');
-
-    clipboard.on('success', function(e) {
-      e.clearSelection();
-      message.show(i18n.get('message_copy_done'));
-    });
-
-    modal = modalFactory.init('#js_modal_export', {
-      'shown.bs.modal': function() {
-        $('#js_export_display').scrollTop(0);
-      },
-    });
-  };
-
-  const bindValues = function() {
-    $('#js_export_display').html(current.jsonString);
-  };
-
-  const show = function() {
-    const data = {
-      version: urlNotification.config.version(),
-      pattern: urlNotification.data.sortByMessage(urlNotification.storage.getAll()),
-    };
-
-    current = {
-      jsonString: JSON.stringify(data, null, 4),
-    };
-
-    bindValues();
-    modal.show();
-  };
-
-  return {
-    init: init,
-    show: show,
   };
 })();
 
@@ -642,7 +588,6 @@ const patternForm = (function() {
 
 $(function() {
   headerComponent.init();
-  exportComponent.init();
   importComponent.init();
   patternListComponent.show();
   patternForm.init();
