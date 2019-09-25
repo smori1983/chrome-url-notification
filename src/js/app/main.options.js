@@ -7,9 +7,9 @@ require('bootstrap-colorpicker');
 
 const urlNotification = require('./../urlNotification/main');
 const modalFactory = require('./options.util.modal');
-const messageFactory = require('./options.util.message');
 
 const exportForm = require('./options.exportForm');
+const importForm = require('./options.importForm');
 const deleteForm = require('./options.deleteForm');
 
 const util = (function() {
@@ -69,7 +69,9 @@ const headerComponent = (function() {
 
     $('#js_button_import').on('click', function(e) {
       e.preventDefault();
-      importComponent.show();
+      importForm.show(function() {
+        patternListComponent.show();
+      })
     });
   };
 
@@ -78,78 +80,6 @@ const headerComponent = (function() {
       initEventHandlers();
       showVersion();
     },
-  };
-})();
-
-const importComponent = (function() {
-  let modal = null;
-
-  const init = function() {
-    modal = modalFactory.init('#js_modal_import', {
-      'shown.bs.modal': function() {
-        $('#js_form_import_json').trigger('focus');
-      },
-    });
-
-    util.rebind('#js_form_import', 'submit', function(e) {
-      e.preventDefault();
-      submit();
-    });
-  };
-
-  const show = function() {
-    clear();
-    modal.show();
-  };
-
-  const clear = function() {
-    $('#js_form_import_json').val('');
-  };
-
-  const submit = (function() {
-    const error = {
-      required: i18n.get('message_json_required'),
-      invalidJson: i18n.get('message_json_invalid'),
-    };
-
-    const message = messageFactory.init('#js_import_message');
-
-    return function() {
-      const jsonText = $('#js_form_import_json').val().trim();
-
-      if (jsonText.length === 0) {
-        message.show(error.required);
-
-        return;
-      }
-
-      let json;
-
-      try {
-        json = JSON.parse(jsonText);
-      } catch (e) {
-        console.warn(e);
-        message.show(error.invalidJson);
-
-        return;
-      }
-
-      if (urlNotification.validator.forImportJson(json) === false) {
-        message.show(error.invalidJson);
-
-        return;
-      }
-
-      urlNotification.importer.importJson(json);
-
-      modal.hide();
-      patternListComponent.show();
-    };
-  })();
-
-  return {
-    init: init,
-    show: show,
   };
 })();
 
@@ -588,7 +518,6 @@ const patternForm = (function() {
 
 $(function() {
   headerComponent.init();
-  importComponent.init();
   patternListComponent.show();
   patternForm.init();
 
