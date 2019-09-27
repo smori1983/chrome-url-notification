@@ -43,16 +43,16 @@
             <form id="js_form_pattern" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label data-i18n="label_url_pattern"></label>
+                        <label for="js_input_url" data-i18n="label_url_pattern"></label>
                         <p class="small text-info" data-i18n="text_url_pattern"></p>
                         <input type="text" name="url" value="" id="js_input_url" class="form-control" data-i18n-ph="ph_url_pattern" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_message"></label>
+                        <label for="js_input_msg" data-i18n="label_message"></label>
                         <input type="text" name="message" value="" id="js_input_msg" class="form-control" data-i18n-ph="ph_message" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_background_color"></label>
+                        <label for="js_input_background_color" data-i18n="label_background_color"></label>
                         <div id="js_colorpicker" class="input-group colorpicker-component">
                             <span class="input-group-addon"><i><!-- // --></i></span>
                             <input type="text" name="background_color" value="" id="js_input_background_color" class="form-control" />
@@ -71,7 +71,6 @@
                             <label class="checkbox-inline"><input id="js_input_status" type="checkbox" value="1" name="status"><span data-i18n="label_enabled"></span></label>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <span id="js_pattern_message" class="text-danger"></span>
@@ -139,7 +138,7 @@
             <form id="js_form_import" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label data-i18n="label_json_text"></label>
+                        <label for="js_form_import_json" data-i18n="label_json_text"></label>
                         <textarea id="js_form_import_json" class="form-control" rows="10"></textarea>
                     </div>
                 </div>
