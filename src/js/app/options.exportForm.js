@@ -1,8 +1,8 @@
 const ClipboardJS = require('clipboard');
-const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const data = require('../urlNotification/data');
 const storage = require('../urlNotification/storage');
+const i18n = require('./i18n');
 const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
