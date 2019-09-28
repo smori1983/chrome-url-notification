@@ -13,6 +13,8 @@ describe('options.exportForm', function () {
   });
 
   beforeEach(function () {
+    testUtil.clearStorage();
+
     const localeFile = __dirname + '/../../src/_locales/en/messages.json';
     const message = fs.readFileSync(localeFile).toString();
     chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
