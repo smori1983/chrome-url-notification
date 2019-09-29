@@ -147,7 +147,7 @@ const show = function (argMode, argOriginal, callback) {
 const submit = function(callback) {
   const $ = require('jquery');
 
-  validator = $('#js_form_pattern').validate(validatorConfig);
+  validator = $('#js_form_pattern').validate(validatorConfig());
 
   if (validator.form() === false) {
     return;
@@ -172,65 +172,67 @@ const submit = function(callback) {
   callback();
 };
 
-const validatorConfig = {
-  rules: {
-    url: {
-      required: true,
-      existingUrl: true,
+const validatorConfig = function() {
+  return {
+    rules: {
+      url: {
+        required: true,
+        existingUrl: true,
+      },
+      message: {
+        required: true,
+      },
+      background_color: {
+        required: true,
+        hexColor: true,
+      },
+      display_position: {
+        required: true,
+        in: ['top', 'bottom'],
+      },
+      status: {
+        required: false,
+        in: ['1'],
+      },
     },
-    message: {
-      required:true,
+    messages: {
+      url: {
+        required: i18n.get('message_field_required'),
+        existingUrl: i18n.get('message_pattern_existing_url_pattern'),
+      },
+      message: {
+        required: i18n.get('message_field_required'),
+      },
+      background_color: {
+        required: i18n.get('message_field_required'),
+        hexColor: i18n.get('message_invalid_color_index'),
+      },
+      display_position: {
+        required: i18n.get('message_field_required'),
+        in: i18n.get('message_invalid_choice'),
+      },
+      status: {
+        required: i18n.get('message_field_required'),
+        in: i18n.get('message_invalid_choice'),
+      },
     },
-    background_color: {
-      required: true,
-      hexColor: true,
+    onfocusout: false,
+    onkeyup: false,
+    onclick: false,
+    errorClass: 'text-danger',
+    errorElement: 'div',
+    errorPlacement: function (error, element) {
+      if (element.attr('name') === 'background_color') {
+        error.appendTo(element.parent().parent());
+      } else if (element.attr('name') === 'display_position') {
+        error.appendTo(element.parent().parent());
+      } else if (element.attr('name') === 'status') {
+        error.appendTo(element.parent().parent());
+      } else {
+        error.insertAfter(element);
+      }
     },
-    display_position: {
-      required: true,
-      in: ['top', 'bottom'],
-    },
-    status: {
-      required: false,
-      in: ['1'],
-    },
-  },
-  messages: {
-    url: {
-      required: i18n.get('message_field_required'),
-      existingUrl: i18n.get('message_pattern_existing_url_pattern'),
-    },
-    message: {
-      required: i18n.get('message_field_required'),
-    },
-    background_color: {
-      required: i18n.get('message_field_required'),
-      hexColor: i18n.get('message_invalid_color_index'),
-    },
-    display_position: {
-      required: i18n.get('message_field_required'),
-      in: i18n.get('message_invalid_choice'),
-    },
-    status: {
-      required: i18n.get('message_field_required'),
-      in: i18n.get('message_invalid_choice'),
-    },
-  },
-  onfocusout: false,
-  onkeyup: false,
-  onclick: false,
-  errorClass: 'text-danger',
-  errorElement: 'div',
-  errorPlacement: function(error, element) {
-    if (element.attr('name') === 'background_color') {
-      error.appendTo(element.parent().parent());
-    } else if (element.attr('name') === 'display_position') {
-      error.appendTo(element.parent().parent());
-    } else if (element.attr('name') === 'status') {
-      error.appendTo(element.parent().parent());
-    } else {
-      error.insertAfter(element);
-    }
-  },
+  };
 };
 
 module.exports.show = show;
