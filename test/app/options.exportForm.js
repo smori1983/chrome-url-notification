@@ -56,12 +56,9 @@ describe('options.exportForm', function () {
     // We have to expose to global.
     global.HTMLElement = dom.window.HTMLElement;
 
-    const $ = require('jquery');
-
     SUT.show();
 
-    const exported = $('#js_export_display').text();
-    const json = JSON.parse(exported);
+    const json = testUtil.opttions.exportForm().json();
 
     assert.strictEqual(json.version, testUtil.currentVersion());
   });
@@ -76,12 +73,9 @@ describe('options.exportForm', function () {
     // We have to expose to global.
     global.HTMLElement = dom.window.HTMLElement;
 
-    const $ = require('jquery');
-
     SUT.show();
 
-    const exported = $('#js_export_display').text();
-    const json = JSON.parse(exported);
+    const json = testUtil.opttions.exportForm().json();
 
     assert.deepStrictEqual(json.pattern, []);
   });
@@ -106,14 +100,17 @@ describe('options.exportForm', function () {
     // We have to expose to global.
     global.HTMLElement = dom.window.HTMLElement;
 
-    const $ = require('jquery');
-
     SUT.show();
 
-    const exported = $('#js_export_display').text();
-    const json = JSON.parse(exported);
+    const json = testUtil.opttions.exportForm().json();
 
     assert.strictEqual(json.pattern.length, 1);
-    assert.deepStrictEqual(json.pattern[0].msg, 'message1');
+    assert.deepStrictEqual(json.pattern[0], {
+      url: 'http://example.com/1',
+      msg: 'message1',
+      backgroundColor: '111111',
+      displayPosition: 'top',
+      status: 1,
+    });
   });
 });

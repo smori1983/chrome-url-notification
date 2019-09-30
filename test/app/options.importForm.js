@@ -5,9 +5,10 @@ const chrome = require('sinon-chrome');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/options.importForm');
+const storage = require('../../src/js/urlNotification/storage');
 const testUtil = require('../../test_lib/util');
 
-describe('options.exportForm', function () {
+describe('options.importForm', function () {
   before(function () {
     global.chrome = chrome;
   });
@@ -43,5 +44,41 @@ describe('options.exportForm', function () {
     assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
     assert.strictEqual($container.find('input[data-i18n-val=label_import]').val(), 'Import');
     assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
+  });
+
+  describe('import - success', function () {
+    it('without data', function () {
+      const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
+
+      global.window = dom.window;
+      global.document = dom.window.document;
+
+      SUT.show(function () {
+      });
+
+      const form = testUtil.opttions.importForm();
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [
+          {
+            url: 'http://example.com/',
+            msg: 'message',
+            backgroundColor: '111111',
+            displayPosition: 'bottom',
+            status: 0,
+          },
+        ],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+
+      const data = storage.getAll();
+      assert.strictEqual(data[0].url, 'http://example.com/');
+      assert.strictEqual(data[0].msg, 'message');
+      assert.strictEqual(data[0].backgroundColor, '111111');
+      assert.strictEqual(data[0].displayPosition, 'bottom');
+      assert.strictEqual(data[0].status, 0);
+    });
   });
 });

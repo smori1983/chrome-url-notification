@@ -27,7 +27,9 @@ describe('options.header', function () {
     const $ = require('jquery');
 
     chrome.runtime.getManifest
-      .returns({ version: '1.2.3' });
+      .returns({
+        version: '1.2.3',
+      });
 
     SUT.show();
 

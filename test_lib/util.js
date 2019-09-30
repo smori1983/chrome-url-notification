@@ -86,3 +86,5 @@ module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;
 module.exports.getHtml = getHtml;
 module.exports.makeFoundItem = makeFoundItem;
+
+module.exports.opttions = require('./options');

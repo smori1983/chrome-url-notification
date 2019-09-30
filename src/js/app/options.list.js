@@ -59,18 +59,29 @@ const makeRow = function(item) {
     return $('<td>');
   };
 
-  /**
-   * @param {PatternItem} item
-   */
-  const patternColumn = function(item) {
-    return column().text(item.url);
-  };
+  const patternColumn = (function(item) {
+    /**
+     * @param {PatternItem} item
+     */
+    const container = function(item) {
+      return $('<div>')
+        .addClass('pattern')
+        .text(item.url);
+    };
+
+    /**
+     * @param {PatternItem} item
+     */
+    return function (item) {
+      return column().append(container(item));
+    };
+  })();
 
   const messageColumn = (function() {
     /**
      * @param {PatternItem} item
      */
-    const message = function(item) {
+    const container = function(item) {
       return $('<div>')
         .addClass('list-message')
         .css(messageCss(item))
@@ -91,11 +102,20 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(message(item));
+      return column().append(container(item));
     };
   })();
 
   const displayPositionColumn = (function() {
+    /**
+     * @param {PatternItem} item
+     */
+    const container = function(item) {
+      return $('<div>')
+        .addClass('display_position')
+        .text(message(item));
+    };
+
     /**
      * @param {PatternItem} item
      */
@@ -111,11 +131,20 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().text(message(item));
+      return column().append(container(item));
     };
   })();
 
   const statusColumn = (function() {
+    /**
+     * @param {PatternItem} item
+     */
+    const container = function(item) {
+      return $('<div>')
+        .addClass('status')
+        .text(message(item));
+    };
+
     /**
      * @param {PatternItem} item
      */
@@ -127,7 +156,7 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().text(message(item));
+      return column().append(container(item));
     };
   })();
 
@@ -144,6 +173,7 @@ const makeRow = function(item) {
      */
     const copyButton = function(item) {
       return button('btn-default', i18n.get('label_copy'))
+        .addClass('copy_button')
         .on('click', function(e) {
           e.preventDefault();
           patternForm.show('add', {
@@ -163,6 +193,7 @@ const makeRow = function(item) {
      */
     const editButton = function(item) {
       return button('btn-primary', i18n.get('label_edit'))
+        .addClass('edit_button')
         .on('click', function(e) {
           e.preventDefault();
           patternForm.show('edit', {
@@ -182,6 +213,7 @@ const makeRow = function(item) {
      */
     const deleteButton = function(item) {
       return button('btn-danger', i18n.get('label_delete'))
+        .addClass('delete_button')
         .on('click', function(e) {
           e.preventDefault();
           deleteForm.show({
