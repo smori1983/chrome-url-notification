@@ -1,40 +1,17 @@
-const fs = require('fs');
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
-const I18nPlugin = require('sinon-chrome/plugins/i18n');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/options.importForm');
 const storage = require('../../src/js/urlNotification/storage');
 const testUtil = require('../../test_lib/util');
 
 describe('options.importForm', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    testUtil.clearStorage();
-
-    const localeFile = __dirname + '/../../src/_locales/en/messages.json';
-    const message = fs.readFileSync(localeFile).toString();
-    chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
-
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-    delete require.cache[require.resolve('bootstrap')];
-    delete require.cache[require.resolve('bootstrap/js/modal')];
-  });
-
-  after(function () {
-    delete (global.chrome);
-  });
+  before(testUtil.options.before);
+  beforeEach(testUtil.options.beforeEach);
+  afterEach(testUtil.options.afterEach);
+  after(testUtil.options.after);
 
   it('i18n label', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     const $ = require('jquery');
 
@@ -48,15 +25,11 @@ describe('options.importForm', function () {
 
   describe('import - success', function () {
     it('without data', function () {
-      const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
+      testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
-      global.window = dom.window;
-      global.document = dom.window.document;
+      SUT.show(function () {});
 
-      SUT.show(function () {
-      });
-
-      const form = testUtil.opttions.importForm();
+      const form = testUtil.options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [

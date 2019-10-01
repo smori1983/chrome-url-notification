@@ -3,9 +3,10 @@
 const fs = require('fs');
 const deepMerge = require('deepmerge');
 const validator = require('../src/js/urlNotification/validator');
+const storage = require('./storage');
 
 const clearStorage = function() {
-  localStorage.clear();
+  storage.clearStorage();
 };
 
 /**
@@ -15,9 +16,7 @@ const clearStorage = function() {
  * @param {PatternItem[]} patterns
  */
 const setUpStorage = function(version, patterns) {
-  localStorage.clear();
-  localStorage.setItem('version', version);
-  localStorage.setItem('pattern', JSON.stringify(patterns));
+  storage.setUpStorage(version, patterns);
 };
 
 /**
@@ -87,4 +86,7 @@ module.exports.isNotValidJson = isNotValidJson;
 module.exports.getHtml = getHtml;
 module.exports.makeFoundItem = makeFoundItem;
 
-module.exports.opttions = require('./options');
+module.exports.message = require('./message');
+module.exports.popup = require('./popup');
+module.exports.content = require('./content');
+module.exports.options = require('./options');

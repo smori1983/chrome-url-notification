@@ -1,46 +1,23 @@
-const fs = require('fs');
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
-const I18nPlugin = require('sinon-chrome/plugins/i18n');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
 describe('options.list', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    testUtil.clearStorage();
-
-    const localeFile = __dirname + '/../../src/_locales/en/messages.json';
-    const message = fs.readFileSync(localeFile).toString();
-    chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
-
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-    delete require.cache[require.resolve('jquery-validation')];
-    delete require.cache[require.resolve('bootstrap')];
-    delete require.cache[require.resolve('bootstrap/js/modal')];
-    delete require.cache[require.resolve('bootstrap-colorpicker')];
-  });
-
-  after(function () {
-    delete (global.chrome);
-  });
+  before(testUtil.options.before);
+  beforeEach(testUtil.options.beforeEach);
+  afterEach(testUtil.options.afterEach);
+  after(testUtil.options.after);
 
   it('tr element - without pattern data', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    assert.strictEqual(testUtil.opttions.list().header().length, 0);
-    assert.strictEqual(testUtil.opttions.list().numOfItems(), 0);
+    const list = testUtil.options.list();
+
+    assert.strictEqual(list.header().length, 0);
+    assert.strictEqual(list.numOfItems(), 0);
   });
 
   it('tr element - with pattern data', function () {
@@ -54,15 +31,14 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    assert.strictEqual(testUtil.opttions.list().header().length, 1);
-    assert.strictEqual(testUtil.opttions.list().numOfItems(), 1);
+    const list = testUtil.options.list();
+
+    assert.strictEqual(list.header().length, 1);
+    assert.strictEqual(list.numOfItems(), 1);
   });
 
   it('header columns', function () {
@@ -76,16 +52,13 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     const $ = require('jquery');
 
     SUT.show();
 
-    const $columns = testUtil.opttions.list().header().find('th');
+    const $columns = testUtil.options.list().header().find('th');
 
     assert.strictEqual($columns.length, 5);
     assert.strictEqual($($columns[0]).text(), 'URL pattern');
@@ -106,16 +79,13 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    assert.strictEqual(testUtil.opttions.list().numOfItems(), 1);
+    assert.strictEqual(testUtil.options.list().numOfItems(), 1);
 
-    const item = testUtil.opttions.list().item(0);
+    const item = testUtil.options.list().item(0);
     assert.strictEqual(item.pattern(), 'http://example.com/1');
     assert.strictEqual(item.message(), 'message1');
     assert.strictEqual(item.displayPosition(), 'Top');
@@ -140,15 +110,12 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const list = testUtil.opttions.list();
-    const form = testUtil.opttions.patternForm();
+    const list = testUtil.options.list();
+    const form = testUtil.options.patternForm();
 
     list.item(0).clickCopy();
 
@@ -179,15 +146,12 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const list = testUtil.opttions.list();
-    const form = testUtil.opttions.patternForm();
+    const list = testUtil.options.list();
+    const form = testUtil.options.patternForm();
 
     list.item(0).clickEdit();
 
@@ -218,15 +182,12 @@ describe('options.list', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const list = testUtil.opttions.list();
-    const form = testUtil.opttions.deleteForm();
+    const list = testUtil.options.list();
+    const form = testUtil.options.deleteForm();
 
     list.item(0).clickDelete();
 

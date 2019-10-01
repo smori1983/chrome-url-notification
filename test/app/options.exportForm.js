@@ -1,43 +1,16 @@
-const fs = require('fs');
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
-const I18nPlugin = require('sinon-chrome/plugins/i18n');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/options.exportForm');
 const testUtil = require('../../test_lib/util');
 
 describe('options.exportForm', function () {
-  before(function() {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    testUtil.clearStorage();
-
-    const localeFile = __dirname + '/../../src/_locales/en/messages.json';
-    const message = fs.readFileSync(localeFile).toString();
-    chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
-
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-    delete require.cache[require.resolve('bootstrap')];
-    delete require.cache[require.resolve('bootstrap/js/modal')];
-  });
-
-  after(function() {
-    delete(global.chrome);
-  });
+  before(testUtil.options.before);
+  beforeEach(testUtil.options.beforeEach);
+  afterEach(testUtil.options.afterEach);
+  after(testUtil.options.after);
 
   it('i18n label', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    // clipboard checks constructor argument is instance of HTMLElement or not.
-    // We have to expose to global.
-    global.HTMLElement = dom.window.HTMLElement;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     const $ = require('jquery');
 
@@ -47,35 +20,21 @@ describe('options.exportForm', function () {
   });
 
   it('exported json - version is current', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    // clipboard checks constructor argument is instance of HTMLElement or not.
-    // We have to expose to global.
-    global.HTMLElement = dom.window.HTMLElement;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const json = testUtil.opttions.exportForm().json();
+    const json = testUtil.options.exportForm().json();
 
     assert.strictEqual(json.version, testUtil.currentVersion());
   });
 
   it('exported json - without pattern data', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    // clipboard checks constructor argument is instance of HTMLElement or not.
-    // We have to expose to global.
-    global.HTMLElement = dom.window.HTMLElement;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const json = testUtil.opttions.exportForm().json();
+    const json = testUtil.options.exportForm().json();
 
     assert.deepStrictEqual(json.pattern, []);
   });
@@ -91,18 +50,11 @@ describe('options.exportForm', function () {
       },
     ]);
 
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    // clipboard checks constructor argument is instance of HTMLElement or not.
-    // We have to expose to global.
-    global.HTMLElement = dom.window.HTMLElement;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    const json = testUtil.opttions.exportForm().json();
+    const json = testUtil.options.exportForm().json();
 
     assert.strictEqual(json.pattern.length, 1);
     assert.deepStrictEqual(json.pattern[0], {

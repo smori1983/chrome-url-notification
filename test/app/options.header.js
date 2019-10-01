@@ -1,28 +1,17 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
 describe('options.header', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    delete require.cache[require.resolve('jquery')];
-  });
-
-  after(function () {
-    delete global.chrome;
-  });
+  before(testUtil.options.before);
+  beforeEach(testUtil.options.beforeEach);
+  afterEach(testUtil.options.afterEach);
+  after(testUtil.options.after);
 
   it('version', function () {
-    const dom = new JSDOM(testUtil.getHtml('src/html/options.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
+    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
 
     const $ = require('jquery');
 

@@ -1,7 +1,6 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
@@ -43,26 +42,13 @@ const sendMessageShould = function(tabId, url, status) {
 };
 
 describe('message.popup.find', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-  });
-
-  after(function () {
-    delete (global.chrome);
-  });
+  before(testUtil.message.before);
+  beforeEach(testUtil.message.beforeEach);
+  afterEach(testUtil.message.afterEach);
+  after(testUtil.message.after);
 
   it('pattern not matched', function() {
-    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    const $ = require('jquery');
+    testUtil.message.initDom(testUtil.getHtml('src/html/popup.html'));
 
     /** @type {chrome.tabs.Tab} */
     const tab = {
@@ -74,16 +60,11 @@ describe('message.popup.find', function () {
 
     popupFindMessage(tab, null);
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'none');
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), false);
   });
 
   it('pattern matched and status is 0', function() {
-    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    const $ = require('jquery');
+    testUtil.message.initDom(testUtil.getHtml('src/html/popup.html'));
 
     /** @type {chrome.tabs.Tab} */
     const tab = {
@@ -97,17 +78,12 @@ describe('message.popup.find', function () {
       status: 0,
     }));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
   });
 
   it('pattern matched and status is 0, then enable', function() {
-    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    const $ = require('jquery');
+    testUtil.message.initDom(testUtil.getHtml('src/html/popup.html'));
 
     /** @type {chrome.tabs.Tab} */
     const tab = {
@@ -121,24 +97,19 @@ describe('message.popup.find', function () {
       status: 0,
     }));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
 
-    $('#pattern_status').trigger('click');
+    testUtil.popup.matchedBlock().clickStatus();
 
     assert.ok(sendMessageShould(20002, 'https://example.com/', 1));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
   });
 
   it('pattern matched status is 1', function() {
-    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    const $ = require('jquery');
+    testUtil.message.initDom(testUtil.getHtml('src/html/popup.html'));
 
     /** @type {chrome.tabs.Tab} */
     const tab = {
@@ -152,17 +123,12 @@ describe('message.popup.find', function () {
       status: 1,
     }));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
   });
 
   it('pattern matched and status is 1, then disable', function() {
-    const dom = new JSDOM(testUtil.getHtml('src/html/popup.html'));
-
-    global.window = dom.window;
-    global.document = dom.window.document;
-
-    const $ = require('jquery');
+    testUtil.message.initDom(testUtil.getHtml('src/html/popup.html'));
 
     /** @type {chrome.tabs.Tab} */
     const tab = {
@@ -176,14 +142,14 @@ describe('message.popup.find', function () {
       status: 1,
     }));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
 
-    $('#pattern_status').trigger('click');
+    testUtil.popup.matchedBlock().clickStatus();
 
     assert.ok(sendMessageShould(30002, 'https://example.com/', 0));
 
-    assert.strictEqual($('#block_for_matched_page').css('display'), 'block');
-    assert.strictEqual($('#pattern_status').prop('checked'), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
   });
 });
