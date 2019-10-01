@@ -107,6 +107,12 @@ const patternForm = function () {
 const deleteForm = function () {
   const $ = require('jquery');
 
+  const checkModalIsActivated = function () {
+    if ($('#js_modal_delete').css('display') !== 'block') {
+      throw new Error('modal is not activated');
+    }
+  };
+
   return {
     shown: function() {
       return $('#js_modal_delete').css('display') === 'block';
@@ -116,6 +122,14 @@ const deleteForm = function () {
     },
     message: function () {
       return $('#js_form_delete_message').text();
+    },
+    submit: function () {
+      checkModalIsActivated();
+      $('#js_form_delete_submit').trigger('click');
+    },
+    cancel: function () {
+      checkModalIsActivated();
+      $('#js_form_delete_cancel').trigger('click');
     },
   };
 };

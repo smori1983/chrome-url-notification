@@ -1,5 +1,6 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
+const storage = require('../../src/js/urlNotification/storage');
 const SUT = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
@@ -164,41 +165,76 @@ describe('options.list', function () {
     assert.strictEqual(form.pattern(), 'http://example.com/2');
   });
 
-  it('delete button', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-      {
-        url: 'http://example.com/2',
-        msg: 'message2',
-        backgroundColor: '111111',
-        displayPosition: 'bottom',
-        status: 0,
-      },
-    ]);
+  describe('delete operation', function () {
+    beforeEach(function () {
+      testUtil.setUpStorage('3', [
+        {
+          url: 'http://example.com/1',
+          msg: 'message1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+        {
+          url: 'http://example.com/2',
+          msg: 'message2',
+          backgroundColor: '111111',
+          displayPosition: 'bottom',
+          status: 0,
+        },
+      ]);
+    });
 
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+    it('open modal twice', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
-    SUT.show();
+      SUT.show();
 
-    const list = testUtil.options.list();
-    const form = testUtil.options.deleteForm();
+      const list = testUtil.options.list();
+      const form = testUtil.options.deleteForm();
 
-    list.item(0).clickDelete();
+      list.item(0).clickDelete();
 
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/1');
-    assert.strictEqual(form.message(), 'message1');
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'http://example.com/1');
+      assert.strictEqual(form.message(), 'message1');
 
-    list.item(1).clickDelete();
+      list.item(1).clickDelete();
 
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/2');
-    assert.strictEqual(form.message(), 'message2');
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'http://example.com/2');
+      assert.strictEqual(form.message(), 'message2');
+    });
+
+    it('execute', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+      SUT.show();
+
+      testUtil.options.list().item(0).clickDelete();
+      testUtil.options.deleteForm().submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+      assert.deepStrictEqual(storage.getAll(), [
+        {
+          url: 'http://example.com/2',
+          msg: 'message2',
+          backgroundColor: '111111',
+          displayPosition: 'bottom',
+          status: 0,
+        },
+      ]);
+    });
+
+    it('cancel', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+      SUT.show();
+
+      testUtil.options.list().item(0).clickDelete();
+      testUtil.options.deleteForm().cancel();
+
+      assert.strictEqual(storage.getCount(), 2);
+    });
   });
 });
