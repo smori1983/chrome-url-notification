@@ -23,6 +23,51 @@ describe('options.importForm', function () {
     assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
   });
 
+  describe('import - failure', function () {
+    it('input is empty', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+      SUT.show(function () {});
+
+      const form = testUtil.options.importForm();
+      form.submit();
+
+      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is required.');
+    });
+
+    it('not a JSON text', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+      SUT.show(function () {});
+
+      const form = testUtil.options.importForm();
+      form.json('foo');
+      form.submit();
+
+      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is invalid.');
+    });
+
+    it('invalid JSON structure', function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+      SUT.show(function () {});
+
+      const form = testUtil.options.importForm();
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [
+          {
+            url: 'http://example.com/',
+            msg: 'message',
+          },
+        ],
+      }));
+      form.submit();
+
+      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is invalid.');
+    });
+  });
+
   describe('import - success', function () {
     it('without data', function () {
       testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));

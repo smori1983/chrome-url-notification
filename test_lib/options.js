@@ -30,6 +30,12 @@ const importForm = function () {
     submit: function () {
       $('#js_form_import_submit').trigger('click');
     },
+    /**
+     * @returns {string}
+     */
+    errorMessage: function () {
+      return $('#js_import_message').text();
+    },
   };
 };
 
