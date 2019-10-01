@@ -7,21 +7,56 @@ const testUtil = require('../../test_lib/util');
 describe('options.header', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    chrome.runtime.getManifest
+      .returns({
+        version: '1.2.3',
+      });
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('version', function () {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
-    const $ = require('jquery');
+    SUT.show();
 
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
+    assert.strictEqual(testUtil.options.header().version(), 'Ver. 1.2.3');
+  });
+
+  it('click add pattern', function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
-    assert.strictEqual($('#js_version').text(), 'Ver. 1.2.3');
+    testUtil.options.header().clickAdd();
+
+    assert.strictEqual(testUtil.options.patternForm().shown(), true);
+    assert.strictEqual(testUtil.options.exportForm().shown(), false);
+    assert.strictEqual(testUtil.options.importForm().shown(), false);
+  });
+
+  it('click export', function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+    SUT.show();
+
+    testUtil.options.header().clickExport();
+
+    assert.strictEqual(testUtil.options.patternForm().shown(), false);
+    assert.strictEqual(testUtil.options.exportForm().shown(), true);
+    assert.strictEqual(testUtil.options.importForm().shown(), false);
+  });
+
+  it('click import', function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+
+    SUT.show();
+
+    testUtil.options.header().clickImport();
+
+    assert.strictEqual(testUtil.options.patternForm().shown(), false);
+    assert.strictEqual(testUtil.options.exportForm().shown(), false);
+    assert.strictEqual(testUtil.options.importForm().shown(), true);
   });
 });

@@ -1,3 +1,22 @@
+const header = function () {
+  const $ = require('jquery');
+
+  return {
+    version: function () {
+      return $('#js_version').text();
+    },
+    clickAdd: function () {
+      $('#js_button_add_pattern').trigger('click');
+    },
+    clickExport: function () {
+      $('#js_button_export').trigger('click');
+    },
+    clickImport: function () {
+      $('#js_button_import').trigger('click');
+    },
+  };
+};
+
 const exportForm = function () {
   const $ = require('jquery');
 
@@ -8,6 +27,12 @@ const exportForm = function () {
   };
 
   return {
+    /**
+     * @returns {boolean}
+     */
+    shown: function () {
+      return $('#js_modal_export').css('display') === 'block';
+    },
     json: function () {
       checkModalIsActivated();
       return JSON.parse($('#js_export_display').text());
@@ -19,6 +44,12 @@ const importForm = function () {
   const $ = require('jquery');
 
   return {
+    /**
+     * @returns {boolean}
+     */
+    shown: function () {
+      return $('#js_modal_import').css('display') === 'block';
+    },
     /**
      * @param {string} [input]
      */
@@ -140,6 +171,7 @@ const deleteForm = function () {
   };
 };
 
+module.exports.header = header;
 module.exports.exportForm = exportForm;
 module.exports.importForm = importForm;
 module.exports.list = list;
