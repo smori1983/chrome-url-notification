@@ -62,10 +62,8 @@ const setBadgeTextShould = function(text, tabId) {
 };
 
 describe('background.content.find', function () {
-  before(function() {
-    global.chrome = chrome;
-  });
-
+  before(testUtil.background.before);
+  beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
     testUtil.setUpStorage('3', [
       {
@@ -83,13 +81,8 @@ describe('background.content.find', function () {
         status: 0,
       },
     ]);
-
-    chrome.flush();
   });
-
-  after(function() {
-    delete(global.chrome);
-  });
+  after(testUtil.background.after);
 
   it('pattern not matched', function () {
     const checker = responseChecker();
