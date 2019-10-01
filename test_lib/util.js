@@ -86,6 +86,7 @@ module.exports.isNotValidJson = isNotValidJson;
 module.exports.getHtml = getHtml;
 module.exports.makeFoundItem = makeFoundItem;
 
+module.exports.uiBase = require('./uiBase');
 module.exports.message = require('./message');
 module.exports.popup = require('./popup');
 module.exports.content = require('./content');

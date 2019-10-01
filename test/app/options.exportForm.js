@@ -4,13 +4,13 @@ const SUT = require('../../src/js/app/options.exportForm');
 const testUtil = require('../../test_lib/util');
 
 describe('options.exportForm', function () {
-  before(testUtil.options.before);
-  beforeEach(testUtil.options.beforeEach);
-  afterEach(testUtil.options.afterEach);
-  after(testUtil.options.after);
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
+  after(testUtil.uiBase.after);
 
   it('i18n label', function () {
-    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     const $ = require('jquery');
 
@@ -20,7 +20,7 @@ describe('options.exportForm', function () {
   });
 
   it('exported json - version is current', function () {
-    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -30,7 +30,7 @@ describe('options.exportForm', function () {
   });
 
   it('exported json - without pattern data', function () {
-    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -50,7 +50,7 @@ describe('options.exportForm', function () {
       },
     ]);
 
-    testUtil.options.initDom(testUtil.getHtml('src/html/options.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 

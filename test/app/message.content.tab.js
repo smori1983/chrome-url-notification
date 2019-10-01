@@ -22,13 +22,13 @@ const tabNotifyDispatch = function(displayPosition, status) {
 };
 
 describe('message.content.tab', function () {
-  before(testUtil.message.before);
-  beforeEach(testUtil.message.beforeEach);
-  afterEach(testUtil.message.afterEach);
-  after(testUtil.message.after);
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
+  after(testUtil.uiBase.after);
 
   it('pattern matched and status is 0', function () {
-    testUtil.message.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
 
     SUT.listen();
 
@@ -40,7 +40,7 @@ describe('message.content.tab', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    testUtil.message.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
 
     SUT.listen();
 

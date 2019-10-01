@@ -6,11 +6,11 @@ const testUtil = require('../../test_lib/util');
 const htmlPath = testUtil.getHtml('test_resource/html/options.modal.01.html');
 
 describe('options.util.modal', function () {
-  beforeEach(testUtil.options.beforeEach);
-  afterEach(testUtil.options.afterEach);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
 
   it('show and hide', function () {
-    testUtil.options.initDom(htmlPath);
+    testUtil.uiBase.initDom(htmlPath);
 
     const $ = require('jquery');
     const $modal = $('#modal');
@@ -29,7 +29,7 @@ describe('options.util.modal', function () {
   });
 
   it('with event handler', function () {
-    testUtil.options.initDom(htmlPath);
+    testUtil.uiBase.initDom(htmlPath);
 
     const $ = require('jquery');
     const $modal = $('#modal');

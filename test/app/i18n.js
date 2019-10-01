@@ -4,10 +4,10 @@ const SUT = require('../../src/js/app/i18n');
 const testUtil = require('../../test_lib/util');
 
 describe('i18n', function () {
-  before(testUtil.options.before);
-  beforeEach(testUtil.options.beforeEach);
-  afterEach(testUtil.options.afterEach);
-  after(testUtil.options.after);
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
+  after(testUtil.uiBase.after);
 
   describe('get', function () {
     it('label_background_color', function () {
