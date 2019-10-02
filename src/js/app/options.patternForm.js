@@ -173,7 +173,16 @@ const submit = function(callback) {
 };
 
 const validatorConfig = function() {
+  // jquery-validation ignores elements that is configured as 'ignore'.
+  // The default value is ':hidden'.
+  // In jsdom testing, all input fields are detected as ':hidden'.
+  // Basically we don't have any fields that should be ignored.
+  // Here, we explicitly set empty string to 'ignore' setting.
+  //
+  // https://jqueryvalidation.org/validate/#ignore
+
   return {
+    ignore: '',
     rules: {
       url: {
         required: true,
