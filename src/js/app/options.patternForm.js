@@ -88,7 +88,7 @@ const show = function (argMode, argOriginal, callback) {
     format: 'hex',
   });
 
-  $container.find('#js_input_clear').on('click', function(e) {
+  $container.find('#js_form_pattern_clear').on('click', function(e) {
     e.preventDefault();
     clear();
   });
