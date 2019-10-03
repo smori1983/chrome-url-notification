@@ -3,15 +3,14 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/options.util.modal');
 const testUtil = require('../../test_lib/util');
 
-const htmlPath = testUtil.getHtml('test_resource/html/options.modal.01.html');
-
 describe('options.util.modal', function () {
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/options.modal.01.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
 
   it('show and hide', function () {
-    testUtil.uiBase.initDom(htmlPath);
-
     const $ = require('jquery');
     const $modal = $('#modal');
 
@@ -29,8 +28,6 @@ describe('options.util.modal', function () {
   });
 
   it('with event handler', function () {
-    testUtil.uiBase.initDom(htmlPath);
-
     const $ = require('jquery');
     const $modal = $('#modal');
 
