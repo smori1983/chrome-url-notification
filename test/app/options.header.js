@@ -12,21 +12,19 @@ describe('options.header', function () {
       .returns({
         version: '1.2.3',
       });
+
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('version', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     assert.strictEqual(testUtil.options.header().version(), 'Ver. 1.2.3');
   });
 
   it('click add pattern', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     testUtil.options.header().clickAdd();
@@ -37,8 +35,6 @@ describe('options.header', function () {
   });
 
   it('click export', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     testUtil.options.header().clickExport();
@@ -49,8 +45,6 @@ describe('options.header', function () {
   });
 
   it('click import', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     testUtil.options.header().clickImport();
