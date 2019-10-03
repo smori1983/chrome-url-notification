@@ -7,12 +7,13 @@ const testUtil = require('../../test_lib/util');
 describe('options.list', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('tr element - without pattern data', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     const list = testUtil.options.list();
@@ -31,8 +32,6 @@ describe('options.list', function () {
         status: 1,
       },
     ]);
-
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -53,12 +52,9 @@ describe('options.list', function () {
       },
     ]);
 
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
-    const $ = require('jquery');
-
     SUT.show();
 
+    const $ = require('jquery');
     const $columns = testUtil.options.list().header().find('th');
 
     assert.strictEqual($columns.length, 5);
@@ -79,8 +75,6 @@ describe('options.list', function () {
         status: 1,
       },
     ]);
-
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -110,8 +104,6 @@ describe('options.list', function () {
         status: 0,
       },
     ]);
-
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -146,8 +138,6 @@ describe('options.list', function () {
         status: 0,
       },
     ]);
-
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
@@ -186,8 +176,6 @@ describe('options.list', function () {
     });
 
     it('open modal twice', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show();
 
       const list = testUtil.options.list();
@@ -207,8 +195,6 @@ describe('options.list', function () {
     });
 
     it('execute', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show();
 
       testUtil.options.list().item(0).clickDelete();
@@ -227,8 +213,6 @@ describe('options.list', function () {
     });
 
     it('cancel', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show();
 
       testUtil.options.list().item(0).clickDelete();
