@@ -133,10 +133,50 @@ const patternForm = function () {
       return $('#js_modal_pattern').css('display') === 'block';
     },
     /**
+     * @param {string} [value]
      * @returns {string}
      */
-    pattern: function () {
-      return $('#js_input_url').val();
+    pattern: function (value) {
+      const $element = $('#js_input_url');
+      if (typeof value === 'string') {
+        $element.val(value);
+      } else {
+        return $element.val();
+      }
+    },
+    /**
+     * @param {string} [value]
+     * @returns {string}
+     */
+    message: function (value) {
+      const $element = $('#js_input_msg');
+      if (typeof value === 'string') {
+        $element.val(value);
+      } else {
+        return $element.val();
+      }
+    },
+    /**
+     * @param {string} [value]
+     * @returns {string}
+     */
+    backgroundColor: function(value) {
+      const $element = $('#js_input_background_color');
+      if (typeof value === 'string') {
+        $element.val(value);
+      } else {
+        return $element.val();
+      }
+    },
+    submit: function () {
+      $('#js_form_pattern_submit').trigger('click');
+    },
+    /**
+     * @param {string} name
+     * @returns {string}
+     */
+    errorMessage: function (name) {
+      return $('#js_input_' + name + '-error').text();
     },
   }
 };
