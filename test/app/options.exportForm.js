@@ -6,22 +6,21 @@ const testUtil = require('../../test_lib/util');
 describe('options.exportForm', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('i18n label', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+    SUT.show();
 
     const $ = require('jquery');
-
-    SUT.show();
 
     assert.strictEqual($('#js_export_copy').text(), 'Copy');
   });
 
   it('exported json - version is current', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     const json = testUtil.options.exportForm().json();
@@ -30,8 +29,6 @@ describe('options.exportForm', function () {
   });
 
   it('exported json - without pattern data', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     SUT.show();
 
     const json = testUtil.options.exportForm().json();
@@ -49,8 +46,6 @@ describe('options.exportForm', function () {
         status: 1,
       },
     ]);
-
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     SUT.show();
 
