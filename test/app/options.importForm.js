@@ -7,17 +7,18 @@ const testUtil = require('../../test_lib/util');
 describe('options.importForm', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('i18n label', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
-    const $ = require('jquery');
-
     SUT.show(function() {});
 
+    const $ = require('jquery');
     const $container = $('#js_modal_import_container');
+
     assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
     assert.strictEqual($container.find('input[data-i18n-val=label_import]').val(), 'Import');
     assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
@@ -25,8 +26,6 @@ describe('options.importForm', function () {
 
   describe('import - failure', function () {
     it('input is empty', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show(function () {});
 
       const form = testUtil.options.importForm();
@@ -36,8 +35,6 @@ describe('options.importForm', function () {
     });
 
     it('not a JSON text', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show(function () {});
 
       const form = testUtil.options.importForm();
@@ -48,8 +45,6 @@ describe('options.importForm', function () {
     });
 
     it('invalid JSON structure', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show(function () {});
 
       const form = testUtil.options.importForm();
@@ -70,8 +65,6 @@ describe('options.importForm', function () {
 
   describe('import - success', function () {
     it('without data', function () {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
       SUT.show(function () {});
 
       const form = testUtil.options.importForm();
