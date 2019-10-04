@@ -136,7 +136,6 @@ const show = function (argMode, argOriginal, callback) {
     },
   });
 
-  resetValidator();
   bindValues();
   modal.show();
 };

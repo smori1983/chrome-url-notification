@@ -76,5 +76,19 @@ describe('options.pattern.add', function () {
 
       assert.strictEqual(form.errorMessage('background_color'), 'Invalid color index.');
     });
+
+    it('open form and submit invalid inputs multiple times', function () {
+      const form = testUtil.options.patternForm();
+
+      form.pattern('');
+      form.submit();
+
+      testUtil.options.header().clickAdd();
+
+      form.pattern('');
+      form.submit();
+
+      assert.strictEqual(form.errorMessage('url'), 'This field is required.');
+    });
   });
 });
