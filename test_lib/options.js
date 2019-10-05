@@ -140,9 +140,8 @@ const patternForm = function () {
       const $element = $('#js_input_url');
       if (typeof value === 'string') {
         $element.val(value);
-      } else {
-        return $element.val();
       }
+      return $element.val();
     },
     /**
      * @param {string} [value]
@@ -152,9 +151,8 @@ const patternForm = function () {
       const $element = $('#js_input_msg');
       if (typeof value === 'string') {
         $element.val(value);
-      } else {
-        return $element.val();
       }
+      return $element.val();
     },
     /**
      * @param {string} [value]
@@ -164,9 +162,30 @@ const patternForm = function () {
       const $element = $('#js_input_background_color');
       if (typeof value === 'string') {
         $element.val(value);
-      } else {
-        return $element.val();
       }
+      return $element.val();
+    },
+    /**
+     * @param {string} [value] 'top' or 'bottom'
+     * @returns {string}
+     */
+    displayPosition: function(value) {
+      const $form = $('#js_form_pattern');
+      if (typeof value === 'string') {
+        $form.find('input[name=display_position]').val(value);
+      }
+      return $form.find('input[name=display_position]:checked').val();
+    },
+    /**
+     * @param {boolean} [value]
+     * @returns {boolean}
+     */
+    status: function(value) {
+      const $element = $('#js_input_status');
+      if (typeof value === 'boolean') {
+        $element.prop('checked', value);
+      }
+      return $element.prop('checked');
     },
     submit: function () {
       $('#js_form_pattern_submit').trigger('click');
