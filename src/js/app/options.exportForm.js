@@ -8,12 +8,10 @@ const modalFactory = require('./options.util.modal');
 
 const show = function () {
   const $ = require('jquery');
-  const $container = $('#js_modal_export_container');
 
-  const html = $('#js_modal_export_html').html();
-
-  $container.empty();
-  $container.append(html);
+  $('#js_modal_export_container')
+    .empty()
+    .append($('#js_modal_export_html').html());
 
   const clipboard = new ClipboardJS('#js_export_copy');
   const message = messageFactory.init('#js_export_message');
@@ -29,17 +27,13 @@ const show = function () {
   };
   const json = JSON.stringify(exportData, null, 4);
 
-  $container.find('#js_export_display').html(json);
+  $('#js_export_display').html(json);
 
   i18n.apply('#js_modal_export_container');
 
-  const modal = modalFactory.init('#js_modal_export', {
-    'shown.bs.modal': function() {
-      $('#js_export_display').scrollTop(0);
-    },
-  });
-
-  modal.show();
+  modalFactory
+    .init('#js_modal_export')
+    .show();
 };
 
 module.exports.show = show;
