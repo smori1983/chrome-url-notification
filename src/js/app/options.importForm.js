@@ -63,7 +63,6 @@ const submit = function (callback) {
   try {
     json = JSON.parse(jsonText);
   } catch (e) {
-    console.warn(e);
     message.show(error.invalidJson);
 
     return;
