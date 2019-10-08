@@ -9,20 +9,21 @@ const modalFactory = require('./options.util.modal');
  */
 const show = function (callback) {
   const $ = require('jquery');
-  const $container = $('#js_modal_import_container');
 
-  const html = $('#js_modal_import_html').html();
+  $('#js_modal_import_container')
+    .empty()
+    .append($('#js_modal_import_html').html());
 
-  $container.empty();
-  $container.append(html);
-
-  $container.find('#js_form_import').on('submit', function(e) {
-    e.preventDefault();
-    submit(function () {
-      modal.hide();
-      callback();
+  $('#js_form_import')
+    .on('submit', function(e) {
+      e.preventDefault();
+      submit(function () {
+        modal.hide();
+        callback();
+      });
     });
-  });
+
+  $('#js_form_import_json').val('');
 
   i18n.apply('#js_modal_import_container');
 
@@ -32,7 +33,6 @@ const show = function (callback) {
     },
   });
 
-  $('#js_form_import_json').val('');
   modal.show();
 };
 
@@ -41,42 +41,41 @@ const show = function (callback) {
  */
 const submit = function (callback) {
   const $ = require('jquery');
-  const $container = $('#js_modal_import_container');
 
-  const error = {
-    required: i18n.get('message_json_required'),
-    invalidJson: i18n.get('message_json_invalid'),
-  };
-
-  const message = messageFactory.init('#js_import_message');
-
-  const jsonText = $container.find('#js_form_import_json').val().trim();
-
-  if (jsonText.length === 0) {
-    message.show(error.required);
-
-    return;
-  }
-
-  let json;
+  const jsonText = $('#js_form_import_json').val().trim();
 
   try {
-    json = JSON.parse(jsonText);
+    const json = parse(jsonText);
+
+    validate(json);
+    importer.importJson(/** @type {ImportJson} */ json);
+    callback();
   } catch (e) {
-    message.show(error.invalidJson);
+    messageFactory
+      .init('#js_import_message')
+      .show(e.message);
+  }
+};
 
-    return;
+/**
+ * @param {string} jsonText
+ */
+const parse = function (jsonText) {
+  if (jsonText.length === 0) {
+    throw new Error(i18n.get('message_json_required'));
   }
 
+  try {
+    return JSON.parse(jsonText);
+  } catch (e) {
+    throw new Error(i18n.get('message_json_invalid'));
+  }
+};
+
+const validate = function (json) {
   if (validator.forImportJson(json) === false) {
-    message.show(error.invalidJson);
-
-    return;
+    throw new Error(i18n.get('message_json_invalid'));
   }
-
-  importer.importJson(json);
-
-  callback();
 };
 
 module.exports.show = show;
