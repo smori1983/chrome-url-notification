@@ -8,11 +8,6 @@ describe('options.header', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
-
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
   });
   afterEach(testUtil.uiBase.afterEach);

@@ -17,6 +17,11 @@ const beforeEach = function () {
 
   chrome.flush();
 
+  chrome.runtime.getManifest
+    .returns({
+      version: '1.2.3',
+    });
+
   delete require.cache[require.resolve('jquery')];
   delete require.cache[require.resolve('jquery-validation')];
   delete require.cache[require.resolve('bootstrap')];

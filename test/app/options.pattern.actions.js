@@ -7,11 +7,6 @@ describe('options.pattern.actions', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
-
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
 
     header.show();

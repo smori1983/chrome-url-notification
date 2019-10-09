@@ -6,12 +6,6 @@ const testUtil = require('../../test_lib/util');
 describe('options.pattern.add', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
-  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
