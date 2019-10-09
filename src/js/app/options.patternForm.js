@@ -54,9 +54,9 @@ const bindValues = function() {
 };
 
 const resetValidator = function() {
-  if (validator) {
-    validator.destroy();
-  }
+  const $ = require('jquery');
+
+  $('#js_form_pattern').validate().destroy();
 };
 
 const clear = function() {
