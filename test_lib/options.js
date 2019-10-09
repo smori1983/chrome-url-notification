@@ -190,6 +190,12 @@ const patternForm = function () {
     submit: function () {
       $('#js_form_pattern_submit').trigger('click');
     },
+    clear: function () {
+      $('#js_form_pattern_clear').trigger('click');
+    },
+    cancel: function () {
+      $('#js_form_pattern_cancel').trigger('click');
+    },
     /**
      * @param {string} name
      * @returns {string}

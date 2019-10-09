@@ -27,8 +27,6 @@ let original;
  */
 let current;
 
-let validator;
-
 /**
  * @returns {FormValue}
  */
@@ -54,9 +52,9 @@ const bindValues = function() {
 };
 
 const resetValidator = function() {
-  if (validator) {
-    validator.destroy();
-  }
+  const $ = require('jquery');
+
+  $('#js_form_pattern').validate().destroy();
 };
 
 const clear = function() {
@@ -146,7 +144,7 @@ const show = function (argMode, argOriginal, callback) {
 const submit = function(callback) {
   const $ = require('jquery');
 
-  validator = $('#js_form_pattern').validate(validatorConfig());
+  const validator = $('#js_form_pattern').validate(validatorConfig());
 
   if (validator.form() === false) {
     return;
