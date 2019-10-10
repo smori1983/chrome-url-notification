@@ -16,6 +16,7 @@ const show = function () {
   const clipboard = new ClipboardJS('#js_export_copy');
   const message = messageFactory.init('#js_export_message');
 
+  /* istanbul ignore next jsdom does not support document.execCommand() */
   clipboard.on('success', function(e) {
     e.clearSelection();
     message.show(i18n.get('message_copy_done'));
