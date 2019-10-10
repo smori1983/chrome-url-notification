@@ -20,44 +20,46 @@ describe('options.exportForm', function () {
     assert.strictEqual($('#js_export_copy').text(), 'Copy');
   });
 
-  it('exported json - version is current', function () {
-    SUT.show();
+  describe('exported json', function () {
+    it('version should be current', function () {
+      SUT.show();
 
-    const json = testUtil.options.exportForm().json();
+      const json = testUtil.options.exportForm().json();
 
-    assert.strictEqual(json.version, testUtil.currentVersion());
-  });
+      assert.strictEqual(json.version, testUtil.currentVersion());
+    });
 
-  it('exported json - without pattern data', function () {
-    SUT.show();
+    it('without pattern data', function () {
+      SUT.show();
 
-    const json = testUtil.options.exportForm().json();
+      const json = testUtil.options.exportForm().json();
 
-    assert.deepStrictEqual(json.pattern, []);
-  });
+      assert.deepStrictEqual(json.pattern, []);
+    });
 
-  it('exported json - with pattern data', function () {
-    testUtil.setUpStorage('3', [
-      {
+    it('with pattern data', function () {
+      testUtil.setUpStorage('3', [
+        {
+          url: 'http://example.com/1',
+          msg: 'message1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+      ]);
+
+      SUT.show();
+
+      const json = testUtil.options.exportForm().json();
+
+      assert.strictEqual(json.pattern.length, 1);
+      assert.deepStrictEqual(json.pattern[0], {
         url: 'http://example.com/1',
         msg: 'message1',
         backgroundColor: '111111',
         displayPosition: 'top',
         status: 1,
-      },
-    ]);
-
-    SUT.show();
-
-    const json = testUtil.options.exportForm().json();
-
-    assert.strictEqual(json.pattern.length, 1);
-    assert.deepStrictEqual(json.pattern[0], {
-      url: 'http://example.com/1',
-      msg: 'message1',
-      backgroundColor: '111111',
-      displayPosition: 'top',
-      status: 1,
+      });
     });
   });
 });
