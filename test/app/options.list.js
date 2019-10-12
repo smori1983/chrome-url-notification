@@ -13,6 +13,58 @@ describe('options.list', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
+  describe('badge number', function () {
+    it('without data', function () {
+      SUT.show();
+
+      assert.strictEqual(testUtil.options.list().badge(), '0');
+    });
+
+    it('with 1 pattern', function() {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: 'aaaaaa',
+          displayPosition: 'bottom',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      assert.strictEqual(testUtil.options.list().badge(), '1');
+    });
+
+    it('with 3 patterns', function() {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: 'aaaaaa',
+          displayPosition: 'bottom',
+          status: 1,
+        },
+        {
+          url: 'site2.example.com',
+          msg: 'site2',
+          backgroundColor: '000000',
+          displayPosition: 'bottom',
+          status: 0,
+        },
+        {
+          url: 'site3.example.com',
+          msg: 'site3',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      assert.strictEqual(testUtil.options.list().badge(), '3');
+    });
+  });
+
   it('tr element - without pattern data', function () {
     SUT.show();
 

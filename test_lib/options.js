@@ -78,6 +78,12 @@ const list = function () {
   };
 
   return {
+    /**
+     * @returns {string}
+     */
+    badge: function () {
+      return $('#js_pattern_list_badge').text();
+    },
     header: function () {
       return $('#js_list_pattern thead').find('tr');
     },
