@@ -74,24 +74,21 @@ const show = function (argMode, argOriginal, callback) {
   require('jquery-validation');
   require('bootstrap-colorpicker');
 
-  const $container = $('#js_modal_pattern_container');
+  $('#js_modal_pattern_container')
+    .empty()
+    .append($('#js_modal_pattern_html').html());
 
-  const html = $('#js_modal_pattern_html').html();
-
-  $container.empty();
-  $container.append(html);
-
-  $container.find('#js_colorpicker').colorpicker({
+  $('#js_colorpicker').colorpicker({
     align: 'left',
     format: 'hex',
   });
 
-  $container.find('#js_form_pattern_clear').on('click', function(e) {
+  $('#js_form_pattern_clear').on('click', function(e) {
     e.preventDefault();
     clear();
   });
 
-  $container.find('#js_form_pattern').on('submit', function(e) {
+  $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
     submit(function () {
       modal.hide();
