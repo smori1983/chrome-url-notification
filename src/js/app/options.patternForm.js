@@ -23,11 +23,6 @@ let mode;
 let original;
 
 /**
- * @type {FormValue}
- */
-let current;
-
-/**
  * @returns {FormValue}
  */
 const defaultValues = function() {
@@ -40,15 +35,18 @@ const defaultValues = function() {
   };
 };
 
-const bindValues = function() {
+/**
+ * @param {FormValue} item
+ */
+const bindValues = function(item) {
   const $ = require('jquery');
 
-  $('#js_input_url').val(current.url);
-  $('#js_input_msg').val(current.message);
-  $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
-  $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
-  $('input[name=display_position]').val([current.displayPosition]);
-  $('#js_input_status').prop('checked', current.status === 1);
+  $('#js_input_url').val(item.url);
+  $('#js_input_msg').val(item.message);
+  $('#js_input_backgroundcolor').val('#' + item.backgroundColor);
+  $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
+  $('input[name=display_position]').val([item.displayPosition]);
+  $('#js_input_status').prop('checked', item.status === 1);
 };
 
 const resetValidator = function() {
@@ -58,10 +56,8 @@ const resetValidator = function() {
 };
 
 const clear = function() {
-  current = defaultValues();
-
   resetValidator();
-  bindValues();
+  bindValues(defaultValues());
 };
 
 /**
@@ -121,8 +117,6 @@ const show = function (argMode, argOriginal, callback) {
   mode = argMode;
   original = argOriginal;
 
-  current = $.extend(defaultValues(), original);
-
   i18n.apply('#js_modal_pattern_container');
 
   const modal = modalFactory.init('#js_modal_pattern', {
@@ -131,7 +125,7 @@ const show = function (argMode, argOriginal, callback) {
     },
   });
 
-  bindValues();
+  bindValues($.extend(defaultValues(), original));
   modal.show();
 };
 
