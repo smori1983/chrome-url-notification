@@ -1,6 +1,5 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
