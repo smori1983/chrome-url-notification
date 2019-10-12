@@ -14,16 +14,15 @@ const modalFactory = require('./options.util.modal');
  */
 const show = function(item, callback) {
   const $ = require('jquery');
-  const $container = $('#js_modal_delete_container');
 
-  const html = $('#js_modal_delete_html').html();
+  $('#js_modal_delete_container')
+    .empty()
+    .append($('#js_modal_delete_html').html());
 
-  $container.empty();
-  $container.append(html);
-  $container.find('#js_form_delete_pattern').text(item.pattern);
-  $container.find('#js_form_delete_message').text(item.message);
+  $('#js_form_delete_pattern').text(item.pattern);
+  $('#js_form_delete_message').text(item.message);
 
-  $container.find('#js_form_delete').on('submit', function(e) {
+  $('#js_form_delete').on('submit', function(e) {
     e.preventDefault();
     storage.deletePattern(item.pattern);
     modal.hide();
@@ -33,7 +32,6 @@ const show = function(item, callback) {
   i18n.apply('#js_modal_delete_container');
 
   const modal = modalFactory.init('#js_modal_delete');
-
   modal.show();
 };
 
