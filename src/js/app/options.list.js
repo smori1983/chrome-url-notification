@@ -149,7 +149,11 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     const message = function(item) {
-      return item.status === 1 ? 'Y': 'n';
+      switch (item.status) {
+        case 1: return 'Y';
+        case 0: return 'n';
+        default: return '';
+      }
     };
 
     /**
