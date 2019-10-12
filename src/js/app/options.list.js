@@ -59,7 +59,7 @@ const makeRow = function(item) {
     return $('<td>');
   };
 
-  const patternColumn = (function(item) {
+  const patternColumn = (function() {
     /**
      * @param {PatternItem} item
      */
