@@ -54,17 +54,15 @@ const setBadgeTextShould = function(text, tabId) {
 };
 
 describe('background.popup.update.status', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
+  before(testUtil.background.before);
+  beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
     testUtil.setUpStorage('3', [
       {
         url: 'https://domain1.example.com/',
         msg: 'domain1',
         backgroundColor: '111111',
-        displayPosition: 'top',
+        displayPosition: 'bottom',
         status: 1,
       },
       {
@@ -75,13 +73,8 @@ describe('background.popup.update.status', function () {
         status: 0,
       },
     ]);
-
-    chrome.flush();
   });
-
-  after(function () {
-    delete (global.chrome);
-  });
+  after(testUtil.background.after);
 
   it('status is 1, then disabled', function () {
     const checker = responseChecker();

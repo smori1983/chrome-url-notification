@@ -1,6 +1,4 @@
-const describe = require('mocha').describe;
-const beforeEach = require('mocha').beforeEach;
-const it = require('mocha').it;
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');

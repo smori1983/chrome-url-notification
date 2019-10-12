@@ -34,22 +34,25 @@
 
 </div>
 
+<div id="js_modal_pattern_container"></div>
+
+<script type="text/template" id="js_modal_pattern_html">
 <div id="js_modal_pattern" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="js_form_pattern" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label data-i18n="label_url_pattern"></label>
+                        <label for="js_input_url" data-i18n="label_url_pattern"></label>
                         <p class="small text-info" data-i18n="text_url_pattern"></p>
                         <input type="text" name="url" value="" id="js_input_url" class="form-control" data-i18n-ph="ph_url_pattern" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_message"></label>
+                        <label for="js_input_msg" data-i18n="label_message"></label>
                         <input type="text" name="message" value="" id="js_input_msg" class="form-control" data-i18n-ph="ph_message" placeholder="" />
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_background_color"></label>
+                        <label for="js_input_background_color" data-i18n="label_background_color"></label>
                         <div id="js_colorpicker" class="input-group colorpicker-component">
                             <span class="input-group-addon"><i><!-- // --></i></span>
                             <input type="text" name="background_color" value="" id="js_input_background_color" class="form-control" />
@@ -68,19 +71,22 @@
                             <label class="checkbox-inline"><input id="js_input_status" type="checkbox" value="1" name="status"><span data-i18n="label_enabled"></span></label>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <span id="js_pattern_message" class="text-danger"></span>
-                    <input type="submit" class="btn btn-success" data-i18n-val="label_save" value="" />
-                    <input type="button" class="btn btn-warning" data-i18n-val="label_clear" value="" id="js_input_clear" />
-                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_pattern_submit" type="submit" class="btn btn-success" data-i18n-val="label_save" value="" />
+                    <input id="js_form_pattern_clear" type="button" class="btn btn-warning" data-i18n-val="label_clear" value="" />
+                    <input id="js_form_pattern_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
     </div>
 </div>
+</script>
 
+<div id="js_modal_delete_container"></div>
+
+<script type="text/template" id="js_modal_delete_html">
 <div id="js_modal_delete" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -96,14 +102,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-danger" data-i18n-val="label_delete" value="" />
-                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_delete_submit" type="submit" class="btn btn-danger" data-i18n-val="label_delete" value="" />
+                    <input id="js_form_delete_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
     </div>
 </div>
+</script>
 
+<div id="js_modal_export_container"></div>
+
+<script type="text/template" id="js_modal_export_html">
 <div id="js_modal_export" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -117,26 +127,31 @@
         </div>
     </div>
 </div>
+</script>
 
+<div id="js_modal_import_container"></div>
+
+<script type="text/template" id="js_modal_import_html">
 <div id="js_modal_import" class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="js_form_import" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label data-i18n="label_json_text"></label>
+                        <label for="js_form_import_json" data-i18n="label_json_text"></label>
                         <textarea id="js_form_import_json" class="form-control" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <span id="js_import_message" class="text-danger"></span>
-                    <input type="submit" class="btn btn-success" data-i18n-val="label_import" value="" />
-                    <input type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_import_submit" type="submit" class="btn btn-success" data-i18n-val="label_import" value="" />
+                    <input id="js_form_import_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
     </div>
 </div>
+</script>
 
 <script type="text/javascript" src="/js/options.js"></script>
 </body>
