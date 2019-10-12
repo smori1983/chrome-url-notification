@@ -125,7 +125,7 @@ describe('options.pattern.edit', function () {
 
       form.submit();
 
-      assert.strictEqual(form.errorMessage('url'), '');
+      assert.strictEqual(form.shown(), false);
     });
 
     it('edit form and save', function() {
