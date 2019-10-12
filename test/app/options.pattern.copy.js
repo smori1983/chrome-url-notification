@@ -11,7 +11,7 @@ describe('options.pattern.copy', function () {
 
   describe('error', function () {
     beforeEach(function () {
-      testUtil.setUpStorage('3', [
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',
@@ -103,7 +103,7 @@ describe('options.pattern.copy', function () {
 
   describe('ok', function () {
     beforeEach(function () {
-      testUtil.setUpStorage('3', [
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',

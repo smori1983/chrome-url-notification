@@ -9,7 +9,6 @@ describe('options.pattern.actions', function () {
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-
     header.show();
   });
   afterEach(testUtil.uiBase.afterEach);

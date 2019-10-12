@@ -34,7 +34,7 @@ describe('options.exportForm', function () {
     });
 
     it('with pattern data', function () {
-      testUtil.setUpStorage('3', [
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'http://example.com/1',
           msg: 'message1',

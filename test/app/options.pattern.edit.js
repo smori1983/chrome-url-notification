@@ -11,7 +11,7 @@ describe('options.pattern.edit', function () {
 
   describe('error', function () {
     beforeEach(function () {
-      testUtil.setUpStorage('3', [
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'domain7.example.com',
           msg: 'domain7',
@@ -95,7 +95,7 @@ describe('options.pattern.edit', function () {
 
   describe('ok', function () {
     beforeEach(function () {
-      testUtil.setUpStorage('3', [
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'domain9.example.com',
           msg: 'domain9',
