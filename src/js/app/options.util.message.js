@@ -13,6 +13,7 @@ const main = function (selector) {
     $(selector).text(message);
 
     if (timeoutId !== null) {
+      /* istanbul ignore next */
       window.clearTimeout(timeoutId);
     }
 
