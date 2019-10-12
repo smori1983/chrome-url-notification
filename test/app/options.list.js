@@ -22,13 +22,7 @@ describe('options.list', function () {
 
     it('with 1 pattern', function() {
       testUtil.setUpStorage(testUtil.currentVersion(), [
-        {
-          url: 'site1.example.com',
-          msg: 'site1',
-          backgroundColor: 'aaaaaa',
-          displayPosition: 'bottom',
-          status: 1,
-        },
+        testUtil.makePatternItem({}),
       ]);
       SUT.show();
 
@@ -37,27 +31,9 @@ describe('options.list', function () {
 
     it('with 3 patterns', function() {
       testUtil.setUpStorage(testUtil.currentVersion(), [
-        {
-          url: 'site1.example.com',
-          msg: 'site1',
-          backgroundColor: 'aaaaaa',
-          displayPosition: 'bottom',
-          status: 1,
-        },
-        {
-          url: 'site2.example.com',
-          msg: 'site2',
-          backgroundColor: '000000',
-          displayPosition: 'bottom',
-          status: 0,
-        },
-        {
-          url: 'site3.example.com',
-          msg: 'site3',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
+        testUtil.makePatternItem({url: 'site1.example.com'}),
+        testUtil.makePatternItem({url: 'site2.example.com'}),
+        testUtil.makePatternItem({url: 'site3.example.com'}),
       ]);
       SUT.show();
 
@@ -77,13 +53,7 @@ describe('options.list', function () {
 
     it('with pattern data', function () {
       testUtil.setUpStorage(testUtil.currentVersion(), [
-        {
-          url: 'example.com',
-          msg: 'message',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
+        testUtil.makePatternItem({}),
       ]);
       SUT.show();
 
@@ -97,13 +67,7 @@ describe('options.list', function () {
   describe('header area', function () {
     it('labels', function () {
       testUtil.setUpStorage(testUtil.currentVersion(), [
-        {
-          url: 'http://example.com/1',
-          msg: 'message1',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
+        testUtil.makePatternItem({}),
       ]);
       SUT.show();
 

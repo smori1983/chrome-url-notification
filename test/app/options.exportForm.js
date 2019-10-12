@@ -35,26 +35,14 @@ describe('options.exportForm', function () {
 
     it('with pattern data', function () {
       testUtil.setUpStorage(testUtil.currentVersion(), [
-        {
-          url: 'http://example.com/1',
-          msg: 'message1',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
+        testUtil.makePatternItem({}),
       ]);
       testUtil.options.header().clickExport();
 
       const json = testUtil.options.exportForm().json();
 
       assert.strictEqual(json.pattern.length, 1);
-      assert.deepStrictEqual(json.pattern[0], {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      });
+      assert.deepStrictEqual(json.pattern[0], testUtil.makePatternItem({}));
     });
   });
 });
