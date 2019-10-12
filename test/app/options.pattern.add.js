@@ -71,6 +71,26 @@ describe('options.pattern.add', function () {
       assert.strictEqual(form.errorMessage('background_color'), 'Invalid color index.');
     });
 
+    it('modify value of display position', function () {
+      const $ = require('jquery');
+      $('input[name=display_position]').val('foo');
+
+      const form = testUtil.options.patternForm();
+      form.submit();
+
+      assert.strictEqual(form.errorMessage('display_position'), 'Invalid choice.');
+    });
+
+    it('modify value of status', function () {
+      const $ = require('jquery');
+      $('#js_input_status').val('2');
+
+      const form = testUtil.options.patternForm();
+      form.submit();
+
+      assert.strictEqual(form.errorMessage('status'), 'Invalid choice.');
+    });
+
     it('open form and submit invalid inputs multiple times', function () {
       const form = testUtil.options.patternForm();
 
