@@ -85,4 +85,26 @@ describe('options.pattern.add', function () {
       assert.strictEqual(form.errorMessage('url'), 'This field is required.');
     });
   });
+
+  describe('ok', function () {
+    beforeEach(function () {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+      header.show();
+      testUtil.options.header().clickAdd();
+    });
+
+    it('register simple data', function () {
+      const form = testUtil.options.patternForm();
+
+      form.pattern('example.com');
+      form.message('example');
+      form.submit();
+
+      assert.strictEqual(testUtil.options.list().numOfItems(), 1);
+
+      const item = testUtil.options.list().item(0);
+      assert.strictEqual(item.pattern(), 'example.com');
+      assert.strictEqual(item.message(), 'example');
+    });
+  });
 });
