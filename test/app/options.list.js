@@ -65,151 +65,38 @@ describe('options.list', function () {
     });
   });
 
-  it('tr element - without pattern data', function () {
-    SUT.show();
+  describe('table tr element', function () {
+    it('without pattern data', function () {
+      SUT.show();
 
-    const list = testUtil.options.list();
+      const list = testUtil.options.list();
 
-    assert.strictEqual(list.header().length, 0);
-    assert.strictEqual(list.numOfItems(), 0);
+      assert.strictEqual(list.header().length, 0);
+      assert.strictEqual(list.numOfItems(), 0);
+    });
+
+    it('with pattern data', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'example.com',
+          msg: 'message',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+
+      assert.strictEqual(list.header().length, 1);
+      assert.strictEqual(list.numOfItems(), 1);
+    });
   });
 
-  it('tr element - with pattern data', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-    ]);
-
-    SUT.show();
-
-    const list = testUtil.options.list();
-
-    assert.strictEqual(list.header().length, 1);
-    assert.strictEqual(list.numOfItems(), 1);
-  });
-
-  it('header columns', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-    ]);
-
-    SUT.show();
-
-    const $ = require('jquery');
-    const $columns = testUtil.options.list().header().find('th');
-
-    assert.strictEqual($columns.length, 5);
-    assert.strictEqual($($columns[0]).text(), 'URL pattern');
-    assert.strictEqual($($columns[1]).text(), 'Message');
-    assert.strictEqual($($columns[2]).text(), 'Display position');
-    assert.strictEqual($($columns[3]).text(), 'Enabled');
-    assert.strictEqual($($columns[4]).text(), 'Operation');
-  });
-
-  it('list area', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-    ]);
-
-    SUT.show();
-
-    assert.strictEqual(testUtil.options.list().numOfItems(), 1);
-
-    const item = testUtil.options.list().item(0);
-    assert.strictEqual(item.pattern(), 'http://example.com/1');
-    assert.strictEqual(item.message(), 'message1');
-    assert.strictEqual(item.displayPosition(), 'Top');
-    assert.strictEqual(item.status(), 'Y');
-  });
-
-  it('copy button', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-      {
-        url: 'http://example.com/2',
-        msg: 'message2',
-        backgroundColor: '111111',
-        displayPosition: 'bottom',
-        status: 0,
-      },
-    ]);
-
-    SUT.show();
-
-    const list = testUtil.options.list();
-    const form = testUtil.options.patternForm();
-
-    list.item(0).clickCopy();
-
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/1');
-
-    list.item(1).clickCopy();
-
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/2');
-  });
-
-  it('edit button', function () {
-    testUtil.setUpStorage('3', [
-      {
-        url: 'http://example.com/1',
-        msg: 'message1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
-        status: 1,
-      },
-      {
-        url: 'http://example.com/2',
-        msg: 'message2',
-        backgroundColor: '111111',
-        displayPosition: 'bottom',
-        status: 0,
-      },
-    ]);
-
-    SUT.show();
-
-    const list = testUtil.options.list();
-    const form = testUtil.options.patternForm();
-
-    list.item(0).clickEdit();
-
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/1');
-
-    list.item(1).clickEdit();
-
-    assert.ok(form.shown());
-    assert.strictEqual(form.pattern(), 'http://example.com/2');
-  });
-
-  describe('delete operation', function () {
-    beforeEach(function () {
-      testUtil.setUpStorage('3', [
+  describe('header area', function () {
+    it('labels', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
           url: 'http://example.com/1',
           msg: 'message1',
@@ -217,60 +104,244 @@ describe('options.list', function () {
           displayPosition: 'top',
           status: 1,
         },
+      ]);
+      SUT.show();
+
+      const $ = require('jquery');
+      const $columns = testUtil.options.list().header().find('th');
+
+      assert.strictEqual($columns.length, 5);
+      assert.strictEqual($($columns[0]).text(), 'URL pattern');
+      assert.strictEqual($($columns[1]).text(), 'Message');
+      assert.strictEqual($($columns[2]).text(), 'Display position');
+      assert.strictEqual($($columns[3]).text(), 'Enabled');
+      assert.strictEqual($($columns[4]).text(), 'Operation');
+    });
+  });
+
+  describe('list area', function () {
+    beforeEach(function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
         {
-          url: 'http://example.com/2',
-          msg: 'message2',
+          url: 'site1.example.com',
+          msg: 'site1',
           backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+        {
+          url: 'site2.example.com',
+          msg: 'site2',
+          backgroundColor: '222222',
           displayPosition: 'bottom',
           status: 0,
         },
       ]);
+      SUT.show();
     });
 
-    it('open modal twice', function () {
-      SUT.show();
+    it('displayed elements of item', function () {
+      assert.strictEqual(testUtil.options.list().numOfItems(), 2);
 
+      const item1 = testUtil.options.list().item(0);
+      assert.strictEqual(item1.pattern(), 'site1.example.com');
+      assert.strictEqual(item1.message(), 'site1');
+      assert.strictEqual(item1.displayPosition(), 'Top');
+      assert.strictEqual(item1.status(), 'Y');
+
+      const item2 = testUtil.options.list().item(1);
+      assert.strictEqual(item2.pattern(), 'site2.example.com');
+      assert.strictEqual(item2.message(), 'site2');
+      assert.strictEqual(item2.displayPosition(), 'Bottom');
+      assert.strictEqual(item2.status(), 'n');
+    });
+
+    it('copy button', function () {
+      const list = testUtil.options.list();
+      const form = testUtil.options.patternForm();
+
+      list.item(0).clickCopy();
+
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'site1.example.com');
+
+      list.item(1).clickCopy();
+
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'site2.example.com');
+    });
+
+    it('edit button', function () {
+      const list = testUtil.options.list();
+      const form = testUtil.options.patternForm();
+
+      list.item(0).clickEdit();
+
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'site1.example.com');
+
+      list.item(1).clickEdit();
+
+      assert.ok(form.shown());
+      assert.strictEqual(form.pattern(), 'site2.example.com');
+    });
+
+    it('click delete button twice', function () {
       const list = testUtil.options.list();
       const form = testUtil.options.deleteForm();
 
       list.item(0).clickDelete();
 
       assert.ok(form.shown());
-      assert.strictEqual(form.pattern(), 'http://example.com/1');
-      assert.strictEqual(form.message(), 'message1');
+      assert.strictEqual(form.pattern(), 'site1.example.com');
+      assert.strictEqual(form.message(), 'site1');
 
       list.item(1).clickDelete();
 
       assert.ok(form.shown());
-      assert.strictEqual(form.pattern(), 'http://example.com/2');
-      assert.strictEqual(form.message(), 'message2');
+      assert.strictEqual(form.pattern(), 'site2.example.com');
+      assert.strictEqual(form.message(), 'site2');
     });
 
-    it('execute', function () {
-      SUT.show();
-
+    it('execute delete', function () {
       testUtil.options.list().item(0).clickDelete();
       testUtil.options.deleteForm().submit();
 
       assert.strictEqual(storage.getCount(), 1);
       assert.deepStrictEqual(storage.getAll(), [
         {
-          url: 'http://example.com/2',
-          msg: 'message2',
-          backgroundColor: '111111',
+          url: 'site2.example.com',
+          msg: 'site2',
+          backgroundColor: '222222',
           displayPosition: 'bottom',
           status: 0,
         },
       ]);
     });
 
-    it('cancel', function () {
-      SUT.show();
-
+    it('cancel delete', function () {
       testUtil.options.list().item(0).clickDelete();
       testUtil.options.deleteForm().cancel();
 
       assert.strictEqual(storage.getCount(), 2);
+    });
+  });
+
+  describe('behavior for broken or invalid data', function () {
+    it('url not registered', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), '');
+      assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).displayPosition(), 'Top');
+      assert.strictEqual(list.item(0).status(), 'Y');
+    });
+
+    it('message not found', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
+      assert.strictEqual(list.item(0).message(), '');
+      assert.strictEqual(list.item(0).displayPosition(), 'Top');
+      assert.strictEqual(list.item(0).status(), 'Y');
+    });
+
+    it('display position not found', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
+      assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).displayPosition(), '');
+      assert.strictEqual(list.item(0).status(), 'Y');
+    });
+
+    it('display position is invalid', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'foo',
+          status: 1,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
+      assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).displayPosition(), '');
+      assert.strictEqual(list.item(0).status(), 'Y');
+    });
+
+    it('status not found', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
+      assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).displayPosition(), 'Top');
+      assert.strictEqual(list.item(0).status(), '');
+    });
+
+    it('status is invalid', function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 2,
+        },
+      ]);
+      SUT.show();
+
+      const list = testUtil.options.list();
+      assert.strictEqual(list.numOfItems(), 1);
+      assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
+      assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).displayPosition(), 'Top');
+      assert.strictEqual(list.item(0).status(), '');
     });
   });
 });
