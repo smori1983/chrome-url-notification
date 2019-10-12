@@ -20,21 +20,15 @@ const header = function () {
 const exportForm = function () {
   const $ = require('jquery');
 
-  const checkModalIsActivated = function () {
-    if ($('#js_modal_export').css('display') !== 'block') {
-      throw new Error('modal is not activated');
-    }
-  };
-
   return {
     /**
      * @returns {boolean}
      */
     shown: function () {
-      return $('#js_modal_export').css('display') === 'block';
+      return modalIsActivated($('#js_modal_export'));
     },
     json: function () {
-      checkModalIsActivated();
+      modalShouldActivated($('#js_modal_export'));
       return JSON.parse($('#js_export_display').text());
     },
   };
@@ -48,23 +42,26 @@ const importForm = function () {
      * @returns {boolean}
      */
     shown: function () {
-      return $('#js_modal_import').css('display') === 'block';
+      return modalIsActivated($('#js_modal_import'));
     },
     /**
      * @param {string} [input]
      */
     json: function (input) {
+      modalShouldActivated($('#js_modal_import'));
       if (typeof input === 'string') {
         $('#js_form_import_json').val(input);
       }
     },
     submit: function () {
+      modalShouldActivated($('#js_modal_import'));
       $('#js_form_import_submit').trigger('click');
     },
     /**
      * @returns {string}
      */
     errorMessage: function () {
+      modalShouldActivated($('#js_modal_import'));
       return $('#js_import_message').text();
     },
   };
@@ -136,13 +133,14 @@ const patternForm = function () {
      * @returns {boolean}
      */
     shown: function () {
-      return $('#js_modal_pattern').css('display') === 'block';
+      return modalIsActivated($('#js_modal_pattern'));
     },
     /**
      * @param {string} [value]
      * @returns {string}
      */
     pattern: function (value) {
+      modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_url');
       if (typeof value === 'string') {
         $element.val(value);
@@ -154,6 +152,7 @@ const patternForm = function () {
      * @returns {string}
      */
     message: function (value) {
+      modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_msg');
       if (typeof value === 'string') {
         $element.val(value);
@@ -165,6 +164,7 @@ const patternForm = function () {
      * @returns {string}
      */
     backgroundColor: function(value) {
+      modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_background_color');
       if (typeof value === 'string') {
         $element.val(value);
@@ -176,6 +176,7 @@ const patternForm = function () {
      * @returns {string}
      */
     displayPosition: function(value) {
+      modalShouldActivated($('#js_modal_pattern'));
       const $form = $('#js_form_pattern');
       if (typeof value === 'string') {
         $form.find('input[name=display_position]').val(value);
@@ -187,6 +188,7 @@ const patternForm = function () {
      * @returns {boolean}
      */
     status: function(value) {
+      modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_status');
       if (typeof value === 'boolean') {
         $element.prop('checked', value);
@@ -194,12 +196,15 @@ const patternForm = function () {
       return $element.prop('checked');
     },
     submit: function () {
+      modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_submit').trigger('click');
     },
     clear: function () {
+      modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_clear').trigger('click');
     },
     cancel: function () {
+      modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_cancel').trigger('click');
     },
     /**
@@ -207,6 +212,7 @@ const patternForm = function () {
      * @returns {string}
      */
     errorMessage: function (name) {
+      modalShouldActivated($('#js_modal_pattern'));
       if (name === 'display_position') {
         return $('#display_position-error').text();
       }
@@ -221,31 +227,51 @@ const patternForm = function () {
 const deleteForm = function () {
   const $ = require('jquery');
 
-  const checkModalIsActivated = function () {
-    if ($('#js_modal_delete').css('display') !== 'block') {
-      throw new Error('modal is not activated');
-    }
-  };
-
   return {
     shown: function() {
-      return $('#js_modal_delete').css('display') === 'block';
+      return modalIsActivated($('#js_modal_delete'));
     },
     pattern: function () {
+      modalShouldActivated($('#js_modal_delete'));
       return $('#js_form_delete_pattern').text();
     },
     message: function () {
+      modalShouldActivated($('#js_modal_delete'));
       return $('#js_form_delete_message').text();
     },
     submit: function () {
-      checkModalIsActivated();
+      modalShouldActivated($('#js_modal_delete'));
       $('#js_form_delete_submit').trigger('click');
     },
     cancel: function () {
-      checkModalIsActivated();
+      modalShouldActivated($('#js_modal_delete'));
       $('#js_form_delete_cancel').trigger('click');
     },
   };
+};
+
+/**
+ * @param {JQuery} $element
+ * @throws {Error}
+ */
+const modalShouldActivated = function ($element) {
+  if (modalIsActivated($element) === false) {
+    throw new Error('modal is not activated');
+  }
+};
+
+/**
+ * In the jsdom testing, detect modal is activated by checking
+ * that element has following class attributes.
+ *
+ * - modal
+ * - in
+ *
+ * @param {JQuery} $element
+ * @returns {boolean}
+ */
+const modalIsActivated = function ($element) {
+  return $element.hasClass('modal') && $element.hasClass('in');
 };
 
 module.exports.header = header;
