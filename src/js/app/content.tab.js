@@ -11,6 +11,7 @@ const listen = function () {
    * @param {MessageTabNotifyStatus} request
    */
   const tabNotifyStatusListener = function(request) {
+    /* istanbul ignore next */
     if (request.command !== 'tab:notify:status') {
       return;
     }

@@ -13,6 +13,7 @@ const badge = require('./background.badge');
  * @param {function} sendResponse
  */
 const listener = function(request, sender, sendResponse) {
+  /* istanbul ignore next */
   if (request.command !== 'browser_action:update:status') {
     return;
   }
