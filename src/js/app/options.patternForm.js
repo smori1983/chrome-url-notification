@@ -1,4 +1,3 @@
-const deepMerge = require('deepmerge');
 const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const storage = require('../urlNotification/storage');
@@ -83,7 +82,7 @@ const show = function (mode, item, callback) {
   });
 
   setUpValidator();
-  bindValues(/** @type {PatternItem} */ deepMerge(defaultValues(), item));
+  bindValues(item);
   modal.show();
 };
 
@@ -234,4 +233,5 @@ const validatorConfig = function(config) {
   };
 };
 
+module.exports.defaultValues = defaultValues;
 module.exports.show = show;

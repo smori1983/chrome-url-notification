@@ -10,7 +10,7 @@ const show = function() {
 
   $('#js_button_add_pattern').on('click', function(e) {
     e.preventDefault();
-    patternForm.show('add', {}, function () {
+    patternForm.show('add', patternForm.defaultValues(), function () {
       patternList.show();
     });
   });
