@@ -4,51 +4,45 @@ const storage = require('../urlNotification/storage');
 const modalFactory = require('./options.util.modal');
 
 /**
- * @typedef {object} FormValue
- * @property {string} url
- * @property {string} message
- * @property {string} backgroundColor
- * @property {string} displayPosition
- * @property {number} status
- */
-
-/**
- * @type {string}
- */
-let mode;
-
-/**
- * @type {FormValue}
- */
-let original;
-
-/**
- * @type {FormValue}
- */
-let current;
-
-/**
- * @returns {FormValue}
+ * @returns {PatternItem}
  */
 const defaultValues = function() {
   return {
     url: '',
-    message: '',
+    msg: '',
     backgroundColor: config.defaultBackgroundColor(),
     displayPosition: config.defaultDisplayPosition(),
     status: config.defaultStatus(),
   };
 };
 
-const bindValues = function() {
+/**
+ * @param {PatternItem} item
+ */
+const bindValues = function(item) {
   const $ = require('jquery');
 
-  $('#js_input_url').val(current.url);
-  $('#js_input_msg').val(current.message);
-  $('#js_input_backgroundcolor').val('#' + current.backgroundColor);
-  $('#js_colorpicker').colorpicker('setValue', '#' + current.backgroundColor);
-  $('input[name=display_position]').val([current.displayPosition]);
-  $('#js_input_status').prop('checked', current.status === 1);
+  $('#js_input_url').val(item.url);
+  $('#js_input_msg').val(item.msg);
+  $('#js_input_backgroundcolor').val('#' + item.backgroundColor);
+  $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
+  $('input[name=display_position]').val([item.displayPosition]);
+  $('#js_input_status').prop('checked', item.status === 1);
+};
+
+/**
+ * @returns {PatternItem}
+ */
+const getValues = function () {
+  const $ = require('jquery');
+
+  return  {
+    url: $('#js_input_url').val().trim(),
+    msg: $('#js_input_msg').val().trim(),
+    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
+    displayPosition: $('input[name=display_position]:checked').val().trim(),
+    status: $('#js_input_status').is(':checked') ? 1 : 0,
+  };
 };
 
 const resetValidator = function() {
@@ -58,73 +52,41 @@ const resetValidator = function() {
 };
 
 const clear = function() {
-  current = defaultValues();
-
   resetValidator();
-  bindValues();
+  bindValues(defaultValues());
 };
 
 /**
- * @param {string} argMode 'add' or 'edit'
- * @param {FormValue} argOriginal
+ * @param {string} mode 'add' or 'edit'
+ * @param {PatternItem} item
  * @param {function} callback
  */
-const show = function (argMode, argOriginal, callback) {
+const show = function (mode, item, callback) {
   const $ = require('jquery');
   require('jquery-validation');
   require('bootstrap-colorpicker');
 
-  const $container = $('#js_modal_pattern_container');
+  $('#js_modal_pattern_container')
+    .empty()
+    .append($('#js_modal_pattern_html').html());
 
-  const html = $('#js_modal_pattern_html').html();
-
-  $container.empty();
-  $container.append(html);
-
-  $container.find('#js_colorpicker').colorpicker({
+  $('#js_colorpicker').colorpicker({
     align: 'left',
     format: 'hex',
   });
 
-  $container.find('#js_form_pattern_clear').on('click', function(e) {
+  $('#js_form_pattern_clear').on('click', function(e) {
     e.preventDefault();
     clear();
   });
 
-  $container.find('#js_form_pattern').on('submit', function(e) {
+  $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
-    submit(function () {
+    submit(item, mode, function () {
       modal.hide();
       callback();
     });
   });
-
-  $.validator.addMethod('hexColor', function(value, element) {
-    return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
-  }, 'Invalid color index.');
-
-  $.validator.addMethod('in', function (value, element, params) {
-    return this.optional(element) || params.indexOf(value) >= 0;
-  }, 'Invalid choice.');
-
-  $.validator.addMethod('existingUrl', function(value, element) {
-    let usable = true;
-
-    if (mode === 'add') {
-      usable = storage.findByUrl(value) === null;
-    }
-
-    if (mode === 'edit') {
-      usable = original.url === value || storage.findByUrl(value) === null;
-    }
-
-    return this.optional(element) || usable;
-  }, 'Existing URL.');
-
-  mode = argMode;
-  original = argOriginal;
-
-  current = $.extend(defaultValues(), original);
 
   i18n.apply('#js_modal_pattern_container');
 
@@ -134,42 +96,78 @@ const show = function (argMode, argOriginal, callback) {
     },
   });
 
-  bindValues();
+  setUpValidator();
+  bindValues(item);
   modal.show();
 };
 
-/**
- * @param {function} callback
- */
-const submit = function(callback) {
+const setUpValidator = function () {
   const $ = require('jquery');
 
-  const validator = $('#js_form_pattern').validate(validatorConfig());
+  $.validator.addMethod('hexColor', function(value, element) {
+    return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
+  }, 'Invalid color index.');
+
+  $.validator.addMethod('in', function (value, element, params) {
+    return this.optional(element) || params.indexOf(value) >= 0;
+  }, 'Invalid choice.');
+
+  $.validator.addMethod('existingUrl', function(value, element, params) {
+    let usable = true;
+
+    if (params.mode === 'add') {
+      usable = storage.findByUrl(value) === null;
+    }
+
+    if (params.mode === 'edit') {
+      usable = params.url === value || storage.findByUrl(value) === null;
+    }
+
+    return this.optional(element) || usable;
+  }, 'Existing URL.');
+};
+
+/**
+ * @param {PatternItem} item
+ * @param {string} mode
+ * @param {function} callback
+ */
+const submit = function(item, mode, callback) {
+  const $ = require('jquery');
+
+  const validator = $('#js_form_pattern').validate(validatorConfig({
+    item: item,
+    mode: mode,
+  }));
 
   if (validator.form() === false) {
     return;
   }
 
-  const saveData = {
-    url: $('#js_input_url').val().trim(),
-    msg: $('#js_input_msg').val().trim(),
-    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
-    displayPosition: $('input[name=display_position]:checked').val().trim(),
-    status: $('#js_input_status').is(':checked') ? 1 : 0,
-  };
+  const saveData = getValues();
 
   if (mode === 'add') {
     storage.addPattern(saveData);
   }
 
   if (mode === 'edit') {
-    storage.updatePattern(original.url, saveData);
+    storage.updatePattern(item.url, saveData);
   }
 
   callback();
 };
 
-const validatorConfig = function() {
+/**
+ * @typedef {Object} ValidatorConfig
+ * @property {string} mode
+ * @property {PatternItem} item
+ */
+
+/**
+ * @param {ValidatorConfig} config
+ * @returns {Object}
+ */
+const validatorConfig = function(config) {
   // jquery-validation ignores elements that is configured as 'ignore'.
   // The default value is ':hidden'.
   // In jsdom testing, all input fields are detected as ':hidden'.
@@ -183,7 +181,10 @@ const validatorConfig = function() {
     rules: {
       url: {
         required: true,
-        existingUrl: true,
+        existingUrl: {
+          mode: config.mode,
+          url: config.item.url,
+        },
       },
       message: {
         required: true,
@@ -241,4 +242,5 @@ const validatorConfig = function() {
   };
 };
 
+module.exports.defaultValues = defaultValues;
 module.exports.show = show;

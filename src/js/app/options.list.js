@@ -180,13 +180,7 @@ const makeRow = function(item) {
         .addClass('copy_button')
         .on('click', function(e) {
           e.preventDefault();
-          patternForm.show('add', {
-            url: item.url,
-            message: item.msg,
-            backgroundColor: item.backgroundColor,
-            displayPosition: item.displayPosition,
-            status: item.status,
-          }, function () {
+          patternForm.show('add', item, function () {
             show();
           });
         });
@@ -200,13 +194,7 @@ const makeRow = function(item) {
         .addClass('edit_button')
         .on('click', function(e) {
           e.preventDefault();
-          patternForm.show('edit', {
-            url: item.url,
-            message: item.msg,
-            backgroundColor: item.backgroundColor,
-            displayPosition: item.displayPosition,
-            status: item.status,
-          }, function () {
+          patternForm.show('edit', item, function () {
             show();
           });
         });
@@ -220,10 +208,7 @@ const makeRow = function(item) {
         .addClass('delete_button')
         .on('click', function(e) {
           e.preventDefault();
-          deleteForm.show({
-            pattern: item.url,
-            message: item.msg,
-          }, function () {
+          deleteForm.show(item, function () {
             show();
           });
         });
