@@ -3,13 +3,7 @@ const storage = require('../urlNotification/storage');
 const modalFactory = require('./options.util.modal');
 
 /**
- * @typedef {object} DeleteFormItem
- * @property {string} pattern
- * @property {string} message
- */
-
-/**
- * @param {DeleteFormItem} item
+ * @param {PatternItem} item
  * @param {function} callback Called when delete form submitted
  */
 const show = function(item, callback) {
@@ -19,12 +13,12 @@ const show = function(item, callback) {
     .empty()
     .append($('#js_modal_delete_html').html());
 
-  $('#js_form_delete_pattern').text(item.pattern);
-  $('#js_form_delete_message').text(item.message);
+  $('#js_form_delete_pattern').text(item.url);
+  $('#js_form_delete_message').text(item.msg);
 
   $('#js_form_delete').on('submit', function(e) {
     e.preventDefault();
-    storage.deletePattern(item.pattern);
+    storage.deletePattern(item.url);
     modal.hide();
     callback();
   });

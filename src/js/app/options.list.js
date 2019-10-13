@@ -220,10 +220,7 @@ const makeRow = function(item) {
         .addClass('delete_button')
         .on('click', function(e) {
           e.preventDefault();
-          deleteForm.show({
-            pattern: item.url,
-            message: item.msg,
-          }, function () {
+          deleteForm.show(item, function () {
             show();
           });
         });
