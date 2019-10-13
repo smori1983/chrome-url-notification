@@ -4,31 +4,22 @@ const storage = require('../urlNotification/storage');
 const modalFactory = require('./options.util.modal');
 
 /**
- * @typedef {object} FormValue
- * @property {string} url
- * @property {string} message
- * @property {string} backgroundColor
- * @property {string} displayPosition
- * @property {number} status
- */
-
-/**
  * @type {string}
  */
 let mode;
 
 /**
- * @type {FormValue}
+ * @type {PatternItem}
  */
 let original;
 
 /**
- * @returns {FormValue}
+ * @returns {PatternItem}
  */
 const defaultValues = function() {
   return {
     url: '',
-    message: '',
+    msg: '',
     backgroundColor: config.defaultBackgroundColor(),
     displayPosition: config.defaultDisplayPosition(),
     status: config.defaultStatus(),
@@ -36,13 +27,13 @@ const defaultValues = function() {
 };
 
 /**
- * @param {FormValue} item
+ * @param {PatternItem} item
  */
 const bindValues = function(item) {
   const $ = require('jquery');
 
   $('#js_input_url').val(item.url);
-  $('#js_input_msg').val(item.message);
+  $('#js_input_msg').val(item.msg);
   $('#js_input_backgroundcolor').val('#' + item.backgroundColor);
   $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
   $('input[name=display_position]').val([item.displayPosition]);
@@ -62,7 +53,7 @@ const clear = function() {
 
 /**
  * @param {string} argMode 'add' or 'edit'
- * @param {FormValue} argOriginal
+ * @param {PatternItem} argOriginal
  * @param {function} callback
  */
 const show = function (argMode, argOriginal, callback) {
