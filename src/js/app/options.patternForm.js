@@ -43,10 +43,10 @@ const clear = function() {
 
 /**
  * @param {string} mode 'add' or 'edit'
- * @param {PatternItem} argOriginal
+ * @param {PatternItem} item
  * @param {function} callback
  */
-const show = function (mode, argOriginal, callback) {
+const show = function (mode, item, callback) {
   const $ = require('jquery');
   require('jquery-validation');
   require('bootstrap-colorpicker');
@@ -67,7 +67,7 @@ const show = function (mode, argOriginal, callback) {
 
   $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
-    submit(argOriginal, mode, function () {
+    submit(item, mode, function () {
       modal.hide();
       callback();
     });
@@ -81,8 +81,8 @@ const show = function (mode, argOriginal, callback) {
     },
   });
 
-  setUpValidator(argOriginal, mode);
-  bindValues($.extend(defaultValues(), argOriginal));
+  setUpValidator(item, mode);
+  bindValues($.extend(defaultValues(), item));
   modal.show();
 };
 
