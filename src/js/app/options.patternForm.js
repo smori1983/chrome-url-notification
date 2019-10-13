@@ -81,16 +81,12 @@ const show = function (mode, item, callback) {
     },
   });
 
-  setUpValidator(item, mode);
+  setUpValidator();
   bindValues($.extend(defaultValues(), item));
   modal.show();
 };
 
-/**
- * @param {PatternItem} item
- * @param {string} mode
- */
-const setUpValidator = function (item, mode) {
+const setUpValidator = function () {
   const $ = require('jquery');
 
   $.validator.addMethod('hexColor', function(value, element) {
@@ -101,15 +97,15 @@ const setUpValidator = function (item, mode) {
     return this.optional(element) || params.indexOf(value) >= 0;
   }, 'Invalid choice.');
 
-  $.validator.addMethod('existingUrl', function(value, element) {
+  $.validator.addMethod('existingUrl', function(value, element, params) {
     let usable = true;
 
-    if (mode === 'add') {
+    if (params.mode === 'add') {
       usable = storage.findByUrl(value) === null;
     }
 
-    if (mode === 'edit') {
-      usable = item.url === value || storage.findByUrl(value) === null;
+    if (params.mode === 'edit') {
+      usable = params.url === value || storage.findByUrl(value) === null;
     }
 
     return this.optional(element) || usable;
@@ -124,7 +120,10 @@ const setUpValidator = function (item, mode) {
 const submit = function(item, mode, callback) {
   const $ = require('jquery');
 
-  const validator = $('#js_form_pattern').validate(validatorConfig());
+  const validator = $('#js_form_pattern').validate(validatorConfig({
+    item: item,
+    mode: mode,
+  }));
 
   if (validator.form() === false) {
     return;
@@ -149,7 +148,17 @@ const submit = function(item, mode, callback) {
   callback();
 };
 
-const validatorConfig = function() {
+/**
+ * @typedef {Object} ValidatorConfig
+ * @property {string} mode
+ * @property {PatternItem} item
+ */
+
+/**
+ * @param {ValidatorConfig} config
+ * @returns {Object}
+ */
+const validatorConfig = function(config) {
   // jquery-validation ignores elements that is configured as 'ignore'.
   // The default value is ':hidden'.
   // In jsdom testing, all input fields are detected as ':hidden'.
@@ -163,7 +172,10 @@ const validatorConfig = function() {
     rules: {
       url: {
         required: true,
-        existingUrl: true,
+        existingUrl: {
+          mode: config.mode,
+          url: config.item.url,
+        },
       },
       message: {
         required: true,
