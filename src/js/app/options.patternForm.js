@@ -4,11 +4,6 @@ const storage = require('../urlNotification/storage');
 const modalFactory = require('./options.util.modal');
 
 /**
- * @type {string}
- */
-let mode;
-
-/**
  * @type {PatternItem}
  */
 let original;
@@ -52,11 +47,11 @@ const clear = function() {
 };
 
 /**
- * @param {string} argMode 'add' or 'edit'
+ * @param {string} mode 'add' or 'edit'
  * @param {PatternItem} argOriginal
  * @param {function} callback
  */
-const show = function (argMode, argOriginal, callback) {
+const show = function (mode, argOriginal, callback) {
   const $ = require('jquery');
   require('jquery-validation');
   require('bootstrap-colorpicker');
@@ -77,13 +72,12 @@ const show = function (argMode, argOriginal, callback) {
 
   $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
-    submit(argMode, function () {
+    submit(mode, function () {
       modal.hide();
       callback();
     });
   });
 
-  mode = argMode;
   original = argOriginal;
 
   i18n.apply('#js_modal_pattern_container');
@@ -94,7 +88,7 @@ const show = function (argMode, argOriginal, callback) {
     },
   });
 
-  setUpValidator(argMode);
+  setUpValidator(mode);
   bindValues($.extend(defaultValues(), original));
   modal.show();
 };
