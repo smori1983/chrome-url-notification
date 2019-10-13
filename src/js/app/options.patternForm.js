@@ -83,6 +83,28 @@ const show = function (argMode, argOriginal, callback) {
     });
   });
 
+  mode = argMode;
+  original = argOriginal;
+
+  i18n.apply('#js_modal_pattern_container');
+
+  const modal = modalFactory.init('#js_modal_pattern', {
+    'shown.bs.modal': function() {
+      $('#js_input_url').trigger('focus');
+    },
+  });
+
+  setUpValidator(argMode);
+  bindValues($.extend(defaultValues(), original));
+  modal.show();
+};
+
+/**
+ * @param {string} mode
+ */
+const setUpValidator = function (mode) {
+  const $ = require('jquery');
+
   $.validator.addMethod('hexColor', function(value, element) {
     return this.optional(element) || /^#[0-9a-f]{6}$/i.test(value);
   }, 'Invalid color index.');
@@ -104,20 +126,6 @@ const show = function (argMode, argOriginal, callback) {
 
     return this.optional(element) || usable;
   }, 'Existing URL.');
-
-  mode = argMode;
-  original = argOriginal;
-
-  i18n.apply('#js_modal_pattern_container');
-
-  const modal = modalFactory.init('#js_modal_pattern', {
-    'shown.bs.modal': function() {
-      $('#js_input_url').trigger('focus');
-    },
-  });
-
-  bindValues($.extend(defaultValues(), original));
-  modal.show();
 };
 
 /**
