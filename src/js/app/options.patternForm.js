@@ -77,7 +77,7 @@ const show = function (argMode, argOriginal, callback) {
 
   $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
-    submit(function () {
+    submit(argMode, function () {
       modal.hide();
       callback();
     });
@@ -129,9 +129,10 @@ const setUpValidator = function (mode) {
 };
 
 /**
+ * @param {string} mode
  * @param {function} callback
  */
-const submit = function(callback) {
+const submit = function(mode, callback) {
   const $ = require('jquery');
 
   const validator = $('#js_form_pattern').validate(validatorConfig());
