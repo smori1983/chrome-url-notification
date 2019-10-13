@@ -30,6 +30,21 @@ const bindValues = function(item) {
   $('#js_input_status').prop('checked', item.status === 1);
 };
 
+/**
+ * @returns {PatternItem}
+ */
+const getValues = function () {
+  const $ = require('jquery');
+
+  return  {
+    url: $('#js_input_url').val().trim(),
+    msg: $('#js_input_msg').val().trim(),
+    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
+    displayPosition: $('input[name=display_position]:checked').val().trim(),
+    status: $('#js_input_status').is(':checked') ? 1 : 0,
+  };
+};
+
 const resetValidator = function() {
   const $ = require('jquery');
 
@@ -129,13 +144,7 @@ const submit = function(item, mode, callback) {
     return;
   }
 
-  const saveData = {
-    url: $('#js_input_url').val().trim(),
-    msg: $('#js_input_msg').val().trim(),
-    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
-    displayPosition: $('input[name=display_position]:checked').val().trim(),
-    status: $('#js_input_status').is(':checked') ? 1 : 0,
-  };
+  const saveData = getValues();
 
   if (mode === 'add') {
     storage.addPattern(saveData);
