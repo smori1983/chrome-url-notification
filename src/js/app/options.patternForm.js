@@ -4,11 +4,6 @@ const storage = require('../urlNotification/storage');
 const modalFactory = require('./options.util.modal');
 
 /**
- * @type {PatternItem}
- */
-let original;
-
-/**
  * @returns {PatternItem}
  */
 const defaultValues = function() {
@@ -72,13 +67,11 @@ const show = function (mode, argOriginal, callback) {
 
   $('#js_form_pattern').on('submit', function(e) {
     e.preventDefault();
-    submit(mode, function () {
+    submit(argOriginal, mode, function () {
       modal.hide();
       callback();
     });
   });
-
-  original = argOriginal;
 
   i18n.apply('#js_modal_pattern_container');
 
@@ -88,15 +81,16 @@ const show = function (mode, argOriginal, callback) {
     },
   });
 
-  setUpValidator(mode);
-  bindValues($.extend(defaultValues(), original));
+  setUpValidator(argOriginal, mode);
+  bindValues($.extend(defaultValues(), argOriginal));
   modal.show();
 };
 
 /**
+ * @param {PatternItem} item
  * @param {string} mode
  */
-const setUpValidator = function (mode) {
+const setUpValidator = function (item, mode) {
   const $ = require('jquery');
 
   $.validator.addMethod('hexColor', function(value, element) {
@@ -115,7 +109,7 @@ const setUpValidator = function (mode) {
     }
 
     if (mode === 'edit') {
-      usable = original.url === value || storage.findByUrl(value) === null;
+      usable = item.url === value || storage.findByUrl(value) === null;
     }
 
     return this.optional(element) || usable;
@@ -123,10 +117,11 @@ const setUpValidator = function (mode) {
 };
 
 /**
+ * @param {PatternItem} item
  * @param {string} mode
  * @param {function} callback
  */
-const submit = function(mode, callback) {
+const submit = function(item, mode, callback) {
   const $ = require('jquery');
 
   const validator = $('#js_form_pattern').validate(validatorConfig());
@@ -148,7 +143,7 @@ const submit = function(mode, callback) {
   }
 
   if (mode === 'edit') {
-    storage.updatePattern(original.url, saveData);
+    storage.updatePattern(item.url, saveData);
   }
 
   callback();
