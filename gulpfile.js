@@ -19,7 +19,7 @@ const dist = (function() {
   const baseDir = process.env.EXTENSION_DIST || 'dist';
 
   if (forProduction) {
-    const manifest = JSON.parse(fs.readFileSync('src/manifest.json'));
+    const manifest = JSON.parse(fs.readFileSync('src/manifest.json').toString());
 
     return sprintf('%s/chrome-url-notification-v%s', baseDir, manifest.version);
   } else {
