@@ -173,7 +173,7 @@ const makeRow = function(item) {
     /**
      * @param {PatternItem} item
      */
-    const copyButton = function(item) {
+    const buttonCopy = function(item) {
       return button('btn-default', i18n.get('label_copy'))
         .addClass('copy_button')
         .on('click', function(e) {
@@ -187,7 +187,7 @@ const makeRow = function(item) {
     /**
      * @param {PatternItem} item
      */
-    const editButton = function(item) {
+    const buttonEdit = function(item) {
       return button('btn-primary', i18n.get('label_edit'))
         .addClass('edit_button')
         .on('click', function(e) {
@@ -201,7 +201,7 @@ const makeRow = function(item) {
     /**
      * @param {PatternItem} item
      */
-    const deleteButton = function(item) {
+    const buttonDelete = function(item) {
       return button('btn-danger', i18n.get('label_delete'))
         .addClass('delete_button')
         .on('click', function(e) {
@@ -218,9 +218,9 @@ const makeRow = function(item) {
     return function(item) {
       return column()
         .addClass('action')
-        .append(copyButton(item))
-        .append(editButton(item))
-        .append(deleteButton(item));
+        .append(buttonCopy(item))
+        .append(buttonEdit(item))
+        .append(buttonDelete(item));
     }
   })();
 
