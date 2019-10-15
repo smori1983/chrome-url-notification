@@ -163,10 +163,9 @@ const makeRow = function(item) {
   })();
 
   const columnAction = (function() {
-    const button = function(className, text) {
+    const button = function(text) {
       return $('<button>')
         .addClass('btn btn-sm')
-        .addClass(className)
         .text(text);
     };
 
@@ -174,8 +173,8 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     const buttonCopy = function(item) {
-      return button('btn-default', i18n.get('label_copy'))
-        .addClass('copy_button')
+      return button(i18n.get('label_copy'))
+        .addClass('btn-default copy_button')
         .on('click', function(e) {
           e.preventDefault();
           patternForm.show('add', item, function () {
@@ -188,8 +187,8 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     const buttonEdit = function(item) {
-      return button('btn-primary', i18n.get('label_edit'))
-        .addClass('edit_button')
+      return button(i18n.get('label_edit'))
+        .addClass('btn-primary edit_button')
         .on('click', function(e) {
           e.preventDefault();
           patternForm.show('edit', item, function () {
@@ -202,8 +201,8 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     const buttonDelete = function(item) {
-      return button('btn-danger', i18n.get('label_delete'))
-        .addClass('delete_button')
+      return button(i18n.get('label_delete'))
+        .addClass('btn-danger delete_button')
         .on('click', function(e) {
           e.preventDefault();
           deleteForm.show(item, function () {
