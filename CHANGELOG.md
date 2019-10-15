@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## v5.3.0
+
+### Development
+
+- Reimplement options page
+
+
 ## v5.2.0
 
 ### Development
