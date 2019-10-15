@@ -6,11 +6,10 @@ const patternForm = require('./options.patternForm');
 const deleteForm = require('./options.deleteForm');
 
 const show = function () {
+  const sorted = data.sortByMessage(storage.getAll());
   const $ = require('jquery');
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
-
-  const sorted = data.sortByMessage(storage.getAll());
 
   $('#js_pattern_list_badge').text(sorted.length);
 
@@ -19,11 +18,10 @@ const show = function () {
 
   if (sorted.length > 0) {
     makeHeader().appendTo($headerArea);
+    sorted.forEach(function (item) {
+      makeRow(item).appendTo($listArea);
+    });
   }
-
-  sorted.forEach(function(item) {
-    makeRow(item).appendTo($listArea);
-  });
 };
 
 const makeHeader = function() {
