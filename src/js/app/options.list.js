@@ -59,7 +59,7 @@ const makeRow = function(item) {
     return $('<td>');
   };
 
-  const patternColumn = (function() {
+  const columnPattern = (function() {
     /**
      * @param {PatternItem} item
      */
@@ -77,7 +77,7 @@ const makeRow = function(item) {
     };
   })();
 
-  const messageColumn = (function() {
+  const columnMessage = (function() {
     /**
      * @param {PatternItem} item
      */
@@ -106,7 +106,7 @@ const makeRow = function(item) {
     };
   })();
 
-  const displayPositionColumn = (function() {
+  const columnDisplayPosition = (function() {
     /**
      * @param {PatternItem} item
      */
@@ -135,7 +135,7 @@ const makeRow = function(item) {
     };
   })();
 
-  const statusColumn = (function() {
+  const columnStatus = (function() {
     /**
      * @param {PatternItem} item
      */
@@ -164,7 +164,7 @@ const makeRow = function(item) {
     };
   })();
 
-  const actionColumn = (function() {
+  const columnAction = (function() {
     const button = function(className, text) {
       return $('<button>')
         .addClass('btn btn-sm')
@@ -227,11 +227,11 @@ const makeRow = function(item) {
   })();
 
   return row()
-    .append(patternColumn(item))
-    .append(messageColumn(item))
-    .append(displayPositionColumn(item))
-    .append(statusColumn(item))
-    .append(actionColumn(item));
+    .append(columnPattern(item))
+    .append(columnMessage(item))
+    .append(columnDisplayPosition(item))
+    .append(columnStatus(item))
+    .append(columnAction(item));
 };
 
 module.exports.show = show;
