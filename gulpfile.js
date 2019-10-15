@@ -109,9 +109,8 @@ gulp.task('lint', function(cb) {
   pump([
     gulp.src([
       'gulpfile.js',
-      'src/js/**/*.js',
-      '!src/js/urlNotification.js',
-      '!src/js/vendor.js',
+      'src/js/app/*.js',
+      'src/js/urlNotification/*.js',
       'test/**/*',
       'test_lib/**/*',
     ]),
