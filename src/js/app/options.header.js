@@ -4,9 +4,18 @@ const patternForm = require('./options.patternForm');
 const patternList = require('./options.list');
 
 const show = function() {
+  version();
+  handlers();
+};
+
+const version = function () {
   const $ = require('jquery');
 
   $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
+};
+
+const handlers = function () {
+  const $ = require('jquery');
 
   $('#js_button_add_pattern').on('click', function(e) {
     e.preventDefault();
