@@ -14,14 +14,13 @@ const show = function (callback) {
     .empty()
     .append($('#js_modal_import_html').html());
 
-  $('#js_form_import')
-    .on('submit', function(e) {
-      e.preventDefault();
-      submit(function () {
-        modal.hide();
-        callback();
-      });
+  $('#js_form_import').on('submit', function(e) {
+    e.preventDefault();
+    submit(function () {
+      modal.hide();
+      callback();
     });
+  });
 
   $('#js_form_import_json').val('');
 
