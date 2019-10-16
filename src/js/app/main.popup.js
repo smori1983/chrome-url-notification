@@ -1,6 +1,8 @@
 const popupFind = require('./popup.find');
 const $ = require('jquery');
 
+const blockAll = require('./popup.block.all');
+
 $(function () {
   $('#i18n_label_status').text(chrome.i18n.getMessage('label_status'));
   $('#i18n_label_enabled').text(chrome.i18n.getMessage('label_enabled'));
@@ -15,15 +17,4 @@ $(function () {
   });
 });
 
-$(function () {
-  $('<a>')
-    .attr('href', '#')
-    .text(chrome.i18n.getMessage('label_options'))
-    .on('click', function(e) {
-      e.preventDefault();
-      chrome.tabs.create({
-        url: chrome.runtime.getURL('html/options.html'),
-      });
-    })
-    .appendTo($('#link_options'));
-});
+blockAll.show();
