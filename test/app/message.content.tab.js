@@ -1,7 +1,6 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.tab');
 const testUtil = require('../../test_lib/util');
 
@@ -23,49 +22,31 @@ const tabNotifyDispatch = function(displayPosition, status) {
 };
 
 describe('message.content.tab', function () {
-  before(function() {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-  });
-
-  after(function() {
-    delete(global.chrome);
-  });
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
+  after(testUtil.uiBase.after);
 
   it('pattern matched and status is 0', function () {
-    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
-
-    global.window = dom.window;
-    global.document = dom.window;
-
-    const $ = require('jquery');
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
 
     SUT.listen();
 
     tabNotifyDispatch('top', 0);
 
     // NOTE: default margin-top of <body> is 8px
-    assert.strictEqual($('body').css('margin-top'), '8px');
-    assert.strictEqual($('div').css('display'), 'none');
+    assert.strictEqual(testUtil.content.page().marginTop(), '8px');
+    assert.strictEqual(testUtil.content.message().hidden(), true);
   });
 
   it('pattern matched and status is 1', function () {
-    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.02.html'));
-
-    global.window = dom.window;
-    global.document = dom.window;
-
-    const $ = require('jquery');
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
 
     SUT.listen();
 
     tabNotifyDispatch('bottom', 1);
 
-    assert.strictEqual($('body').css('margin-bottom'), '50px');
-    assert.strictEqual($('div').css('display'), 'block');
+    assert.strictEqual(testUtil.content.page().marginBottom(), '50px');
+    assert.strictEqual(testUtil.content.message().shown(), true);
   });
 });

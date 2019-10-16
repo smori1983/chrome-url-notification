@@ -2,6 +2,7 @@ const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.badge');
 const chrome = require('sinon-chrome');
+const testUtil = require('../../test_lib/util');
 
 /**
  * @param {string} text
@@ -18,17 +19,9 @@ const setBadgeTextShould = function(text, tabId) {
 };
 
 describe('app.badge', function() {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-  });
-
-  after(function () {
-    delete global.chrome;
-  });
+  before(testUtil.background.before);
+  beforeEach(testUtil.background.beforeEach);
+  after(testUtil.background.after);
 
   it('draw - matched and enabled', function () {
     SUT.draw(10001, true, 1);

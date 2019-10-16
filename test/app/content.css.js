@@ -1,7 +1,6 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/content.css');
-const chrome = require('sinon-chrome');
 const testUtil = require('../../test_lib/util');
 
 const css = SUT.init({
@@ -12,17 +11,9 @@ const css = SUT.init({
 });
 
 describe('app.css', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-  });
-
-  after(function () {
-    delete global.chrome;
-  });
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  after(testUtil.uiBase.after);
 
   describe('forBody', function() {
     it('display position is top and status is 1', function() {

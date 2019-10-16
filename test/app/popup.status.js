@@ -42,17 +42,9 @@ const sendMessageForTabShould = function (tabId, item, status) {
 };
 
 describe('popup', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-  });
-
-  after(function () {
-    delete global.chrome;
-  });
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  after(testUtil.uiBase.after);
 
   describe('updateStatus', function () {
     it('update with 0', function () {

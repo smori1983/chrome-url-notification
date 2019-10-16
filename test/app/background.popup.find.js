@@ -43,10 +43,8 @@ const popupFindDispatch = function (url, callback) {
 };
 
 describe('background.content.find', function () {
-  before(function () {
-    global.chrome = chrome;
-  });
-
+  before(testUtil.background.before);
+  beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
     testUtil.setUpStorage('3', [
       {
@@ -60,17 +58,12 @@ describe('background.content.find', function () {
         url: 'https://domain2.example.com/',
         msg: 'domain2',
         backgroundColor: '111111',
-        displayPosition: 'bottom',
+        displayPosition: 'top',
         status: 0,
       },
     ]);
-
-    chrome.flush();
   });
-
-  after(function () {
-    delete (global.chrome);
-  });
+  after(testUtil.background.after);
 
   it('pattern not matched', function () {
     const checker = responseChecker();

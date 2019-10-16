@@ -1,7 +1,6 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
-const JSDOM = require('jsdom').JSDOM;
 const SUT = require('../../src/js/app/content.find');
 const testUtil = require('../../test_lib/util');
 
@@ -24,45 +23,27 @@ const contentFindMessage = function(url, item) {
 };
 
 describe('message.content.find', function () {
-  before(function() {
-    global.chrome = chrome;
-  });
-
-  beforeEach(function () {
-    chrome.flush();
-    delete require.cache[require.resolve('jquery')];
-  });
-
-  after(function() {
-    delete(global.chrome);
-  });
+  before(testUtil.uiBase.before);
+  beforeEach(testUtil.uiBase.beforeEach);
+  afterEach(testUtil.uiBase.afterEach);
+  after(testUtil.uiBase.after);
 
   it('pattern not matched', function() {
-    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
-
-    global.window = dom.window;
-    global.document = dom.window;
-
-    const $ = require('jquery');
 
     SUT.sendMessage();
 
     contentFindMessage('https://example.com/', null);
 
-    assert.strictEqual($('div').length, 0);
+    assert.strictEqual(testUtil.content.message().exists(), false);
   });
 
   it('pattern matched and status is 0', function () {
-    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
-
-    global.window = dom.window;
-    global.document = dom.window;
-
-    const $ = require('jquery');
 
     SUT.sendMessage();
 
@@ -70,20 +51,13 @@ describe('message.content.find', function () {
       status: 0,
     }));
 
-    const $container = $('div');
-    assert.strictEqual($container.length, 1);
-    assert.strictEqual($container.css('display'), 'none');
+    assert.strictEqual(testUtil.content.message().hidden(), true);
   });
 
   it('pattern matched and status is 1', function () {
-    const dom = new JSDOM(testUtil.getHtml('test_resource/html/content.01.html'), {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
-
-    global.window = dom.window;
-    global.document = dom.window;
-
-    const $ = require('jquery');
 
     SUT.sendMessage();
 
@@ -91,8 +65,6 @@ describe('message.content.find', function () {
       status: 1,
     }));
 
-    const $container = $('div');
-    assert.strictEqual($container.length, 1);
-    assert.strictEqual($container.css('display'), 'block');
+    assert.strictEqual(testUtil.content.message().shown(), true);
   });
 });

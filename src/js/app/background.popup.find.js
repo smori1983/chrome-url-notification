@@ -12,6 +12,7 @@ const background = require('../urlNotification/background');
  * @param {function} sendResponse
  */
 const listener = function(request, sender, sendResponse) {
+  /* istanbul ignore next */
   if (request.command !== 'browser_action:find') {
     return;
   }
