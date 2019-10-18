@@ -1,7 +1,6 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.find');
-const chrome = require('sinon-chrome');
 const testUtil = require('../../test_lib/util');
 
 const responseChecker = function() {
@@ -22,24 +21,6 @@ const responseChecker = function() {
       return response;
     },
   };
-};
-
-/**
- * @param {string} url
- * @param {function} callback
- */
-const popupFindDispatch = function (url, callback) {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'browser_action:find',
-        data: {
-          url: url,
-        },
-      },
-      {},
-      callback
-    );
 };
 
 describe('background.content.find', function () {
@@ -70,7 +51,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    popupFindDispatch('https://www.example.com/', checker.callback);
+    testUtil.chrome.popupFindDispatch('https://www.example.com/', checker.callback);
 
     assert.strictEqual(checker.response().matched, false);
     assert.strictEqual(checker.response().data, null);
@@ -81,7 +62,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    popupFindDispatch('https://domain1.example.com/', checker.callback);
+    testUtil.chrome.popupFindDispatch('https://domain1.example.com/', checker.callback);
 
     assert.strictEqual(checker.response().matched, true);
     assert.strictEqual(checker.response().data.message, 'domain1');
@@ -92,7 +73,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    popupFindDispatch('https://domain2.example.com/', checker.callback);
+    testUtil.chrome.popupFindDispatch('https://domain2.example.com/', checker.callback);
 
     assert.strictEqual(checker.response().matched, true);
     assert.strictEqual(checker.response().data.message, 'domain2');
