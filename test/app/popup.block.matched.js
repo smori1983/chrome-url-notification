@@ -3,6 +3,35 @@ const assert = require('assert');
 const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
+const deepMerge = require('deepmerge');
+
+/**
+ * @typedef {Object} ChromeTabsTabDiff
+ * @property {number} [id]
+ * @property {string} [url]
+ */
+
+/**
+ * @param {ChromeTabsTabDiff} diff
+ * @returns {chrome.tabs.Tab}
+ */
+const createTab = function(diff) {
+  const base = {
+    index: 0,
+    url: 'https://example.com/page1.html',
+    pinned: false,
+    highlighted: true,
+    windowId: 10,
+    active: true,
+    id: 10001,
+    incognito: false,
+    selected: true,
+    discarded: false,
+    autoDiscardable: true,
+  };
+
+  return /** @type {chrome.tabs.Tab} */ deepMerge(base, diff);
+};
 
 /**
  * @param {string} url used to part of chrome.tabs.Tab
@@ -67,10 +96,10 @@ describe('popup.block.matched', function () {
   describe('initial state of status checkbox', function () {
     it('pattern matched and status is 0', function () {
       popupTabsQuery('https://foo.example.com/page');
-      popupFindMessage({
+      popupFindMessage(createTab({
         id: 10001,
         url: 'https://foo.example.com/page',
-      }, testUtil.makeFoundItem({
+      }), testUtil.makeFoundItem({
         url: 'foo.example.com',
         status: 0,
       }));
@@ -83,10 +112,10 @@ describe('popup.block.matched', function () {
 
     it('pattern matched and status is 1', function () {
       popupTabsQuery('https://foo.example.com/page');
-      popupFindMessage({
+      popupFindMessage(createTab({
         id: 10002,
         url: 'https://foo.example.com/page',
-      }, testUtil.makeFoundItem({
+      }), testUtil.makeFoundItem({
         url: 'foo.example.com',
         status: 1,
       }));
