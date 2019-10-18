@@ -51,7 +51,7 @@ describe('background.content.find', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
-    testUtil.setUpStorage('3', [
+    testUtil.setUpStorage(testUtil.currentVersion(), [
       {
         url: 'https://domain1.example.com/',
         msg: 'domain1',
