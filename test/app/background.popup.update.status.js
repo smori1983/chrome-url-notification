@@ -1,7 +1,6 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.update.status');
-const chrome = require('sinon-chrome');
 const testUtil = require('../../test_lib/util');
 
 const responseChecker = function() {
@@ -15,28 +14,6 @@ const responseChecker = function() {
       return response;
     },
   };
-};
-
-/**
- * @param {number} tabId
- * @param {string} url
- * @param {number} status
- * @param {function} callback
- */
-const updateStatusDispatch = function (tabId, url, status, callback) {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'browser_action:update:status',
-        data: {
-          url: url,
-          status: status,
-          tabId: tabId,
-        },
-      },
-      {},
-      callback
-    );
 };
 
 describe('background.popup.update.status', function () {
@@ -67,7 +44,7 @@ describe('background.popup.update.status', function () {
 
     SUT.listen();
 
-    updateStatusDispatch(10001, 'https://domain1.example.com/', 0, checker.callback);
+    testUtil.chrome.popupUpdateStatusDispatch(10001, 'https://domain1.example.com/', 0, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10001));
 
@@ -80,7 +57,7 @@ describe('background.popup.update.status', function () {
 
     SUT.listen();
 
-    updateStatusDispatch(10002, 'https://domain2.example.com/', 1, checker.callback);
+    testUtil.chrome.popupUpdateStatusDispatch(10002, 'https://domain2.example.com/', 1, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
 
