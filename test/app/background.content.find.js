@@ -1,7 +1,6 @@
 const { describe, before, beforeEach, after, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.content.find');
-const chrome = require('sinon-chrome');
 const testUtil = require('../../test_lib/util');
 
 const responseChecker = function() {
@@ -22,29 +21,6 @@ const responseChecker = function() {
       return response;
     },
   };
-};
-
-/**
- * @param {string} url
- * @param {number} tabId
- * @param {function} callback
- */
-const contentFindDispatch = function (url, tabId, callback) {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'content_scripts:find',
-        data: {
-          url: url,
-        },
-      },
-      {
-        tab: {
-          id: tabId,
-        },
-      },
-      callback
-    );
 };
 
 describe('background.content.find', function () {
@@ -75,7 +51,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    contentFindDispatch('https://www.example.com/', 10001, checker.callback);
+    testUtil.chrome.contentFindDispatch('https://www.example.com/', 10001, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('', 10001));
     assert.strictEqual(checker.response().matched, false);
@@ -87,7 +63,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    contentFindDispatch('https://domain1.example.com/page', 10002, checker.callback);
+    testUtil.chrome.contentFindDispatch('https://domain1.example.com/page', 10002, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
     assert.strictEqual(checker.response().matched, true);
@@ -99,7 +75,7 @@ describe('background.content.find', function () {
 
     SUT.listen();
 
-    contentFindDispatch('https://domain2.example.com/page', 10003, checker.callback);
+    testUtil.chrome.contentFindDispatch('https://domain2.example.com/page', 10003, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10003));
     assert.strictEqual(checker.response().matched, true);

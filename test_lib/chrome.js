@@ -45,5 +45,32 @@ const setBadgeTextShould = function(text, tabId) {
     .calledOnce;
 };
 
+/**
+ * chrome.runtime.onMessage() for 'content_scripts:find'
+ *
+ * @param {string} url
+ * @param {number} tabId
+ * @param {function} callback
+ */
+const contentFindDispatch = function (url, tabId, callback) {
+  chrome.runtime.onMessage
+    .dispatch(
+      {
+        command: 'content_scripts:find',
+        data: {
+          url: url,
+        },
+      },
+      {
+        tab: {
+          id: tabId,
+        },
+      },
+      callback
+    );
+};
+
 module.exports.createTab = createTab;
 module.exports.setBadgeTextShould = setBadgeTextShould;
+
+module.exports.contentFindDispatch = contentFindDispatch;
