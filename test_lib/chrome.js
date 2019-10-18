@@ -1,3 +1,4 @@
+const chrome = require('sinon-chrome');
 const deepMerge = require('deepmerge');
 
 /**
@@ -28,4 +29,21 @@ const createTab = function(diff) {
   return /** @type {chrome.tabs.Tab} */ deepMerge(base, diff);
 };
 
+/**
+ * chrome.browserAction.setBadgeText()
+ *
+ * @param {string} text
+ * @param {number} tabId
+ * @returns {boolean}
+ */
+const setBadgeTextShould = function(text, tabId) {
+  return chrome.browserAction.setBadgeText
+    .withArgs({
+      text: text,
+      tabId: tabId,
+    })
+    .calledOnce;
+};
+
 module.exports.createTab = createTab;
+module.exports.setBadgeTextShould = setBadgeTextShould;

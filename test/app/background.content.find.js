@@ -47,20 +47,6 @@ const contentFindDispatch = function (url, tabId, callback) {
     );
 };
 
-/**
- * @param {string} text
- * @param {number} tabId
- * @returns {boolean}
- */
-const setBadgeTextShould = function(text, tabId) {
-  return chrome.browserAction.setBadgeText
-    .withArgs({
-      text: text,
-      tabId: tabId,
-    })
-    .calledOnce;
-};
-
 describe('background.content.find', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
@@ -91,7 +77,7 @@ describe('background.content.find', function () {
 
     contentFindDispatch('https://www.example.com/', 10001, checker.callback);
 
-    assert.ok(setBadgeTextShould('', 10001));
+    assert.ok(testUtil.chrome.setBadgeTextShould('', 10001));
     assert.strictEqual(checker.response().matched, false);
     assert.strictEqual(checker.response().data, null);
   });
@@ -103,7 +89,7 @@ describe('background.content.find', function () {
 
     contentFindDispatch('https://domain1.example.com/page', 10002, checker.callback);
 
-    assert.ok(setBadgeTextShould('ON', 10002));
+    assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
     assert.strictEqual(checker.response().matched, true);
     assert.strictEqual(checker.response().data.message, 'domain1');
   });
@@ -115,7 +101,7 @@ describe('background.content.find', function () {
 
     contentFindDispatch('https://domain2.example.com/page', 10003, checker.callback);
 
-    assert.ok(setBadgeTextShould('OFF', 10003));
+    assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10003));
     assert.strictEqual(checker.response().matched, true);
     assert.strictEqual(checker.response().data.message, 'domain2');
   });

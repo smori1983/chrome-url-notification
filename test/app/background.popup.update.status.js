@@ -39,20 +39,6 @@ const updateStatusDispatch = function (tabId, url, status, callback) {
     );
 };
 
-/**
- * @param {string} text
- * @param {number} tabId
- * @returns {boolean}
- */
-const setBadgeTextShould = function(text, tabId) {
-  return chrome.browserAction.setBadgeText
-    .withArgs({
-      text: text,
-      tabId: tabId,
-    })
-    .calledOnce;
-};
-
 describe('background.popup.update.status', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
@@ -83,7 +69,7 @@ describe('background.popup.update.status', function () {
 
     updateStatusDispatch(10001, 'https://domain1.example.com/', 0, checker.callback);
 
-    assert.ok(setBadgeTextShould('OFF', 10001));
+    assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10001));
 
     assert.strictEqual(checker.response().item.status, 0);
     assert.strictEqual(checker.response().status, 0);
@@ -96,7 +82,7 @@ describe('background.popup.update.status', function () {
 
     updateStatusDispatch(10002, 'https://domain2.example.com/', 1, checker.callback);
 
-    assert.ok(setBadgeTextShould('ON', 10002));
+    assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
 
     assert.strictEqual(checker.response().item.status, 1);
     assert.strictEqual(checker.response().status, 1);
