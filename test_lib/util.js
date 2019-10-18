@@ -115,6 +115,7 @@ module.exports.getHtml = getHtml;
 module.exports.makePatternItem = makePatternItem;
 module.exports.makeFoundItem = makeFoundItem;
 
+module.exports.chrome = require('./chrome');
 module.exports.uiBase = require('./uiBase');
 module.exports.message = require('./message');
 module.exports.background = require('./background');

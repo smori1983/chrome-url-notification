@@ -51,11 +51,10 @@ describe('message.popup.find', function () {
   after(testUtil.uiBase.after);
 
   it('pattern not matched', function() {
-    /** @type {chrome.tabs.Tab} */
-    const tab = {
+    const tab = testUtil.chrome.createTab({
       id: 10001,
       url: 'https://example.com/',
-    };
+    });
 
     SUT.sendMessage(tab);
 
@@ -65,11 +64,10 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0', function() {
-    /** @type {chrome.tabs.Tab} */
-    const tab = {
+    const tab = testUtil.chrome.createTab({
       id: 20001,
       url: 'https://example.com/',
-    };
+    });
 
     SUT.sendMessage(tab);
 
@@ -82,11 +80,10 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0, then enable', function() {
-    /** @type {chrome.tabs.Tab} */
-    const tab = {
+    const tab = testUtil.chrome.createTab({
       id: 20002,
       url: 'https://example.com/',
-    };
+    });
 
     SUT.sendMessage(tab);
 
@@ -106,11 +103,10 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched status is 1', function() {
-    /** @type {chrome.tabs.Tab} */
-    const tab = {
+    const tab = testUtil.chrome.createTab({
       id: 30001,
       url: 'https://example.com/',
-    };
+    });
 
     SUT.sendMessage(tab);
 
@@ -123,11 +119,10 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 1, then disable', function() {
-    /** @type {chrome.tabs.Tab} */
-    const tab = {
+    const tab = testUtil.chrome.createTab({
       id: 30002,
       url: 'https://example.com/',
-    };
+    });
 
     SUT.sendMessage(tab);
 
