@@ -28,20 +28,16 @@ describe('background.content.find', function () {
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
     testUtil.setUpStorage(testUtil.currentVersion(), [
-      {
-        url: 'https://domain1.example.com/',
+      testUtil.makePatternItem({
+        url: 'domain1.example.com',
         msg: 'domain1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
         status: 1,
-      },
-      {
-        url: 'https://domain2.example.com/',
+      }),
+      testUtil.makePatternItem({
+        url: 'domain2.example.com',
         msg: 'domain2',
-        backgroundColor: '111111',
-        displayPosition: 'top',
         status: 0,
-      },
+      }),
     ]);
   });
   after(testUtil.background.after);

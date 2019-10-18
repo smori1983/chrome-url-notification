@@ -21,20 +21,14 @@ describe('background.popup.update.status', function () {
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
     testUtil.setUpStorage(testUtil.currentVersion(), [
-      {
-        url: 'https://domain1.example.com/',
-        msg: 'domain1',
-        backgroundColor: '111111',
-        displayPosition: 'bottom',
+      testUtil.makePatternItem({
+        url: 'domain1.example.com',
         status: 1,
-      },
-      {
-        url: 'https://domain2.example.com/',
-        msg: 'domain2',
-        backgroundColor: '111111',
-        displayPosition: 'bottom',
+      }),
+      testUtil.makePatternItem({
+        url: 'domain2.example.com',
         status: 0,
-      },
+      }),
     ]);
   });
   after(testUtil.background.after);
@@ -44,7 +38,7 @@ describe('background.popup.update.status', function () {
 
     SUT.listen();
 
-    testUtil.chrome.popupUpdateStatusDispatch(10001, 'https://domain1.example.com/', 0, checker.callback);
+    testUtil.chrome.popupUpdateStatusDispatch(10001, 'domain1.example.com', 0, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10001));
 
@@ -57,7 +51,7 @@ describe('background.popup.update.status', function () {
 
     SUT.listen();
 
-    testUtil.chrome.popupUpdateStatusDispatch(10002, 'https://domain2.example.com/', 1, checker.callback);
+    testUtil.chrome.popupUpdateStatusDispatch(10002, 'domain2.example.com', 1, checker.callback);
 
     assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
 

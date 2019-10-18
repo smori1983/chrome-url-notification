@@ -55,7 +55,6 @@ const getHtml = function(path) {
  * @property {string} [url]
  * @property {string} [msg]
  * @property {string} [backgroundColor]
- * @property {string} [fontColor]
  * @property {string} [displayPosition]
  * @property {number} [status]
  */
@@ -70,7 +69,6 @@ const makePatternItem = function (diff) {
     url: 'domain1.example.com',
     msg: 'domain1',
     backgroundColor: '000000',
-    fontColor: 'ffffff',
     displayPosition: 'bottom',
     status: 1,
   };
