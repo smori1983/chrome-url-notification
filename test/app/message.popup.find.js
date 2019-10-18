@@ -44,12 +44,13 @@ const sendMessageShould = function(tabId, url, status) {
 describe('message.popup.find', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('pattern not matched', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-
     /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 10001,
@@ -64,8 +65,6 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-
     /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 20001,
@@ -83,8 +82,6 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 0, then enable', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-
     /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 20002,
@@ -109,8 +106,6 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched status is 1', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-
     /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 30001,
@@ -128,8 +123,6 @@ describe('message.popup.find', function () {
   });
 
   it('pattern matched and status is 1, then disable', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-
     /** @type {chrome.tabs.Tab} */
     const tab = {
       id: 30002,
