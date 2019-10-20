@@ -69,6 +69,24 @@ const sendResponse = function() {
 };
 
 /**
+ * @param {string} url
+ * @param {(FoundItem|null)} item
+ */
+const contentFindChain = function(url, item) {
+  chrome.runtime.sendMessage
+    .withArgs({
+      command: 'content_scripts:find',
+      data: {
+        url: url,
+      },
+    })
+    .callArgWith(1, {
+      matched: item !== null,
+      data: item,
+    })
+};
+
+/**
  * chrome.runtime.onMessage() for 'content_scripts:find'
  *
  * @param {string} url
@@ -178,6 +196,7 @@ module.exports.createTab = createTab;
 module.exports.setBadgeTextShould = setBadgeTextShould;
 module.exports.sendResposne = sendResponse;
 
+module.exports.contentFindChain = contentFindChain;
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
