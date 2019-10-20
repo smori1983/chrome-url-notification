@@ -25,14 +25,15 @@ const contentFindMessage = function(url, item) {
 describe('message.content.find', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
+      url: 'https://example.com/',
+    });
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('pattern not matched', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
     contentFindMessage('https://example.com/', null);
@@ -41,10 +42,6 @@ describe('message.content.find', function () {
   });
 
   it('pattern matched and status is 0', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
     contentFindMessage('https://example.com/', testUtil.makeFoundItem({
@@ -55,10 +52,6 @@ describe('message.content.find', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
     contentFindMessage('https://example.com/', testUtil.makeFoundItem({

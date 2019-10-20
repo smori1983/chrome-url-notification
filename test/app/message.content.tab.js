@@ -6,12 +6,13 @@ const testUtil = require('../../test_lib/util');
 describe('message.content.tab', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('pattern matched and status is 0', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
-
     SUT.listen();
 
     testUtil.chrome.contentTabNotifyStatusDispatch('top', 0);
@@ -22,8 +23,6 @@ describe('message.content.tab', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
-
     SUT.listen();
 
     testUtil.chrome.contentTabNotifyStatusDispatch('bottom', 1);
