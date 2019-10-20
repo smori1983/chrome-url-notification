@@ -113,6 +113,24 @@ const contentTabNotifyStatusDispatch = function(displayPosition, status) {
 };
 
 /**
+ * @param {chrome.tabs.Tab} tab
+ * @param {(FoundItem|null)} item
+ */
+const popupFindChain = function(tab, item) {
+  chrome.runtime.sendMessage
+    .withArgs({
+      command: 'browser_action:find',
+      data: {
+        url: tab.url,
+      },
+    })
+    .callArgWith(1, {
+      matched: item !== null,
+      data: item,
+    });
+};
+
+/**
  * chrome.runtime.onMessage() for 'browser_action:find'
  *
  * @param {string} url
@@ -162,5 +180,6 @@ module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
+module.exports.popupFindChain = popupFindChain;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;

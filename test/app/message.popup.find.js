@@ -5,24 +5,6 @@ const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
 /**
- * @param {chrome.tabs.Tab} tab
- * @param {(FoundItem|null)} item
- */
-const popupFindMessage = function(tab, item) {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:find',
-      data: {
-        url: tab.url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    });
-};
-
-/**
  * @param {number} tabId
  * @param {string} url
  * @param {number} status
@@ -58,7 +40,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    popupFindMessage(tab, null);
+    testUtil.chrome.popupFindChain(tab, null);
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), false);
   });
@@ -71,7 +53,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    popupFindMessage(tab, testUtil.makeFoundItem({
+    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
       status: 0,
     }));
 
@@ -87,7 +69,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    popupFindMessage(tab, testUtil.makeFoundItem({
+    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
       status: 0,
     }));
 
@@ -110,7 +92,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    popupFindMessage(tab, testUtil.makeFoundItem({
+    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
       status: 1,
     }));
 
@@ -126,7 +108,7 @@ describe('message.popup.find', function () {
 
     SUT.sendMessage(tab);
 
-    popupFindMessage(tab, testUtil.makeFoundItem({
+    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
       status: 1,
     }));
 
