@@ -45,6 +45,28 @@ const setBadgeTextShould = function(text, tabId) {
     .calledOnce;
 };
 
+const sendResponse = function() {
+  /**
+   * @type {Object}
+   */
+  let data;
+
+  return {
+    /**
+     * @param {Object} args
+     */
+    callback: function(args) {
+      data = args;
+    },
+    /**
+     * @returns {Object}
+     */
+    data: function() {
+      return data;
+    },
+  };
+};
+
 /**
  * chrome.runtime.onMessage() for 'content_scripts:find'
  *
@@ -116,6 +138,7 @@ const popupUpdateStatusDispatch = function (tabId, url, status, callback) {
 
 module.exports.createTab = createTab;
 module.exports.setBadgeTextShould = setBadgeTextShould;
+module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.popupFindDispatch = popupFindDispatch;
