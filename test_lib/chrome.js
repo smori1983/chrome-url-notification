@@ -192,6 +192,25 @@ const popupUpdateStatusDispatch = function (tabId, url, status, callback) {
     );
 };
 
+/**
+ * @param {number} tabId
+ * @param {string} url
+ * @param {number} status
+ * @returns {boolean}
+ */
+const popupUpdateStatusShould = function(tabId, url, status) {
+  return chrome.runtime.sendMessage
+    .withArgs({
+      command: 'browser_action:update:status',
+      data: {
+        url: url,
+        status: status,
+        tabId: tabId,
+      },
+    })
+    .calledOnce;
+};
+
 module.exports.createTab = createTab;
 module.exports.setBadgeTextShould = setBadgeTextShould;
 module.exports.sendResposne = sendResponse;
@@ -202,3 +221,4 @@ module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
+module.exports.popupUpdateStatusShould = popupUpdateStatusShould;

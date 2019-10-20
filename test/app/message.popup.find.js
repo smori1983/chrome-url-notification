@@ -1,27 +1,7 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
-
-/**
- * @param {number} tabId
- * @param {string} url
- * @param {number} status
- * @returns {boolean}
- */
-const sendMessageShould = function(tabId, url, status) {
-  return chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:update:status',
-      data: {
-        url: url,
-        status: status,
-        tabId: tabId,
-      },
-    })
-    .calledOnce;
-};
 
 describe('message.popup.find', function () {
   before(testUtil.uiBase.before);
@@ -78,7 +58,7 @@ describe('message.popup.find', function () {
 
     testUtil.popup.matchedBlock().clickStatus();
 
-    assert.ok(sendMessageShould(20002, 'https://example.com/', 1));
+    assert.ok(testUtil.chrome.popupUpdateStatusShould(20002, 'https://example.com/', 1));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
@@ -117,7 +97,7 @@ describe('message.popup.find', function () {
 
     testUtil.popup.matchedBlock().clickStatus();
 
-    assert.ok(sendMessageShould(30002, 'https://example.com/', 0));
+    assert.ok(testUtil.chrome.popupUpdateStatusShould(30002, 'https://example.com/', 0));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
