@@ -1,5 +1,6 @@
 const chrome = require('sinon-chrome');
 const deepMerge = require('deepmerge');
+const factory = require('./factory');
 
 /**
  * @typedef {Object} ChromeTabsTabDiff
@@ -93,6 +94,25 @@ const contentFindDispatch = function (url, tabId, callback) {
 };
 
 /**
+ * chrome.runtime.onMessage() for 'content:tab:notify:status'
+ *
+ * @param {string} displayPosition
+ * @param {number} status
+ */
+const contentTabNotifyStatusDispatch = function(displayPosition, status) {
+  chrome.runtime.onMessage
+    .dispatch({
+      command: 'tab:notify:status',
+      data: {
+        item: factory.makeFoundItem({
+          displayPosition: displayPosition,
+          status: status,
+        }),
+      },
+    });
+};
+
+/**
  * chrome.runtime.onMessage() for 'browser_action:find'
  *
  * @param {string} url
@@ -141,5 +161,6 @@ module.exports.setBadgeTextShould = setBadgeTextShould;
 module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindDispatch = contentFindDispatch;
+module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
