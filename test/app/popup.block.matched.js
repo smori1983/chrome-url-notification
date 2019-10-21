@@ -18,26 +18,6 @@ const popupTabsQuery = function (url) {
     }]);
 };
 
-/**
- * NOTE: This function is copied from message.popup.find.js
- *
- * @param {chrome.tabs.Tab} tab
- * @param {(FoundItem|null)} item
- */
-const popupFindMessage = function(tab, item) {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:find',
-      data: {
-        url: tab.url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    });
-};
-
 describe('popup.block.matched', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
@@ -67,7 +47,7 @@ describe('popup.block.matched', function () {
   describe('initial state of status checkbox', function () {
     it('pattern matched and status is 0', function () {
       popupTabsQuery('https://foo.example.com/page');
-      popupFindMessage(testUtil.chrome.createTab({
+      testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10001,
         url: 'https://foo.example.com/page',
       }), testUtil.makeFoundItem({
@@ -83,7 +63,7 @@ describe('popup.block.matched', function () {
 
     it('pattern matched and status is 1', function () {
       popupTabsQuery('https://foo.example.com/page');
-      popupFindMessage(testUtil.chrome.createTab({
+      testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10002,
         url: 'https://foo.example.com/page',
       }), testUtil.makeFoundItem({
