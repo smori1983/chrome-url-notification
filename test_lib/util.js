@@ -1,12 +1,12 @@
 'use strict';
 
 const fs = require('fs');
-const deepMerge = require('deepmerge');
 const validator = require('../src/js/urlNotification/validator');
+const factory = require('./factory');
 const storage = require('./storage');
 
 const clearStorage = function() {
-  storage.clearStorage();
+  storage.clear();
 };
 
 /**
@@ -16,7 +16,7 @@ const clearStorage = function() {
  * @param {PatternItem[]} patterns
  */
 const setUpStorage = function(version, patterns) {
-  storage.setUpStorage(version, patterns);
+  storage.setUp(version, patterns);
 };
 
 /**
@@ -51,59 +51,19 @@ const getHtml = function(path) {
 };
 
 /**
- * @typedef {Object} PatternItemDiff
- * @property {string} [url]
- * @property {string} [msg]
- * @property {string} [backgroundColor]
- * @property {string} [fontColor]
- * @property {string} [displayPosition]
- * @property {number} [status]
- */
-
-/**
  * @param {PatternItemDiff} diff
  * @returns {PatternItem}
  */
 const makePatternItem = function (diff) {
-  /** @type {PatternItem} */
-  const base = {
-    url: 'domain1.example.com',
-    msg: 'domain1',
-    backgroundColor: '000000',
-    fontColor: 'ffffff',
-    displayPosition: 'bottom',
-    status: 1,
-  };
-
-  return /** @type {PatternItem} */ deepMerge(base, diff);
+  return factory.makePatternItem(diff);
 };
-
-/**
- * @typedef {Object} FoundItemDiff
- * @property {string} [url]
- * @property {string} [message]
- * @property {string} [backgroundColor]
- * @property {string} [fontColor]
- * @property {string} [displayPosition]
- * @property {number} [status]
- */
 
 /**
  * @param {FoundItemDiff} diff
  * @returns {FoundItem}
  */
 const makeFoundItem = function(diff) {
-  /** @type {FoundItem} */
-  const base = {
-    url: 'https://example.com/',
-    message: 'example',
-    backgroundColor: '000000',
-    fontColor: 'ffffff',
-    displayPosition: 'bottom',
-    status: 1,
-  };
-
-  return /** @type {FoundItem} */ deepMerge(base, diff);
+  return factory.makeFoundItem(diff);
 };
 
 module.exports.clearStorage = clearStorage;
@@ -115,6 +75,7 @@ module.exports.getHtml = getHtml;
 module.exports.makePatternItem = makePatternItem;
 module.exports.makeFoundItem = makeFoundItem;
 
+module.exports.chrome = require('./chrome');
 module.exports.uiBase = require('./uiBase');
 module.exports.message = require('./message');
 module.exports.background = require('./background');

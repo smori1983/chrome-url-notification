@@ -1,4 +1,4 @@
-const clearStorage = function() {
+const clear = function() {
   localStorage.clear();
 };
 
@@ -8,11 +8,11 @@ const clearStorage = function() {
  * @param {string} version
  * @param {PatternItem[]} patterns
  */
-const setUpStorage = function(version, patterns) {
+const setUp = function(version, patterns) {
   localStorage.clear();
   localStorage.setItem('version', version);
   localStorage.setItem('pattern', JSON.stringify(patterns));
 };
 
-module.exports.clearStorage = clearStorage;
-module.exports.setUpStorage = setUpStorage;
+module.exports.clear = clear;
+module.exports.setUp = setUp;
