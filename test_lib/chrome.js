@@ -169,6 +169,24 @@ const popupFindDispatch = function (url, callback) {
 };
 
 /**
+ * @param {number} tabId
+ * @param {FindResult} item
+ * @param {number} status
+ * @returns {boolean}
+ */
+const popupTabNotifyStatusShould = function (tabId, item, status) {
+  return chrome.tabs.sendMessage
+    .withArgs(tabId, {
+      command: 'tab:notify:status',
+      data: {
+        item: item,
+        status: status,
+      },
+    })
+    .calledOnce;
+};
+
+/**
  * chrome.runtime.onMessage() for 'browser_action:update:status'
  *
  * @param {number} tabId
@@ -220,5 +238,6 @@ module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
 module.exports.popupFindDispatch = popupFindDispatch;
+module.exports.popupTabNotifyStatusShould = popupTabNotifyStatusShould;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusShould = popupUpdateStatusShould;

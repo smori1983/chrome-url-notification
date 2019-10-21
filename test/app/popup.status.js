@@ -23,24 +23,6 @@ const popupUpdateStatusMessage = function(tabId, url, status, item) {
     .callsArgWith(1, { item: item, status: status });
 };
 
-/**
- * @param {number} tabId
- * @param {FindResult} item
- * @param {number} status
- * @returns {boolean}
- */
-const sendMessageForTabShould = function (tabId, item, status) {
-  return chrome.tabs.sendMessage
-    .withArgs(tabId, {
-      command: 'tab:notify:status',
-      data: {
-        item: item,
-        status: status,
-      },
-    })
-    .calledOnce;
-};
-
 describe('popup', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
@@ -61,7 +43,7 @@ describe('popup', function () {
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
-      assert.ok(sendMessageForTabShould(10001, result, 0));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10001, result, 0));
     });
 
     it('update with 1', function () {
@@ -78,7 +60,7 @@ describe('popup', function () {
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
-      assert.ok(sendMessageForTabShould(10002, result, 1));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10002, result, 1));
     });
   });
 });
