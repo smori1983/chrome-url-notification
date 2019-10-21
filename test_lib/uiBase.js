@@ -9,7 +9,7 @@ const before = function () {
 };
 
 const beforeEach = function () {
-  storage.clearStorage();
+  storage.clear();
 
   const localeFile = __dirname + '/../src/_locales/en/messages.json';
   const message = fs.readFileSync(localeFile).toString();

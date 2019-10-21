@@ -6,7 +6,7 @@ const factory = require('./factory');
 const storage = require('./storage');
 
 const clearStorage = function() {
-  storage.clearStorage();
+  storage.clear();
 };
 
 /**
@@ -16,7 +16,7 @@ const clearStorage = function() {
  * @param {PatternItem[]} patterns
  */
 const setUpStorage = function(version, patterns) {
-  storage.setUpStorage(version, patterns);
+  storage.setUp(version, patterns);
 };
 
 /**
