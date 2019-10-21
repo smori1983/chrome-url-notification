@@ -187,6 +187,20 @@ const popupTabNotifyStatusShould = function (tabId, item, status) {
 };
 
 /**
+ * @param {string} url used to part of chrome.tabs.Tab
+ */
+const popupTabsQueryChain = function (url) {
+  chrome.tabs.query
+    .withArgs({
+      currentWindow: true,
+      active: true,
+    })
+    .callArgWith(1, [{
+      url: url,
+    }]);
+};
+
+/**
  * @param {number} tabId
  * @param {string} url
  * @param {number} status
@@ -261,6 +275,7 @@ module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupTabNotifyStatusShould = popupTabNotifyStatusShould;
+module.exports.popupTabsQueryChain = popupTabsQueryChain;
 module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusShould = popupUpdateStatusShould;

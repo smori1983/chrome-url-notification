@@ -1,22 +1,7 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
-
-/**
- * @param {string} url used to part of chrome.tabs.Tab
- */
-const popupTabsQuery = function (url) {
-  chrome.tabs.query
-    .withArgs({
-      currentWindow: true,
-      active: true,
-    })
-    .callArgWith(1, [{
-      url: url,
-    }]);
-};
 
 describe('popup.block.matched', function () {
   before(testUtil.uiBase.before);
@@ -46,7 +31,7 @@ describe('popup.block.matched', function () {
 
   describe('initial state of status checkbox', function () {
     it('pattern matched and status is 0', function () {
-      popupTabsQuery('https://foo.example.com/page');
+      testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
       testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10001,
         url: 'https://foo.example.com/page',
@@ -62,7 +47,7 @@ describe('popup.block.matched', function () {
     });
 
     it('pattern matched and status is 1', function () {
-      popupTabsQuery('https://foo.example.com/page');
+      testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
       testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10002,
         url: 'https://foo.example.com/page',
