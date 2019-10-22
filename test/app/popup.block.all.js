@@ -23,21 +23,17 @@ describe('popup.block.all', function () {
   });
 
   it('click link to options page', function () {
+    const path = 'chrome-extension://xxx/html/options.html';
+
     chrome.runtime.getURL
       .withArgs('html/options.html')
-      .returns('chrome-extension://xxx/html/options.html');
+      .returns(path);
 
     const $ = require('jquery');
     const $link = $('#link_options').find('a').eq(0);
 
     $link.trigger('click');
 
-    const called = chrome.tabs.create
-      .withArgs({
-        url: 'chrome-extension://xxx/html/options.html',
-      })
-      .calledOnce;
-
-    assert.strictEqual(called, true);
+    assert.strictEqual(testUtil.chrome.tabsCreateShould(path), true);
   });
 });
