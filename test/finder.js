@@ -7,14 +7,14 @@ describe('urlNotification.finder', function() {
   describe('ステータスが全て1', function() {
     beforeEach(function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-        { url: 'http://example.com/2', msg: '2', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-        { url: 'http://example.com/*', msg: '*', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
+        testUtil.makePatternItem({url: 'http://example.com/2', msg: '2'}),
+        testUtil.makePatternItem({url: 'http://example.com/*', msg: '*'}),
 
-        { url: 'http://abc-123.net/1', msg: 'abc-123-1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-        { url: 'http://abc-123.net/*', msg: 'abc-123-0', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        testUtil.makePatternItem({url: 'http://abc-123.net/1', msg: 'abc-123-1'}),
+        testUtil.makePatternItem({url: 'http://abc-123.net/*', msg: 'abc-123-0'}),
 
-        { url: 'http://*.example.com/', msg: 'subdomain-1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
+        testUtil.makePatternItem({url: 'http://*.example.com/', msg: 'subdomain-1'}),
       ]);
     });
 
@@ -30,8 +30,8 @@ describe('urlNotification.finder', function() {
       const expected = {
         url: 'http://example.com/*',
         message: '*',
-        backgroundColor: '111111',
-        displayPosition: 'top',
+        backgroundColor: '000000',
+        displayPosition: 'bottom',
         fontColor: 'ffffff',
         status: 1,
       };
@@ -45,8 +45,8 @@ describe('urlNotification.finder', function() {
       const expected = {
         url: 'http://example.com/1',
         message: '1',
-        backgroundColor: '111111',
-        displayPosition: 'top',
+        backgroundColor: '000000',
+        displayPosition: 'bottom',
         fontColor: 'ffffff',
         status: 1,
       };
@@ -70,9 +70,9 @@ describe('urlNotification.finder', function() {
   describe('ステータスを考慮', function() {
     beforeEach(function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-        { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
-        { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
+        testUtil.makePatternItem({url: 'http://example.com/1', msg: '1', status: 1}),
+        testUtil.makePatternItem({url: 'http://example.com/2', msg: '2', status: 0}),
+        testUtil.makePatternItem({url: 'http://example.com/3', msg: '3', status: 1}),
       ]);
     });
 
@@ -92,9 +92,9 @@ describe('urlNotification.finder', function() {
   describe('find option - ignoreStatus', function() {
     beforeEach(function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
-        { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-        { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
-        { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
+        testUtil.makePatternItem({url: 'http://example.com/1', msg: '1', status: 1 }),
+        testUtil.makePatternItem({url: 'http://example.com/2', msg: '2', status: 0 }),
+        testUtil.makePatternItem({url: 'http://example.com/3', msg: '3', status: 1 }),
       ]);
     });
 

@@ -6,10 +6,10 @@ const SUT = require('../src/js/urlNotification/background');
 describe('urlNotification.background', function () {
   beforeEach(function () {
     testUtil.setUpStorage(testUtil.currentVersion(), [
-      { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/item/*', msg: 'item', backgroundColor: '000000', displayPosition: 'top', status: 1 },
+      testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
+      testUtil.makePatternItem({url: 'http://example.com/2', msg: '2'}),
+      testUtil.makePatternItem({url: 'http://example.com/3', msg: '3'}),
+      testUtil.makePatternItem({url: 'http://example.com/item/*', msg: 'item'}),
     ]);
   });
 
@@ -27,9 +27,9 @@ describe('urlNotification.background', function () {
       const expectedData = {
         url: 'http://example.com/1',
         message: '1',
-        backgroundColor: '111111',
+        backgroundColor: '000000',
         fontColor: 'ffffff',
-        displayPosition: 'top',
+        displayPosition: 'bottom',
         status: 1,
       };
 
@@ -45,7 +45,7 @@ describe('urlNotification.background', function () {
         message: 'item',
         backgroundColor: '000000',
         fontColor: 'ffffff',
-        displayPosition: 'top',
+        displayPosition: 'bottom',
         status: 1,
       };
 
