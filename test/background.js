@@ -1,7 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
+const SUT = require('../src/js/urlNotification/background');
 
 describe('urlNotification.background', function () {
   beforeEach(function () {
@@ -15,14 +15,14 @@ describe('urlNotification.background', function () {
 
   describe('find()', function() {
     it('該当データなし', function () {
-      const result = SUT.background.find('foo');
+      const result = SUT.find('foo');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
     it('該当データあり', function () {
-      const result = SUT.background.find('http://example.com/1');
+      const result = SUT.find('http://example.com/1');
 
       const expectedData = {
         url: 'http://example.com/1',
@@ -38,7 +38,7 @@ describe('urlNotification.background', function () {
     });
 
     it('該当データあり - パターンにマッチ', function () {
-      const result = SUT.background.find('http://example.com/item/5');
+      const result = SUT.find('http://example.com/item/5');
 
       const expectedData = {
         url: 'http://example.com/item/*',
@@ -56,7 +56,7 @@ describe('urlNotification.background', function () {
 
   describe('updatePattern()', function () {
     it('Call with non-existing pattern', function () {
-      const result = SUT.background.updatePattern('http://example.com/999', {
+      const result = SUT.updatePattern('http://example.com/999', {
         status: 0,
       });
 
@@ -64,7 +64,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Normal case', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         status: 0,
       });
 
@@ -72,7 +72,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Try to update with invalid value', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         status: 9,
       });
 
@@ -80,7 +80,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Try to update with invalid key', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         foo: 'bar',
       });
 

@@ -1,7 +1,8 @@
 const { describe, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../src/js/urlNotification/main');
 const testUtil = require('../test_lib/util');
+const SUT = require('../src/js/urlNotification/importer');
+const storage = require('../src/js/urlNotification/storage');
 
 describe('urlNotification.importer.v3', function() {
   describe('import v3', function () {
@@ -21,9 +22,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      SUT.importer.importJson(json);
+      SUT.importJson(json);
 
-      const allData = SUT.storage.getAll();
+      const allData = storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
@@ -50,9 +51,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      SUT.importer.importJson(json);
+      SUT.importJson(json);
 
-      const allData = SUT.storage.getAll();
+      const allData = storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
@@ -87,9 +88,9 @@ describe('urlNotification.importer.v3', function() {
         ],
       };
 
-      SUT.importer.importJson(json);
+      SUT.importJson(json);
 
-      const allData = SUT.storage.getAll();
+      const allData = storage.getAll();
 
       assert.strictEqual(allData.length, 1);
 
