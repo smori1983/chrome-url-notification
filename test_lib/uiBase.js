@@ -6,14 +6,14 @@ const storage = require('./storage');
 
 const before = function () {
   global.chrome = chrome;
-};
-
-const beforeEach = function () {
-  storage.clear();
 
   const localeFile = __dirname + '/../src/_locales/en/messages.json';
   const message = fs.readFileSync(localeFile).toString();
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
+};
+
+const beforeEach = function () {
+  storage.clear();
 
   chrome.flush();
 
