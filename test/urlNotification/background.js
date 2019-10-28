@@ -21,6 +21,13 @@ describe('urlNotification.background', function () {
       assert.strictEqual(result.data, null);
     });
 
+    it('該当データなし - パターン', function () {
+      const result = SUT.find('http://example.com/item/');
+
+      assert.strictEqual(result.matched, false);
+      assert.strictEqual(result.data, null);
+    });
+
     it('該当データあり', function () {
       const result = SUT.find('http://example.com/1');
 
