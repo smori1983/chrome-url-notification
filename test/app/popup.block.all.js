@@ -16,7 +16,7 @@ describe('popup.block.all', function () {
 
   it('link to options page should be shown', function () {
     const $ = require('jquery');
-    const $link = $('#link_options').find('a');
+    const $link = $('#link_options a');
 
     assert.strictEqual($link.length, 1);
     assert.strictEqual($link.eq(0).text(), 'Options');
@@ -30,7 +30,7 @@ describe('popup.block.all', function () {
       .returns(path);
 
     const $ = require('jquery');
-    const $link = $('#link_options').find('a').eq(0);
+    const $link = $('#link_options a').eq(0);
 
     $link.trigger('click');
 
