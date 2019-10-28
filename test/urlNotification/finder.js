@@ -1,7 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../test_lib/util');
-const SUT = require('../src/js/urlNotification/finder');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/finder');
 
 describe('urlNotification.finder', function() {
   describe('ステータスが全て1', function() {

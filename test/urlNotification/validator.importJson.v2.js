@@ -1,6 +1,6 @@
 const { describe, it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../test_lib/util');
+const testUtil = require('../../test_lib/util');
 
 describe('urlNotification.validator.importJson.v2', function() {
   describe('for basic structure', function() {

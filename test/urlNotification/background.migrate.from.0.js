@@ -1,9 +1,9 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../test_lib/util');
-const SUT = require('../src/js/urlNotification/background');
-const migration = require('../src/js/urlNotification/migration');
-const storage = require('../src/js/urlNotification/storage');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/background');
+const migration = require('../../src/js/urlNotification/migration');
+const storage = require('../../src/js/urlNotification/storage');
 
 describe('urlNotification.background.migrate.from.0', function () {
   describe('no data', function() {

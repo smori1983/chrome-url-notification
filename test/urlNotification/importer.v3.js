@@ -1,8 +1,8 @@
 const { describe, it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../test_lib/util');
-const SUT = require('../src/js/urlNotification/importer');
-const storage = require('../src/js/urlNotification/storage');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/importer');
+const storage = require('../../src/js/urlNotification/storage');
 
 describe('urlNotification.importer.v3', function() {
   describe('import v3', function () {

@@ -1,7 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../test_lib/util');
-const SUT = require('../src/js/urlNotification/data');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/data');
 
 describe('urlNotification.data', function() {
   beforeEach(function() {
