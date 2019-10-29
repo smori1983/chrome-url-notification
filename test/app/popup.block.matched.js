@@ -4,6 +4,7 @@ const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
 
 describe('popup.block.matched', function () {
+  before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {

@@ -4,6 +4,7 @@ const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
 describe('options.pattern.add', function () {
+  before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   afterEach(testUtil.uiBase.afterEach);

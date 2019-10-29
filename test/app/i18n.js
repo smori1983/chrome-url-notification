@@ -9,9 +9,23 @@ describe('i18n', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('get', function () {
-    it('label_background_color', function () {
-      assert.strictEqual(SUT.get('label_background_color'), 'Background color');
+  describe('en', function () {
+    before(testUtil.uiBase.initI18n('en'));
+
+    describe('get', function () {
+      it('label_background_color', function () {
+        assert.strictEqual(SUT.get('label_background_color'), 'Background color');
+      });
+    });
+  });
+
+  describe('ja', function () {
+    before(testUtil.uiBase.initI18n('ja'));
+
+    describe('get', function () {
+      it('label_background_color', function () {
+        assert.strictEqual(SUT.get('label_background_color'), '背景色');
+      });
     });
   });
 });
