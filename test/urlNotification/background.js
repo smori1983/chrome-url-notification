@@ -1,35 +1,42 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../src/js/urlNotification/main');
-const testUtil = require('../test_lib/util');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/background');
 
 describe('urlNotification.background', function () {
   beforeEach(function () {
     testUtil.setUpStorage(testUtil.currentVersion(), [
-      { url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1 },
-      { url: 'http://example.com/item/*', msg: 'item', backgroundColor: '000000', displayPosition: 'top', status: 1 },
+      testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
+      testUtil.makePatternItem({url: 'http://example.com/2', msg: '2'}),
+      testUtil.makePatternItem({url: 'http://example.com/3', msg: '3'}),
+      testUtil.makePatternItem({url: 'http://example.com/item/*', msg: 'item'}),
     ]);
   });
 
   describe('find()', function() {
     it('該当データなし', function () {
-      const result = SUT.background.find('foo');
+      const result = SUT.find('foo');
+
+      assert.strictEqual(result.matched, false);
+      assert.strictEqual(result.data, null);
+    });
+
+    it('該当データなし - パターン', function () {
+      const result = SUT.find('http://example.com/item/');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
     it('該当データあり', function () {
-      const result = SUT.background.find('http://example.com/1');
+      const result = SUT.find('http://example.com/1');
 
       const expectedData = {
         url: 'http://example.com/1',
         message: '1',
-        backgroundColor: '111111',
+        backgroundColor: '000000',
         fontColor: 'ffffff',
-        displayPosition: 'top',
+        displayPosition: 'bottom',
         status: 1,
       };
 
@@ -38,14 +45,14 @@ describe('urlNotification.background', function () {
     });
 
     it('該当データあり - パターンにマッチ', function () {
-      const result = SUT.background.find('http://example.com/item/5');
+      const result = SUT.find('http://example.com/item/5');
 
       const expectedData = {
         url: 'http://example.com/item/*',
         message: 'item',
         backgroundColor: '000000',
         fontColor: 'ffffff',
-        displayPosition: 'top',
+        displayPosition: 'bottom',
         status: 1,
       };
 
@@ -56,7 +63,7 @@ describe('urlNotification.background', function () {
 
   describe('updatePattern()', function () {
     it('Call with non-existing pattern', function () {
-      const result = SUT.background.updatePattern('http://example.com/999', {
+      const result = SUT.updatePattern('http://example.com/999', {
         status: 0,
       });
 
@@ -64,7 +71,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Normal case', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         status: 0,
       });
 
@@ -72,7 +79,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Try to update with invalid value', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         status: 9,
       });
 
@@ -80,7 +87,7 @@ describe('urlNotification.background', function () {
     });
 
     it('Try to update with invalid key', function () {
-      const result = SUT.background.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('http://example.com/1', {
         foo: 'bar',
       });
 

@@ -5,6 +5,7 @@ const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
 describe('options.pattern.actions', function () {
+  before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {

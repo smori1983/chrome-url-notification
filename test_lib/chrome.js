@@ -31,6 +31,18 @@ const createTab = function(diff) {
 };
 
 /**
+ * @param {string} url
+ * @returns {boolean}
+ */
+const tabsCreateShould = function (url) {
+  return chrome.tabs.create
+    .withArgs({
+      url: url,
+    })
+    .calledOnce;
+};
+
+/**
  * chrome.browserAction.setBadgeText()
  *
  * @param {string} text
@@ -266,6 +278,7 @@ const popupUpdateStatusShould = function(tabId, url, status) {
 };
 
 module.exports.createTab = createTab;
+module.exports.tabsCreateShould = tabsCreateShould;
 module.exports.setBadgeTextShould = setBadgeTextShould;
 module.exports.sendResposne = sendResponse;
 

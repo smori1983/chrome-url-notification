@@ -1,7 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../src/js/urlNotification/main');
-const testUtil = require('../test_lib/util');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/data');
 
 describe('urlNotification.data', function() {
   beforeEach(function() {
@@ -12,7 +12,7 @@ describe('urlNotification.data', function() {
     it('データなし', function () {
       const patterns = [];
 
-      const sorted = SUT.data.sortByUrl(patterns);
+      const sorted = SUT.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 0);
     });
@@ -24,7 +24,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/3', msg: '3' },
       ];
 
-      const sorted = SUT.data.sortByUrl(patterns);
+      const sorted = SUT.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, '1');
@@ -39,7 +39,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/*', msg: '*' },
       ];
 
-      const sorted = SUT.data.sortByUrl(patterns);
+      const sorted = SUT.sortByUrl(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, '*');
@@ -52,7 +52,7 @@ describe('urlNotification.data', function() {
     it('データなし', function() {
       const patterns = [];
 
-      const sorted = SUT.data.sortByMessage(patterns);
+      const sorted = SUT.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 0);
     });
@@ -64,7 +64,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/1', msg: 'three' },
       ];
 
-      const sorted = SUT.data.sortByMessage(patterns);
+      const sorted = SUT.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].msg, 'one');
@@ -79,7 +79,7 @@ describe('urlNotification.data', function() {
         { url: 'http://example.com/2', msg: 'message' },
       ];
 
-      const sorted = SUT.data.sortByMessage(patterns);
+      const sorted = SUT.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 3);
       assert.strictEqual(sorted[0].url, 'http://example.com/1');

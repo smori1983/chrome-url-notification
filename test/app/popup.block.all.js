@@ -5,6 +5,7 @@ const SUT = require('../../src/js/app/popup.block.all');
 const testUtil = require('../../test_lib/util');
 
 describe('popup.block.all', function () {
+  before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {
@@ -16,28 +17,24 @@ describe('popup.block.all', function () {
 
   it('link to options page should be shown', function () {
     const $ = require('jquery');
-    const $link = $('#link_options').find('a');
+    const $link = $('#link_options a');
 
     assert.strictEqual($link.length, 1);
     assert.strictEqual($link.eq(0).text(), 'Options');
   });
 
   it('click link to options page', function () {
+    const path = 'chrome-extension://xxx/html/options.html';
+
     chrome.runtime.getURL
       .withArgs('html/options.html')
-      .returns('chrome-extension://xxx/html/options.html');
+      .returns(path);
 
     const $ = require('jquery');
-    const $link = $('#link_options').find('a').eq(0);
+    const $link = $('#link_options a').eq(0);
 
     $link.trigger('click');
 
-    const called = chrome.tabs.create
-      .withArgs({
-        url: 'chrome-extension://xxx/html/options.html',
-      })
-      .calledOnce;
-
-    assert.strictEqual(called, true);
+    assert.strictEqual(testUtil.chrome.tabsCreateShould(path), true);
   });
 });

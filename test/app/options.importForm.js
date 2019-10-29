@@ -5,6 +5,7 @@ const storage = require('../../src/js/urlNotification/storage');
 const testUtil = require('../../test_lib/util');
 
 describe('options.importForm', function () {
+  before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(function () {

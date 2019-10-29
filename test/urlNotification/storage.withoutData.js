@@ -1,38 +1,39 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const SUT = require('../src/js/urlNotification/main');
-const testUtil = require('../test_lib/util');
+const testUtil = require('../../test_lib/util');
+const SUT = require('../../src/js/urlNotification/storage');
+const background = require('../../src/js/urlNotification/background');
 
 describe('urlNotification.storage.withoutData', function() {
   beforeEach(function () {
     testUtil.clearStorage();
 
-    SUT.background.migrate();
+    background.migrate();
   });
 
   describe('削除', function () {
     it('全件削除', function () {
-      SUT.storage.deleteAll();
+      SUT.deleteAll();
 
-      assert.strictEqual(SUT.storage.getCount(), 0);
+      assert.strictEqual(SUT.getCount(), 0);
     });
 
     it('1件削除 - 該当データ無し', function () {
-      SUT.storage.deletePattern('http://example.com/');
+      SUT.deletePattern('http://example.com/');
 
-      assert.strictEqual(SUT.storage.getCount(), 0);
+      assert.strictEqual(SUT.getCount(), 0);
     });
   });
 
   describe('参照', function () {
     it('全件取得', function () {
-      const all = SUT.storage.getAll();
+      const all = SUT.getAll();
 
       assert.strictEqual(all.length, 0);
     });
 
     it('URLで検索 該当データなし', function () {
-      assert.strictEqual(SUT.storage.findByUrl('http://example.com/'), null);
+      assert.strictEqual(SUT.findByUrl('http://example.com/'), null);
     });
   });
 
@@ -45,9 +46,9 @@ describe('urlNotification.storage.withoutData', function() {
         displayPosition: 'top',
       };
 
-      SUT.storage.updatePattern('http://example.com/', item);
+      SUT.updatePattern('http://example.com/', item);
 
-      assert.strictEqual(SUT.storage.findByUrl('http://example.com/'), null);
+      assert.strictEqual(SUT.findByUrl('http://example.com/'), null);
     });
 
     it('パターンの重複登録はできない', function () {
@@ -58,11 +59,11 @@ describe('urlNotification.storage.withoutData', function() {
         displayPosition: 'top',
       };
 
-      SUT.storage.addPattern(item);
-      SUT.storage.addPattern(item);
-      SUT.storage.addPattern(item);
+      SUT.addPattern(item);
+      SUT.addPattern(item);
+      SUT.addPattern(item);
 
-      assert.strictEqual(SUT.storage.getCount(), 1);
+      assert.strictEqual(SUT.getCount(), 1);
     });
   });
 });

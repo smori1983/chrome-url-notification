@@ -11,10 +11,6 @@ const before = function () {
 const beforeEach = function () {
   storage.clear();
 
-  const localeFile = __dirname + '/../src/_locales/en/messages.json';
-  const message = fs.readFileSync(localeFile).toString();
-  chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
-
   chrome.flush();
 
   chrome.runtime.getManifest
@@ -40,6 +36,17 @@ const after = function () {
 };
 
 /**
+ * @param {string} locale 'en' or 'ja'
+ */
+const initI18n = function (locale) {
+  return function () {
+    const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
+    const message = fs.readFileSync(localeFile).toString();
+    chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
+  };
+};
+
+/**
  * @param {string} content
  * @param {Object} [options]
  */
@@ -58,4 +65,5 @@ module.exports.before = before;
 module.exports.beforeEach = beforeEach;
 module.exports.afterEach = afterEach;
 module.exports.after = after;
+module.exports.initI18n = initI18n;
 module.exports.initDom = initDom;
