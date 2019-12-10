@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/chrome": "0.0.91",
     "@types/jquery": "^3.3.31",
-    "@types/node": "^12.12.12",
+    "@types/node": "^12.12.16",
     "browserify": "^16.5.0",
     "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
@@ -46,7 +46,7 @@
     "deepmerge": "^4.2.2",
     "jquery": "^3.4.1",
     "jquery-validation": "^1.19.1",
-    "jsonschema": "^1.2.4",
+    "jsonschema": "^1.2.5",
     "lodash": "^4.17.15"
   }
 }
