@@ -1,53 +1,31 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/content.find');
 const testUtil = require('../../test_lib/util');
-
-/**
- * @param {string} url
- * @param {(FoundItem|null)} item
- */
-const contentFindMessage = function(url, item) {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'content_scripts:find',
-      data: {
-        url: url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    })
-};
 
 describe('message.content.find', function () {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
+  beforeEach(function () {
+    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
+      url: 'https://example.com/',
+    });
+  });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
   it('pattern not matched', function() {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
-    contentFindMessage('https://example.com/', null);
+    testUtil.chrome.contentFindChain('https://example.com/', null);
 
     assert.strictEqual(testUtil.content.message().exists(), false);
   });
 
   it('pattern matched and status is 0', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
-    contentFindMessage('https://example.com/', testUtil.makeFoundItem({
+    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
       status: 0,
     }));
 
@@ -55,13 +33,9 @@ describe('message.content.find', function () {
   });
 
   it('pattern matched and status is 1', function () {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
-      url: 'https://example.com/',
-    });
-
     SUT.sendMessage();
 
-    contentFindMessage('https://example.com/', testUtil.makeFoundItem({
+    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
       status: 1,
     }));
 

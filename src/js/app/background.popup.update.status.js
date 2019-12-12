@@ -8,6 +8,12 @@ const badge = require('./background.badge');
  */
 
 /**
+ * @typedef {Object} MessageBrowserActionUpdateStatusResponse
+ * @property {PatternItem} item
+ * @property {number} status
+ */
+
+/**
  * @param {MessageBrowserActionUpdateStatus} request
  * @param {chrome.runtime.MessageSender} sender
  * @param {function} sendResponse
