@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## Next
+## v5.4.0
 
 ### Development
 
