@@ -61,27 +61,110 @@ const main = function(pageInfo) {
      * @returns {Object}
      */
     forMessage: function (item) {
+      // Common properties.
       const result = {
         position: 'fixed',
-        left: '0px',
-        width: '100%',
         height: height + 'px',
         lineHeight: height + 'px',
         background: '#' + item.backgroundColor,
         color: '#' + item.fontColor,
         fontSize: '16px',
         textAlign: 'center',
+        overflow: 'hidden',
         zIndex: '99999999',
-
         webkitUserSelect: 'none',
       };
 
-      result[item.displayPosition] = '0px';
+      if (item.displayPosition === 'top') {
+        result.top = '0px';
+        result.left = '0px';
+        result.width = '100%';
+      }
+
+      if (item.displayPosition === 'bottom') {
+        result.bottom = '0px';
+        result.left = '0px';
+        result.width = '100%';
+      }
+
+      if (item.displayPosition === 'top_left') {
+        result.top = '20px';
+        result.left = '20px';
+        result.width = height + 'px';
+        result.transitionProperty = 'width';
+        result.transitionDuration = '0.5s';
+        result.webkitBorderRadius = '25px';
+      }
+
+      if (item.displayPosition === 'top_right') {
+        result.top = '20px';
+        result.right = '20px';
+        result.width = height + 'px';
+        result.transitionProperty = 'width';
+        result.transitionDuration = '0.5s';
+        result.webkitBorderRadius = '25px';
+      }
+
+      if (item.displayPosition === 'bottom_left') {
+        result.bottom = '20px';
+        result.left = '20px';
+        result.width = height + 'px';
+        result.transitionProperty = 'width';
+        result.transitionDuration = '0.5s';
+        result.webkitBorderRadius = '25px';
+      }
+
+      if (item.displayPosition === 'bottom_right') {
+        result.bottom = '20px';
+        result.right = '20px';
+        result.width = height + 'px';
+        result.transitionProperty = 'width';
+        result.transitionDuration = '0.5s';
+        result.webkitBorderRadius = '25px';
+      }
 
       // Initially hide element regardless of status.
       result.display = 'none';
 
       return result;
+    },
+    /**
+     * Determine CSS for mouseover event.
+     *
+     * @param {FoundItem} item
+     * @returns {Object}
+     */
+    forMouseOver: function (item) {
+      switch (item.displayPosition) {
+        case 'top_left':
+        case 'top_right':
+        case 'bottom_left':
+        case 'bottom_right':
+          return {
+            width: 'calc(100% - 40px)',
+          };
+        default:
+          return {};
+      }
+    },
+    /**
+     * Determine CSS for mouseout event.
+     *
+     * @param {FoundItem} item
+     * @returns {Object}
+     */
+    forMouseOut: function (item) {
+      switch (item.displayPosition) {
+        case 'top_left':
+        case 'top_right':
+        case 'bottom_left':
+        case 'bottom_right':
+          return {
+            width: '50px',
+          };
+        default:
+          return {};
+      }
     },
   };
 };
