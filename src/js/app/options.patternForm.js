@@ -195,7 +195,7 @@ const validatorConfig = function(config) {
       },
       display_position: {
         required: true,
-        in: ['top', 'bottom'],
+        in: ['top', 'top_left', 'top_right', 'bottom', 'bottom_left', 'bottom_right'],
       },
       status: {
         required: false,

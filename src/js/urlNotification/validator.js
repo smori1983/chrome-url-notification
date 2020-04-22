@@ -69,7 +69,7 @@ const patternV2 = function() {
     'properties': {
       'displayPosition': {
         'type': 'string',
-        'pattern': /^(bottom|top)$/,
+        'pattern': /^(bottom|bottom_left|bottom_right|top|top_left|top_right)$/,
       },
     },
     'required': [

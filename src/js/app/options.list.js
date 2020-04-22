@@ -121,6 +121,10 @@ const makeRow = function(item) {
       switch (item.displayPosition) {
         case 'top': return i18n.get('label_top');
         case 'bottom': return i18n.get('label_bottom');
+        case 'top_left': return i18n.get('label_top_left');
+        case 'top_right': return i18n.get('label_top_right');
+        case 'bottom_left': return i18n.get('label_bottom_left');
+        case 'bottom_right': return i18n.get('label_bottom_right');
         default: return '';
       }
     };
