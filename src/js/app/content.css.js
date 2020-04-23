@@ -31,6 +31,21 @@ const marginBottom = function(pageInfo, status) {
 };
 
 /**
+ * @param {string} displayPosition
+ * @returns {boolean}
+ */
+const isCornerType = function (displayPosition) {
+  const targets = [
+    'top_left',
+    'top_right',
+    'bottom_left',
+    'bottom_right',
+  ];
+
+  return targets.indexOf(displayPosition) >= 0;
+};
+
+/**
  * @param {PageInfo} pageInfo
  */
 const main = function(pageInfo) {
@@ -89,36 +104,30 @@ const main = function(pageInfo) {
         result.width = '100%';
       }
 
-      if (item.displayPosition === 'top_left') {
-        result.top = cornerSpace + 'px';
-        result.left = cornerSpace + 'px';
+      if (isCornerType(item.displayPosition)) {
         result.width = height + 'px';
         result.transition = 'width 0.3s 0.1s';
         result.webkitBorderRadius = sprintf('%dpx', height / 2);
+      }
+
+      if (item.displayPosition === 'top_left') {
+        result.top = cornerSpace + 'px';
+        result.left = cornerSpace + 'px';
       }
 
       if (item.displayPosition === 'top_right') {
         result.top = cornerSpace + 'px';
         result.right = cornerSpace + 'px';
-        result.width = height + 'px';
-        result.transition = 'width 0.3s 0.1s';
-        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       if (item.displayPosition === 'bottom_left') {
         result.bottom = cornerSpace + 'px';
         result.left = cornerSpace + 'px';
-        result.width = height + 'px';
-        result.transition = 'width 0.3s 0.1s';
-        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       if (item.displayPosition === 'bottom_right') {
         result.bottom = cornerSpace + 'px';
         result.right = cornerSpace + 'px';
-        result.width = height + 'px';
-        result.transition = 'width 0.3s 0.1s';
-        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       // Initially hide element regardless of status.
@@ -133,16 +142,12 @@ const main = function(pageInfo) {
      * @returns {Object}
      */
     forMouseOver: function (item) {
-      switch (item.displayPosition) {
-        case 'top_left':
-        case 'top_right':
-        case 'bottom_left':
-        case 'bottom_right':
-          return {
-            width: sprintf('calc(100%% - %dpx)', cornerSpace * 2),
-          };
-        default:
-          return {};
+      if (isCornerType(item.displayPosition)) {
+        return {
+          width: sprintf('calc(100%% - %dpx)', cornerSpace * 2),
+        };
+      } else {
+        return {};
       }
     },
     /**
@@ -152,16 +157,12 @@ const main = function(pageInfo) {
      * @returns {Object}
      */
     forMouseOut: function (item) {
-      switch (item.displayPosition) {
-        case 'top_left':
-        case 'top_right':
-        case 'bottom_left':
-        case 'bottom_right':
-          return {
-            width: height + 'px',
-          };
-        default:
-          return {};
+      if (isCornerType(item.displayPosition)) {
+        return {
+          width: height + 'px',
+        };
+      } else {
+        return {};
       }
     },
   };
