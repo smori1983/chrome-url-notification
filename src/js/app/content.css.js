@@ -93,7 +93,7 @@ const main = function(pageInfo) {
         result.top = cornerSpace + 'px';
         result.left = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transition = 'width 0.5s 0.1s';
+        result.transition = 'width 0.3s 0.1s';
         result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
@@ -101,7 +101,7 @@ const main = function(pageInfo) {
         result.top = cornerSpace + 'px';
         result.right = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transition = 'width 0.5s 0.1s';
+        result.transition = 'width 0.3s 0.1s';
         result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
@@ -109,7 +109,7 @@ const main = function(pageInfo) {
         result.bottom = cornerSpace + 'px';
         result.left = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transition = 'width 0.5s 0.1s';
+        result.transition = 'width 0.3s 0.1s';
         result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
@@ -117,7 +117,7 @@ const main = function(pageInfo) {
         result.bottom = cornerSpace + 'px';
         result.right = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transition = 'width 0.5s 0.1s';
+        result.transition = 'width 0.3s 0.1s';
         result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
