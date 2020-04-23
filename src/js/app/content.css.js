@@ -34,6 +34,19 @@ const marginBottom = function(pageInfo, status) {
  * @param {string} displayPosition
  * @returns {boolean}
  */
+const isBarType = function (displayPosition) {
+  const targets = [
+    'top',
+    'bottom',
+  ];
+
+  return targets.indexOf(displayPosition) >= 0;
+};
+
+/**
+ * @param {string} displayPosition
+ * @returns {boolean}
+ */
 const isCornerType = function (displayPosition) {
   const targets = [
     'top_left',
@@ -92,16 +105,17 @@ const main = function(pageInfo) {
         webkitUserSelect: 'none',
       };
 
-      if (item.displayPosition === 'top') {
-        result.top = '0px';
+      if (isBarType(item.displayPosition)) {
         result.left = '0px';
         result.width = '100%';
       }
 
+      if (item.displayPosition === 'top') {
+        result.top = '0px';
+      }
+
       if (item.displayPosition === 'bottom') {
         result.bottom = '0px';
-        result.left = '0px';
-        result.width = '100%';
       }
 
       if (isCornerType(item.displayPosition)) {
