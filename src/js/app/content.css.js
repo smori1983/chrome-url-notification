@@ -1,6 +1,8 @@
 'use strict';
 
+const sprintf = require('sprintf-js').sprintf;
 const height = 50;
+const cornerSpace = 20;
 
 /**
  * @param {PageInfo} pageInfo
@@ -88,39 +90,35 @@ const main = function(pageInfo) {
       }
 
       if (item.displayPosition === 'top_left') {
-        result.top = '20px';
-        result.left = '20px';
+        result.top = cornerSpace + 'px';
+        result.left = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transitionProperty = 'width';
-        result.transitionDuration = '0.5s';
-        result.webkitBorderRadius = '25px';
+        result.transition = 'width 0.5s 0.1s';
+        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       if (item.displayPosition === 'top_right') {
-        result.top = '20px';
-        result.right = '20px';
+        result.top = cornerSpace + 'px';
+        result.right = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transitionProperty = 'width';
-        result.transitionDuration = '0.5s';
-        result.webkitBorderRadius = '25px';
+        result.transition = 'width 0.5s 0.1s';
+        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       if (item.displayPosition === 'bottom_left') {
-        result.bottom = '20px';
-        result.left = '20px';
+        result.bottom = cornerSpace + 'px';
+        result.left = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transitionProperty = 'width';
-        result.transitionDuration = '0.5s';
-        result.webkitBorderRadius = '25px';
+        result.transition = 'width 0.5s 0.1s';
+        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       if (item.displayPosition === 'bottom_right') {
-        result.bottom = '20px';
-        result.right = '20px';
+        result.bottom = cornerSpace + 'px';
+        result.right = cornerSpace + 'px';
         result.width = height + 'px';
-        result.transitionProperty = 'width';
-        result.transitionDuration = '0.5s';
-        result.webkitBorderRadius = '25px';
+        result.transition = 'width 0.5s 0.1s';
+        result.webkitBorderRadius = sprintf('%dpx', height / 2);
       }
 
       // Initially hide element regardless of status.
@@ -141,7 +139,7 @@ const main = function(pageInfo) {
         case 'bottom_left':
         case 'bottom_right':
           return {
-            width: 'calc(100% - 40px)',
+            width: sprintf('calc(100%% - %dpx)', cornerSpace * 2),
           };
         default:
           return {};
@@ -160,7 +158,7 @@ const main = function(pageInfo) {
         case 'bottom_left':
         case 'bottom_right':
           return {
-            width: '50px',
+            width: height + 'px',
           };
         default:
           return {};
