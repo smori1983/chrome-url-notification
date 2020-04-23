@@ -2,7 +2,7 @@
 
 const sprintf = require('sprintf-js').sprintf;
 const height = 50;
-const cornerSpace = 20;
+const cornerSpace = 10;
 
 /**
  * @param {PageInfo} pageInfo
