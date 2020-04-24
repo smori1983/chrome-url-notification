@@ -192,6 +192,58 @@ describe('options.list', function () {
     });
   });
 
+  describe('list area - display position', function () {
+    beforeEach(function () {
+      testUtil.setUpStorage(testUtil.currentVersion(), [
+        testUtil.makePatternItem({
+          url: 'site1.example.com',
+          displayPosition: 'top',
+        }),
+        testUtil.makePatternItem({
+          url: 'site2.example.com',
+          displayPosition: 'bottom',
+        }),
+        testUtil.makePatternItem({
+          url: 'site3.example.com',
+          displayPosition: 'top_left',
+        }),
+        testUtil.makePatternItem({
+          url: 'site4.example.com',
+          displayPosition: 'top_right',
+        }),
+        testUtil.makePatternItem({
+          url: 'site5.example.com',
+          displayPosition: 'bottom_left',
+        }),
+        testUtil.makePatternItem({
+          url: 'site6.example.com',
+          displayPosition: 'bottom_right',
+        }),
+      ]);
+      SUT.show();
+    });
+
+    it('label of display position', function () {
+      const item1 = testUtil.options.list().item(0);
+      assert.strictEqual(item1.displayPosition(), 'Top');
+
+      const item2 = testUtil.options.list().item(1);
+      assert.strictEqual(item2.displayPosition(), 'Bottom');
+
+      const item3 = testUtil.options.list().item(2);
+      assert.strictEqual(item3.displayPosition(), 'Top left');
+
+      const item4 = testUtil.options.list().item(3);
+      assert.strictEqual(item4.displayPosition(), 'Top right');
+
+      const item5 = testUtil.options.list().item(4);
+      assert.strictEqual(item5.displayPosition(), 'Bottom left');
+
+      const item6 = testUtil.options.list().item(5);
+      assert.strictEqual(item6.displayPosition(), 'Bottom right');
+    });
+  });
+
   describe('behavior for broken or invalid data', function () {
     it('url not registered', function () {
       testUtil.setUpStorage(testUtil.currentVersion(), [
