@@ -66,5 +66,105 @@ describe('app.css', function () {
       });
     });
   });
+
+  describe('forMouseOver', function () {
+    it('display position is top', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'top',
+      }));
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is bottom', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'bottom',
+      }));
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is top_left', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'top_left',
+      }));
+
+      assert.deepStrictEqual(result, {width: 'calc(100% - 20px)'});
+    });
+
+    it('display position is top_right', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'top_right',
+      }));
+
+      assert.deepStrictEqual(result, {width: 'calc(100% - 20px)'});
+    });
+
+    it('display position is bottom_left', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'bottom_left',
+      }));
+
+      assert.deepStrictEqual(result, {width: 'calc(100% - 20px)'});
+    });
+
+    it('display position is bottom_right', function () {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: 'bottom_right',
+      }));
+
+      assert.deepStrictEqual(result, {width: 'calc(100% - 20px)'});
+    });
+  });
+
+  describe('forMouseOut', function () {
+    it('display position is top', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'top',
+      }));
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is bottom', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'bottom',
+      }));
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is top_left', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'top_left',
+      }));
+
+      assert.deepStrictEqual(result, {width: '50px'});
+    });
+
+    it('display position is top_right', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'top_right',
+      }));
+
+      assert.deepStrictEqual(result, {width: '50px'});
+    });
+
+    it('display position is bottom_left', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'bottom_left',
+      }));
+
+      assert.deepStrictEqual(result, {width: '50px'});
+    });
+
+    it('display position is bottom_right', function () {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: 'bottom_right',
+      }));
+
+      assert.deepStrictEqual(result, {width: '50px'});
+    });
+  });
 });
 
