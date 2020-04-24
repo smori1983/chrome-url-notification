@@ -65,6 +65,68 @@ describe('app.css', function () {
         assert.strictEqual('none', result.display);
       });
     });
+
+    describe('display position', function () {
+      it('top', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'top',
+        }));
+
+        assert.strictEqual(result.width, '100%');
+        assert.strictEqual(result.top, '0px');
+        assert.strictEqual(result.left, '0px');
+      });
+
+      it('bottom', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'bottom',
+        }));
+
+        assert.strictEqual(result.width, '100%');
+        assert.strictEqual(result.bottom, '0px');
+        assert.strictEqual(result.left, '0px');
+      });
+
+      it('top_left', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'top_left',
+        }));
+
+        assert.strictEqual(result.width, '50px');
+        assert.strictEqual(result.top, '10px');
+        assert.strictEqual(result.left, '10px');
+      });
+
+      it('top_right', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'top_right',
+        }));
+
+        assert.strictEqual(result.width, '50px');
+        assert.strictEqual(result.top, '10px');
+        assert.strictEqual(result.right, '10px');
+      });
+
+      it('bottom_left', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'bottom_left',
+        }));
+
+        assert.strictEqual(result.width, '50px');
+        assert.strictEqual(result.bottom, '10px');
+        assert.strictEqual(result.left, '10px');
+      });
+
+      it('bottom_right', function () {
+        const result = css.forMessage(testUtil.makeFoundItem({
+          displayPosition: 'bottom_right',
+        }));
+
+        assert.strictEqual(result.width, '50px');
+        assert.strictEqual(result.bottom, '10px');
+        assert.strictEqual(result.right, '10px');
+      });
+    });
   });
 
   describe('forMouseOver', function () {
