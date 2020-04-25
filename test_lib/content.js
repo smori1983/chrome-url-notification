@@ -27,6 +27,9 @@ const message = function () {
   };
 
   return {
+    getJqueryObject: function () {
+      return getContainer();
+    },
     /**
      * @returns {boolean}
      */
