@@ -3,16 +3,16 @@ const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 
 describe('urlNotification.validator.importJson.v1', function() {
-  describe('for basic structure', function() {
-    it('import json - error - argument is an array', function () {
+  describe('basic structure', function() {
+    it('error - argument is an array', function () {
       assert.ok(testUtil.isNotValidJson([]));
     });
 
-    it('import json - error - argument is an object but no keys', function () {
+    it('error - argument is an object but no keys', function () {
       assert.ok(testUtil.isNotValidJson({}));
     });
 
-    it('import json - error - version is not defined', function () {
+    it('error - version is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         pattern: [
           { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
@@ -21,7 +21,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is null', function () {
+    it('error - version is null', function () {
       assert.ok(testUtil.isNotValidJson({
         version: null,
         pattern: [
@@ -31,7 +31,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is true', function () {
+    it('error - version is true', function () {
       assert.ok(testUtil.isNotValidJson({
         version: true,
         pattern: [
@@ -41,7 +41,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is false', function () {
+    it('error - version is false', function () {
       assert.ok(testUtil.isNotValidJson({
         version: false,
         pattern: [
@@ -51,7 +51,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is string of integer', function () {
+    it('error - version is string of integer', function () {
       assert.ok(testUtil.isNotValidJson({
         version: '1',
         pattern: [
@@ -61,7 +61,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is float', function () {
+    it('error - version is float', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1.1,
         pattern: [
@@ -71,7 +71,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - version is out of range', function () {
+    it('error - version is out of range', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 0,
         pattern: [
@@ -89,41 +89,41 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
     });
 
-    it('import json - error - pattern is not defined', function () {
+    it('error - pattern is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
       }));
     });
 
-    it('import json - error - pattern is null', function () {
+    it('error - pattern is null', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: null,
       }));
     });
 
-    it('import json - error - pattern is true', function () {
+    it('error - pattern is true', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: true,
       }));
     });
 
-    it('import json - error - pattern is false', function () {
+    it('error - pattern is false', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: false,
       }));
     });
 
-    it('import json - error - pattern is string', function () {
+    it('error - pattern is string', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: 'dummy',
       }));
     });
 
-    it('import json - error - pattern is not an array of object(s)', function () {
+    it('error - pattern is not an array of object(s)', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
@@ -131,7 +131,7 @@ describe('urlNotification.validator.importJson.v1', function() {
     });
   });
 
-  describe('for pattern data', function() {
+  describe('pattern data', function() {
     it('import json - error - pattern - url is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
