@@ -15,8 +15,7 @@ describe('urlNotification.validator.importJson.v1', function() {
     it('error - version is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -25,8 +24,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: null,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -35,8 +33,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: true,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -45,8 +42,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: false,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -55,8 +51,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: '1',
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -65,8 +60,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1.1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -75,16 +69,14 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 0,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 5,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
         ],
       }));
     });
@@ -126,7 +118,7 @@ describe('urlNotification.validator.importJson.v1', function() {
     it('error - pattern is not an array of object(s)', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
-        pattern: { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
+        pattern: {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
       }));
     });
   });

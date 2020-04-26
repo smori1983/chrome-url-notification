@@ -16,7 +16,6 @@ describe('urlNotification.validator.importJson.v4', function() {
       assert.ok(testUtil.isNotValidJson({
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -26,7 +25,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: null,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -36,7 +34,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: true,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -46,7 +43,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: false,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -56,7 +52,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: '1',
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -66,7 +61,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: 1.1,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
@@ -76,7 +70,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: 0,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
 
@@ -84,7 +77,6 @@ describe('urlNotification.validator.importJson.v4', function() {
         version: 5,
         pattern: [
           {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1},
         ],
       }));
     });
