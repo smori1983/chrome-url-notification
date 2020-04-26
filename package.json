@@ -31,7 +31,7 @@
     "gulp-eslint": "^6.0.0",
     "istanbul": "^0.4.5",
     "jsdom": "^16.2.2",
-    "mocha": "^7.1.1",
+    "mocha": "^7.1.2",
     "mock-local-storage": "^1.1.12",
     "pump": "^3.0.0",
     "sinon-chrome": "^3.0.1",
