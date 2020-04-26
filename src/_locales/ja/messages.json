@@ -5,6 +5,12 @@
   "label_bottom": {
     "message": "下"
   },
+  "label_bottom_left": {
+    "message": "左下"
+  },
+  "label_bottom_right": {
+    "message": "右下"
+  },
   "label_cancel": {
     "message": "キャンセル"
   },
@@ -58,6 +64,12 @@
   },
   "label_top": {
     "message": "上"
+  },
+  "label_top_left": {
+    "message": "左上"
+  },
+  "label_top_right": {
+    "message": "右上"
   },
   "label_url_pattern": {
     "message": "URLパターン"

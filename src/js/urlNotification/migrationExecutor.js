@@ -45,10 +45,23 @@ const for2 = function(item) {
   return item;
 };
 
+/**
+ * Migration from 3 to 4
+ *
+ * - No need to set default value.
+ *
+ * @param {PatternItem} item
+ * @returns {PatternItem}
+ */
+const for3 = function(item) {
+  return item;
+};
+
 const converters = {
   0: for0,
   1: for1,
   2: for2,
+  3: for3,
 };
 
 /**

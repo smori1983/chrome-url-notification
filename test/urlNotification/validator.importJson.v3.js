@@ -81,7 +81,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
 
       assert.ok(testUtil.isNotValidJson({
-        version: 4,
+        version: 5,
         pattern: [
           { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
           { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1 },
@@ -133,6 +133,40 @@ describe('urlNotification.validator.importJson.v3', function() {
 
   describe('for pattern data', function() {
     // TODO add tests
+
+    it('import json - error - pattern - displayPosition values supported since v4 are invalid in v3', function () {
+      assert.ok(testUtil.isNotValidJson({
+        version: 3,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',      status: 1 },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_left', status: 1 },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 3,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',       status: 1 },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_right', status: 1 },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 3,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',         status: 1 },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_left', status: 1 },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 3,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',          status: 1 },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_right', status: 1 },
+        ],
+      }));
+    });
 
     it('import json - error - pattern - status is not defined', function () {
       assert.ok(testUtil.isNotValidJson({

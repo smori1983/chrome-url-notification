@@ -81,7 +81,7 @@ describe('urlNotification.validator.importJson.v2', function() {
       }));
 
       assert.ok(testUtil.isNotValidJson({
-        version: 4,
+        version: 5,
         pattern: [
           { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
           { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top' },
@@ -608,6 +608,40 @@ describe('urlNotification.validator.importJson.v2', function() {
         pattern: [
           { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'TOP' },
           { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom' },
+        ],
+      }));
+    });
+
+    it('import json - error - pattern - displayPosition values supported since v4 are invalid in v2', function () {
+      assert.ok(testUtil.isNotValidJson({
+        version: 2,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_left' },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 2,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_right' },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 2,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_left' },
+        ],
+      }));
+
+      assert.ok(testUtil.isNotValidJson({
+        version: 2,
+        pattern: [
+          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
+          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_right' },
         ],
       }));
     });

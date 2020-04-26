@@ -35,7 +35,6 @@
     "mock-local-storage": "^1.1.12",
     "pump": "^3.0.0",
     "sinon-chrome": "^3.0.1",
-    "sprintf-js": "^1.1.2",
     "vinyl-source-stream": "^2.0.0",
     "watch": "^1.0.2"
   },
@@ -47,6 +46,7 @@
     "jquery": "^3.5.0",
     "jquery-validation": "^1.19.1",
     "jsonschema": "^1.2.6",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "sprintf-js": "^1.1.2"
   }
 }
