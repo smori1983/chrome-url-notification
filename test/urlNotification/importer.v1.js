@@ -5,7 +5,7 @@ const SUT = require('../../src/js/urlNotification/importer');
 const storage = require('../../src/js/urlNotification/storage');
 
 describe('urlNotification.importer.v1', function() {
-  describe('import v1 and migrate to v3', function() {
+  describe('import v1 and migrate to v4', function() {
     it('without existing data', function () {
       testUtil.clearStorage();
 

@@ -5,7 +5,7 @@
  *
  * @type {number}
  */
-const version = 3;
+const version = 4;
 
 /**
  * @type {string}

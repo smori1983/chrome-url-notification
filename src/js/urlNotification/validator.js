@@ -93,10 +93,21 @@ const patternV3 = function() {
   });
 };
 
+const patternV4 = function() {
+  return deepMerge(patternV3(), {
+    'properties': {
+      'displayPosition': {
+        'pattern': /^(bottom|bottom_left|bottom_right|top|top_left|top_right)$/,
+      },
+    },
+  });
+};
+
 const patterns = {
   1: patternV1,
   2: patternV2,
   3: patternV3,
+  4: patternV4,
 };
 
 const patternFor = function(version) {
