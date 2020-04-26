@@ -134,7 +134,7 @@ describe('urlNotification.validator.importJson.v3', function() {
   describe('pattern data', function() {
     // TODO add tests
 
-    it('import json - error - pattern - displayPosition values supported since v4 are invalid in v3', function () {
+    it('error - displayPosition values supported since v4 are invalid in v3', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -168,7 +168,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is not defined', function () {
+    it('error - status is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -186,7 +186,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is null', function () {
+    it('error - status is null', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -204,7 +204,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is true', function () {
+    it('error - status is true', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -222,7 +222,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is false', function () {
+    it('error - status is false', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -240,7 +240,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is empty string', function () {
+    it('error - status is empty string', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -258,7 +258,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is string of integer', function () {
+    it('error - status is string of integer', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -276,7 +276,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is float', function () {
+    it('error - status is float', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -294,7 +294,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - error - pattern - status is invalid integer', function () {
+    it('error - status is invalid integer', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
@@ -312,7 +312,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - ok', function () {
+    it('ok', function () {
       assert.ok(testUtil.isValidJson({
         version: 3,
         pattern: [
@@ -330,7 +330,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       }));
     });
 
-    it('import json - ok - no data', function () {
+    it('ok - no data', function () {
       assert.ok(testUtil.isValidJson({
         version: 3,
         pattern: [],

@@ -132,7 +132,7 @@ describe('urlNotification.validator.importJson.v4', function() {
   });
 
   describe('pattern data', function () {
-    it('import json - error - pattern - displayPosition is not defined', function () {
+    it('error - displayPosition is not defined', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -150,7 +150,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - error - pattern - displayPosition is null', function () {
+    it('error - displayPosition is null', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -168,7 +168,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - error - pattern - displayPosition is bool', function () {
+    it('error - displayPosition is bool', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -186,7 +186,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - error - pattern - displayPosition is number', function () {
+    it('error - displayPosition is number', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -204,7 +204,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - error - pattern - displayPosition is empty string', function () {
+    it('error - displayPosition is empty string', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -222,7 +222,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - error - pattern - displayPosition is invalid string', function () {
+    it('error - displayPosition is invalid string', function () {
       assert.ok(testUtil.isNotValidJson({
         version: 4,
         pattern: [
@@ -272,7 +272,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - ok', function () {
+    it('ok', function () {
       assert.ok(testUtil.isValidJson({
         version: 4,
         pattern: [
@@ -286,7 +286,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       }));
     });
 
-    it('import json - ok - no data', function () {
+    it('ok - no data', function () {
       assert.ok(testUtil.isValidJson({
         version: 4,
         pattern: [],
