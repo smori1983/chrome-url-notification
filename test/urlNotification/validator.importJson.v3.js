@@ -130,32 +130,28 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',      status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_left', status: 1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top_left', status: 1},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',       status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top_right', status: 1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top_right', status: 1},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',         status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_left', status: 1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'bottom_left', status: 1},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',          status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom_right', status: 1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'bottom_right', status: 1},
         ],
       }));
     });
@@ -164,16 +160,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top'},
         ],
       }));
     });
@@ -182,16 +169,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: null },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: null },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: null},
         ],
       }));
     });
@@ -200,16 +178,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: true },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: true },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: true},
         ],
       }));
     });
@@ -218,16 +187,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: false },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: false },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: false},
         ],
       }));
     });
@@ -236,16 +196,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: '' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: '' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: ''},
         ],
       }));
     });
@@ -254,16 +205,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: '1' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: '0' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: '1'},
         ],
       }));
     });
@@ -272,16 +214,7 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1.1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0.1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1.1},
         ],
       }));
     });
@@ -290,16 +223,14 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 2 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 2},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: -1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: -1},
         ],
       }));
     });
@@ -308,16 +239,8 @@ describe('urlNotification.validator.importJson.v3', function() {
       assert.ok(testUtil.isValidJson({
         version: 3,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 1 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 0 },
-        ],
-      }));
-
-      assert.ok(testUtil.isValidJson({
-        version: 3,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top', status: 0 },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'top', status: 1 },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',    status: 1},
+          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom', status: 0},
         ],
       }));
     });

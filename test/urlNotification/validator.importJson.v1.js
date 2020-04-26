@@ -128,16 +128,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          {                 msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          {                 msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {msg: 'sample2', backgroundColor: '222222' },
         ],
       }));
     });
@@ -146,16 +137,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: null,      msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: null,      msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: null, msg: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -164,16 +146,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: true,      msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: true, msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: true, msg: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -182,16 +155,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: false, msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: false,     msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: false, msg: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -200,16 +164,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 100,       msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 100,       msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 100, msg: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -218,16 +173,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: '',        msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: '',        msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: '', msg: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -236,16 +182,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2',                 backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1',                 backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', backgroundColor: '222222'},
         ],
       }));
     });
@@ -254,16 +191,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: null,      backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: null,      backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: null, backgroundColor: '222222'},
         ],
       }));
     });
@@ -272,16 +200,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: true,      backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: true,      backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: true, backgroundColor: '222222'},
         ],
       }));
     });
@@ -290,16 +209,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: false,     backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: false,     backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: false, backgroundColor: '222222'},
         ],
       }));
     });
@@ -308,16 +218,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 100,       backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 100,       backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 100, backgroundColor: '222222'},
         ],
       }));
     });
@@ -326,16 +227,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: '',        backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: '',        backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: '', backgroundColor: '222222'},
         ],
       }));
     });
@@ -344,16 +236,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2'},
         ],
       }));
     });
@@ -362,16 +245,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: null },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: null },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: null},
         ],
       }));
     });
@@ -380,16 +254,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: true },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: true },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: true},
         ],
       }));
     });
@@ -398,16 +263,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: false },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: false },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: false},
         ],
       }));
     });
@@ -416,16 +272,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: ''},
         ],
       }));
     });
@@ -434,32 +281,14 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '12345z' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: '12345z'},
         ],
       }));
 
       assert.ok(testUtil.isNotValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: 'black' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '12345z' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
-        ],
-      }));
-
-      assert.ok(testUtil.isNotValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: 'black' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
+          {url: 'sample2', msg: 'sample2', backgroundColor: 'black'},
         ],
       }));
     });
@@ -468,16 +297,8 @@ describe('urlNotification.validator.importJson.v1', function() {
       assert.ok(testUtil.isValidJson({
         version: 1,
         pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: '000000' },
-        ],
-      }));
-
-      assert.ok(testUtil.isValidJson({
-        version: 1,
-        pattern: [
-          { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
-          { url: 'sample2', msg: 'sample2', backgroundColor: 'ffffff' },
+          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
+          {url: 'sample2', msg: 'sample2', backgroundColor: '000000'},
         ],
       }));
     });
