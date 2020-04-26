@@ -81,7 +81,7 @@ describe('urlNotification.validator.importJson.v1', function() {
       }));
 
       assert.ok(testUtil.isNotValidJson({
-        version: 4,
+        version: 5,
         pattern: [
           { url: 'sample1', msg: 'sample1', backgroundColor: '111111' },
           { url: 'sample2', msg: 'sample2', backgroundColor: '222222' },
