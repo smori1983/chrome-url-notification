@@ -9,92 +9,45 @@ describe('urlNotification.importer.v2', function() {
     it('without existing data - case1', function () {
       testUtil.clearStorage();
 
-      const json = {
-        version: 2,
-        pattern: [
-          {
-            url: 'http://example.com/1',
-            msg: '1',
-            backgroundColor: '111111',
-            displayPosition: 'top',
-          },
-        ],
-      };
+      SUT.importJson({version: 2, pattern: [
+        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top'},
+      ]});
 
-      SUT.importJson(json);
+      const expected = [
+        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1},
+      ];
 
-      const allData = storage.getAll();
-
-      assert.strictEqual(allData.length, 1);
-
-      assert.strictEqual(allData[0].url, 'http://example.com/1');
-      assert.strictEqual(allData[0].msg, '1');
-      assert.strictEqual(allData[0].backgroundColor, '111111');
-      assert.strictEqual(allData[0].displayPosition, 'top');
-      assert.strictEqual(allData[0].status, 1);
+      assert.deepStrictEqual(storage.getAll(), expected);
     });
 
     it('without existing data - case2', function () {
       testUtil.clearStorage();
 
-      const json = {
-        version: 2,
-        pattern: [
-          {
-            url: 'http://example.com/2',
-            msg: '2',
-            backgroundColor: '222222',
-            displayPosition: 'bottom',
-          },
-        ],
-      };
+      SUT.importJson({version: 2, pattern: [
+        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'bottom'},
+      ]});
 
-      SUT.importJson(json);
+      const expected = [
+        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'bottom', status: 1},
+      ];
 
-      const allData = storage.getAll();
-
-      assert.strictEqual(allData.length, 1);
-
-      assert.strictEqual(allData[0].url, 'http://example.com/2');
-      assert.strictEqual(allData[0].msg, '2');
-      assert.strictEqual(allData[0].backgroundColor, '222222');
-      assert.strictEqual(allData[0].displayPosition, 'bottom');
-      assert.strictEqual(allData[0].status, 1);
+      assert.deepStrictEqual(storage.getAll(), expected);
     });
 
     it('with existing data', function () {
       testUtil.setUpStorage('2', [
-        {
-          url: 'http://example.com/1',
-          msg: '1',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-        },
+        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top'},
       ]);
 
-      const json = {
-        version: 2,
-        pattern: [
-          {
-            url: 'http://example.com/1',
-            msg: '1-edit',
-            backgroundColor: '222222',
-            displayPosition: 'bottom',
-          },
-        ],
-      };
+      SUT.importJson({ version: 2, pattern: [
+        {url: 'http://example.com/1', msg: '1-edit', backgroundColor: '222222', displayPosition: 'bottom'},
+      ]});
 
-      SUT.importJson(json);
+      const expected = [
+        {url: 'http://example.com/1', msg: '1-edit', backgroundColor: '222222', displayPosition: 'bottom', status: 1},
+      ];
 
-      const allData = storage.getAll();
-
-      assert.strictEqual(allData.length, 1);
-
-      assert.strictEqual(allData[0].url, 'http://example.com/1');
-      assert.strictEqual(allData[0].msg, '1-edit');
-      assert.strictEqual(allData[0].backgroundColor, '222222');
-      assert.strictEqual(allData[0].displayPosition, 'bottom');
-      assert.strictEqual(allData[0].status, 1);
+      assert.deepStrictEqual(storage.getAll(), expected);
     });
   });
 });
