@@ -1,4 +1,4 @@
-const { describe, beforeEach, it } = require('mocha');
+const { describe, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/background');
@@ -11,15 +11,13 @@ describe('urlNotification.background.migrate.from.0', function () {
   });
 
   describe('with data', function() {
-    beforeEach(function () {
+    it('migrate', function () {
       testUtil.setUpStorage('', [
         {url: 'http://example.com/1', msg: '1'},
         {url: 'http://example.com/2', msg: '2'},
         {url: 'http://example.com/3', msg: '3'},
       ]);
-    });
 
-    it('migrate', function () {
       SUT.migrate();
 
       const expected = [
