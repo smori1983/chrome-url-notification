@@ -8,14 +8,11 @@ const storage = require('../../src/js/urlNotification/storage');
 describe('urlNotification.background.migrate.from.0', function () {
   describe('no data', function() {
     it('migrate', function () {
-      testUtil.clearStorage();
+      testUtil.setUpStorage('', []);
 
       SUT.migrate();
 
-      const expected = [];
-
-      assert.deepStrictEqual(storage.getAll(), expected);
-
+      assert.deepStrictEqual(storage.getAll(), []);
       assert.strictEqual(migration.currentVersion(), testUtil.currentVersion());
     });
   });
