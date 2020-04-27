@@ -3,6 +3,7 @@ const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/migration');
 const storage = require('../../src/js/urlNotification/storage');
+const sharedMigration = require('./shared/migration');
 
 describe('urlNotification.migration.from.1', function() {
   beforeEach(function () {
@@ -11,15 +12,7 @@ describe('urlNotification.migration.from.1', function() {
     ]);
   });
 
-  it('current version', function () {
-    assert.strictEqual(SUT.currentVersion(), 1);
-  });
-
-  it('migrated version', function () {
-    SUT.execute();
-
-    assert.strictEqual(SUT.currentVersion(), testUtil.currentVersion());
-  });
+  sharedMigration.run(1);
 
   it('migrated pattern', function () {
     SUT.execute();
