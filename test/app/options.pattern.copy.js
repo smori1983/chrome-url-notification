@@ -2,6 +2,7 @@ const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
+const sharedForm = require('./shared/options.form');
 
 describe('options.pattern.copy', function () {
   before(testUtil.uiBase.initI18n('en'));
@@ -34,14 +35,7 @@ describe('options.pattern.copy', function () {
       testUtil.options.list().item(0).clickCopy();
     });
 
-    it('patten is required', function () {
-      const form = testUtil.options.patternForm();
-
-      form.pattern('');
-      form.submit();
-
-      assert.strictEqual(form.errorMessage('url'), 'This field is required.');
-    });
+    sharedForm.runError();
 
     it('patten cannot be duplicated - keeps original value', function () {
       const form = testUtil.options.patternForm();
@@ -58,47 +52,6 @@ describe('options.pattern.copy', function () {
       form.submit();
 
       assert.strictEqual(form.errorMessage('url'), 'URL pattern already exists.');
-    });
-
-    it('message is required', function () {
-      const form = testUtil.options.patternForm();
-
-      form.message('');
-      form.submit();
-
-      assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
-    });
-
-    it('background color is required', function () {
-      const form = testUtil.options.patternForm();
-
-      form.backgroundColor('');
-      form.submit();
-
-      assert.strictEqual(form.errorMessage('background_color'), 'This field is required.');
-    });
-
-    it('background color should be valid color index', function () {
-      const form = testUtil.options.patternForm();
-
-      form.backgroundColor('#0000');
-      form.submit();
-
-      assert.strictEqual(form.errorMessage('background_color'), 'Invalid color index.');
-    });
-
-    it('open form and submit invalid inputs multiple times', function () {
-      const form = testUtil.options.patternForm();
-
-      form.pattern('');
-      form.submit();
-
-      testUtil.options.header().clickAdd();
-
-      form.pattern('');
-      form.submit();
-
-      assert.strictEqual(form.errorMessage('url'), 'This field is required.');
     });
   });
 
