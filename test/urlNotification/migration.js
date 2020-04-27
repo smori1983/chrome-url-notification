@@ -5,36 +5,6 @@ const SUT = require('../../src/js/urlNotification/migration');
 const storage = require('../../src/js/urlNotification/storage');
 
 describe('urlNotification.migration', function() {
-  describe('version', function () {
-    it('キーなし', function () {
-      testUtil.clearStorage();
-
-      assert.strictEqual(SUT.hasVersion(), false);
-      assert.strictEqual(SUT.currentVersion(), 0);
-    });
-
-    it('キーあり - 不正値 - 小数', function () {
-      testUtil.setUpStorage('1.1', []);
-
-      assert.strictEqual(SUT.hasVersion(), false);
-      assert.strictEqual(SUT.currentVersion(), 0);
-    });
-
-    it('キーあり - 不正値 - 文字列', function () {
-      testUtil.setUpStorage('foo', []);
-
-      assert.strictEqual(SUT.hasVersion(), false);
-      assert.strictEqual(SUT.currentVersion(), 0);
-    });
-
-    it('キーあり - 正常値', function () {
-      testUtil.setUpStorage('1', []);
-
-      assert.strictEqual(SUT.hasVersion(), true);
-      assert.strictEqual(SUT.currentVersion(), 1);
-    });
-  });
-
   describe('0to3', function () {
     beforeEach(function () {
       testUtil.setUpStorage('', [
