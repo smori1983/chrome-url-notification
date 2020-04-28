@@ -37,7 +37,7 @@ describe('options.pattern.copy', function () {
 
     sharedForm.runError();
 
-    it('patten cannot be duplicated - keeps original value', function () {
+    it('patten cannot be duplicated - keep original value', function () {
       const form = testUtil.options.patternForm();
 
       form.submit();
