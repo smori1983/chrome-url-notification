@@ -24,6 +24,7 @@
     "@types/node": "^12.12.36",
     "browserify": "^16.5.1",
     "codecov": "^3.6.5",
+    "color-js": "^1.0.5",
     "cross-env": "^7.0.2",
     "del": "^5.1.0",
     "dotenv": "^8.2.0",
