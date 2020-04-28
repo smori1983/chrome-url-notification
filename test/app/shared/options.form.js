@@ -33,7 +33,7 @@ module.exports.runError = function () {
   it('background color should be valid color index', function () {
     const form = testUtil.options.patternForm();
 
-    form.backgroundColor('#0000');
+    form.backgroundColor('#zzzzzz');
     form.submit();
 
     assert.strictEqual(form.errorMessage('background_color'), 'Invalid color index.');
