@@ -96,12 +96,14 @@ describe('options.pattern.copy', function () {
       const item1 = testUtil.options.list().item(0);
       assert.strictEqual(item1.pattern(), 'domain1.example.com');
       assert.strictEqual(item1.message(), 'domain1');
+      assert.strictEqual(item1.backgroundColor(), '#111111');
       assert.strictEqual(item1.displayPosition(), 'Bottom');
       assert.strictEqual(item1.status(), 'Y');
 
       const item2 = testUtil.options.list().item(1);
       assert.strictEqual(item2.pattern(), 'domain2.example.com');
       assert.strictEqual(item2.message(), 'domain2');
+      assert.strictEqual(item2.backgroundColor(), '#222222');
       assert.strictEqual(item2.displayPosition(), 'Top');
       assert.strictEqual(item2.status(), 'n');
     });

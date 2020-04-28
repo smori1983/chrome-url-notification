@@ -111,12 +111,14 @@ describe('options.list', function () {
       const item1 = testUtil.options.list().item(0);
       assert.strictEqual(item1.pattern(), 'site1.example.com');
       assert.strictEqual(item1.message(), 'site1');
+      assert.strictEqual(item1.backgroundColor(), '#111111');
       assert.strictEqual(item1.displayPosition(), 'Top');
       assert.strictEqual(item1.status(), 'Y');
 
       const item2 = testUtil.options.list().item(1);
       assert.strictEqual(item2.pattern(), 'site2.example.com');
       assert.strictEqual(item2.message(), 'site2');
+      assert.strictEqual(item2.backgroundColor(), '#222222');
       assert.strictEqual(item2.displayPosition(), 'Bottom');
       assert.strictEqual(item2.status(), 'n');
     });
@@ -260,6 +262,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), '');
       assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), 'Top');
       assert.strictEqual(list.item(0).status(), 'Y');
     });
@@ -279,6 +282,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
       assert.strictEqual(list.item(0).message(), '');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), 'Top');
       assert.strictEqual(list.item(0).status(), 'Y');
     });
@@ -298,6 +302,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
       assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), '');
       assert.strictEqual(list.item(0).status(), 'Y');
     });
@@ -318,6 +323,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
       assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), '');
       assert.strictEqual(list.item(0).status(), 'Y');
     });
@@ -337,6 +343,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
       assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), 'Top');
       assert.strictEqual(list.item(0).status(), '');
     });
@@ -357,6 +364,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 1);
       assert.strictEqual(list.item(0).pattern(), 'site1.example.com');
       assert.strictEqual(list.item(0).message(), 'site1');
+      assert.strictEqual(list.item(0).backgroundColor(), '#111111');
       assert.strictEqual(list.item(0).displayPosition(), 'Top');
       assert.strictEqual(list.item(0).status(), '');
     });

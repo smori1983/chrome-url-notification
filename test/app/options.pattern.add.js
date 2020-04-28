@@ -59,6 +59,9 @@ describe('options.pattern.add', function () {
       const item = testUtil.options.list().item(0);
       assert.strictEqual(item.pattern(), 'example.com');
       assert.strictEqual(item.message(), 'example');
+      assert.strictEqual(item.backgroundColor(), '#000000');
+      assert.strictEqual(item.displayPosition(), 'Top');
+      assert.strictEqual(item.status(), 'Y');
     });
   });
 });

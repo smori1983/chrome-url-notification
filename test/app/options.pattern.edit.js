@@ -96,6 +96,7 @@ describe('options.pattern.edit', function () {
       const item1 = testUtil.options.list().item(0);
       assert.strictEqual(item1.pattern(), 'domain10.example.com');
       assert.strictEqual(item1.message(), 'domain10');
+      assert.strictEqual(item1.backgroundColor(), '#333333');
       assert.strictEqual(item1.displayPosition(), 'Bottom');
       assert.strictEqual(item1.status(), 'Y');
     });
