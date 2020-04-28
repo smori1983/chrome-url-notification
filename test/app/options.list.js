@@ -22,7 +22,7 @@ describe('options.list', function () {
     });
 
     it('with 1 pattern', function() {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -31,7 +31,7 @@ describe('options.list', function () {
     });
 
     it('with 3 patterns', function() {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'site1.example.com'}),
         testUtil.makePatternItem({url: 'site2.example.com'}),
         testUtil.makePatternItem({url: 'site3.example.com'}),
@@ -53,7 +53,7 @@ describe('options.list', function () {
     });
 
     it('with pattern data', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -67,7 +67,7 @@ describe('options.list', function () {
 
   describe('header area', function () {
     it('labels', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -86,7 +86,7 @@ describe('options.list', function () {
 
   describe('list area', function () {
     beforeEach(function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -194,7 +194,7 @@ describe('options.list', function () {
 
   describe('list area - display position', function () {
     beforeEach(function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({
           url: 'site1.example.com',
           displayPosition: 'top',
@@ -246,7 +246,7 @@ describe('options.list', function () {
 
   describe('behavior for broken or invalid data', function () {
     it('url not registered', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           msg: 'site1',
           backgroundColor: '111111',
@@ -265,7 +265,7 @@ describe('options.list', function () {
     });
 
     it('message not found', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           backgroundColor: '111111',
@@ -284,7 +284,7 @@ describe('options.list', function () {
     });
 
     it('display position not found', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -303,7 +303,7 @@ describe('options.list', function () {
     });
 
     it('display position is invalid', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -323,7 +323,7 @@ describe('options.list', function () {
     });
 
     it('status not found', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -342,7 +342,7 @@ describe('options.list', function () {
     });
 
     it('status is invalid', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',

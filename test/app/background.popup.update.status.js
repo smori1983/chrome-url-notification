@@ -7,7 +7,7 @@ describe('background.popup.update.status', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
-    testUtil.setUpStorage(testUtil.currentVersion(), [
+    testUtil.setUpStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
         url: 'domain1.example.com',
         status: 1,

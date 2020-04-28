@@ -13,7 +13,7 @@ describe('options.pattern.add', function () {
 
   describe('error', function () {
     beforeEach(function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'example.com',
           msg: 'message',
