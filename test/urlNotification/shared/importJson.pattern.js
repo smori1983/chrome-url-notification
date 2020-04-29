@@ -235,7 +235,7 @@ module.exports.runDisplayPosition = function (version, validPattern) {
  * @param {PatternItem} validPattern
  */
 module.exports.runDisplayPositionV2andV3 = function (version, validPattern) {
-  it('error - displayPosition values supported since v4 are invalid in v3', function () {
+  it('error - displayPosition values supported since v4 are invalid in v2 and v3', function () {
     assert.ok(testUtil.isNotValidJson({
       version: version,
       pattern: [deepMerge(validPattern, {displayPosition: 'top_left'})],
