@@ -1,4 +1,5 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
 const storage = require('../../src/js/urlNotification/storage');
 const SUT = require('../../src/js/app/options.list');
@@ -170,24 +171,40 @@ describe('options.list', function () {
       assert.strictEqual(form.message(), 'site2');
     });
 
-    it('execute delete', function () {
-      testUtil.options.list().item(0).clickDelete();
-      testUtil.options.deleteForm().submit();
-
-      assert.strictEqual(storage.getCount(), 1);
-      assert.deepStrictEqual(storage.getAll(), [
-        {
+    given([
+      {
+        itemIndex: 0,
+        remained: [{
           url: 'site2.example.com',
           msg: 'site2',
           backgroundColor: '222222',
           displayPosition: 'bottom',
           status: 0,
-        },
-      ]);
+        }],
+      },
+      {
+        itemIndex: 1,
+        remained: [{
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
+        }],
+      },
+    ]).it('execute delete', function (arg) {
+      testUtil.options.list().item(arg.itemIndex).clickDelete();
+      testUtil.options.deleteForm().submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+      assert.deepStrictEqual(storage.getAll(), arg.remained);
     });
 
-    it('cancel delete', function () {
-      testUtil.options.list().item(0).clickDelete();
+    given([
+      {itemIndex: 0},
+      {itemIndex: 1},
+    ]).it('cancel delete', function (arg) {
+      testUtil.options.list().item(arg.itemIndex).clickDelete();
       testUtil.options.deleteForm().cancel();
 
       assert.strictEqual(storage.getCount(), 2);
@@ -197,52 +214,27 @@ describe('options.list', function () {
   describe('list area - display position', function () {
     beforeEach(function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
-        testUtil.makePatternItem({
-          url: 'site1.example.com',
-          displayPosition: 'top',
-        }),
-        testUtil.makePatternItem({
-          url: 'site2.example.com',
-          displayPosition: 'bottom',
-        }),
-        testUtil.makePatternItem({
-          url: 'site3.example.com',
-          displayPosition: 'top_left',
-        }),
-        testUtil.makePatternItem({
-          url: 'site4.example.com',
-          displayPosition: 'top_right',
-        }),
-        testUtil.makePatternItem({
-          url: 'site5.example.com',
-          displayPosition: 'bottom_left',
-        }),
-        testUtil.makePatternItem({
-          url: 'site6.example.com',
-          displayPosition: 'bottom_right',
-        }),
+        testUtil.makePatternItem({url: 'site1.example.com', displayPosition: 'top'}),
+        testUtil.makePatternItem({url: 'site2.example.com', displayPosition: 'bottom'}),
+        testUtil.makePatternItem({url: 'site3.example.com', displayPosition: 'top_left'}),
+        testUtil.makePatternItem({url: 'site4.example.com', displayPosition: 'top_right'}),
+        testUtil.makePatternItem({url: 'site5.example.com', displayPosition: 'bottom_left'}),
+        testUtil.makePatternItem({url: 'site6.example.com', displayPosition: 'bottom_right'}),
       ]);
       SUT.show();
     });
 
-    it('label of display position', function () {
-      const item1 = testUtil.options.list().item(0);
-      assert.strictEqual(item1.displayPosition(), 'Top');
+    given([
+      {itemIndex: 0, expected: 'Top'},
+      {itemIndex: 1, expected: 'Bottom'},
+      {itemIndex: 2, expected: 'Top left'},
+      {itemIndex: 3, expected: 'Top right'},
+      {itemIndex: 4, expected: 'Bottom left'},
+      {itemIndex: 5, expected: 'Bottom right'},
+    ]).it('label of display position', function (arg) {
+      const item = testUtil.options.list().item(arg.itemIndex);
 
-      const item2 = testUtil.options.list().item(1);
-      assert.strictEqual(item2.displayPosition(), 'Bottom');
-
-      const item3 = testUtil.options.list().item(2);
-      assert.strictEqual(item3.displayPosition(), 'Top left');
-
-      const item4 = testUtil.options.list().item(3);
-      assert.strictEqual(item4.displayPosition(), 'Top right');
-
-      const item5 = testUtil.options.list().item(4);
-      assert.strictEqual(item5.displayPosition(), 'Bottom left');
-
-      const item6 = testUtil.options.list().item(5);
-      assert.strictEqual(item6.displayPosition(), 'Bottom right');
+      assert.strictEqual(item.displayPosition(), arg.expected);
     });
   });
 
