@@ -7,7 +7,7 @@ describe('background.popup.update.status', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
-    testUtil.setUpStorage(testUtil.currentVersion(), [
+    testUtil.setUpStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
         url: 'domain1.example.com',
         status: 1,
@@ -20,7 +20,7 @@ describe('background.popup.update.status', function () {
   });
   after(testUtil.background.after);
 
-  it('status is 1, then disabled', function () {
+  it('status is 1, then disable', function () {
     const res = testUtil.chrome.sendResposne();
 
     SUT.listen();
@@ -34,7 +34,7 @@ describe('background.popup.update.status', function () {
     assert.strictEqual(data.status, 0);
   });
 
-  it('status is 0, then enabled', function () {
+  it('status is 0, then enable', function () {
     const res = testUtil.chrome.sendResposne();
 
     SUT.listen();

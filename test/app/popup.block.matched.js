@@ -41,10 +41,7 @@ describe('popup.block.matched', function () {
         status: 0,
       }));
 
-      const $ = require('jquery');
-      const $element = $('#pattern_status');
-
-      assert.strictEqual($element.prop('checked'), false);
+      assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
     });
 
     it('pattern matched and status is 1', function () {
@@ -57,10 +54,7 @@ describe('popup.block.matched', function () {
         status: 1,
       }));
 
-      const $ = require('jquery');
-      const $element = $('#pattern_status');
-
-      assert.strictEqual($element.prop('checked'), true);
+      assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
     });
   });
 });

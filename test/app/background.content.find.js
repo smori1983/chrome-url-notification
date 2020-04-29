@@ -7,7 +7,7 @@ describe('background.content.find', function () {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(function () {
-    testUtil.setUpStorage(testUtil.currentVersion(), [
+    testUtil.setUpStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
         url: 'domain1.example.com',
         msg: 'domain1',

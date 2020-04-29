@@ -65,10 +65,10 @@ describe('options.importForm', function () {
         version: testUtil.currentVersion(),
         pattern: [
           {
-            url: 'http://example.com/',
+            url: 'example.com',
             msg: 'message',
             backgroundColor: '111111',
-            displayPosition: 'bottom',
+            displayPosition: 'bottom_left',
             status: 0,
           },
         ],
@@ -78,11 +78,91 @@ describe('options.importForm', function () {
       assert.strictEqual(storage.getCount(), 1);
 
       const data = storage.getAll();
-      assert.strictEqual(data[0].url, 'http://example.com/');
+      assert.strictEqual(data[0].url, 'example.com');
       assert.strictEqual(data[0].msg, 'message');
       assert.strictEqual(data[0].backgroundColor, '111111');
-      assert.strictEqual(data[0].displayPosition, 'bottom');
+      assert.strictEqual(data[0].displayPosition, 'bottom_left');
       assert.strictEqual(data[0].status, 0);
+    });
+
+    it('with data - update existing data', function() {
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '333333',
+          displayPosition: 'top_right',
+          status: 0,
+        },
+      ]);
+
+      const form = testUtil.options.importForm();
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [
+          {
+            url: 'site1.example.com',
+            msg: 'site1-edit',
+            backgroundColor: '777777',
+            displayPosition: 'bottom_right',
+            status: 1,
+          },
+        ],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+
+      const data = storage.getAll();
+
+      assert.strictEqual(data[0].url, 'site1.example.com');
+      assert.strictEqual(data[0].msg, 'site1-edit');
+      assert.strictEqual(data[0].backgroundColor, '777777');
+      assert.strictEqual(data[0].displayPosition, 'bottom_right');
+      assert.strictEqual(data[0].status, 1);
+    });
+
+    it('with data - add new data', function() {
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top_left',
+          status: 1,
+        },
+      ]);
+
+      const form = testUtil.options.importForm();
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [
+          {
+            url: 'site2.example.com',
+            msg: 'site2',
+            backgroundColor: '999999',
+            displayPosition: 'bottom_right',
+            status: 0,
+          },
+        ],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 2);
+
+      const data = storage.getAll();
+
+      assert.strictEqual(data[0].url, 'site1.example.com');
+      assert.strictEqual(data[0].msg, 'site1');
+      assert.strictEqual(data[0].backgroundColor, '111111');
+      assert.strictEqual(data[0].displayPosition, 'top_left');
+      assert.strictEqual(data[0].status, 1);
+
+      assert.strictEqual(data[1].url, 'site2.example.com');
+      assert.strictEqual(data[1].msg, 'site2');
+      assert.strictEqual(data[1].backgroundColor, '999999');
+      assert.strictEqual(data[1].displayPosition, 'bottom_right');
+      assert.strictEqual(data[1].status, 0);
     });
   });
 });

@@ -1,3 +1,5 @@
+const Color = require('color-js');
+
 const header = function () {
   const $ = require('jquery');
 
@@ -106,6 +108,11 @@ const listItem = function ($item) {
     },
     message: function () {
       return $item.find('.list-message').text();
+    },
+    backgroundColor: function () {
+      /** @type {net.brehaut.Color} */
+      const color = Color($item.find('.list-message').css('background-color'));
+      return color.toCSS();
     },
     displayPosition: function () {
       return $item.find('.display_position').text();
@@ -256,6 +263,7 @@ const deleteForm = function () {
  */
 const modalShouldActivated = function ($element) {
   if (modalIsActivated($element) === false) {
+    /* istanbul ignore next */
     throw new Error('modal is not activated');
   }
 };

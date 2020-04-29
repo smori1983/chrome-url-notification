@@ -22,37 +22,35 @@ const message = function () {
 
   const $ = require('jquery');
 
-  const getContainer = function () {
+  const container = function () {
     return $('#' + messageContainerId);
   };
 
+  const exists = function () {
+    return container().length === 1;
+  };
+
   return {
-    getJqueryObject: function () {
-      return getContainer();
+    jqueryObject: function () {
+      return container();
     },
     /**
      * @returns {boolean}
      */
     exists: function () {
-      const $container = getContainer();
-
-      return $container.length > 0;
+      return exists();
     },
     /**
      * @returns {boolean}
      */
     shown: function () {
-      const $container = getContainer();
-
-      return $container.length > 0 && $container.css('display') === 'block';
+      return exists() && container().css('display') === 'block';
     },
     /**
      * @returns {boolean}
      */
     hidden: function () {
-      const $container = getContainer();
-
-      return $container.length > 0 && $container.css('display') === 'none';
+      return exists() && container().css('display') === 'none';
     },
   }
 };
