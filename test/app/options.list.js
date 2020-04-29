@@ -124,7 +124,7 @@ describe('options.list', function () {
       assert.strictEqual(item2.status(), 'n');
     });
 
-    it('copy button', function () {
+    it('click copy button twice and form should be updated', function () {
       const list = testUtil.options.list();
       const form = testUtil.options.patternForm();
 
@@ -139,7 +139,7 @@ describe('options.list', function () {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('edit button', function () {
+    it('click edit button twice and form should be updated', function () {
       const list = testUtil.options.list();
       const form = testUtil.options.patternForm();
 
@@ -154,7 +154,7 @@ describe('options.list', function () {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('click delete button twice', function () {
+    it('click delete button twice and form should be updated', function () {
       const list = testUtil.options.list();
       const form = testUtil.options.deleteForm();
 
@@ -259,7 +259,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('message not found', function () {
+    it('message not registered', function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -279,7 +279,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('display position not found', function () {
+    it('display position not registered', function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -320,7 +320,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('status not found', function () {
+    it('status not registered', function () {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
