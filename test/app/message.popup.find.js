@@ -38,7 +38,7 @@ describe('message.popup.find', function () {
     }));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
   });
 
   it('pattern matched and status is 0, then enable', function() {
@@ -54,17 +54,17 @@ describe('message.popup.find', function () {
     }));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
 
     testUtil.popup.matchedBlock().clickStatus();
 
     assert.ok(testUtil.chrome.popupUpdateStatusShould(20002, 'https://example.com/', 1));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
   });
 
-  it('pattern matched status is 1', function() {
+  it('pattern matched and status is 1', function() {
     const tab = testUtil.chrome.createTab({
       id: 30001,
       url: 'https://example.com/',
@@ -77,7 +77,7 @@ describe('message.popup.find', function () {
     }));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
   });
 
   it('pattern matched and status is 1, then disable', function() {
@@ -93,13 +93,13 @@ describe('message.popup.find', function () {
     }));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
 
     testUtil.popup.matchedBlock().clickStatus();
 
     assert.ok(testUtil.chrome.popupUpdateStatusShould(30002, 'https://example.com/', 0));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusIsEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
   });
 });
