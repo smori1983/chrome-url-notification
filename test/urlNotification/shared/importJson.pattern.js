@@ -1,4 +1,5 @@
 const { it } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
 const _ = require('lodash');
 const deepMerge = require('deepmerge');
@@ -19,38 +20,17 @@ module.exports.runUrl = function (version, validPattern) {
     }));
   });
 
-  it('error - url is null', function () {
+  given([
+    {desc: 'null', value: null},
+    {desc: 'bool', value: true},
+    {desc: 'bool', value: false},
+    {desc: 'int', value: 100},
+    {desc: 'float', value: 100.123},
+    {desc: 'empty string', value: ''},
+  ]).it('error - url', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {url: null})],
-    }));
-  });
-
-  it('error - url is true', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {url: true})],
-    }));
-  });
-
-  it('error - url is false', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {url: false})],
-    }));
-  });
-
-  it('error - url is number', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {url: 100})],
-    }));
-  });
-
-  it('error - url is empty string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {url: ''})],
+      pattern: [deepMerge(validPattern, {url: arg.value})],
     }));
   });
 };
@@ -70,38 +50,17 @@ module.exports.runMsg = function (version, validPattern) {
     }));
   });
 
-  it('error - msg is null', function () {
+  given([
+    {desc: 'null', value: null},
+    {desc: 'bool', value: true},
+    {desc: 'bool', value: false},
+    {desc: 'int', value: 100},
+    {desc: 'float', value: 100.123},
+    {desc: 'empty string', value: ''},
+  ]).it('error - msg', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {msg: null})],
-    }));
-  });
-
-  it('error - msg is true', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {msg: true})],
-    }));
-  });
-
-  it('error - msg is false', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {msg: false})],
-    }));
-  });
-
-  it('error - msg is number', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {msg: 100})],
-    }));
-  });
-
-  it('error - msg is empty string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {msg: ''})],
+      pattern: [deepMerge(validPattern, {msg: arg.value})],
     }));
   });
 };
@@ -121,43 +80,19 @@ module.exports.runBackgroundColor = function (version, validPattern) {
     }));
   });
 
-  it('error - backgroundColor is null', function () {
+  given([
+    {desc: 'null', value: null},
+    {desc: 'bool', value: true},
+    {desc: 'bool', value: false},
+    {desc: 'int', value: 100},
+    {desc: 'float', value: 100.123},
+    {desc: 'empty string', value: ''},
+    {desc: 'not hex color', value: '12345z'},
+    {desc: 'not hex color', value: 'black'},
+  ]).it('error - backgroundColor', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: null})],
-    }));
-  });
-
-  it('error - backgroundColor is true', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: true})],
-    }));
-  });
-
-  it('error - backgroundColor is false', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: false})],
-    }));
-  });
-
-  it('error - backgroundColor is empty string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: ''})],
-    }));
-  });
-
-  it('error - backgroundColor is not hex color', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: '12345z'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {backgroundColor: 'black'})],
+      pattern: [deepMerge(validPattern, {backgroundColor: arg.value})],
     }));
   });
 };
@@ -177,55 +112,20 @@ module.exports.runDisplayPosition = function (version, validPattern) {
     }));
   });
 
-  it('error - displayPosition is null', function () {
+  given([
+    {desc: 'null', value: null},
+    {desc: 'bool', value: true},
+    {desc: 'bool', value: false},
+    {desc: 'int', value: 100},
+    {desc: 'float', value: 100.123},
+    {desc: 'empty string', value: ''},
+    {desc: 'invalid string', value: 'foo'},
+    {desc: 'invalid string', value: 'Top'},
+    {desc: 'invalid string', value: 'TOP'},
+  ]).it('error - displayPosition', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: null})],
-    }));
-  });
-
-  it('error - displayPosition is true', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: true})],
-    }));
-  });
-
-  it('error - displayPosition is false', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: false})],
-    }));
-  });
-
-  it('error - displayPosition is number', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 100})],
-    }));
-  });
-
-  it('error - displayPosition is empty string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: ''})],
-    }));
-  });
-
-  it('error - displayPosition is invalid string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'foo'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'Top'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'TOP'})],
+      pattern: [deepMerge(validPattern, {displayPosition: arg.value})],
     }));
   });
 };
@@ -235,25 +135,15 @@ module.exports.runDisplayPosition = function (version, validPattern) {
  * @param {PatternItem} validPattern
  */
 module.exports.runDisplayPositionV2andV3 = function (version, validPattern) {
-  it('error - displayPosition values supported since v4 are invalid in v2 and v3', function () {
+  given([
+    {value: 'top_left'},
+    {value: 'top_right'},
+    {value: 'bottom_left'},
+    {value: 'bottom_right'},
+  ]).it('error - displayPosition values supported since v4 are invalid in v2 and v3', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'top_left'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'top_right'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'bottom_left'})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {displayPosition: 'bottom_right'})],
+      pattern: [deepMerge(validPattern, {displayPosition: arg.value})],
     }));
   });
 };
@@ -273,57 +163,19 @@ module.exports.runStatus = function (version, validPattern) {
     }));
   });
 
-  it('error - status is null', function () {
+  given([
+    {desc: 'null', value: null},
+    {desc: 'bool', value: true},
+    {desc: 'bool', value: false},
+    {desc: 'float', value: 1.1},
+    {desc: 'empty string', value: ''},
+    {desc: 'string of int', value: '1'},
+    {desc: 'invalid int', value: -1},
+    {desc: 'invalid int', value: 2},
+  ]).it('error - status', function (arg) {
     assert.ok(testUtil.isNotValidJson({
       version: version,
-      pattern: [deepMerge(validPattern, {status: null})],
-    }));
-  });
-
-  it('error - status is true', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: true})],
-    }));
-  });
-
-  it('error - status is false', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: false})],
-    }));
-  });
-
-  it('error - status is empty string', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: ''})],
-    }));
-  });
-
-  it('error - status is string of integer', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: '1'})],
-    }));
-  });
-
-  it('error - status is float', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: 1.1})],
-    }));
-  });
-
-  it('error - status is invalid integer', function () {
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: 2})],
-    }));
-
-    assert.ok(testUtil.isNotValidJson({
-      version: version,
-      pattern: [deepMerge(validPattern, {status: -1})],
+      pattern: [deepMerge(validPattern, {status: arg.value})],
     }));
   });
 };
