@@ -24,7 +24,7 @@ describe('content.ui', function () {
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().getJqueryObject();
+    const $message = testUtil.content.message().jqueryObject();
     $message.trigger('mouseover');
   });
 
@@ -38,7 +38,7 @@ describe('content.ui', function () {
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().getJqueryObject();
+    const $message = testUtil.content.message().jqueryObject();
     $message.trigger('mouseout');
   });
 });

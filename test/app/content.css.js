@@ -19,36 +19,85 @@ describe('app.css', function () {
     it('display position is top and status is 1', function() {
       const result = css.forBody('top', 1);
 
-      assert.strictEqual('50px', result.marginTop);
+      assert.deepStrictEqual(result, {marginTop: '50px'});
     });
 
     it('display position is top and status is 0', function() {
       const result = css.forBody('top', 0);
 
-      assert.strictEqual('0px', result.marginTop);
+      assert.deepStrictEqual(result, {marginTop: '0px'});
     });
 
     it('display position is bottom and status is 1', function() {
       const result = css.forBody('bottom', 1);
 
-      assert.strictEqual('50px', result.marginBottom);
+      assert.deepStrictEqual(result, {marginBottom: '50px'});
     });
 
     it('display position is bottom and status is 0', function() {
       const result = css.forBody('bottom', 0);
 
-      assert.strictEqual('0px', result.marginBottom);
+      assert.deepStrictEqual(result, {marginBottom: '0px'});
+    });
+
+    it('display position is top_left and status is 1', function() {
+      const result = css.forBody('top_left', 1);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is top_left and status is 0', function() {
+      const result = css.forBody('top_left', 0);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is top_right and status is 1', function() {
+      const result = css.forBody('top_right', 1);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is top_right and status is 0', function() {
+      const result = css.forBody('top_right', 0);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+
+    it('display position is bottom_left and status is 1', function() {
+      const result = css.forBody('bottom_left', 1);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is bottom_left and status is 0', function() {
+      const result = css.forBody('bottom_left', 0);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is bottom_right and status is 1', function() {
+      const result = css.forBody('bottom_right', 1);
+
+      assert.deepStrictEqual(result, {});
+    });
+
+    it('display position is bottom_right and status is 0', function() {
+      const result = css.forBody('bottom_right', 0);
+
+      assert.deepStrictEqual(result, {});
     });
 
     it('display position is invalid', function() {
       const result = css.forBody('unknown', 1);
 
-      assert.deepStrictEqual({}, result);
+      assert.deepStrictEqual(result, {});
     });
   });
 
   describe('forMessage', function() {
-    describe('status', function( ) {
+    describe('element is always hidden initially regardless of status', function( ) {
       it('status is 1', function () {
         const result = css.forMessage(testUtil.makeFoundItem({
           status: 1,
