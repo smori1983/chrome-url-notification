@@ -11,6 +11,7 @@ const matchedBlock = function () {
 
   const shouldShown = function () {
     if (shown() === false) {
+      /* istanbul ignore next */
       throw new Error('matched block is not shown');
     }
   };

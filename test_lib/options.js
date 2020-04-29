@@ -263,6 +263,7 @@ const deleteForm = function () {
  */
 const modalShouldActivated = function ($element) {
   if (modalIsActivated($element) === false) {
+    /* istanbul ignore next */
     throw new Error('modal is not activated');
   }
 };
