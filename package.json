@@ -19,8 +19,8 @@
     "url": "git+https://github.com/smori1983/chrome-url-notification.git"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.104",
-    "@types/jquery": "^3.3.35",
+    "@types/chrome": "0.0.106",
+    "@types/jquery": "^3.3.36",
     "@types/node": "^12.12.36",
     "browserify": "^16.5.1",
     "codecov": "^3.6.5",
