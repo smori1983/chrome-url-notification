@@ -72,6 +72,11 @@ describe('urlNotification.validator.importJson.v3', function() {
       {item: {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top',    status: 0}},
       {item: {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom', status: 1}},
       {item: {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom', status: 0}},
+
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: 'FFFFFF', displayPosition: 'top',    status: 1}},
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: 'ffffff', displayPosition: 'top',    status: 0}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: 'FFFFFF', displayPosition: 'bottom', status: 1}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: 'ffffff', displayPosition: 'bottom', status: 0}},
     ]).it('ok', function (arg) {
       assert.ok(testUtil.isValidJson({
         version: 3,

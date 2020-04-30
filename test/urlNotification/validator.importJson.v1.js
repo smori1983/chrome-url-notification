@@ -38,6 +38,9 @@ describe('urlNotification.validator.importJson.v1', function() {
     given([
       {item: {url: 'sample1', msg: 'sample1', backgroundColor: '111111'}},
       {item: {url: 'sample2', msg: 'sample2', backgroundColor: '000000'}},
+
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: 'ffffff'}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: 'FFFFFF'}},
     ]).it('ok', function (arg) {
       assert.ok(testUtil.isValidJson({
         version: 1,

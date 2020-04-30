@@ -56,6 +56,9 @@ describe('urlNotification.validator.importJson.v2', function() {
     given([
       {item: {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top'}},
       {item: {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom'}},
+
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: 'ffffff', displayPosition: 'top'}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: 'FFFFFF', displayPosition: 'bottom'}},
     ]).it('ok', function (arg) {
       assert.ok(testUtil.isValidJson({
         version: 2,
