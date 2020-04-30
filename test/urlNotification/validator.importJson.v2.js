@@ -1,4 +1,5 @@
-const { describe, it } = require('mocha');
+const { describe } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedBasic = require('./shared/importJson.basic');
@@ -50,20 +51,18 @@ describe('urlNotification.validator.importJson.v2', function() {
       displayPosition: 'top',
     });
 
-    it('ok', function () {
-      assert.ok(testUtil.isValidJson({
-        version: 2,
-        pattern: [
-          {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top'},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom'},
-        ],
-      }));
-    });
+    sharedPattern.runOk(2);
 
-    it('ok - no data', function () {
+    given([
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: '111111', displayPosition: 'top'}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: '222222', displayPosition: 'bottom'}},
+
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: 'ffffff', displayPosition: 'top'}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: 'FFFFFF', displayPosition: 'bottom'}},
+    ]).it('ok', function (arg) {
       assert.ok(testUtil.isValidJson({
         version: 2,
-        pattern: [],
+        pattern: [arg.item],
       }));
     });
   });
