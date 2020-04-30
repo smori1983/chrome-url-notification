@@ -32,6 +32,8 @@ describe('urlNotification.validator.importJson.v1', function() {
       backgroundColor: '111111',
     });
 
+    sharedPattern.runOk(1);
+
     it('ok', function () {
       assert.ok(testUtil.isValidJson({
         version: 1,
@@ -40,13 +42,6 @@ describe('urlNotification.validator.importJson.v1', function() {
           {url: 'sample2', msg: 'sample2', backgroundColor: '000000'},
         ],
       }));
-    });
-
-    it('ok - no data', function () {
-      assert.ok(testUtil.isValidJson({
-        version: 1,
-        pattern: [],
-      }))
     });
   });
 });
