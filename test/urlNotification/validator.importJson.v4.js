@@ -56,6 +56,8 @@ describe('urlNotification.validator.importJson.v4', function() {
       status: 1,
     });
 
+    sharedPattern.runOk(4);
+
     it('ok', function () {
       assert.ok(testUtil.isValidJson({
         version: 4,
@@ -67,13 +69,6 @@ describe('urlNotification.validator.importJson.v4', function() {
           {url: 'sample5', msg: 'sample5', backgroundColor: '555555', displayPosition: 'bottom_left',  status: 1},
           {url: 'sample6', msg: 'sample6', backgroundColor: '666666', displayPosition: 'bottom_right', status: 0},
         ],
-      }));
-    });
-
-    it('ok - no data', function () {
-      assert.ok(testUtil.isValidJson({
-        version: 4,
-        pattern: [],
       }));
     });
   });

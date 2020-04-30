@@ -327,3 +327,15 @@ module.exports.runStatus = function (version, validPattern) {
     }));
   });
 };
+
+/**
+ * @param {number} version
+ */
+module.exports.runOk = function (version) {
+  it('ok - no data', function () {
+    assert.ok(testUtil.isValidJson({
+      version: version,
+      pattern: [],
+    }))
+  });
+};
