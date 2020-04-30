@@ -24,7 +24,7 @@ const bindValues = function(item) {
 
   $('#js_input_url').val(item.url);
   $('#js_input_msg').val(item.msg);
-  $('#js_input_backgroundcolor').val('#' + item.backgroundColor);
+  $('#js_input_background_color').val('#' + item.backgroundColor);
   $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
   $('input[name=display_position]').val([item.displayPosition]);
   $('#js_input_status').prop('checked', item.status === 1);
