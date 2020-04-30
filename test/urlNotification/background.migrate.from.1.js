@@ -1,4 +1,5 @@
-const { describe, it } = require('mocha');
+const { describe } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/background');
@@ -11,22 +12,25 @@ describe('urlNotification.background.migrate.from.1', function() {
   });
 
   describe('with data', function() {
-    it('migrate', function() {
-      testUtil.setUpStorage('1', [
-        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111'},
-        {url: 'http://example.com/2', msg: '2', backgroundColor: '222222'},
-        {url: 'http://example.com/3', msg: '3', backgroundColor: '333333'},
-      ]);
+    given([
+      {
+        from: {url: 'example.com/1', msg: '1', backgroundColor: '111111'},
+        to:   {url: 'example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1},
+      },
+      {
+        from: {url: 'example.com/2', msg: '2', backgroundColor: '222222'},
+        to:   {url: 'example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1},
+      },
+      {
+        from: {url: 'example.com/3', msg: '3', backgroundColor: '333333'},
+        to:   {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
+      },
+    ]).it('migrate', function (arg) {
+      testUtil.setUpStorage('1', [arg.from]);
 
       SUT.migrate();
 
-      const expected = [
-        {url: 'http://example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1},
-        {url: 'http://example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1},
-        {url: 'http://example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
-      ];
-
-      assert.deepStrictEqual(storage.getAll(), expected);
+      assert.deepStrictEqual(storage.getAll(), [arg.to]);
       assert.strictEqual(storage.currentVersion(), testUtil.currentVersion());
     });
   });
