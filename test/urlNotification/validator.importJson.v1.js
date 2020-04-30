@@ -1,4 +1,5 @@
-const { describe, it } = require('mocha');
+const { describe } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedBasic = require('./shared/importJson.basic');
@@ -34,13 +35,13 @@ describe('urlNotification.validator.importJson.v1', function() {
 
     sharedPattern.runOk(1);
 
-    it('ok', function () {
+    given([
+      {item: {url: 'sample1', msg: 'sample1', backgroundColor: '111111'}},
+      {item: {url: 'sample2', msg: 'sample2', backgroundColor: '000000'}},
+    ]).it('ok', function (arg) {
       assert.ok(testUtil.isValidJson({
         version: 1,
-        pattern: [
-          {url: 'sample1', msg: 'sample1', backgroundColor: '111111'},
-          {url: 'sample2', msg: 'sample2', backgroundColor: '000000'},
-        ],
+        pattern: [arg.item],
       }));
     });
   });
