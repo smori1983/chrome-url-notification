@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/chrome": "0.0.106",
     "@types/jquery": "^3.3.36",
-    "@types/node": "^12.12.36",
+    "@types/node": "^12.12.37",
     "browserify": "^16.5.1",
     "codecov": "^3.6.5",
     "color-js": "^1.0.5",
