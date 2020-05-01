@@ -51,5 +51,7 @@
     "jsonschema": "^1.2.6",
     "lodash": "^4.17.15",
     "sprintf-js": "^1.1.2"
-  }
+  },
+  "author": "Shinichiro MORI",
+  "license": "MIT"
 }
