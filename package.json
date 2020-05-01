@@ -4,6 +4,7 @@
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
+    "license:summary": "license-checker --production --summary --unknown",
     "build:prod": "cross-env EXTENSION_MODE=production gulp build",
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
     "make": "gulp make",
@@ -32,6 +33,7 @@
     "gulp-eslint": "^6.0.0",
     "istanbul": "^0.4.5",
     "jsdom": "^16.2.2",
+    "license-checker": "^25.0.1",
     "mocha": "^7.1.2",
     "mocha-testdata": "^1.2.0",
     "mock-local-storage": "^1.1.12",
@@ -50,5 +52,7 @@
     "jsonschema": "^1.2.6",
     "lodash": "^4.17.15",
     "sprintf-js": "^1.1.2"
-  }
+  },
+  "author": "Shinichiro MORI",
+  "license": "MIT"
 }
