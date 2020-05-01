@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## Next
+## v6.0.0
 
 ### Feature
 
