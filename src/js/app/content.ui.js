@@ -24,6 +24,12 @@ const main = function () {
         .attr('id', messageContainerId)
         .css(css.forMessage(item))
         .text(item.message)
+        .on('mouseover', function () {
+          $(this).css(css.forMouseOver(item));
+        })
+        .on('mouseout', function () {
+          $(this).css(css.forMouseOut(item));
+        })
         .appendTo($body);
     },
     /**

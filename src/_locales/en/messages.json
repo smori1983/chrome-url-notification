@@ -5,6 +5,12 @@
   "label_bottom": {
     "message": "Bottom"
   },
+  "label_bottom_left": {
+    "message": "Bottom left"
+  },
+  "label_bottom_right": {
+    "message": "Bottom right"
+  },
   "label_cancel": {
     "message": "Cancel"
   },
@@ -58,6 +64,12 @@
   },
   "label_top": {
     "message": "Top"
+  },
+  "label_top_left": {
+    "message": "Top left"
+  },
+  "label_top_right": {
+    "message": "Top right"
   },
   "label_url_pattern": {
     "message": "URL pattern"

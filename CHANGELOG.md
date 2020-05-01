@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v6.0.0
+
+### Feature
+
+- Support additional choices for message display position.
+  - top left / top right / bottom left / bottom right
+
+
 ## v5.4.0
 
 ### Development

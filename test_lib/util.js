@@ -23,7 +23,7 @@ const setUpStorage = function(version, patterns) {
  * @returns {number}
  */
 const currentVersion = function() {
-  return 3;
+  return 4;
 };
 
 /**

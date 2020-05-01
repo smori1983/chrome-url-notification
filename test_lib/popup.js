@@ -1,11 +1,22 @@
 const matchedBlock = function () {
   const $ = require('jquery');
 
-  const getElement = function () {
+  const block = function () {
     return $('#block_for_matched_page');
   };
 
-  const getStatus = function () {
+  const shown = function() {
+    return block().css('display') === 'block';
+  };
+
+  const shouldShown = function () {
+    if (shown() === false) {
+      /* istanbul ignore next */
+      throw new Error('matched block is not shown');
+    }
+  };
+
+  const status = function () {
     return $('#pattern_status');
   };
 
@@ -14,17 +25,18 @@ const matchedBlock = function () {
      * @returns {boolean}
      */
     shown: function () {
-      return getElement().css('display') === 'block';
+      return shown();
     },
     /**
      * @returns {boolean}
      */
-    statusIsEnabled: function () {
-      return getElement().css('display') === 'block'
-        && getStatus().prop('checked') === true;
+    statusEnabled: function () {
+      shouldShown();
+      return status().prop('checked') === true;
     },
     clickStatus: function () {
-      getStatus().trigger('click');
+      shouldShown();
+      status().trigger('click');
     },
   };
 };

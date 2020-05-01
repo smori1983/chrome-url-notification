@@ -35,7 +35,7 @@ describe('options.exportForm', function () {
     });
 
     it('with pattern data', function () {
-      testUtil.setUpStorage(testUtil.currentVersion(), [
+      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       testUtil.options.header().clickExport();

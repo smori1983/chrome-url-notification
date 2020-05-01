@@ -1,5 +1,7 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, before, beforeEach, after } = require('mocha');
+const { given } = require('mocha-testdata');
 const assert = require('assert');
+const _ = require('lodash');
 const SUT = require('../../src/js/app/content.css');
 const testUtil = require('../../test_lib/util');
 
@@ -16,55 +18,88 @@ describe('app.css', function () {
   after(testUtil.uiBase.after);
 
   describe('forBody', function() {
-    it('display position is top and status is 1', function() {
-      const result = css.forBody('top', 1);
+    given([
+      {displayPosition: 'top',          status: 1, expected: {marginTop: '50px'}},
+      {displayPosition: 'top',          status: 0, expected: {marginTop: '0px'}},
+      {displayPosition: 'bottom',       status: 1, expected: {marginBottom: '50px'}},
+      {displayPosition: 'bottom',       status: 0, expected: {marginBottom: '0px'}},
+      {displayPosition: 'top_left',     status: 1, expected: {}},
+      {displayPosition: 'top_left',     status: 0, expected: {}},
+      {displayPosition: 'top_right',    status: 1, expected: {}},
+      {displayPosition: 'top_right',    status: 0, expected: {}},
+      {displayPosition: 'bottom_left',  status: 1, expected: {}},
+      {displayPosition: 'bottom_left',  status: 0, expected: {}},
+      {displayPosition: 'bottom_right', status: 1, expected: {}},
+      {displayPosition: 'bottom_right', status: 0, expected: {}},
+      {displayPosition: 'unknown',      status: 1, expected: {}},
+      {displayPosition: 'unknown',      status: 0, expected: {}},
+    ]).it('display position and status', function(arg) {
+      const result = css.forBody(arg.displayPosition, arg.status);
 
-      assert.strictEqual('50px', result.marginTop);
-    });
-
-    it('display position is top and status is 0', function() {
-      const result = css.forBody('top', 0);
-
-      assert.strictEqual('0px', result.marginTop);
-    });
-
-    it('display position is bottom and status is 1', function() {
-      const result = css.forBody('bottom', 1);
-
-      assert.strictEqual('50px', result.marginBottom);
-    });
-
-    it('display position is bottom and status is 0', function() {
-      const result = css.forBody('bottom', 0);
-
-      assert.strictEqual('0px', result.marginBottom);
-    });
-
-    it('display position is invalid', function() {
-      const result = css.forBody('unknown', 1);
-
-      assert.deepStrictEqual({}, result);
+      assert.deepStrictEqual(result, arg.expected);
     });
   });
 
   describe('forMessage', function() {
-    describe('status', function( ) {
-      it('status is 1', function () {
-        const result = css.forMessage(testUtil.makeFoundItem({
-          status: 1,
-        }));
+    given([
+      {status: 0},
+      {status: 1},
+    ]).it('element is always hidden initially regardless of status', function (arg) {
+      const result = css.forMessage(testUtil.makeFoundItem({
+        status: arg.status,
+      }));
 
-        assert.strictEqual('none', result.display);
-      });
+      assert.strictEqual(result.display, 'none');
+    });
 
-      it('status is 0', function () {
-        const result = css.forMessage(testUtil.makeFoundItem({
-          status: 0,
-        }));
+    given([
+      {displayPosition: 'top',          expected: {width: '100%', top: '0px', left: '0px'}},
+      {displayPosition: 'bottom',       expected: {width: '100%', bottom: '0px', left: '0px'}},
+      {displayPosition: 'top_left',     expected: {width: '50px', top: '10px', left: '10px'}},
+      {displayPosition: 'top_right',    expected: {width: '50px', top: '10px', right: '10px'}},
+      {displayPosition: 'bottom_left',  expected: {width: '50px', bottom: '10px', left: '10px'}},
+      {displayPosition: 'bottom_right', expected: {width: '50px', bottom: '10px', right: '10px'}},
+    ]).it('display position', function (arg) {
+      const result = css.forMessage(testUtil.makeFoundItem({
+        displayPosition: arg.displayPosition,
+      }));
+      const targetProperties = _.pick(result, _.keys(arg.expected));
 
-        assert.strictEqual('none', result.display);
-      });
+      assert.deepStrictEqual(targetProperties, arg.expected);
+    });
+  });
+
+  describe('forMouseOver', function () {
+    given([
+      {displayPosition: 'top',          expected: {}},
+      {displayPosition: 'bottom',       expected: {}},
+      {displayPosition: 'top_left',     expected: {width: 'calc(100% - 20px)'}},
+      {displayPosition: 'top_right',    expected: {width: 'calc(100% - 20px)'}},
+      {displayPosition: 'bottom_left',  expected: {width: 'calc(100% - 20px)'}},
+      {displayPosition: 'bottom_right', expected: {width: 'calc(100% - 20px)'}},
+    ]).it('display position', function (arg) {
+      const result = css.forMouseOver(testUtil.makeFoundItem({
+        displayPosition: arg.displayPosition,
+      }));
+
+      assert.deepStrictEqual(result, arg.expected);
+    });
+  });
+
+  describe('forMouseOut', function () {
+    given([
+      {displayPosition: 'top',          expected: {}},
+      {displayPosition: 'bottom',       expected: {}},
+      {displayPosition: 'top_left',     expected: {width: '50px'}},
+      {displayPosition: 'top_right',    expected: {width: '50px'}},
+      {displayPosition: 'bottom_left',  expected: {width: '50px'}},
+      {displayPosition: 'bottom_right', expected: {width: '50px'}},
+    ]).it('display position', function (arg) {
+      const result = css.forMouseOut(testUtil.makeFoundItem({
+        displayPosition: arg.displayPosition,
+      }));
+
+      assert.deepStrictEqual(result, arg.expected);
     });
   });
 });
-
