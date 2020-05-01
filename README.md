@@ -29,8 +29,8 @@ Register data in options page.
 - URL pattern
 - message
 - background color
-- display position
-- status (enabled/disabled)
+- display position (top / top left / top right / bottom / bottom left / bottom right)
+- status (enabled / disabled)
 
 
 ## Message APIs
