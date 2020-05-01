@@ -4,6 +4,7 @@
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
+    "license:summary": "license-checker --production --summary --unknown",
     "build:prod": "cross-env EXTENSION_MODE=production gulp build",
     "build:dev": "cross-env EXTENSION_MODE=development gulp build",
     "make": "gulp make",
