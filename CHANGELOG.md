@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v6.0.1
+
+### Bug fix
+
+- Prevent duplicate open of modal form.
+  - Export form
+  - Pattern item delete form
+
+
 ## v6.0.0
 
 ### Feature
