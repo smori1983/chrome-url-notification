@@ -5,7 +5,54 @@ const storage = require('../urlNotification/storage');
 const patternForm = require('./options.patternForm');
 const deleteForm = require('./options.deleteForm');
 
+const initEventHandler = function () {
+  const $ = require('jquery');
+  const $table = $('#js_list_pattern');
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-copy') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      patternForm.show('add', $element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-edit') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      patternForm.show('edit', $element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-delete') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      deleteForm.show($element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+};
+
 const show = function () {
+  initEventHandler();
+  drawTable();
+};
+
+const refresh = function () {
+  drawTable();
+};
+
+const drawTable = function () {
   const sorted = data.sortByMessage(storage.getAll());
   const $ = require('jquery');
   const $headerArea = $('#js_list_pattern thead');
@@ -179,13 +226,8 @@ const makeRow = function(item) {
     const buttonCopy = function(item) {
       return button(i18n.get('label_copy'))
         .addClass('btn-default copy_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          patternForm.show('add', item, function () {
-            show();
-          });
-        });
+        .data('un-action', 'pattern-item-copy')
+        .data('un-pattern-item', item);
     };
 
     /**
@@ -194,13 +236,8 @@ const makeRow = function(item) {
     const buttonEdit = function(item) {
       return button(i18n.get('label_edit'))
         .addClass('btn-primary edit_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          patternForm.show('edit', item, function () {
-            show();
-          });
-        });
+        .data('un-action', 'pattern-item-edit')
+        .data('un-pattern-item', item);
     };
 
     /**
@@ -209,13 +246,8 @@ const makeRow = function(item) {
     const buttonDelete = function(item) {
       return button(i18n.get('label_delete'))
         .addClass('btn-danger delete_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          deleteForm.show(item, function () {
-            show();
-          });
-        });
+        .data('un-action', 'pattern-item-delete')
+        .data('un-pattern-item', item);
     };
 
     /**
@@ -239,3 +271,4 @@ const makeRow = function(item) {
 };
 
 module.exports.show = show;
+module.exports.refresh = refresh;

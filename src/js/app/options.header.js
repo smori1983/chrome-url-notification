@@ -21,7 +21,7 @@ const handlers = function () {
     e.preventDefault();
     $(e.target).trigger('blur');
     patternForm.show('add', patternForm.defaultValues(), function () {
-      patternList.show();
+      patternList.refresh();
     });
   });
 
@@ -35,7 +35,7 @@ const handlers = function () {
     e.preventDefault();
     $(e.target).trigger('blur');
     importForm.show(function() {
-      patternList.show();
+      patternList.refresh();
     })
   });
 };
