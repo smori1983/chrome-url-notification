@@ -181,6 +181,7 @@ const makeRow = function(item) {
         .addClass('btn-default copy_button')
         .on('click', function(e) {
           e.preventDefault();
+          $(e.target).trigger('blur');
           patternForm.show('add', item, function () {
             show();
           });
@@ -195,6 +196,7 @@ const makeRow = function(item) {
         .addClass('btn-primary edit_button')
         .on('click', function(e) {
           e.preventDefault();
+          $(e.target).trigger('blur');
           patternForm.show('edit', item, function () {
             show();
           });
@@ -209,6 +211,7 @@ const makeRow = function(item) {
         .addClass('btn-danger delete_button')
         .on('click', function(e) {
           e.preventDefault();
+          $(e.target).trigger('blur');
           deleteForm.show(item, function () {
             show();
           });
