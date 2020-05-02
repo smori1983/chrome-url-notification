@@ -113,6 +113,7 @@ gulp.task('make:options:css', function (cb) {
     gulp.src([
       'node_modules/bootstrap/dist/css/bootstrap.min.css',
       'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+      'node_modules/bootstrap-table/dist/bootstrap-table.min.css',
       'src/css/bootstrap-custom.css',
     ]),
     concatCss('options.css'),
