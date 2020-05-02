@@ -19,6 +19,7 @@ const handlers = function () {
 
   $('#js_button_add_pattern').on('click', function(e) {
     e.preventDefault();
+    $(e.target).trigger('blur');
     patternForm.show('add', patternForm.defaultValues(), function () {
       patternList.show();
     });
@@ -26,11 +27,13 @@ const handlers = function () {
 
   $('#js_button_export').on('click', function(e) {
     e.preventDefault();
+    $(e.target).trigger('blur');
     exportForm.show();
   });
 
   $('#js_button_import').on('click', function(e) {
     e.preventDefault();
+    $(e.target).trigger('blur');
     importForm.show(function() {
       patternList.show();
     })
