@@ -23,6 +23,7 @@ const beforeEach = function () {
   delete require.cache[require.resolve('bootstrap')];
   delete require.cache[require.resolve('bootstrap/js/modal')];
   delete require.cache[require.resolve('bootstrap-colorpicker')];
+  delete require.cache[require.resolve('bootstrap-table')];
 };
 
 const afterEach = function() {
