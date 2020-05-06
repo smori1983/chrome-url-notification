@@ -1,3 +1,4 @@
+const sprintf = require('sprintf-js').sprintf;
 const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const data = require('../urlNotification/data');
@@ -214,40 +215,41 @@ const makeRow = function(item) {
   })();
 
   const columnAction = (function() {
-    const button = function(text) {
+    /**
+     * @param {string} label
+     * @param {string} action
+     * @param {PatternItem} item
+     * @param {string} className
+     * @returns {JQuery}
+     */
+    const button = function(label, action, item, className) {
       return $('<button>')
-        .addClass('btn btn-sm')
-        .text(text);
+        .addClass(sprintf('btn btn-sm %s_button', action))
+        .addClass(className)
+        .attr('data-un-action', sprintf('pattern-item-%s', action))
+        .attr('data-un-pattern-item', JSON.stringify(item))
+        .text(label);
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonCopy = function(item) {
-      return button(i18n.get('label_copy'))
-        .addClass('btn-default copy_button')
-        .attr('data-un-action', 'pattern-item-copy')
-        .attr('data-un-pattern-item', JSON.stringify(item));
+      return button(i18n.get('label_copy'), 'copy', item, 'btn-default');
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonEdit = function(item) {
-      return button(i18n.get('label_edit'))
-        .addClass('btn-primary edit_button')
-        .attr('data-un-action', 'pattern-item-edit')
-        .attr('data-un-pattern-item', JSON.stringify(item));
+      return button(i18n.get('label_edit'), 'edit', item, 'btn-primary');
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonDelete = function(item) {
-      return button(i18n.get('label_delete'))
-        .addClass('btn-danger delete_button')
-        .attr('data-un-action', 'pattern-item-delete')
-        .attr('data-un-pattern-item', JSON.stringify(item));
+      return button(i18n.get('label_delete'), 'delete', item, 'btn-danger');
     };
 
     /**
