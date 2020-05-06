@@ -226,8 +226,8 @@ const makeRow = function(item) {
     const buttonCopy = function(item) {
       return button(i18n.get('label_copy'))
         .addClass('btn-default copy_button')
-        .data('un-action', 'pattern-item-copy')
-        .data('un-pattern-item', item);
+        .attr('data-un-action', 'pattern-item-copy')
+        .attr('data-un-pattern-item', JSON.stringify(item));
     };
 
     /**
@@ -236,8 +236,8 @@ const makeRow = function(item) {
     const buttonEdit = function(item) {
       return button(i18n.get('label_edit'))
         .addClass('btn-primary edit_button')
-        .data('un-action', 'pattern-item-edit')
-        .data('un-pattern-item', item);
+        .attr('data-un-action', 'pattern-item-edit')
+        .attr('data-un-pattern-item', JSON.stringify(item));
     };
 
     /**
@@ -246,8 +246,8 @@ const makeRow = function(item) {
     const buttonDelete = function(item) {
       return button(i18n.get('label_delete'))
         .addClass('btn-danger delete_button')
-        .data('un-action', 'pattern-item-delete')
-        .data('un-pattern-item', item);
+        .attr('data-un-action', 'pattern-item-delete')
+        .attr('data-un-pattern-item', JSON.stringify(item));
     };
 
     /**
