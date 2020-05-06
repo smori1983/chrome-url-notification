@@ -54,19 +54,19 @@ const refresh = function () {
 };
 
 const drawTable = function () {
-  const sorted = data.sortByMessage(storage.getAll());
+  const items = data.sortByMessage(storage.getAll());
   const $ = require('jquery');
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
-  $('#js_pattern_list_badge').text(sorted.length);
+  $('#js_pattern_list_badge').text(items.length);
 
   $headerArea.empty();
   $listArea.empty();
 
-  if (sorted.length > 0) {
+  if (items.length > 0) {
     makeHeader().appendTo($headerArea);
-    sorted.forEach(function (item) {
+    items.forEach(function (item) {
       makeRow(item).appendTo($listArea);
     });
   }
