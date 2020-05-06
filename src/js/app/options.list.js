@@ -46,20 +46,36 @@ const initEventHandler = function () {
 
 const show = function () {
   initEventHandler();
-  drawTable();
+  draw();
 };
 
 const refresh = function () {
-  drawTable();
+  draw();
 };
 
-const drawTable = function () {
+const draw = function () {
   const items = data.sortByMessage(storage.getAll());
+
+  drawBadge(items);
+  drawTable(items);
+};
+
+/**
+ * @param {PatternItem[]} items
+ */
+const drawBadge = function (items) {
+  const $ = require('jquery');
+
+  $('#js_pattern_list_badge').text(items.length);
+};
+
+/**
+ * @param {PatternItem[]} items
+ */
+const drawTable = function (items) {
   const $ = require('jquery');
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
-
-  $('#js_pattern_list_badge').text(items.length);
 
   $headerArea.empty();
   $listArea.empty();
