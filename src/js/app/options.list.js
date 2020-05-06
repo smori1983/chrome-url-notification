@@ -121,21 +121,23 @@ const makeRow = function(item) {
     return $('<td>');
   };
 
+  /**
+   * @param {string} label
+   * @param {string} className
+   * @returns {JQuery}
+   */
+  const container = function (label, className) {
+    return $('<div>')
+      .addClass(className)
+      .text(label);
+  };
+
   const columnPattern = (function() {
     /**
      * @param {PatternItem} item
      */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('pattern')
-        .text(item.url);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
     return function (item) {
-      return column().append(container(item));
+      return column().append(container(item.url, 'pattern'));
     };
   })();
 
@@ -143,17 +145,7 @@ const makeRow = function(item) {
     /**
      * @param {PatternItem} item
      */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('list-message')
-        .css(messageCss(item))
-        .text(item.msg);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
-    const messageCss = function(item) {
+    const css = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
         'color': '#' + config.defaultFontColor(),
@@ -164,20 +156,11 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(item.msg, 'list-message').css(css(item)));
     };
   })();
 
   const columnDisplayPosition = (function() {
-    /**
-     * @param {PatternItem} item
-     */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('display_position')
-        .text(message(item));
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -197,20 +180,11 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(message(item), 'display_position'));
     };
   })();
 
   const columnStatus = (function() {
-    /**
-     * @param {PatternItem} item
-     */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('status')
-        .text(message(item));
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -226,7 +200,7 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(message(item), 'status'));
     };
   })();
 
