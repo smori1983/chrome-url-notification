@@ -61,8 +61,18 @@ const refresh = function () {
 const draw = function () {
   const items = storage.getAll();
 
+  resetBootstrapTable();
   drawBadge(items);
   drawTable(items);
+  buildBootstrapTable(items);
+};
+
+const resetBootstrapTable = function () {
+  const $ = require('jquery');
+  require('bootstrap-table');
+  const $table = $('#js_list_pattern');
+
+  $table.bootstrapTable('destroy');
 };
 
 /**
@@ -79,12 +89,6 @@ const drawBadge = function (items) {
  */
 const drawTable = function (items) {
   const $ = require('jquery');
-  require('bootstrap-table');
-  const $table = $('#js_list_pattern');
-
-  $table.bootstrapTable('destroy');
-
-  // Should get jQuery object after destroyed.
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
@@ -97,10 +101,21 @@ const drawTable = function (items) {
       makeRow(item).appendTo($listArea);
     });
   }
+};
 
-  if (items.length > 0) {
-    $table.bootstrapTable(tableOption());
+/**
+ * @param {PatternItem[]} items
+ */
+const buildBootstrapTable = function (items) {
+  if (items.length === 0) {
+    return;
   }
+
+  const $ = require('jquery');
+  require('bootstrap-table');
+  const $table = $('#js_list_pattern');
+
+  $table.bootstrapTable(tableOption());
 };
 
 const tableOption = function () {
