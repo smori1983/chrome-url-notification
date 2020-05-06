@@ -1,7 +1,6 @@
 const sprintf = require('sprintf-js').sprintf;
 const i18n = require('./i18n');
 const config = require('../urlNotification/config');
-const data = require('../urlNotification/data');
 const storage = require('../urlNotification/storage');
 const patternForm = require('./options.patternForm');
 const deleteForm = require('./options.deleteForm');
@@ -42,6 +41,12 @@ const initEventHandler = function () {
       });
     }
   });
+
+  // https://bootstrap-table.com/docs/api/events/#onsort
+  $table.on('sort.bs.table', function (e, name, order) {
+    $table.data('un-table-sort-name', name);
+    $table.data('un-table-sort-order', order);
+  });
 };
 
 const show = function () {
@@ -54,7 +59,7 @@ const refresh = function () {
 };
 
 const draw = function () {
-  const items = data.sortByMessage(storage.getAll());
+  const items = storage.getAll();
 
   drawBadge(items);
   drawTable(items);
@@ -74,6 +79,12 @@ const drawBadge = function (items) {
  */
 const drawTable = function (items) {
   const $ = require('jquery');
+  require('bootstrap-table');
+  const $table = $('#js_list_pattern');
+
+  $table.bootstrapTable('destroy');
+
+  // Should get jQuery object after destroyed.
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
@@ -86,6 +97,40 @@ const drawTable = function (items) {
       makeRow(item).appendTo($listArea);
     });
   }
+
+  if (items.length > 0) {
+    $table.bootstrapTable(tableOption());
+  }
+};
+
+const tableOption = function () {
+  const $ = require('jquery');
+  const $table = $('#js_list_pattern');
+
+  return {
+    classes: 'table',
+    customSort: tableCustomSort,
+    sortName: $table.data('un-table-sort-name') || 'msg',
+    sortOrder: $table.data('un-table-sort-order') || 'asc',
+  };
+};
+
+const tableCustomSort = function (sortName, sortOrder, data) {
+  const $ = require('jquery');
+  const order = sortOrder === 'desc' ? -1 : 1;
+
+  data.sort(function (a, b) {
+    const aLabel = $(a[sortName]).text();
+    const bLabel = $(b[sortName]).text();
+
+    if (aLabel < bLabel) {
+      return order * -1;
+    }
+    if (aLabel > bLabel) {
+      return order;
+    }
+    return 0;
+  });
 };
 
 const makeHeader = function() {
@@ -95,16 +140,25 @@ const makeHeader = function() {
     return $('<tr>');
   };
 
-  const column = function(value) {
-    return $('<th>').text(value);
+  /**
+   * @param {string} field
+   * @param {boolean} sortable
+   * @param {string} label
+   * @returns {JQuery}
+   */
+  const column = function(field, sortable, label) {
+    return $('<th>')
+      .text(label)
+      .data('field', field)
+      .data('sortable', sortable);
   };
 
   return row()
-    .append(column(i18n.get('label_url_pattern')))
-    .append(column(i18n.get('label_message')))
-    .append(column(i18n.get('label_display_position')))
-    .append(column(i18n.get('label_enabled')))
-    .append(column(i18n.get('label_operation')));
+    .append(column('url', true, i18n.get('label_url_pattern')))
+    .append(column('msg', true, i18n.get('label_message')))
+    .append(column('display_position', false, i18n.get('label_display_position')))
+    .append(column('status', true, i18n.get('label_enabled')))
+    .append(column('operation', false, i18n.get('label_operation')));
 };
 
 /**
