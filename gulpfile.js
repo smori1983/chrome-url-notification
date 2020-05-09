@@ -137,16 +137,16 @@ gulp.task('dist:manifest', function(cb) {
   pump([
     gulp.src([
       'src/manifest.json',
-    ]),
+    ], {base: 'src'}),
     gulp.dest(dist),
   ], cb);
 });
 
-gulp.task('dist:source', function(cb) {
+gulp.task('dist:locale', function(cb) {
   pump([
     gulp.src([
       'src/_locales/**',
-    ]),
+    ], {base: 'src'}),
     gulp.dest(dist),
   ], cb);
 
@@ -161,7 +161,7 @@ gulp.task('dist:icon', function(cb) {
   ], cb);
 });
 
-gulp.task('dist', gulp.series('dist:manifest', 'dist:source', 'dist:icon'));
+gulp.task('dist', gulp.series('dist:manifest', 'dist:locale', 'dist:icon'));
 
 gulp.task('build', gulp.series('clean', 'make', 'dist'));
 
