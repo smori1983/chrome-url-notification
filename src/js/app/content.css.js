@@ -1,12 +1,18 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
-const height = 50;
 
 /**
  * @returns {number}
  */
 const barHeight = function () {
+  return 50;
+};
+
+/**
+ * @returns {number}
+ */
+const circleDiameter = function () {
   return 50;
 };
 
@@ -107,8 +113,6 @@ const main = function(pageInfo) {
       // Common properties.
       const result = {
         position: 'fixed',
-        height: height + 'px',
-        lineHeight: height + 'px',
         background: '#' + item.backgroundColor,
         color: '#' + item.fontColor,
         fontSize: '16px',
@@ -134,9 +138,11 @@ const main = function(pageInfo) {
       }
 
       if (isCornerType(item.displayPosition)) {
-        result.width = height + 'px';
+        result.width = circleDiameter() + 'px';
+        result.height = circleDiameter() + 'px';
+        result.lineHeight = circleDiameter() + 'px';
         result.transition = 'width 0.3s 0.1s';
-        result.webkitBorderRadius = sprintf('%dpx', height / 2);
+        result.webkitBorderRadius = sprintf('%dpx', circleDiameter() / 2);
       }
 
       if (item.displayPosition === 'top_left') {
@@ -188,7 +194,7 @@ const main = function(pageInfo) {
     forMessageMouseOut: function (item) {
       if (isCornerType(item.displayPosition)) {
         return {
-          width: height + 'px',
+          width: circleDiameter() + 'px',
         };
       } else {
         return {};
