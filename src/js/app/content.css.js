@@ -1,26 +1,27 @@
 'use strict';
 
 const sprintf = require('sprintf-js').sprintf;
+const config = require('../urlNotification/config');
 
 /**
  * @returns {number}
  */
 const barHeight = function () {
-  return 50;
+  return config.defaultBarHeight();
 };
 
 /**
  * @returns {number}
  */
 const circleDiameter = function () {
-  return 50;
+  return config.defaultCircleDiameter();
 };
 
 /**
  * @returns {number}
  */
 const cornerSpace = function () {
-  return 10;
+  return config.defaultCornerSpace();
 };
 
 /**

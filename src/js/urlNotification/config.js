@@ -8,6 +8,27 @@
 const version = 4;
 
 /**
+ * Bar height for bar type message
+ *
+ * @type {number}
+ */
+const defaultBarHeight = 50;
+
+/**
+ * Circle diameter for corner type message
+ *
+ * @type {number}
+ */
+const defaultCircleDiameter = 50;
+
+/**
+ * Corner space for corner type message
+ *
+ * @type {number}
+ */
+const defaultCornerSpace = 10;
+
+/**
  * @type {string}
  */
 const defaultFontColor = 'ffffff';
@@ -38,6 +59,27 @@ const defaultStatus = 1;
  */
 module.exports.version = function() {
   return version;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultBarHeight = function () {
+  return defaultBarHeight;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultCircleDiameter = function () {
+  return defaultCircleDiameter;
+};
+
+/**
+ * @returns {number}
+ */
+module.exports.defaultCornerSpace = function () {
+  return defaultCornerSpace;
 };
 
 /**
