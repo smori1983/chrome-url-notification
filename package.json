@@ -30,6 +30,7 @@
     "del": "^5.1.0",
     "dotenv": "^8.2.0",
     "gulp": "^4.0.2",
+    "gulp-concat-css": "^3.1.0",
     "gulp-eslint": "^6.0.0",
     "istanbul": "^0.4.5",
     "jsdom": "^16.2.2",

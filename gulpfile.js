@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const browserify = require('browserify');
 const gulp = require('gulp');
+const concatCss = require('gulp-concat-css');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
@@ -28,11 +29,13 @@ const dist = (function() {
 })();
 
 gulp.task('clean', function() {
-  return del([
+  const patterns = [
     sprintf('%s/.*', dist),
     sprintf('%s/**', dist),
     sprintf('!%s', dist),
-  ], { force: true });
+  ];
+
+  return del(patterns, { force: true });
 });
 
 gulp.task('make:background', function (cb) {
@@ -41,7 +44,7 @@ gulp.task('make:background', function (cb) {
       './src/js/app/main.background.js',
     ]).bundle(),
     source('background.js'),
-    gulp.dest('src/js'),
+    gulp.dest(sprintf('%s/js', dist)),
   ], cb);
 });
 
@@ -51,42 +54,99 @@ gulp.task('make:content', function (cb) {
       './src/js/app/main.content.js',
     ]).bundle(),
     source('content.js'),
-    gulp.dest('src/js'),
+    gulp.dest(sprintf('%s/js', dist)),
   ], cb);
 });
 
-gulp.task('make:popup', function (cb) {
+gulp.task('make:popup:html', function (cb) {
+  pump([
+    gulp.src([
+      'src/html/popup.html',
+    ]),
+    gulp.dest(sprintf('%s/html', dist)),
+  ], cb);
+});
+
+gulp.task('make:popup:js', function (cb) {
   pump([
     browserify([
       './src/js/app/main.popup.js',
     ]).bundle(),
     source('popup.js'),
-    gulp.dest('src/js'),
+    gulp.dest(sprintf('%s/js', dist)),
   ], cb);
 });
 
-gulp.task('make:options', function (cb) {
+gulp.task('make:popup:css', function (cb) {
+  pump([
+    gulp.src([
+      'src/css/popup.css',
+    ]),
+    concatCss('popup.css'),
+    gulp.dest(sprintf('%s/css', dist)),
+  ], cb);
+});
+
+gulp.task('make:popup', gulp.series('make:popup:html', 'make:popup:js', 'make:popup:css'));
+
+gulp.task('make:options:js', function (cb) {
   pump([
     browserify([
       './src/js/app/main.options.js',
     ]).bundle(),
     source('options.js'),
-    gulp.dest('src/js'),
+    gulp.dest(sprintf('%s/js', dist)),
   ], cb);
 });
 
+gulp.task('make:options:html', function (cb) {
+  pump([
+    gulp.src([
+      'src/html/options.html',
+    ]),
+    gulp.dest(sprintf('%s/html', dist)),
+  ], cb);
+});
+
+gulp.task('make:options:css', function (cb) {
+  pump([
+    gulp.src([
+      'node_modules/bootstrap/dist/css/bootstrap.min.css',
+      'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+      'src/css/bootstrap-custom.css',
+    ]),
+    concatCss('options.css'),
+    gulp.dest(sprintf('%s/css', dist)),
+  ], cb);
+});
+
+gulp.task('make:options:font', function (cb) {
+  pump([
+    gulp.src([
+      'node_modules/bootstrap/dist/fonts/*',
+    ]),
+    gulp.dest(sprintf('%s/fonts', dist)),
+  ], cb);
+});
+
+gulp.task('make:options', gulp.series('make:options:html', 'make:options:js', 'make:options:css', 'make:options:font'));
+
 gulp.task('make', gulp.series('make:background', 'make:content', 'make:popup', 'make:options'));
+
+gulp.task('dist:manifest', function(cb) {
+  pump([
+    gulp.src([
+      'src/manifest.json',
+    ]),
+    gulp.dest(dist),
+  ], cb);
+});
 
 gulp.task('dist:source', function(cb) {
   pump([
     gulp.src([
       'src/_locales/**',
-      'src/css/**',
-      'src/html/**',
-      'src/js/*.js',
-      'src/lib/**/**',
-      'src/manifest.json',
-    ], { base: 'src' }),
+    ]),
     gulp.dest(dist),
   ], cb);
 
@@ -101,7 +161,7 @@ gulp.task('dist:icon', function(cb) {
   ], cb);
 });
 
-gulp.task('dist', gulp.series('dist:source', 'dist:icon'));
+gulp.task('dist', gulp.series('dist:manifest', 'dist:source', 'dist:icon'));
 
 gulp.task('build', gulp.series('clean', 'make', 'dist'));
 
