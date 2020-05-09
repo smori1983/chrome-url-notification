@@ -2,7 +2,13 @@
 
 const sprintf = require('sprintf-js').sprintf;
 const height = 50;
-const cornerSpace = 10;
+
+/**
+ * @returns {number}
+ */
+const cornerSpace = function () {
+  return 10;
+};
 
 /**
  * @param {PageInfo} pageInfo
@@ -125,23 +131,23 @@ const main = function(pageInfo) {
       }
 
       if (item.displayPosition === 'top_left') {
-        result.top = cornerSpace + 'px';
-        result.left = cornerSpace + 'px';
+        result.top = cornerSpace() + 'px';
+        result.left = cornerSpace() + 'px';
       }
 
       if (item.displayPosition === 'top_right') {
-        result.top = cornerSpace + 'px';
-        result.right = cornerSpace + 'px';
+        result.top = cornerSpace() + 'px';
+        result.right = cornerSpace() + 'px';
       }
 
       if (item.displayPosition === 'bottom_left') {
-        result.bottom = cornerSpace + 'px';
-        result.left = cornerSpace + 'px';
+        result.bottom = cornerSpace() + 'px';
+        result.left = cornerSpace() + 'px';
       }
 
       if (item.displayPosition === 'bottom_right') {
-        result.bottom = cornerSpace + 'px';
-        result.right = cornerSpace + 'px';
+        result.bottom = cornerSpace() + 'px';
+        result.right = cornerSpace() + 'px';
       }
 
       // Initially hide element regardless of status.
@@ -158,7 +164,7 @@ const main = function(pageInfo) {
     forMessageMouseOver: function (item) {
       if (isCornerType(item.displayPosition)) {
         return {
-          width: sprintf('calc(100%% - %dpx)', cornerSpace * 2),
+          width: sprintf('calc(100%% - %dpx)', cornerSpace() * 2),
         };
       } else {
         return {};
