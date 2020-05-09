@@ -6,6 +6,13 @@ const height = 50;
 /**
  * @returns {number}
  */
+const barHeight = function () {
+  return 50;
+};
+
+/**
+ * @returns {number}
+ */
 const cornerSpace = function () {
   return 10;
 };
@@ -17,7 +24,7 @@ const cornerSpace = function () {
  */
 const marginTop = function(pageInfo, status) {
   if (status === 1) {
-    return height + 'px';
+    return barHeight() + 'px';
   } else {
     return pageInfo.body.marginTop;
   }
@@ -30,7 +37,7 @@ const marginTop = function(pageInfo, status) {
  */
 const marginBottom = function(pageInfo, status) {
   if (status === 1) {
-    return height + 'px';
+    return barHeight() + 'px';
   } else {
     return pageInfo.body.marginBottom;
   }
@@ -114,6 +121,8 @@ const main = function(pageInfo) {
       if (isBarType(item.displayPosition)) {
         result.left = '0px';
         result.width = '100%';
+        result.height = barHeight() + 'px';
+        result.lineHeight = barHeight() + 'px';
       }
 
       if (item.displayPosition === 'top') {
