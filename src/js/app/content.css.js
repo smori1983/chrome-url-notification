@@ -13,7 +13,7 @@ const marginTop = function(pageInfo, status) {
   if (status === 1) {
     return height + 'px';
   } else {
-    return pageInfo.body.marginBottom;
+    return pageInfo.body.marginTop;
   }
 };
 
@@ -26,7 +26,7 @@ const marginBottom = function(pageInfo, status) {
   if (status === 1) {
     return height + 'px';
   } else {
-    return pageInfo.body.marginTop;
+    return pageInfo.body.marginBottom;
   }
 };
 
