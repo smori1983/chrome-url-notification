@@ -69,7 +69,7 @@ describe('app.css', function () {
     });
   });
 
-  describe('forMouseOver', function () {
+  describe('forMessageMouseOver', function () {
     given([
       {displayPosition: 'top',          expected: {}},
       {displayPosition: 'bottom',       expected: {}},
@@ -78,7 +78,7 @@ describe('app.css', function () {
       {displayPosition: 'bottom_left',  expected: {width: 'calc(100% - 20px)'}},
       {displayPosition: 'bottom_right', expected: {width: 'calc(100% - 20px)'}},
     ]).it('display position', function (arg) {
-      const result = css.forMouseOver(testUtil.makeFoundItem({
+      const result = css.forMessageMouseOver(testUtil.makeFoundItem({
         displayPosition: arg.displayPosition,
       }));
 
@@ -86,7 +86,7 @@ describe('app.css', function () {
     });
   });
 
-  describe('forMouseOut', function () {
+  describe('forMessageMouseOut', function () {
     given([
       {displayPosition: 'top',          expected: {}},
       {displayPosition: 'bottom',       expected: {}},
@@ -95,7 +95,7 @@ describe('app.css', function () {
       {displayPosition: 'bottom_left',  expected: {width: '50px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px'}},
     ]).it('display position', function (arg) {
-      const result = css.forMouseOut(testUtil.makeFoundItem({
+      const result = css.forMessageMouseOut(testUtil.makeFoundItem({
         displayPosition: arg.displayPosition,
       }));
 

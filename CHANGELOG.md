@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## v6.0.2
+
+### Bug fix
+
+- Fix margin update code of top and bottom cases in display position.
+
+
 ## v6.0.1
 
 ### Bug fix
