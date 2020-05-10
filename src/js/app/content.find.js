@@ -1,4 +1,7 @@
-const sendMessage = function() {
+/**
+ * @param {PageInfo} pageInfo
+ */
+const sendMessage = function(pageInfo) {
   /**
    * @param {string} url
    * @returns {MessageContentScriptsFind}
@@ -20,7 +23,7 @@ const sendMessage = function() {
       return;
     }
 
-    const ui = require('./content.ui').init();
+    const ui = require('./content.ui').init(pageInfo);
 
     ui.initUI(response.data);
     ui.updateUI(response.data);

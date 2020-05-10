@@ -6,7 +6,10 @@
  * @property {{item: PatternItem|null, status: number}} data
  */
 
-const listen = function () {
+/**
+ * @param {PageInfo} pageInfo
+ */
+const listen = function (pageInfo) {
   /**
    * @param {MessageTabNotifyStatus} request
    */
@@ -17,7 +20,7 @@ const listen = function () {
     }
 
     if (request.data.item) {
-      const ui = require('./content.ui').init();
+      const ui = require('./content.ui').init(pageInfo);
 
       ui.updateUI(request.data.item);
     }

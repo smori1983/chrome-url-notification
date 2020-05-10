@@ -4,16 +4,14 @@ const cssFactory = require('./content.css');
 
 const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
 
-const main = function () {
+/**
+ * @param {PageInfo} pageInfo
+ */
+const main = function (pageInfo) {
   const $ = require('jquery');
   const $body = $('body');
 
-  const css = cssFactory.init({
-    body: {
-      marginTop: $body.css('marginTop'),
-      marginBottom: $body.css('marginBottom'),
-    },
-  });
+  const css = cssFactory.init(pageInfo);
 
   return {
     /**

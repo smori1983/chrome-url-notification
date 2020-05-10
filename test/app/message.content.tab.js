@@ -2,6 +2,7 @@ const { describe, before, beforeEach, afterEach, after } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const SUT = require('../../src/js/app/content.tab');
+const pageInfo = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('message.content.tab', function () {
@@ -17,7 +18,7 @@ describe('message.content.tab', function () {
     {displayPosition: 'top', marginTop: '10px', marginBottom: '20px'},
     {displayPosition: 'bottom', marginTop: '10px', marginBottom: '20px'},
   ]).it('pattern matched and status is 0', function (arg) {
-    SUT.listen();
+    SUT.listen(pageInfo.init().get());
 
     testUtil.chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 0);
 
@@ -30,7 +31,7 @@ describe('message.content.tab', function () {
     {displayPosition: 'top', marginTop: '50px', marginBottom: '20px'},
     {displayPosition: 'bottom', marginTop: '10px', marginBottom: '50px'},
   ]).it('pattern matched and status is 1', function (arg) {
-    SUT.listen();
+    SUT.listen(pageInfo.init().get());
 
     testUtil.chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 1);
 
