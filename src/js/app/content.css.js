@@ -13,7 +13,7 @@ const marginTop = function(pageInfo, status) {
   if (status === 1) {
     return height + 'px';
   } else {
-    return pageInfo.body.marginBottom;
+    return pageInfo.body.marginTop;
   }
 };
 
@@ -26,7 +26,7 @@ const marginBottom = function(pageInfo, status) {
   if (status === 1) {
     return height + 'px';
   } else {
-    return pageInfo.body.marginTop;
+    return pageInfo.body.marginBottom;
   }
 };
 
@@ -155,7 +155,7 @@ const main = function(pageInfo) {
      * @param {FoundItem} item
      * @returns {Object}
      */
-    forMouseOver: function (item) {
+    forMessageMouseOver: function (item) {
       if (isCornerType(item.displayPosition)) {
         return {
           width: sprintf('calc(100%% - %dpx)', cornerSpace * 2),
@@ -170,7 +170,7 @@ const main = function(pageInfo) {
      * @param {FoundItem} item
      * @returns {Object}
      */
-    forMouseOut: function (item) {
+    forMessageMouseOut: function (item) {
       if (isCornerType(item.displayPosition)) {
         return {
           width: height + 'px',
