@@ -25,10 +25,10 @@ const main = function () {
         .css(css.forMessage(item))
         .text(item.message)
         .on('mouseover', function () {
-          $(this).css(css.forMouseOver(item));
+          $(this).css(css.forMessageMouseOver(item));
         })
         .on('mouseout', function () {
-          $(this).css(css.forMouseOut(item));
+          $(this).css(css.forMessageMouseOut(item));
         })
         .appendTo($body);
     },
