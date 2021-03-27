@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Assumes passed value is fetched from local storage.
  *

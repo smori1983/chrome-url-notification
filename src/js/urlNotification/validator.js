@@ -1,5 +1,3 @@
-'use strict';
-
 const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');

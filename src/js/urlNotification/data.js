@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {PatternItem[]} patterns
  * @returns {PatternItem[]}

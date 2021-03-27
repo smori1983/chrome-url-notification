@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @typedef {Object} MessageTabNotifyStatus
  * @property {string} command

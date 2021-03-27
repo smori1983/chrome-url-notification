@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {number} tabId
  * @param {string} url

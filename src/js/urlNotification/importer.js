@@ -1,5 +1,3 @@
-'use strict';
-
 const migrationExecutor = require('./migrationExecutor');
 const storage = require('./storage');
 

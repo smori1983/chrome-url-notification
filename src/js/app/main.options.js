@@ -1,5 +1,3 @@
-'use strict';
-
 const $ = global.jQuery = require('jquery');
 
 const i18n = require('./i18n');
