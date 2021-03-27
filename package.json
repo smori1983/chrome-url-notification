@@ -30,7 +30,7 @@
     "@types/chrome": "0.0.133",
     "@types/jquery": "^3.5.5",
     "@types/node": "^12.12.38",
-    "browserify": "^16.5.2",
+    "browserify": "^17.0.0",
     "codecov": "^3.8.1",
     "color-js": "^1.0.5",
     "cross-env": "^7.0.3",
