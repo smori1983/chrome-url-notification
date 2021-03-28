@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v6.1.0
+
+### Development
+
+- Refactoring.
+- Update dependent packages.
+
+
 ## v6.0.2
 
 ### Bug fix
