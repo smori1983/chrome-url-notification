@@ -1,5 +1,3 @@
-'use strict';
-
 const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');
@@ -53,7 +51,7 @@ const patternV1 = function() {
       },
       'backgroundColor': {
         'type': 'string',
-        'pattern': /^[0-9a-f]{6}$/i,
+        'pattern': '^[0-9a-fA-F]{6}$',
       },
     },
     'required': [
@@ -69,7 +67,7 @@ const patternV2 = function() {
     'properties': {
       'displayPosition': {
         'type': 'string',
-        'pattern': /^(bottom|top)$/,
+        'pattern': '^(bottom|top)$',
       },
     },
     'required': [
@@ -97,7 +95,7 @@ const patternV4 = function() {
   return deepMerge(patternV3(), {
     'properties': {
       'displayPosition': {
-        'pattern': /^(bottom|bottom_left|bottom_right|top|top_left|top_right)$/,
+        'pattern': '^(bottom|bottom_left|bottom_right|top|top_left|top_right)$',
       },
     },
   });

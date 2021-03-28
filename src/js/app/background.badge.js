@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @param {boolean} matched
  * @param {(number|null)} status

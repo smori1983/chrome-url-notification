@@ -1,3 +1,4 @@
+const sprintf = require('sprintf-js').sprintf;
 const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const data = require('../urlNotification/data');
@@ -5,20 +6,83 @@ const storage = require('../urlNotification/storage');
 const patternForm = require('./options.patternForm');
 const deleteForm = require('./options.deleteForm');
 
+const initEventHandler = function () {
+  const $ = require('jquery');
+  const $table = $('#js_list_pattern');
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-copy') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      patternForm.show('add', $element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-edit') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      patternForm.show('edit', $element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+
+  $table.on('click', function (e) {
+    const $element = $(e.target);
+    if ($element.data('un-action') === 'pattern-item-delete') {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      deleteForm.show($element.data('un-pattern-item'), function () {
+        refresh();
+      });
+    }
+  });
+};
+
 const show = function () {
-  const sorted = data.sortByMessage(storage.getAll());
+  initEventHandler();
+  draw();
+};
+
+const refresh = function () {
+  draw();
+};
+
+const draw = function () {
+  const items = data.sortByMessage(storage.getAll());
+
+  drawBadge(items);
+  drawTable(items);
+};
+
+/**
+ * @param {PatternItem[]} items
+ */
+const drawBadge = function (items) {
+  const $ = require('jquery');
+
+  $('#js_pattern_list_badge').text(items.length);
+};
+
+/**
+ * @param {PatternItem[]} items
+ */
+const drawTable = function (items) {
   const $ = require('jquery');
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
-  $('#js_pattern_list_badge').text(sorted.length);
-
   $headerArea.empty();
   $listArea.empty();
 
-  if (sorted.length > 0) {
+  if (items.length > 0) {
     makeHeader().appendTo($headerArea);
-    sorted.forEach(function (item) {
+    items.forEach(function (item) {
       makeRow(item).appendTo($listArea);
     });
   }
@@ -57,21 +121,23 @@ const makeRow = function(item) {
     return $('<td>');
   };
 
+  /**
+   * @param {string} label
+   * @param {string} className
+   * @returns {JQuery}
+   */
+  const container = function (label, className) {
+    return $('<div>')
+      .addClass(className)
+      .text(label);
+  };
+
   const columnPattern = (function() {
     /**
      * @param {PatternItem} item
      */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('pattern')
-        .text(item.url);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
     return function (item) {
-      return column().append(container(item));
+      return column().append(container(item.url, 'pattern'));
     };
   })();
 
@@ -79,17 +145,7 @@ const makeRow = function(item) {
     /**
      * @param {PatternItem} item
      */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('list-message')
-        .css(messageCss(item))
-        .text(item.msg);
-    };
-
-    /**
-     * @param {PatternItem} item
-     */
-    const messageCss = function(item) {
+    const css = function(item) {
       return {
         'background-color': '#' + item.backgroundColor,
         'color': '#' + config.defaultFontColor(),
@@ -100,20 +156,11 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(item.msg, 'list-message').css(css(item)));
     };
   })();
 
   const columnDisplayPosition = (function() {
-    /**
-     * @param {PatternItem} item
-     */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('display_position')
-        .text(message(item));
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -133,20 +180,11 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(message(item), 'display_position'));
     };
   })();
 
   const columnStatus = (function() {
-    /**
-     * @param {PatternItem} item
-     */
-    const container = function(item) {
-      return $('<div>')
-        .addClass('status')
-        .text(message(item));
-    };
-
     /**
      * @param {PatternItem} item
      */
@@ -162,60 +200,46 @@ const makeRow = function(item) {
      * @param {PatternItem} item
      */
     return function(item) {
-      return column().append(container(item));
+      return column().append(container(message(item), 'status'));
     };
   })();
 
   const columnAction = (function() {
-    const button = function(text) {
+    /**
+     * @param {string} label
+     * @param {string} action
+     * @param {PatternItem} item
+     * @param {string} className
+     * @returns {JQuery}
+     */
+    const button = function(label, action, item, className) {
       return $('<button>')
-        .addClass('btn btn-sm')
-        .text(text);
+        .addClass(sprintf('btn btn-sm %s_button', action))
+        .addClass(className)
+        .attr('data-un-action', sprintf('pattern-item-%s', action))
+        .attr('data-un-pattern-item', JSON.stringify(item))
+        .text(label);
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonCopy = function(item) {
-      return button(i18n.get('label_copy'))
-        .addClass('btn-default copy_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          patternForm.show('add', item, function () {
-            show();
-          });
-        });
+      return button(i18n.get('label_copy'), 'copy', item, 'btn-default');
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonEdit = function(item) {
-      return button(i18n.get('label_edit'))
-        .addClass('btn-primary edit_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          patternForm.show('edit', item, function () {
-            show();
-          });
-        });
+      return button(i18n.get('label_edit'), 'edit', item, 'btn-primary');
     };
 
     /**
      * @param {PatternItem} item
      */
     const buttonDelete = function(item) {
-      return button(i18n.get('label_delete'))
-        .addClass('btn-danger delete_button')
-        .on('click', function(e) {
-          e.preventDefault();
-          $(e.target).trigger('blur');
-          deleteForm.show(item, function () {
-            show();
-          });
-        });
+      return button(i18n.get('label_delete'), 'delete', item, 'btn-danger');
     };
 
     /**
@@ -239,3 +263,4 @@ const makeRow = function(item) {
 };
 
 module.exports.show = show;
+module.exports.refresh = refresh;

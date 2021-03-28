@@ -1,5 +1,3 @@
-'use strict';
-
 const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
