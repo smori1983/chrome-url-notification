@@ -22,7 +22,7 @@
     "deepmerge": "^4.2.2",
     "jquery": "^3.5.1",
     "jquery-validation": "^1.19.3",
-    "jsonschema": "^1.2.6",
+    "jsonschema": "^1.4.0",
     "lodash": "^4.17.21",
     "sprintf-js": "^1.1.2"
   },
