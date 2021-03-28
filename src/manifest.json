@@ -3,7 +3,7 @@
 
     "name": "Chrome URL Notification",
     "description": "Notify user when the URL matches the registered patterns.",
-    "version": "6.0.2",
+    "version": "6.1.0",
 
     "icons": {
         "16": "image/icon_16.png",
