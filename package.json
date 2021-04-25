@@ -27,7 +27,7 @@
     "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.133",
+    "@types/chrome": "0.0.135",
     "@types/jquery": "^3.5.5",
     "@types/node": "^12.12.38",
     "browserify": "^17.0.0",
@@ -40,7 +40,7 @@
     "gulp-concat-css": "^3.1.0",
     "gulp-eslint": "^6.0.0",
     "istanbul": "^0.4.5",
-    "jsdom": "^16.5.1",
+    "jsdom": "^16.5.3",
     "license-checker": "^25.0.1",
     "mocha": "^8.3.2",
     "mocha-testdata": "^1.2.0",
