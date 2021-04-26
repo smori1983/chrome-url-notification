@@ -37,6 +37,7 @@
     "browserify": "^17.0.0",
     "codecov": "^3.8.1",
     "color-js": "^1.0.5",
+    "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "dotenv": "^8.2.0",
