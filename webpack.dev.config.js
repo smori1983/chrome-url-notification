@@ -39,10 +39,20 @@ module.exports = {
     filename: 'js/background.js',
   },
   module: {
-    rules: [{
-      test: /\.(js)$/,
-      include: path.resolve(__dirname, 'src'),
-      loader: 'babel-loader',
-    }],
+    rules: [
+      {
+        test: /\.(js)$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.(css)$/,
+        use: [
+          'style-loader', {
+            loader: 'css-loader',
+          },
+        ],
+      },
+    ],
   },
 }
