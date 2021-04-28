@@ -5,14 +5,10 @@
   "directories": {},
   "scripts": {
     "license:summary": "license-checker --production --summary --unknown",
-    "build:prod": "cross-env EXTENSION_MODE=production gulp build",
-    "build:dev": "cross-env EXTENSION_MODE=development gulp build",
-    "make": "gulp make",
     "test": "mocha --require mock-local-storage test/*",
     "test:coverage": "istanbul cover --print both _mocha -- test/* --require mock-local-storage",
     "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "watch:test": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
-    "lint": "gulp lint",
     "report:coverage": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
   },
   "dependencies": {
