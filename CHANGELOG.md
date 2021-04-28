@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Introduce `webpack`.
+
+
 ## v6.1.0
 
 ### Development
