@@ -11,7 +11,7 @@ const deepMerge = require('deepmerge');
  * @property {(FoundItem|null)} data Depends on the value of matched
  */
 
-const migrate = function() {
+const migrate = () => {
   migration.execute();
 };
 
@@ -20,7 +20,7 @@ const migrate = function() {
  * @param {FindOption} [option]
  * @return {FindResult}
  */
-const find = function(url, option) {
+const find = (url, option) => {
   const item = finder.findFor(url, option);
 
   return {
@@ -33,7 +33,7 @@ const find = function(url, option) {
  * @param {string} url
  * @returns {PatternItem}
  */
-const findByUrl = function(url) {
+const findByUrl = (url) => {
   return storage.findByUrl(url);
 };
 
@@ -42,7 +42,7 @@ const findByUrl = function(url) {
  * @param {object} data
  * @returns {boolean} true if successfully updated
  */
-const updatePattern = function(url, data) {
+const updatePattern = (url, data) => {
   const item = storage.findByUrl(url);
 
   if (item === null) {

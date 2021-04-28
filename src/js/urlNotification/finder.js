@@ -28,7 +28,7 @@ const deepMerge = require('deepmerge');
  * @param {FindOption} [option]
  * @returns {(FoundItem|null)}
  */
-const find = function(url, option) {
+const find = (url, option) => {
   let i, len;
 
   option = deepMerge(defaultFindOption(), option || {});
@@ -50,7 +50,7 @@ const find = function(url, option) {
 /**
  * @returns {FindOption}
  */
-const defaultFindOption = function () {
+const defaultFindOption = () => {
   return {
     ignoreStatus: false,
   };
@@ -60,7 +60,7 @@ const defaultFindOption = function () {
  * @param {string} url
  * @returns {RegExp}
  */
-const makeRegExp = function(url) {
+const makeRegExp = (url) => {
   return new RegExp(convertForMatching(url));
 };
 
@@ -68,12 +68,12 @@ const makeRegExp = function(url) {
  * @param {string} url
  * @returns {string}
  */
-const convertForMatching = function(url) {
+const convertForMatching = (url) => {
   return url
-    .replace(/[/.+\-?]/g, function(matched) {
+    .replace(/[/.+\-?]/g, (matched) => {
       return '\\' + matched;
     })
-    .replace(/\*/g, function() {
+    .replace(/\*/g, () => {
       return '[0-9a-zA-Z-_]+';
     });
 };
@@ -82,7 +82,7 @@ const convertForMatching = function(url) {
  * @param {PatternItem} item
  * @returns {FoundItem}
  */
-const createData = function(item) {
+const createData = (item) => {
   return {
     url: item.url,
     message: item.msg,

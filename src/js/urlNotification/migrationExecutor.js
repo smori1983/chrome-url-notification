@@ -9,7 +9,7 @@ const config = require('./config');
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const for0 = function(item) {
+const for0 = (item) => {
   item.backgroundColor = config.defaultBackgroundColor();
 
   return item;
@@ -23,7 +23,7 @@ const for0 = function(item) {
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const for1 = function(item) {
+const for1 = (item) => {
   item.displayPosition = config.defaultDisplayPosition();
 
   return item;
@@ -37,7 +37,7 @@ const for1 = function(item) {
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const for2 = function(item) {
+const for2 = (item) => {
   item.status = config.defaultStatus();
 
   return item;
@@ -51,7 +51,7 @@ const for2 = function(item) {
  * @param {PatternItem} item
  * @returns {PatternItem}
  */
-const for3 = function(item) {
+const for3 = (item) => {
   return item;
 };
 
@@ -67,7 +67,7 @@ const converters = {
  * @param {number} fromVersion
  * @returns {PatternItem}
  */
-const executeOne = function(pattern, fromVersion) {
+const executeOne = (pattern, fromVersion) => {
   return converters[fromVersion](pattern);
 };
 
@@ -78,10 +78,10 @@ const executeOne = function(pattern, fromVersion) {
  * @param {number} fromVersion
  * @returns {PatternItem[]}
  */
-const execute = function(patterns, fromVersion) {
+const execute = (patterns, fromVersion) => {
   let result = [];
 
-  patterns.forEach(function(pattern) {
+  patterns.forEach((pattern) => {
     result.push(executeOne(pattern, fromVersion));
   });
 
@@ -95,7 +95,7 @@ const execute = function(patterns, fromVersion) {
  * @param {number} fromVersion
  * @returns {PatternItem[]}
  */
-const toLatest = function(patterns, fromVersion) {
+const toLatest = (patterns, fromVersion) => {
   let version;
   let migrated = _.cloneDeep(patterns);
 

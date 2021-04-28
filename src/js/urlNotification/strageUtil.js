@@ -3,7 +3,7 @@
  *
  * @returns {boolean}
  */
-const isValidStringAsVersion = function(value) {
+const isValidStringAsVersion = (value) => {
   return (typeof value === 'string') && (/^\d+$/.test(value));
 };
 

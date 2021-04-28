@@ -55,55 +55,55 @@ const defaultStatus = 1;
 /**
  * @returns {number}
  */
-module.exports.version = function() {
+module.exports.version = () => {
   return version;
 };
 
 /**
  * @returns {number}
  */
-module.exports.defaultBarHeight = function () {
+module.exports.defaultBarHeight = () => {
   return defaultBarHeight;
 };
 
 /**
  * @returns {number}
  */
-module.exports.defaultCircleDiameter = function () {
+module.exports.defaultCircleDiameter = () => {
   return defaultCircleDiameter;
 };
 
 /**
  * @returns {number}
  */
-module.exports.defaultCornerSpace = function () {
+module.exports.defaultCornerSpace = () => {
   return defaultCornerSpace;
 };
 
 /**
  * @returns {string}
  */
-module.exports.defaultFontColor = function() {
+module.exports.defaultFontColor = () => {
   return defaultFontColor;
 };
 
 /**
  * @returns {string}
  */
-module.exports.defaultBackgroundColor = function() {
+module.exports.defaultBackgroundColor = () => {
   return defaultBackgroundColor;
 };
 
 /**
  * @returns {string}
  */
-module.exports.defaultDisplayPosition = function() {
+module.exports.defaultDisplayPosition = () => {
   return defaultDisplayPosition;
 };
 
 /**
  * @returns {number}
  */
-module.exports.defaultStatus = function() {
+module.exports.defaultStatus = () => {
   return defaultStatus;
 };

@@ -5,14 +5,14 @@ const migrationExecutor = require('./migrationExecutor');
 /**
  * @returns {boolean}
  */
-const hasVersion = function() {
+const hasVersion = () => {
   return storage.hasVersion();
 };
 
 /**
  * @returns {number}
  */
-const currentVersion = function() {
+const currentVersion = () => {
   return storage.currentVersion();
 };
 
@@ -23,11 +23,11 @@ const currentVersion = function() {
  *
  * @param {PatternItem[]} patterns
  */
-const persist = function(patterns) {
+const persist = (patterns) => {
   storage.replace(config.version(), patterns);
 };
 
-const execute = function() {
+const execute = () => {
   const version = currentVersion();
   const patterns = storage.getAll();
 
