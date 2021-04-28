@@ -4,6 +4,8 @@
   "description": "Chrome URL Notification",
   "directories": {},
   "scripts": {
+    "build:prod": "webpack",
+    "build:dev": "webpack --config webpack.dev.config.js",
     "license:summary": "license-checker --production --summary --unknown",
     "test": "mocha --require mock-local-storage test/*",
     "test:coverage": "istanbul cover --print both _mocha -- test/* --require mock-local-storage",
