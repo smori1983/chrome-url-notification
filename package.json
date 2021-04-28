@@ -6,12 +6,12 @@
   "scripts": {
     "build:prod": "webpack",
     "build:dev": "webpack --config webpack.dev.config.js",
+    "build:dev:watch": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "license:summary": "license-checker --production --summary --unknown",
     "test": "mocha --require mock-local-storage test/*",
     "test:coverage": "istanbul cover --print both _mocha -- test/* --require mock-local-storage",
-    "watch:build:dev": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
-    "watch:test": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
-    "report:coverage": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
+    "test:watch": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
+    "coverage:report": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
   },
   "dependencies": {
     "bootstrap": "^3.4.1",
