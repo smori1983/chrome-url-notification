@@ -5,7 +5,6 @@ node_js:
   - lts/*
 
 script:
-  - npm run lint
   - npm run test
   - npm run report:coverage
   - npm run build:prod
