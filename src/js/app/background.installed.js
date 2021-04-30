@@ -1,10 +1,10 @@
 const background = require('../urlNotification/background');
 
-const listener = function () {
+const listener = () => {
   background.migrate();
 };
 
-const listen = function () {
+const listen = () => {
   chrome.runtime.onInstalled.addListener(listener);
 };
 

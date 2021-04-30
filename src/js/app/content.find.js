@@ -1,12 +1,12 @@
 /**
  * @param {PageInfo} pageInfo
  */
-const sendMessage = function(pageInfo) {
+const sendMessage = (pageInfo) => {
   /**
    * @param {string} url
    * @returns {MessageContentScriptsFind}
    */
-  const createRequest = function(url) {
+  const createRequest = (url) => {
     return {
       command: 'content_scripts:find',
       data: {
@@ -18,7 +18,7 @@ const sendMessage = function(pageInfo) {
   /**
    * @param {FindResult} response
    */
-  const process = function(response) {
+  const process = (response) => {
     if (response.matched === false) {
       return;
     }

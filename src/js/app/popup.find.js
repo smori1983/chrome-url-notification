@@ -3,12 +3,12 @@ const statusManager = require('./popup.status');
 /**
  * @param {chrome.tabs.Tab} tab
  */
-const sendMessage = function(tab) {
+const sendMessage = (tab) => {
   /**
    * @param {string} url
    * @returns {MessageBrowserActionFind}
    */
-  const createRequest = function(url) {
+  const createRequest = (url) => {
     return {
       command: 'browser_action:find',
       data: {
@@ -20,7 +20,7 @@ const sendMessage = function(tab) {
   /**
    * @param {FindResult} response
    */
-  const process = function(response) {
+  const process = (response) => {
     const $ = require('jquery');
 
     if (response.matched === false) {
@@ -31,7 +31,7 @@ const sendMessage = function(tab) {
 
     $('#pattern_status')
       .prop('checked', response.data.status === 1)
-      .on('click', function() {
+      .on('click', function () {
         const url = response.data.url;
         const status = $(this).prop('checked') ? 1 : 0;
 

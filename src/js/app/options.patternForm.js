@@ -6,7 +6,7 @@ const modalFactory = require('./options.util.modal');
 /**
  * @returns {PatternItem}
  */
-const defaultValues = function() {
+const defaultValues = () => {
   return {
     url: '',
     msg: '',
@@ -19,7 +19,7 @@ const defaultValues = function() {
 /**
  * @param {PatternItem} item
  */
-const bindValues = function(item) {
+const bindValues = (item) => {
   const $ = require('jquery');
 
   $('#js_input_url').val(item.url);
@@ -33,7 +33,7 @@ const bindValues = function(item) {
 /**
  * @returns {PatternItem}
  */
-const getValues = function () {
+const getValues = () => {
   const $ = require('jquery');
 
   return  {
@@ -45,13 +45,13 @@ const getValues = function () {
   };
 };
 
-const resetValidator = function() {
+const resetValidator = () => {
   const $ = require('jquery');
 
   $('#js_form_pattern').validate().destroy();
 };
 
-const clear = function() {
+const clear = () => {
   resetValidator();
   bindValues(defaultValues());
 };
@@ -61,7 +61,7 @@ const clear = function() {
  * @param {PatternItem} item
  * @param {function} callback
  */
-const show = function (mode, item, callback) {
+const show = (mode, item, callback) => {
   const $ = require('jquery');
   require('jquery-validation');
   require('bootstrap-colorpicker');
@@ -75,14 +75,14 @@ const show = function (mode, item, callback) {
     format: 'hex',
   });
 
-  $('#js_form_pattern_clear').on('click', function(e) {
+  $('#js_form_pattern_clear').on('click', (e) => {
     e.preventDefault();
     clear();
   });
 
-  $('#js_form_pattern').on('submit', function(e) {
+  $('#js_form_pattern').on('submit', (e) => {
     e.preventDefault();
-    submit(item, mode, function () {
+    submit(item, mode, () => {
       modal.hide();
       callback();
     });
@@ -91,7 +91,7 @@ const show = function (mode, item, callback) {
   i18n.apply('#js_modal_pattern_container');
 
   const modal = modalFactory.init('#js_modal_pattern', {
-    'shown.bs.modal': function() {
+    'shown.bs.modal': () => {
       $('#js_input_url').trigger('focus');
     },
   });
@@ -101,7 +101,7 @@ const show = function (mode, item, callback) {
   modal.show();
 };
 
-const setUpValidator = function () {
+const setUpValidator = () => {
   const $ = require('jquery');
 
   $.validator.addMethod('hexColor', function(value, element) {
@@ -167,7 +167,7 @@ const submit = function(item, mode, callback) {
  * @param {ValidatorConfig} config
  * @returns {Object}
  */
-const validatorConfig = function(config) {
+const validatorConfig = (config) => {
   // jquery-validation ignores elements that is configured as 'ignore'.
   // The default value is ':hidden'.
   // In jsdom testing, all input fields are detected as ':hidden'.

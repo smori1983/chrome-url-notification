@@ -7,16 +7,16 @@ const modalFactory = require('./options.util.modal');
 /**
  * @param {function} callback Called when import form submitted
  */
-const show = function (callback) {
+const show = (callback) => {
   const $ = require('jquery');
 
   $('#js_modal_import_container')
     .empty()
     .append($('#js_modal_import_html').html());
 
-  $('#js_form_import').on('submit', function(e) {
+  $('#js_form_import').on('submit', (e) => {
     e.preventDefault();
-    submit(function () {
+    submit(() => {
       modal.hide();
       callback();
     });
@@ -27,7 +27,7 @@ const show = function (callback) {
   i18n.apply('#js_modal_import_container');
 
   const modal = modalFactory.init('#js_modal_import', {
-    'shown.bs.modal': function() {
+    'shown.bs.modal': () => {
       $('#js_form_import_json').trigger('focus');
     },
   });
@@ -38,7 +38,7 @@ const show = function (callback) {
 /**
  * @param {function} callback
  */
-const submit = function (callback) {
+const submit = (callback) => {
   const $ = require('jquery');
 
   const jsonText = $('#js_form_import_json').val().trim();
@@ -59,7 +59,7 @@ const submit = function (callback) {
 /**
  * @param {string} jsonText
  */
-const parse = function (jsonText) {
+const parse = (jsonText) => {
   if (jsonText.length === 0) {
     throw new Error(i18n.get('message_json_required'));
   }
@@ -71,7 +71,7 @@ const parse = function (jsonText) {
   }
 };
 
-const validate = function (json) {
+const validate = (json) => {
   if (validator.forImportJson(json) === false) {
     throw new Error(i18n.get('message_json_invalid'));
   }

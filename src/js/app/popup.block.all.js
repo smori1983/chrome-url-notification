@@ -1,10 +1,10 @@
-const show = function () {
+const show = () => {
   const $ = require('jquery');
 
   $('<a>')
     .attr('href', '#')
     .text(chrome.i18n.getMessage('label_options'))
-    .on('click', function(e) {
+    .on('click', (e) => {
       e.preventDefault();
       chrome.tabs.create({
         url: chrome.runtime.getURL('html/options.html'),

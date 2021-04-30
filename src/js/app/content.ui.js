@@ -5,7 +5,7 @@ const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca9
 /**
  * @param {PageInfo} pageInfo
  */
-const main = function (pageInfo) {
+const main = (pageInfo) => {
   const $ = require('jquery');
   const $body = $('body');
 
@@ -15,15 +15,15 @@ const main = function (pageInfo) {
     /**
      * @param {FoundItem} item
      */
-    initUI: function(item) {
+    initUI: (item) => {
       $('<div>')
         .attr('id', messageContainerId)
         .css(css.forMessage(item))
         .text(item.message)
-        .on('mouseover', function () {
+        .on('mouseover', () => {
           $(this).css(css.forMessageMouseOver(item));
         })
-        .on('mouseout', function () {
+        .on('mouseout', () => {
           $(this).css(css.forMessageMouseOut(item));
         })
         .appendTo($body);
@@ -31,7 +31,7 @@ const main = function (pageInfo) {
     /**
      * @param {PatternItem|FoundItem} item
      */
-    updateUI: function(item) {
+    updateUI: (item) => {
       const selector = '#' + messageContainerId;
 
       if (item.status === 1) {
