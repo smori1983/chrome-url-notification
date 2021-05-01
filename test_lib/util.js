@@ -5,7 +5,7 @@ const validator = require('../src/js/urlNotification/validator');
 const factory = require('./factory');
 const storage = require('./storage');
 
-const clearStorage = function() {
+const clearStorage = () => {
   storage.clear();
 };
 
@@ -15,14 +15,14 @@ const clearStorage = function() {
  * @param {string} version
  * @param {PatternItem[]} patterns
  */
-const setUpStorage = function(version, patterns) {
+const setUpStorage = (version, patterns) => {
   storage.setUp(version, patterns);
 };
 
 /**
  * @returns {number}
  */
-const currentVersion = function() {
+const currentVersion = () => {
   return 4;
 };
 
@@ -30,7 +30,7 @@ const currentVersion = function() {
  * @param {object} json
  * @returns {boolean}
  */
-const isValidJson = function(json) {
+const isValidJson = (json) => {
   return validator.forImportJson(json) === true;
 };
 
@@ -38,7 +38,7 @@ const isValidJson = function(json) {
  * @param {object} json
  * @returns {boolean}
  */
-const isNotValidJson = function(json) {
+const isNotValidJson = (json) => {
   return validator.forImportJson(json) === false;
 };
 
@@ -46,7 +46,7 @@ const isNotValidJson = function(json) {
  * @param {string} path Relative path from project root.
  * @returns {string}
  */
-const getHtml = function(path) {
+const getHtml = (path) => {
   return fs.readFileSync(__dirname + '/../' + path).toString();
 };
 
@@ -54,7 +54,7 @@ const getHtml = function(path) {
  * @param {PatternItemDiff} diff
  * @returns {PatternItem}
  */
-const makePatternItem = function (diff) {
+const makePatternItem = (diff) => {
   return factory.makePatternItem(diff);
 };
 
@@ -62,7 +62,7 @@ const makePatternItem = function (diff) {
  * @param {FoundItemDiff} diff
  * @returns {FoundItem}
  */
-const makeFoundItem = function(diff) {
+const makeFoundItem = (diff) => {
   return factory.makeFoundItem(diff);
 };
 

@@ -13,7 +13,7 @@ const deepMerge = require('deepmerge');
  * @param {PatternItemDiff} diff
  * @returns {PatternItem}
  */
-const makePatternItem = function (diff) {
+const makePatternItem = (diff) => {
   /** @type {PatternItem} */
   const base = {
     url: 'domain1.example.com',
@@ -40,7 +40,7 @@ const makePatternItem = function (diff) {
  * @param {FoundItemDiff} diff
  * @returns {FoundItem}
  */
-const makeFoundItem = function(diff) {
+const makeFoundItem = (diff) => {
   /** @type {FoundItem} */
   const base = {
     url: 'https://example.com/',
