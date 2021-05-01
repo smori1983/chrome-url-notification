@@ -17,6 +17,12 @@
     "urlNotification": true
   },
   "rules": {
+    "arrow-body-style": ["error", "always"],
+    "arrow-parens": ["error", "always"],
+    "arrow-spacing": ["error", {
+      "before": true,
+      "after": true
+    }],
     "array-bracket-spacing": ["error", "never"],
     "block-scoped-var": "error",
     "brace-style": ["error", "1tbs"],
@@ -46,6 +52,7 @@
       "args": "none",
       "caughtErrors": "none"
     }],
+    "no-var": "error",
     "quotes": ["error", "single"]
   }
 }

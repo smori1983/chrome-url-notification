@@ -8,6 +8,8 @@
     "build:dev": "webpack --config webpack.dev.config.js",
     "build:dev:watch": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "license:summary": "license-checker --production --summary --unknown",
+    "lint": "eslint src/ test/ test_lib/",
+    "lint:fix": "eslint --fix src/ test/ test_lib/",
     "test": "mocha --require mock-local-storage test/*",
     "test:coverage": "istanbul cover --print both _mocha -- test/* --require mock-local-storage",
     "test:watch": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
