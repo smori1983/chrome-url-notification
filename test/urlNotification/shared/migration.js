@@ -3,12 +3,12 @@ const assert = require('assert');
 const testUtil = require('../../../test_lib/util');
 const migration = require('../../../src/js/urlNotification/migration');
 
-module.exports.run = function (version) {
-  it('current version', function () {
+module.exports.run = (version) => {
+  it('current version', () => {
     assert.strictEqual(migration.currentVersion(), version);
   });
 
-  it('migrated version', function () {
+  it('migrated version', () => {
     migration.execute();
 
     assert.strictEqual(migration.currentVersion(), testUtil.currentVersion());

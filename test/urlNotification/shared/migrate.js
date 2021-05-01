@@ -7,8 +7,8 @@ const storage = require('../../../src/js/urlNotification/storage');
 /**
  * @param {string} version
  */
-module.exports.runNoData = function (version) {
-  it('migrate', function () {
+module.exports.runNoData = (version) => {
+  it('migrate', () => {
     testUtil.setUpStorage(version, []);
 
     background.migrate();
