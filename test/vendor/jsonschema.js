@@ -2,8 +2,8 @@ const { describe, it } = require('mocha');
 const assert = require('assert');
 const Validator = require('jsonschema').Validator;
 
-describe('vendor.jsonschema', function() {
-  it('object - permit additional properties', function() {
+describe('vendor.jsonschema', () => {
+  it('object - permit additional properties', () => {
     const schema = {
       'type': 'object',
       'properties': {
@@ -28,7 +28,7 @@ describe('vendor.jsonschema', function() {
     assert.strictEqual(result, true);
   });
 
-  it('object - prohibit additional properties', function() {
+  it('object - prohibit additional properties', () => {
     const schema = {
       'type': 'object',
       'properties': {
