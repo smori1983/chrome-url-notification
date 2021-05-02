@@ -4,18 +4,18 @@ const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.block.all');
 const testUtil = require('../../test_lib/util');
 
-describe('popup.block.all', function () {
+describe('popup.block.all', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
     SUT.show();
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('link to options page should be shown', function () {
+  it('link to options page should be shown', () => {
     const $ = require('jquery');
     const $link = $('#link_options a');
 
@@ -23,7 +23,7 @@ describe('popup.block.all', function () {
     assert.strictEqual($link.eq(0).text(), 'Options');
   });
 
-  it('click link to options page', function () {
+  it('click link to options page', () => {
     const path = 'chrome-extension://xxx/html/options.html';
 
     chrome.runtime.getURL

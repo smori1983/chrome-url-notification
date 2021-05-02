@@ -4,15 +4,15 @@ const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
 
-describe('options.pattern.copy', function () {
+describe('options.pattern.copy', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('error', function () {
-    beforeEach(function () {
+  describe('error', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
@@ -37,7 +37,7 @@ describe('options.pattern.copy', function () {
 
     sharedForm.runError();
 
-    it('patten cannot be duplicated - keep original value', function () {
+    it('patten cannot be duplicated - keep original value', () => {
       const form = testUtil.options.patternForm();
 
       form.submit();
@@ -45,7 +45,7 @@ describe('options.pattern.copy', function () {
       assert.strictEqual(form.errorMessage('url'), 'URL pattern already exists.');
     });
 
-    it('patten cannot be duplicated - change to existing value', function () {
+    it('patten cannot be duplicated - change to existing value', () => {
       const form = testUtil.options.patternForm();
 
       form.pattern('domain2.example.com');
@@ -55,8 +55,8 @@ describe('options.pattern.copy', function () {
     });
   });
 
-  describe('ok', function () {
-    beforeEach(function () {
+  describe('ok', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
@@ -72,7 +72,7 @@ describe('options.pattern.copy', function () {
       testUtil.options.list().item(0).clickCopy();
     });
 
-    it('initial state', function () {
+    it('initial state', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain1.example.com');
@@ -82,7 +82,7 @@ describe('options.pattern.copy', function () {
       assert.strictEqual(form.status(), true);
     });
 
-    it('edit form and save', function () {
+    it('edit form and save', () => {
       const form = testUtil.options.patternForm();
       form.pattern('domain2.example.com');
       form.message('domain2');

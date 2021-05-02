@@ -4,15 +4,15 @@ const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
 
-describe('options.pattern.edit', function () {
+describe('options.pattern.edit', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('error', function () {
-    beforeEach(function () {
+  describe('error', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain7.example.com',
@@ -37,7 +37,7 @@ describe('options.pattern.edit', function () {
 
     sharedForm.runError();
 
-    it('patten cannot be duplicated - change to existing value', function () {
+    it('patten cannot be duplicated - change to existing value', () => {
       const form = testUtil.options.patternForm();
 
       form.pattern('domain8.example.com');
@@ -47,8 +47,8 @@ describe('options.pattern.edit', function () {
     });
   });
 
-  describe('ok', function () {
-    beforeEach(function () {
+  describe('ok', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain9.example.com',
@@ -64,7 +64,7 @@ describe('options.pattern.edit', function () {
       testUtil.options.list().item(0).clickEdit();
     });
 
-    it('initial state', function () {
+    it('initial state', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain9.example.com');
@@ -74,7 +74,7 @@ describe('options.pattern.edit', function () {
       assert.strictEqual(form.status(), false);
     });
 
-    it('keeping original pattern is not an error', function() {
+    it('keeping original pattern is not an error', () => {
       const form = testUtil.options.patternForm();
 
       form.submit();
@@ -82,7 +82,7 @@ describe('options.pattern.edit', function () {
       assert.strictEqual(form.shown(), false);
     });
 
-    it('edit form and save', function() {
+    it('edit form and save', () => {
       const form = testUtil.options.patternForm();
       form.pattern('domain10.example.com');
       form.message('domain10');

@@ -3,11 +3,11 @@ const assert = require('assert');
 const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
-describe('options.exportForm', function () {
+describe('options.exportForm', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
     header.show();
     testUtil.options.header().clickExport();
@@ -15,26 +15,26 @@ describe('options.exportForm', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('i18n label', function () {
+  it('i18n label', () => {
     const $ = require('jquery');
 
     assert.strictEqual($('#js_export_copy').text(), 'Copy');
   });
 
-  describe('exported json', function () {
-    it('version should be current', function () {
+  describe('exported json', () => {
+    it('version should be current', () => {
       const json = testUtil.options.exportForm().json();
 
       assert.strictEqual(json.version, testUtil.currentVersion());
     });
 
-    it('without pattern data', function () {
+    it('without pattern data', () => {
       const json = testUtil.options.exportForm().json();
 
       assert.deepStrictEqual(json.pattern, []);
     });
 
-    it('with pattern data', function () {
+    it('with pattern data', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);

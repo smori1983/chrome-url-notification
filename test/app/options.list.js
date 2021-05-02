@@ -5,24 +5,24 @@ const storage = require('../../src/js/urlNotification/storage');
 const SUT = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
-describe('options.list', function () {
+describe('options.list', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('badge number', function () {
-    it('without data', function () {
+  describe('badge number', () => {
+    it('without data', () => {
       SUT.show();
 
       assert.strictEqual(testUtil.options.list().badge(), '0');
     });
 
-    it('with 1 pattern', function() {
+    it('with 1 pattern', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
@@ -31,7 +31,7 @@ describe('options.list', function () {
       assert.strictEqual(testUtil.options.list().badge(), '1');
     });
 
-    it('with 3 patterns', function() {
+    it('with 3 patterns', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'site1.example.com'}),
         testUtil.makePatternItem({url: 'site2.example.com'}),
@@ -43,8 +43,8 @@ describe('options.list', function () {
     });
   });
 
-  describe('table tr element', function () {
-    it('without pattern data', function () {
+  describe('table tr element', () => {
+    it('without pattern data', () => {
       SUT.show();
 
       const list = testUtil.options.list();
@@ -53,7 +53,7 @@ describe('options.list', function () {
       assert.strictEqual(list.numOfItems(), 0);
     });
 
-    it('with pattern data', function () {
+    it('with pattern data', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
@@ -66,8 +66,8 @@ describe('options.list', function () {
     });
   });
 
-  describe('header area', function () {
-    it('labels', function () {
+  describe('header area', () => {
+    it('labels', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
@@ -85,8 +85,8 @@ describe('options.list', function () {
     });
   });
 
-  describe('list area', function () {
-    beforeEach(function () {
+  describe('list area', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -106,7 +106,7 @@ describe('options.list', function () {
       SUT.show();
     });
 
-    it('displayed elements of item', function () {
+    it('displayed elements of item', () => {
       assert.strictEqual(testUtil.options.list().numOfItems(), 2);
 
       const item1 = testUtil.options.list().item(0);
@@ -124,7 +124,7 @@ describe('options.list', function () {
       assert.strictEqual(item2.status(), 'n');
     });
 
-    it('click copy button twice and form should be updated', function () {
+    it('click copy button twice and form should be updated', () => {
       const list = testUtil.options.list();
       const form = testUtil.options.patternForm();
 
@@ -139,7 +139,7 @@ describe('options.list', function () {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('click edit button twice and form should be updated', function () {
+    it('click edit button twice and form should be updated', () => {
       const list = testUtil.options.list();
       const form = testUtil.options.patternForm();
 
@@ -154,7 +154,7 @@ describe('options.list', function () {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('click delete button twice and form should be updated', function () {
+    it('click delete button twice and form should be updated', () => {
       const list = testUtil.options.list();
       const form = testUtil.options.deleteForm();
 
@@ -192,7 +192,7 @@ describe('options.list', function () {
           status: 1,
         }],
       },
-    ]).it('execute delete', function (arg) {
+    ]).it('execute delete', (arg) => {
       testUtil.options.list().item(arg.itemIndex).clickDelete();
       testUtil.options.deleteForm().submit();
 
@@ -203,7 +203,7 @@ describe('options.list', function () {
     given([
       {itemIndex: 0},
       {itemIndex: 1},
-    ]).it('cancel delete', function (arg) {
+    ]).it('cancel delete', (arg) => {
       testUtil.options.list().item(arg.itemIndex).clickDelete();
       testUtil.options.deleteForm().cancel();
 
@@ -211,8 +211,8 @@ describe('options.list', function () {
     });
   });
 
-  describe('list area - display position', function () {
-    beforeEach(function () {
+  describe('list area - display position', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'site1.example.com', displayPosition: 'top'}),
         testUtil.makePatternItem({url: 'site2.example.com', displayPosition: 'bottom'}),
@@ -231,15 +231,15 @@ describe('options.list', function () {
       {itemIndex: 3, expected: 'Top right'},
       {itemIndex: 4, expected: 'Bottom left'},
       {itemIndex: 5, expected: 'Bottom right'},
-    ]).it('label of display position', function (arg) {
+    ]).it('label of display position', (arg) => {
       const item = testUtil.options.list().item(arg.itemIndex);
 
       assert.strictEqual(item.displayPosition(), arg.expected);
     });
   });
 
-  describe('behavior for broken or invalid data', function () {
-    it('url not registered', function () {
+  describe('behavior for broken or invalid data', () => {
+    it('url not registered', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           msg: 'site1',
@@ -259,7 +259,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('message not registered', function () {
+    it('message not registered', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -279,7 +279,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('display position not registered', function () {
+    it('display position not registered', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -299,7 +299,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('display position is invalid', function () {
+    it('display position is invalid', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -320,7 +320,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), 'Y');
     });
 
-    it('status not registered', function () {
+    it('status not registered', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -340,7 +340,7 @@ describe('options.list', function () {
       assert.strictEqual(list.item(0).status(), '');
     });
 
-    it('status is invalid', function () {
+    it('status is invalid', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',

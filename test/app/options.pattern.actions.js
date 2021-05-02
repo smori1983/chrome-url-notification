@@ -4,19 +4,19 @@ const header = require('../../src/js/app/options.header');
 const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
-describe('options.pattern.actions', function () {
+describe('options.pattern.actions', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
     header.show();
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('submit add form with invalid inputs and open again', function () {
-    beforeEach(function () {
+  describe('submit add form with invalid inputs and open again', () => {
+    beforeEach(() => {
       testUtil.options.header().clickAdd();
 
       const form = testUtil.options.patternForm();
@@ -28,7 +28,7 @@ describe('options.pattern.actions', function () {
       testUtil.options.header().clickAdd();
     });
 
-    it('form fields should be initialized', function () {
+    it('form fields should be initialized', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.pattern(), '');
@@ -38,14 +38,14 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.status(), true);
     });
 
-    it('error messages should not be shown', function () {
+    it('error messages should not be shown', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
-    it('submit add form with invalid inputs again', function () {
+    it('submit add form with invalid inputs again', () => {
       const form = testUtil.options.patternForm();
       form.submit();
 
@@ -53,7 +53,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
     });
 
-    it('clear button works', function () {
+    it('clear button works', () => {
       const form = testUtil.options.patternForm();
       form.clear();
 
@@ -67,7 +67,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
-    it('cancel button works', function () {
+    it('cancel button works', () => {
       const form = testUtil.options.patternForm();
       form.cancel();
 
@@ -75,8 +75,8 @@ describe('options.pattern.actions', function () {
     });
   });
 
-  describe('submit add form multiple times with invalid inputs', function () {
-    beforeEach(function () {
+  describe('submit add form multiple times with invalid inputs', () => {
+    beforeEach(() => {
       testUtil.options.header().clickAdd();
 
       const form = testUtil.options.patternForm();
@@ -88,7 +88,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
     });
 
-    it('clear button works', function () {
+    it('clear button works', () => {
       const form = testUtil.options.patternForm();
       form.clear();
 
@@ -102,7 +102,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
-    it('cancel button works', function () {
+    it('cancel button works', () => {
       const form = testUtil.options.patternForm();
       form.cancel();
 
@@ -110,8 +110,8 @@ describe('options.pattern.actions', function () {
     });
   });
 
-  describe('submit add form with invalid inputs and open copy form', function () {
-    beforeEach(function () {
+  describe('submit add form with invalid inputs and open copy form', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain11.example.com',
@@ -134,7 +134,7 @@ describe('options.pattern.actions', function () {
       testUtil.options.list().item(0).clickCopy();
     });
 
-    it('initial state', function () {
+    it('initial state', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain11.example.com');
@@ -144,14 +144,14 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.status(), true);
     });
 
-    it('error messages should not be shown', function () {
+    it('error messages should not be shown', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
-    it('clear button works', function () {
+    it('clear button works', () => {
       const form = testUtil.options.patternForm();
       form.clear();
 
@@ -162,7 +162,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.status(), true);
     });
 
-    it('cancel button works', function () {
+    it('cancel button works', () => {
       const form = testUtil.options.patternForm();
       form.cancel();
 
@@ -170,8 +170,8 @@ describe('options.pattern.actions', function () {
     });
   });
 
-  describe('submit add form with invalid inputs and open edit form', function () {
-    beforeEach(function () {
+  describe('submit add form with invalid inputs and open edit form', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain21.example.com',
@@ -194,7 +194,7 @@ describe('options.pattern.actions', function () {
       testUtil.options.list().item(0).clickEdit();
     });
 
-    it('initial state', function () {
+    it('initial state', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain21.example.com');
@@ -204,14 +204,14 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.status(), false);
     });
 
-    it('error messages should not be shown', function () {
+    it('error messages should not be shown', () => {
       const form = testUtil.options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
-    it('clear button works', function () {
+    it('clear button works', () => {
       const form = testUtil.options.patternForm();
       form.clear();
 
@@ -222,7 +222,7 @@ describe('options.pattern.actions', function () {
       assert.strictEqual(form.status(), true);
     });
 
-    it('cancel button works', function () {
+    it('cancel button works', () => {
       const form = testUtil.options.patternForm();
       form.cancel();
 

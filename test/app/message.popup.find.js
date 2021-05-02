@@ -3,16 +3,16 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
-describe('message.popup.find', function () {
+describe('message.popup.find', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('pattern not matched', function() {
+  it('pattern not matched', () => {
     const tab = testUtil.chrome.createTab({
       id: 10001,
       url: 'https://example.com/',
@@ -25,7 +25,7 @@ describe('message.popup.find', function () {
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), false);
   });
 
-  it('pattern matched and status is 0', function() {
+  it('pattern matched and status is 0', () => {
     const tab = testUtil.chrome.createTab({
       id: 20001,
       url: 'https://example.com/',
@@ -41,7 +41,7 @@ describe('message.popup.find', function () {
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
   });
 
-  it('pattern matched and status is 0, then enable', function() {
+  it('pattern matched and status is 0, then enable', () => {
     const tab = testUtil.chrome.createTab({
       id: 20002,
       url: 'https://example.com/',
@@ -64,7 +64,7 @@ describe('message.popup.find', function () {
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
   });
 
-  it('pattern matched and status is 1', function() {
+  it('pattern matched and status is 1', () => {
     const tab = testUtil.chrome.createTab({
       id: 30001,
       url: 'https://example.com/',
@@ -80,7 +80,7 @@ describe('message.popup.find', function () {
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
   });
 
-  it('pattern matched and status is 1, then disable', function() {
+  it('pattern matched and status is 1, then disable', () => {
     const tab = testUtil.chrome.createTab({
       id: 30002,
       url: 'https://example.com/',
