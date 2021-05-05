@@ -7,16 +7,16 @@ const testUtil = require('../../../test_lib/util');
  * @param {number} version
  * @param {PatternItem} validPattern
  */
-module.exports.run = function (version, validPattern) {
+module.exports.run = (version, validPattern) => {
   given([
     {desc: 'null', value: null},
     {desc: 'array', value: []},
     {desc: 'object but no keys', value: {}},
-  ]).it('error - argument', function (arg) {
+  ]).it('error - argument', (arg) => {
     assert.ok(testUtil.isNotValidJson(arg.value));
   });
 
-  it('error - version is not defined', function () {
+  it('error - version is not defined', () => {
     assert.ok(testUtil.isNotValidJson({
       pattern: [validPattern],
     }));
@@ -30,14 +30,14 @@ module.exports.run = function (version, validPattern) {
     {desc: 'string of int', value: '1'},
     {desc: 'out of range', value: 0},
     {desc: 'out of range', value: 5},
-  ]).it('error - version', function (arg) {
+  ]).it('error - version', (arg) => {
     assert.ok(testUtil.isNotValidJson({
       version: arg.value,
       pattern: [validPattern],
     }));
   });
 
-  it('error - pattern is not defined', function () {
+  it('error - pattern is not defined', () => {
     assert.ok(testUtil.isNotValidJson({
       version: version,
     }));
@@ -50,7 +50,7 @@ module.exports.run = function (version, validPattern) {
     {desc: 'float', value: 1.1},
     {desc: 'string', value: 'dummy'},
     {desc: 'not an array of object(s)', value: validPattern},
-  ]).it('error - pattern', function (arg) {
+  ]).it('error - pattern', (arg) => {
     assert.ok(testUtil.isNotValidJson({
       version: version,
       pattern: arg.value,

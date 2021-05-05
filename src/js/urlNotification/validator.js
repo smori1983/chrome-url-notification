@@ -2,7 +2,7 @@ const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
 const config = require('./config');
 
-const schemaForEssentialPart = function() {
+const schemaForEssentialPart = () => {
   return {
     'type': 'object',
     'properties': {
@@ -22,14 +22,14 @@ const schemaForEssentialPart = function() {
   };
 };
 
-const patternBase = function() {
+const patternBase = () => {
   return {
     'type': 'array',
     'items': { '$ref': '/item' },
   };
 };
 
-const patternTemplate = function() {
+const patternTemplate = () => {
   return {
     'id': '/item',
     'properties': {},
@@ -37,7 +37,7 @@ const patternTemplate = function() {
   };
 };
 
-const patternV1 = function() {
+const patternV1 = () => {
   return deepMerge(patternTemplate(), {
     'type': 'object',
     'properties': {
@@ -62,7 +62,7 @@ const patternV1 = function() {
   });
 };
 
-const patternV2 = function() {
+const patternV2 = () => {
   return deepMerge(patternV1(), {
     'properties': {
       'displayPosition': {
@@ -76,7 +76,7 @@ const patternV2 = function() {
   });
 };
 
-const patternV3 = function() {
+const patternV3 = () => {
   return deepMerge(patternV2(), {
     'properties': {
       'status': {
@@ -91,7 +91,7 @@ const patternV3 = function() {
   });
 };
 
-const patternV4 = function() {
+const patternV4 = () => {
   return deepMerge(patternV3(), {
     'properties': {
       'displayPosition': {
@@ -108,11 +108,11 @@ const patterns = {
   4: patternV4,
 };
 
-const patternFor = function(version) {
+const patternFor = (version) => {
   return patterns[version]();
 };
 
-const create = function() {
+const create = () => {
   return new Validator();
 };
 
@@ -120,7 +120,7 @@ const create = function() {
  * @param {object} json
  * @returns {boolean}
  */
-const validateEssentialPart = function(json) {
+const validateEssentialPart = (json) => {
   const validator = create();
 
   return validator.validate(json, schemaForEssentialPart()).valid;
@@ -130,7 +130,7 @@ const validateEssentialPart = function(json) {
  * @param {object} json
  * @returns {boolean}
  */
-const validatePatternPart = function(json) {
+const validatePatternPart = (json) => {
   const validator = create();
 
   validator.addSchema(patternFor(json.version), '/item');
@@ -142,7 +142,7 @@ const validatePatternPart = function(json) {
  * @param {object} json
  * @returns {boolean}
  */
-const importJson = function(json) {
+const importJson = (json) => {
   return validateEssentialPart(json) && validatePatternPart(json);
 };
 

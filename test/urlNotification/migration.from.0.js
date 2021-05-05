@@ -6,9 +6,9 @@ const SUT = require('../../src/js/urlNotification/migration');
 const storage = require('../../src/js/urlNotification/storage');
 const sharedMigration = require('./shared/migration');
 
-describe('urlNotification.migration.from.0', function() {
-  describe('shared patterns', function () {
-    beforeEach(function () {
+describe('urlNotification.migration.from.0', () => {
+  describe('shared patterns', () => {
+    beforeEach(() => {
       testUtil.setUpStorage('', [
         {url: 'example.com/1', msg: '1'},
       ]);
@@ -26,7 +26,7 @@ describe('urlNotification.migration.from.0', function() {
       from: {url: 'example.com/2', msg: '2'},
       to:   {url: 'example.com/2', msg: '2', backgroundColor: '000000', displayPosition: 'top', status: 1},
     },
-  ]).it('migrated pattern', function (arg) {
+  ]).it('migrated pattern', (arg) => {
     testUtil.setUpStorage('', [arg.from]);
 
     SUT.execute();

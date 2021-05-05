@@ -17,7 +17,7 @@ const key = {
 /**
  * @returns {boolean}
  */
-const hasVersion = function() {
+const hasVersion = () => {
   return util.isValidStringAsVersion(getVersion());
 };
 
@@ -26,7 +26,7 @@ const hasVersion = function() {
  *
  * @returns {number}
  */
-const currentVersion = function() {
+const currentVersion = () => {
   const version = getVersion();
 
   if (util.isValidStringAsVersion(version)) {
@@ -36,35 +36,35 @@ const currentVersion = function() {
   return 0;
 };
 
-const getVersion = function() {
+const getVersion = () => {
   return localStorage.getItem(key.version);
 };
 
 /**
  * @param {number} version
  */
-const saveVersion = function(version) {
+const saveVersion = (version) => {
   localStorage.setItem(key.version, version.toString());
 };
 
 /**
  * @param {PatternItem[]} data
  */
-const savePattern = function(data) {
+const savePattern = (data) => {
   localStorage.setItem(key.pattern, JSON.stringify(data));
 };
 
 /**
  * @returns {number}
  */
-const getCount = function() {
+const getCount = () => {
   return getAll().length;
 };
 
 /**
  * @returns {PatternItem[]}
  */
-const getAll = function() {
+const getAll = () => {
   const data = localStorage.getItem(key.pattern);
 
   if (data === null) {
@@ -80,7 +80,7 @@ const getAll = function() {
  * @param {string} url
  * @returns {(PatternItem|null)}
  */
-const findByUrl = function(url) {
+const findByUrl = (url) => {
   let i, len, patterns = getAll();
 
   for (i = 0, len = patterns.length; i < len; i++) {
@@ -95,7 +95,7 @@ const findByUrl = function(url) {
 /**
  * @param {PatternItem} pattern
  */
-const addPattern = function(pattern) {
+const addPattern = (pattern) => {
   if (findByUrl(pattern.url)) {
     return;
   }
@@ -107,7 +107,7 @@ const addPattern = function(pattern) {
  * @param {string} originalUrl
  * @param {PatternItem} pattern
  */
-const updatePattern = function(originalUrl, pattern) {
+const updatePattern = (originalUrl, pattern) => {
   if (findByUrl(originalUrl)) {
     deletePattern(originalUrl);
     addPattern(pattern);
@@ -117,15 +117,15 @@ const updatePattern = function(originalUrl, pattern) {
 /**
  * @param {string} url
  */
-const deletePattern = function(url) {
-  const newData = getAll().filter(function(pattern) {
+const deletePattern = (url) => {
+  const newData = getAll().filter((pattern) => {
     return pattern.url !== url;
   });
 
   savePattern(newData);
 };
 
-const deleteAll = function() {
+const deleteAll = () => {
   savePattern([]);
 };
 
@@ -133,7 +133,7 @@ const deleteAll = function() {
  * @param {number} version
  * @param {PatternItem[]} patterns
  */
-const replace = function(version, patterns) {
+const replace = (version, patterns) => {
   saveVersion(version);
   savePattern(patterns);
 };

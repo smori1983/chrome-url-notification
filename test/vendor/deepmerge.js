@@ -2,8 +2,8 @@ const { describe, it } = require('mocha');
 const assert = require('assert');
 const deepMerge = require('deepmerge');
 
-describe('vendor.deepmerge', function() {
-  it('deepmerge - string', function () {
+describe('vendor.deepmerge', () => {
+  it('deepmerge - string', () => {
     const data1 = {
       'key': 'value1',
     };
@@ -27,7 +27,7 @@ describe('vendor.deepmerge', function() {
     });
   });
 
-  it('deepmerge - string array', function () {
+  it('deepmerge - string array', () => {
     const data1 = {
       'key': ['a', 'b'],
     };
@@ -51,7 +51,7 @@ describe('vendor.deepmerge', function() {
     });
   });
 
-  it('deepmerge - object', function () {
+  it('deepmerge - object', () => {
     const data1 = {
       'key1': {
         'prop1': 'value1',

@@ -2,8 +2,8 @@
  * @param {PatternItem[]} patterns
  * @returns {PatternItem[]}
  */
-const sortByUrl = function(patterns) {
-  return patterns.sort(function(a, b) {
+const sortByUrl = (patterns) => {
+  return patterns.sort((a, b) => {
     return (a.url < b.url) ? -1 : 1;
   });
 };
@@ -12,8 +12,8 @@ const sortByUrl = function(patterns) {
  * @param {PatternItem[]} patterns
  * @returns {PatternItem[]}
  */
-const sortByMessage = function(patterns) {
-  return patterns.sort(function(a, b) {
+const sortByMessage = (patterns) => {
+  return patterns.sort((a, b) => {
     if (a.msg === b.msg) {
       return (a.url < b.url) ? -1 : 1;
     }

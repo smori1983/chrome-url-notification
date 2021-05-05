@@ -1,7 +1,7 @@
 /**
  * @param {string} selector
  */
-const main = function (selector) {
+const main = (selector) => {
   const $ = global.jQuery = require('jquery');
 
   let timeoutId = null;
@@ -9,7 +9,7 @@ const main = function (selector) {
   /**
    * @param {string} message
    */
-  const show = function (message) {
+  const show = (message) => {
     $(selector).text(message);
 
     if (timeoutId !== null) {
@@ -17,13 +17,13 @@ const main = function (selector) {
       window.clearTimeout(timeoutId);
     }
 
-    timeoutId = window.setTimeout(function() {
+    timeoutId = window.setTimeout(() => {
       timeoutId = null;
       hide();
     }, 3000);
   };
 
-  const hide = function () {
+  const hide = () => {
     $(selector).empty();
   };
 

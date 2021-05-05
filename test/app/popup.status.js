@@ -3,13 +3,13 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.status');
 const testUtil = require('../../test_lib/util');
 
-describe('popup', function () {
+describe('popup', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   after(testUtil.uiBase.after);
 
-  describe('updateStatus', function () {
-    it('update with 0', function () {
+  describe('updateStatus', () => {
+    it('update with 0', () => {
       /** @type {FindResult} */
       const result = {
         matched: true,
@@ -26,7 +26,7 @@ describe('popup', function () {
       assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10001, result, 0));
     });
 
-    it('update with 1', function () {
+    it('update with 1', () => {
       /** @type {FindResult} */
       const result = {
         matched: true,

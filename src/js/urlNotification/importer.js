@@ -6,8 +6,8 @@ const storage = require('./storage');
  *
  * @param {PatternItem[]} patterns
  */
-const persist = function(patterns) {
-  patterns.forEach(function(pattern) {
+const persist = (patterns) => {
+  patterns.forEach((pattern) => {
     if (storage.findByUrl(pattern.url)) {
       storage.updatePattern(pattern.url, pattern);
     } else {
@@ -21,7 +21,7 @@ const persist = function(patterns) {
  *
  * @param {ImportJson} json
  */
-const importJson = function(json) {
+const importJson = (json) => {
   const version = json.version;
   const patterns = json.pattern;
 

@@ -1,14 +1,14 @@
 const chrome = require('sinon-chrome');
 
-const before = function () {
+const before = () => {
   global.chrome = chrome;
 };
 
-const beforeEach = function () {
+const beforeEach = () => {
   chrome.flush();
 };
 
-const after = function () {
+const after = () => {
   delete global.chrome;
 };
 

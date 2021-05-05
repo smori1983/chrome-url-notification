@@ -3,8 +3,8 @@ const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/background');
 
-describe('urlNotification.background', function () {
-  beforeEach(function () {
+describe('urlNotification.background', () => {
+  beforeEach(() => {
     testUtil.setUpStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
       testUtil.makePatternItem({url: 'http://example.com/2', msg: '2'}),
@@ -13,22 +13,22 @@ describe('urlNotification.background', function () {
     ]);
   });
 
-  describe('find()', function() {
-    it('該当データなし', function () {
+  describe('find()', () => {
+    it('該当データなし', () => {
       const result = SUT.find('foo');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
-    it('該当データなし - パターン', function () {
+    it('該当データなし - パターン', () => {
       const result = SUT.find('http://example.com/item/');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
-    it('該当データあり', function () {
+    it('該当データあり', () => {
       const result = SUT.find('http://example.com/1');
 
       const expectedData = {
@@ -44,7 +44,7 @@ describe('urlNotification.background', function () {
       assert.deepStrictEqual(result.data, expectedData);
     });
 
-    it('該当データあり - パターンにマッチ', function () {
+    it('該当データあり - パターンにマッチ', () => {
       const result = SUT.find('http://example.com/item/5');
 
       const expectedData = {
@@ -61,8 +61,8 @@ describe('urlNotification.background', function () {
     });
   });
 
-  describe('updatePattern()', function () {
-    it('Call with non-existing pattern', function () {
+  describe('updatePattern()', () => {
+    it('Call with non-existing pattern', () => {
       const result = SUT.updatePattern('http://example.com/999', {
         status: 0,
       });
@@ -70,7 +70,7 @@ describe('urlNotification.background', function () {
       assert.strictEqual(result, false);
     });
 
-    it('Normal case', function () {
+    it('Normal case', () => {
       const result = SUT.updatePattern('http://example.com/1', {
         status: 0,
       });
@@ -78,7 +78,7 @@ describe('urlNotification.background', function () {
       assert.strictEqual(result, true);
     });
 
-    it('Try to update with invalid value', function () {
+    it('Try to update with invalid value', () => {
       const result = SUT.updatePattern('http://example.com/1', {
         status: 9,
       });
@@ -86,7 +86,7 @@ describe('urlNotification.background', function () {
       assert.strictEqual(result, false);
     });
 
-    it('Try to update with invalid key', function () {
+    it('Try to update with invalid key', () => {
       const result = SUT.updatePattern('http://example.com/1', {
         foo: 'bar',
       });

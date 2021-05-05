@@ -4,10 +4,10 @@ const SUT = require('../../src/js/app/content.find');
 const pageInfo = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
-describe('message.content.find', function () {
+describe('message.content.find', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
@@ -15,7 +15,7 @@ describe('message.content.find', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('pattern not matched', function() {
+  it('pattern not matched', () => {
     SUT.sendMessage(pageInfo.init().get());
 
     testUtil.chrome.contentFindChain('https://example.com/', null);
@@ -23,7 +23,7 @@ describe('message.content.find', function () {
     assert.strictEqual(testUtil.content.message().exists(), false);
   });
 
-  it('pattern matched and status is 0', function () {
+  it('pattern matched and status is 0', () => {
     SUT.sendMessage(pageInfo.init().get());
 
     testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
@@ -33,7 +33,7 @@ describe('message.content.find', function () {
     assert.strictEqual(testUtil.content.message().hidden(), true);
   });
 
-  it('pattern matched and status is 1', function () {
+  it('pattern matched and status is 1', () => {
     SUT.sendMessage();
 
     testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({

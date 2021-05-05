@@ -1,4 +1,4 @@
-const clear = function() {
+const clear = () => {
   localStorage.clear();
 };
 
@@ -8,7 +8,7 @@ const clear = function() {
  * @param {string} version
  * @param {PatternItem[]} patterns
  */
-const setUp = function(version, patterns) {
+const setUp = (version, patterns) => {
   localStorage.clear();
   localStorage.setItem('version', version);
   localStorage.setItem('pattern', JSON.stringify(patterns));

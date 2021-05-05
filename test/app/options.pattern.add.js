@@ -4,15 +4,15 @@ const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
 
-describe('options.pattern.add', function () {
+describe('options.pattern.add', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('error', function () {
-    beforeEach(function () {
+  describe('error', () => {
+    beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'example.com',
@@ -30,7 +30,7 @@ describe('options.pattern.add', function () {
 
     sharedForm.runError();
 
-    it('patten cannot be duplicated', function () {
+    it('patten cannot be duplicated', () => {
       const form = testUtil.options.patternForm();
 
       form.pattern('example.com');
@@ -40,14 +40,14 @@ describe('options.pattern.add', function () {
     });
   });
 
-  describe('ok', function () {
-    beforeEach(function () {
+  describe('ok', () => {
+    beforeEach(() => {
       testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
       header.show();
       testUtil.options.header().clickAdd();
     });
 
-    it('register simple data', function () {
+    it('register simple data', () => {
       const form = testUtil.options.patternForm();
 
       form.pattern('example.com');

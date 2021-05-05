@@ -7,11 +7,11 @@
 /**
  * @param {PageInfo} pageInfo
  */
-const listen = function (pageInfo) {
+const listen = (pageInfo) => {
   /**
    * @param {MessageTabNotifyStatus} request
    */
-  const tabNotifyStatusListener = function(request) {
+  const tabNotifyStatusListener = (request) => {
     /* istanbul ignore next */
     if (request.command !== 'tab:notify:status') {
       return;

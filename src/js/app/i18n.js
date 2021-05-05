@@ -1,7 +1,7 @@
 /**
  * @param {string} selector
  */
-const apply = function (selector) {
+const apply = (selector) => {
   const $ = require('jquery');
   const $element = $(selector);
 
@@ -22,7 +22,7 @@ const apply = function (selector) {
  * @param {string} key
  * @returns {string}
  */
-const get = function(key) {
+const get = (key) => {
   return chrome.i18n.getMessage(key);
 };
 

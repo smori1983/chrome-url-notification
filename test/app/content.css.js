@@ -12,12 +12,12 @@ const css = SUT.init({
   },
 });
 
-describe('app.css', function () {
+describe('app.css', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   after(testUtil.uiBase.after);
 
-  describe('forBody', function() {
+  describe('forBody', () => {
     given([
       {displayPosition: 'top',          status: 1, expected: {marginTop: '50px'}},
       {displayPosition: 'top',          status: 0, expected: {marginTop: '0px'}},
@@ -33,18 +33,18 @@ describe('app.css', function () {
       {displayPosition: 'bottom_right', status: 0, expected: {}},
       {displayPosition: 'unknown',      status: 1, expected: {}},
       {displayPosition: 'unknown',      status: 0, expected: {}},
-    ]).it('display position and status', function(arg) {
+    ]).it('display position and status', (arg) => {
       const result = css.forBody(arg.displayPosition, arg.status);
 
       assert.deepStrictEqual(result, arg.expected);
     });
   });
 
-  describe('forMessage', function() {
+  describe('forMessage', () => {
     given([
       {status: 0},
       {status: 1},
-    ]).it('element is always hidden initially regardless of status', function (arg) {
+    ]).it('element is always hidden initially regardless of status', (arg) => {
       const result = css.forMessage(testUtil.makeFoundItem({
         status: arg.status,
       }));
@@ -59,7 +59,7 @@ describe('app.css', function () {
       {displayPosition: 'top_right',    expected: {width: '50px', top: '10px', right: '10px'}},
       {displayPosition: 'bottom_left',  expected: {width: '50px', bottom: '10px', left: '10px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px', bottom: '10px', right: '10px'}},
-    ]).it('display position', function (arg) {
+    ]).it('display position', (arg) => {
       const result = css.forMessage(testUtil.makeFoundItem({
         displayPosition: arg.displayPosition,
       }));
@@ -69,7 +69,7 @@ describe('app.css', function () {
     });
   });
 
-  describe('forMessageMouseOver', function () {
+  describe('forMessageMouseOver', () => {
     given([
       {displayPosition: 'top',          expected: {}},
       {displayPosition: 'bottom',       expected: {}},
@@ -77,7 +77,7 @@ describe('app.css', function () {
       {displayPosition: 'top_right',    expected: {width: 'calc(100% - 20px)'}},
       {displayPosition: 'bottom_left',  expected: {width: 'calc(100% - 20px)'}},
       {displayPosition: 'bottom_right', expected: {width: 'calc(100% - 20px)'}},
-    ]).it('display position', function (arg) {
+    ]).it('display position', (arg) => {
       const result = css.forMessageMouseOver(testUtil.makeFoundItem({
         displayPosition: arg.displayPosition,
       }));
@@ -86,7 +86,7 @@ describe('app.css', function () {
     });
   });
 
-  describe('forMessageMouseOut', function () {
+  describe('forMessageMouseOut', () => {
     given([
       {displayPosition: 'top',          expected: {}},
       {displayPosition: 'bottom',       expected: {}},
@@ -94,7 +94,7 @@ describe('app.css', function () {
       {displayPosition: 'top_right',    expected: {width: '50px'}},
       {displayPosition: 'bottom_left',  expected: {width: '50px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px'}},
-    ]).it('display position', function (arg) {
+    ]).it('display position', (arg) => {
       const result = css.forMessageMouseOut(testUtil.makeFoundItem({
         displayPosition: arg.displayPosition,
       }));

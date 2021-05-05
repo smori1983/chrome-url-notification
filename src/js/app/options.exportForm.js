@@ -6,7 +6,7 @@ const i18n = require('./i18n');
 const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
-const show = function () {
+const show = () => {
   const $ = require('jquery');
 
   $('#js_modal_export_container')
@@ -17,7 +17,7 @@ const show = function () {
   const message = messageFactory.init('#js_export_message');
 
   /* istanbul ignore next jsdom does not support document.execCommand() */
-  clipboard.on('success', function(e) {
+  clipboard.on('success', (e) => {
     e.clearSelection();
     message.show(i18n.get('message_copy_done'));
   });

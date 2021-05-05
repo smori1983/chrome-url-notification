@@ -1,22 +1,22 @@
-const matchedBlock = function () {
+const matchedBlock = () => {
   const $ = require('jquery');
 
-  const block = function () {
+  const block = () => {
     return $('#block_for_matched_page');
   };
 
-  const shown = function() {
+  const shown = () => {
     return block().css('display') === 'block';
   };
 
-  const shouldShown = function () {
+  const shouldShown = () => {
     if (shown() === false) {
       /* istanbul ignore next */
       throw new Error('matched block is not shown');
     }
   };
 
-  const status = function () {
+  const status = () => {
     return $('#pattern_status');
   };
 
@@ -24,17 +24,17 @@ const matchedBlock = function () {
     /**
      * @returns {boolean}
      */
-    shown: function () {
+    shown: () => {
       return shown();
     },
     /**
      * @returns {boolean}
      */
-    statusEnabled: function () {
+    statusEnabled: () => {
       shouldShown();
       return status().prop('checked') === true;
     },
-    clickStatus: function () {
+    clickStatus: () => {
       shouldShown();
       status().trigger('click');
     },

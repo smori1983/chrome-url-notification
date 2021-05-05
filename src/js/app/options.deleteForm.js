@@ -6,7 +6,7 @@ const modalFactory = require('./options.util.modal');
  * @param {PatternItem} item
  * @param {function} callback Called when delete form submitted
  */
-const show = function(item, callback) {
+const show = (item, callback) => {
   const $ = require('jquery');
 
   $('#js_modal_delete_container')
@@ -16,7 +16,7 @@ const show = function(item, callback) {
   $('#js_form_delete_pattern').text(item.url);
   $('#js_form_delete_message').text(item.msg);
 
-  $('#js_form_delete').on('submit', function(e) {
+  $('#js_form_delete').on('submit', (e) => {
     e.preventDefault();
     storage.deletePattern(item.url);
     modal.hide();

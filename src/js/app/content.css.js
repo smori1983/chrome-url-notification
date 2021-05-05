@@ -4,21 +4,21 @@ const config = require('../urlNotification/config');
 /**
  * @returns {number}
  */
-const barHeight = function () {
+const barHeight = () => {
   return config.defaultBarHeight();
 };
 
 /**
  * @returns {number}
  */
-const circleDiameter = function () {
+const circleDiameter = () => {
   return config.defaultCircleDiameter();
 };
 
 /**
  * @returns {number}
  */
-const cornerSpace = function () {
+const cornerSpace = () => {
   return config.defaultCornerSpace();
 };
 
@@ -27,7 +27,7 @@ const cornerSpace = function () {
  * @param {number} status
  * @returns {string}
  */
-const marginTop = function(pageInfo, status) {
+const marginTop = (pageInfo, status) => {
   if (status === 1) {
     return barHeight() + 'px';
   } else {
@@ -40,7 +40,7 @@ const marginTop = function(pageInfo, status) {
  * @param {number} status
  * @returns {string}
  */
-const marginBottom = function(pageInfo, status) {
+const marginBottom = (pageInfo, status) => {
   if (status === 1) {
     return barHeight() + 'px';
   } else {
@@ -52,7 +52,7 @@ const marginBottom = function(pageInfo, status) {
  * @param {string} displayPosition
  * @returns {boolean}
  */
-const isBarType = function (displayPosition) {
+const isBarType = (displayPosition) => {
   const targets = [
     'top',
     'bottom',
@@ -65,7 +65,7 @@ const isBarType = function (displayPosition) {
  * @param {string} displayPosition
  * @returns {boolean}
  */
-const isCornerType = function (displayPosition) {
+const isCornerType = (displayPosition) => {
   const targets = [
     'top_left',
     'top_right',
@@ -79,7 +79,7 @@ const isCornerType = function (displayPosition) {
 /**
  * @param {PageInfo} pageInfo
  */
-const main = function(pageInfo) {
+const main = (pageInfo) => {
   return {
     /**
      * Determine CSS for body tag according to display position and current status.
@@ -88,7 +88,7 @@ const main = function(pageInfo) {
      * @param {number} status The latest value should be passed.
      * @returns {Object}
      */
-    forBody: function (displayPosition, status) {
+    forBody: (displayPosition, status) => {
       switch (displayPosition) {
         case 'top':
           return {
@@ -108,7 +108,7 @@ const main = function(pageInfo) {
      * @param {FoundItem} item
      * @returns {Object}
      */
-    forMessage: function (item) {
+    forMessage: (item) => {
       // Common properties.
       const result = {
         position: 'fixed',
@@ -175,7 +175,7 @@ const main = function(pageInfo) {
      * @param {FoundItem} item
      * @returns {Object}
      */
-    forMessageMouseOver: function (item) {
+    forMessageMouseOver: (item) => {
       if (isCornerType(item.displayPosition)) {
         return {
           width: sprintf('calc(100%% - %dpx)', cornerSpace() * 2),
@@ -190,7 +190,7 @@ const main = function(pageInfo) {
      * @param {FoundItem} item
      * @returns {Object}
      */
-    forMessageMouseOut: function (item) {
+    forMessageMouseOut: (item) => {
       if (isCornerType(item.displayPosition)) {
         return {
           width: circleDiameter() + 'px',

@@ -12,7 +12,7 @@ const factory = require('./factory');
  * @param {ChromeTabsTabDiff} diff
  * @returns {chrome.tabs.Tab}
  */
-const createTab = function(diff) {
+const createTab = (diff) => {
   const base = {
     index: 0,
     url: 'https://example.com/page1.html',
@@ -34,7 +34,7 @@ const createTab = function(diff) {
  * @param {string} url
  * @returns {boolean}
  */
-const tabsCreateShould = function (url) {
+const tabsCreateShould = (url) => {
   return chrome.tabs.create
     .withArgs({
       url: url,
@@ -49,7 +49,7 @@ const tabsCreateShould = function (url) {
  * @param {number} tabId
  * @returns {boolean}
  */
-const setBadgeTextShould = function(text, tabId) {
+const setBadgeTextShould = (text, tabId) => {
   return chrome.browserAction.setBadgeText
     .withArgs({
       text: text,
@@ -58,7 +58,7 @@ const setBadgeTextShould = function(text, tabId) {
     .calledOnce;
 };
 
-const sendResponse = function() {
+const sendResponse = () => {
   /**
    * @type {Object}
    */
@@ -68,13 +68,13 @@ const sendResponse = function() {
     /**
      * @param {Object} args
      */
-    callback: function(args) {
+    callback: (args) => {
       data = args;
     },
     /**
      * @returns {Object}
      */
-    data: function() {
+    data: () => {
       return data;
     },
   };
@@ -84,7 +84,7 @@ const sendResponse = function() {
  * @param {string} url
  * @param {(FoundItem|null)} item
  */
-const contentFindChain = function(url, item) {
+const contentFindChain = (url, item) => {
   chrome.runtime.sendMessage
     .withArgs({
       command: 'content_scripts:find',
@@ -105,7 +105,7 @@ const contentFindChain = function(url, item) {
  * @param {number} tabId
  * @param {function} callback
  */
-const contentFindDispatch = function (url, tabId, callback) {
+const contentFindDispatch = (url, tabId, callback) => {
   chrome.runtime.onMessage
     .dispatch(
       {
@@ -129,7 +129,7 @@ const contentFindDispatch = function (url, tabId, callback) {
  * @param {string} displayPosition
  * @param {number} status
  */
-const contentTabNotifyStatusDispatch = function(displayPosition, status) {
+const contentTabNotifyStatusDispatch = (displayPosition, status) => {
   chrome.runtime.onMessage
     .dispatch({
       command: 'tab:notify:status',
@@ -146,7 +146,7 @@ const contentTabNotifyStatusDispatch = function(displayPosition, status) {
  * @param {chrome.tabs.Tab} tab
  * @param {(FoundItem|null)} item
  */
-const popupFindChain = function(tab, item) {
+const popupFindChain = (tab, item) => {
   chrome.runtime.sendMessage
     .withArgs({
       command: 'browser_action:find',
@@ -166,7 +166,7 @@ const popupFindChain = function(tab, item) {
  * @param {string} url
  * @param {function} callback
  */
-const popupFindDispatch = function (url, callback) {
+const popupFindDispatch = (url, callback) => {
   chrome.runtime.onMessage
     .dispatch(
       {
@@ -186,7 +186,7 @@ const popupFindDispatch = function (url, callback) {
  * @param {number} status
  * @returns {boolean}
  */
-const popupTabNotifyStatusShould = function (tabId, item, status) {
+const popupTabNotifyStatusShould = (tabId, item, status) => {
   return chrome.tabs.sendMessage
     .withArgs(tabId, {
       command: 'tab:notify:status',
@@ -201,7 +201,7 @@ const popupTabNotifyStatusShould = function (tabId, item, status) {
 /**
  * @param {string} url used to part of chrome.tabs.Tab
  */
-const popupTabsQueryChain = function (url) {
+const popupTabsQueryChain = (url) => {
   chrome.tabs.query
     .withArgs({
       currentWindow: true,
@@ -218,7 +218,7 @@ const popupTabsQueryChain = function (url) {
  * @param {number} status
  * @param {FindResult} item
  */
-const popupUpdateStatusChain = function(tabId, url, status, item) {
+const popupUpdateStatusChain = (tabId, url, status, item) => {
   chrome.runtime.sendMessage
     .withArgs({
       command: 'browser_action:update:status',
@@ -242,7 +242,7 @@ const popupUpdateStatusChain = function(tabId, url, status, item) {
  * @param {number} status
  * @param {function} callback
  */
-const popupUpdateStatusDispatch = function (tabId, url, status, callback) {
+const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
   chrome.runtime.onMessage
     .dispatch(
       {
@@ -264,7 +264,7 @@ const popupUpdateStatusDispatch = function (tabId, url, status, callback) {
  * @param {number} status
  * @returns {boolean}
  */
-const popupUpdateStatusShould = function(tabId, url, status) {
+const popupUpdateStatusShould = (tabId, url, status) => {
   return chrome.runtime.sendMessage
     .withArgs({
       command: 'browser_action:update:status',

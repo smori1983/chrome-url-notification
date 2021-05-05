@@ -1,4 +1,4 @@
-const main = function () {
+const main = () => {
   const $ = require('jquery');
   const $body = $('body');
 
@@ -11,7 +11,7 @@ const main = function () {
   };
 
   return {
-    get: function () {
+    get: () => {
       return pageInfo;
     },
   };

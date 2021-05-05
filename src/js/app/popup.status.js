@@ -3,14 +3,14 @@
  * @param {string} url
  * @param {number} status
  */
-const updateStatus = function(tabId, url, status) {
+const updateStatus = (tabId, url, status) => {
   /**
    * @param {number} tabId
    * @param {string} url
    * @param {number} status
    * @returns {MessageBrowserActionUpdateStatus}
    */
-  const createRequest = function(tabId, url, status) {
+  const createRequest = (tabId, url, status) => {
     return {
       command: 'browser_action:update:status',
       data: {
@@ -21,7 +21,7 @@ const updateStatus = function(tabId, url, status) {
     };
   };
 
-  const process = function(response) {
+  const process = (response) => {
     chrome.tabs.sendMessage(tabId, {
       command: 'tab:notify:status',
       data: {

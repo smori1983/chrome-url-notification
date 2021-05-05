@@ -3,10 +3,10 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.update.status');
 const testUtil = require('../../test_lib/util');
 
-describe('background.popup.update.status', function () {
+describe('background.popup.update.status', () => {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.setUpStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
         url: 'domain1.example.com',
@@ -20,7 +20,7 @@ describe('background.popup.update.status', function () {
   });
   after(testUtil.background.after);
 
-  it('status is 1, then disable', function () {
+  it('status is 1, then disable', () => {
     const res = testUtil.chrome.sendResposne();
 
     SUT.listen();
@@ -34,7 +34,7 @@ describe('background.popup.update.status', function () {
     assert.strictEqual(data.status, 0);
   });
 
-  it('status is 0, then enable', function () {
+  it('status is 0, then enable', () => {
     const res = testUtil.chrome.sendResposne();
 
     SUT.listen();

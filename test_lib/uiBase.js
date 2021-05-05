@@ -4,11 +4,11 @@ const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
 const storage = require('./storage');
 
-const before = function () {
+const before = () => {
   global.chrome = chrome;
 };
 
-const beforeEach = function () {
+const beforeEach = () => {
   storage.clear();
 
   chrome.flush();
@@ -25,21 +25,21 @@ const beforeEach = function () {
   delete require.cache[require.resolve('bootstrap-colorpicker')];
 };
 
-const afterEach = function() {
+const afterEach = () => {
   delete global.window;
   delete global.document;
   delete global.HTMLElement;
 };
 
-const after = function () {
+const after = () => {
   delete global.chrome;
 };
 
 /**
  * @param {string} locale 'en' or 'ja'
  */
-const initI18n = function (locale) {
-  return function () {
+const initI18n = (locale) => {
+  return () => {
     const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
     const message = fs.readFileSync(localeFile).toString();
     chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
@@ -50,7 +50,7 @@ const initI18n = function (locale) {
  * @param {string} content
  * @param {Object} [options]
  */
-const initDom = function (content, options) {
+const initDom = (content, options) => {
   const dom = new JSDOM(content, options);
 
   global.window = dom.window;

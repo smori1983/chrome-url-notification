@@ -4,11 +4,11 @@ const header = require('../../src/js/app/options.header');
 const storage = require('../../src/js/urlNotification/storage');
 const testUtil = require('../../test_lib/util');
 
-describe('options.importForm', function () {
+describe('options.importForm', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
     header.show();
     testUtil.options.header().clickImport();
@@ -16,7 +16,7 @@ describe('options.importForm', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('i18n label', function () {
+  it('i18n label', () => {
     const $ = require('jquery');
     const $container = $('#js_modal_import_container');
 
@@ -25,15 +25,15 @@ describe('options.importForm', function () {
     assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
   });
 
-  describe('import - failure', function () {
-    it('input is empty', function () {
+  describe('import - failure', () => {
+    it('input is empty', () => {
       const form = testUtil.options.importForm();
       form.submit();
 
       assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is required.');
     });
 
-    it('not a JSON text', function () {
+    it('not a JSON text', () => {
       const form = testUtil.options.importForm();
       form.json('foo');
       form.submit();
@@ -41,7 +41,7 @@ describe('options.importForm', function () {
       assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is invalid.');
     });
 
-    it('invalid JSON structure', function () {
+    it('invalid JSON structure', () => {
       const form = testUtil.options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -58,8 +58,8 @@ describe('options.importForm', function () {
     });
   });
 
-  describe('import - success', function () {
-    it('without data', function () {
+  describe('import - success', () => {
+    it('without data', () => {
       const form = testUtil.options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -85,7 +85,7 @@ describe('options.importForm', function () {
       assert.strictEqual(data[0].status, 0);
     });
 
-    it('with data - update existing data', function() {
+    it('with data - update existing data', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
@@ -122,7 +122,7 @@ describe('options.importForm', function () {
       assert.strictEqual(data[0].status, 1);
     });
 
-    it('with data - add new data', function() {
+    it('with data - add new data', () => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',

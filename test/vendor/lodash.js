@@ -2,8 +2,8 @@ const { describe, it } = require('mocha');
 const assert = require('assert');
 const _ = require('lodash');
 
-describe('vendor.lodash', function() {
-  it('cloneDeep - array', function() {
+describe('vendor.lodash', () => {
+  it('cloneDeep - array', () => {
     const source = [1, 2, 3];
 
     const cloned = _.cloneDeep(source);
@@ -17,7 +17,7 @@ describe('vendor.lodash', function() {
     assert.deepStrictEqual(cloned, [999, 2, 3]);
   });
 
-  it('cloneDeep - flat object', function() {
+  it('cloneDeep - flat object', () => {
     const source = {
       'key1': 'value1',
       'key2': 'value2',
@@ -40,7 +40,7 @@ describe('vendor.lodash', function() {
     });
   });
 
-  it('cloneDeep - nested object', function() {
+  it('cloneDeep - nested object', () => {
     const source = {
       'key1': 'value1',
       'key2': {

@@ -3,26 +3,26 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
 
-describe('popup.block.matched', function () {
+describe('popup.block.matched', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
     SUT.show();
   });
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  describe('i18n', function () {
-    it('status label', function () {
+  describe('i18n', () => {
+    it('status label', () => {
       const $ = require('jquery');
       const $element = $('#block_for_matched_page span').eq(0);
 
       assert.strictEqual($element.text(), 'Status');
     });
 
-    it('enabled label', function () {
+    it('enabled label', () => {
       const $ = require('jquery');
       const $element = $('#block_for_matched_page label').eq(0);
 
@@ -30,8 +30,8 @@ describe('popup.block.matched', function () {
     });
   });
 
-  describe('initial state of status checkbox', function () {
-    it('pattern matched and status is 0', function () {
+  describe('initial state of status checkbox', () => {
+    it('pattern matched and status is 0', () => {
       testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
       testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10001,
@@ -44,7 +44,7 @@ describe('popup.block.matched', function () {
       assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
     });
 
-    it('pattern matched and status is 1', function () {
+    it('pattern matched and status is 1', () => {
       testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
       testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
         id: 10002,

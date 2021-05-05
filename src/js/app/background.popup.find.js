@@ -11,7 +11,7 @@ const background = require('../urlNotification/background');
  * @param {chrome.runtime.MessageSender} sender
  * @param {function} sendResponse
  */
-const listener = function(request, sender, sendResponse) {
+const listener = (request, sender, sendResponse) => {
   /* istanbul ignore next */
   if (request.command !== 'browser_action:find') {
     return;
@@ -22,7 +22,7 @@ const listener = function(request, sender, sendResponse) {
   sendResponse(findResult);
 };
 
-const listen = function () {
+const listen = () => {
   chrome.runtime.onMessage.addListener(listener);
 };
 

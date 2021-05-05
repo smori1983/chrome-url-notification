@@ -3,14 +3,14 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/options.util.modal');
 const testUtil = require('../../test_lib/util');
 
-describe('options.util.modal', function () {
+describe('options.util.modal', () => {
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/options.modal.01.html'));
   });
   afterEach(testUtil.uiBase.afterEach);
 
-  it('show and hide', function () {
+  it('show and hide', () => {
     const $ = require('jquery');
     const $modal = $('#modal');
 
@@ -27,12 +27,12 @@ describe('options.util.modal', function () {
     assert.strictEqual($modal.css('display'), 'none');
   });
 
-  it('with event handler', function () {
+  it('with event handler', () => {
     const $ = require('jquery');
     const $modal = $('#modal');
 
     const modal = SUT.init('#modal', {
-      'shown.bs.modal': function() {
+      'shown.bs.modal': () => {
         $('#modal').text('Activated');
       },
     });

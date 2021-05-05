@@ -3,10 +3,10 @@ const assert = require('assert');
 const contentFind = require('../../src/js/app/content.find');
 const testUtil = require('../../test_lib/util');
 
-describe('content.ui', function () {
+describe('content.ui', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
-  beforeEach(function () {
+  beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
@@ -14,7 +14,7 @@ describe('content.ui', function () {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
-  it('mouseover (test for coverage)', function() {
+  it('mouseover (test for coverage)', () => {
     contentFind.sendMessage();
 
     testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
@@ -28,7 +28,7 @@ describe('content.ui', function () {
     $message.trigger('mouseover');
   });
 
-  it('mouseout (test for coverage)', function() {
+  it('mouseout (test for coverage)', () => {
     contentFind.sendMessage();
 
     testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({

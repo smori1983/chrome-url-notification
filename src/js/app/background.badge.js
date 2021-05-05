@@ -3,7 +3,7 @@
  * @param {(number|null)} status
  * @returns {string}
  */
-const determineText = function(matched, status) {
+const determineText = (matched, status) => {
   if (matched && status === 1) {
     return 'ON';
   } else if (matched && status === 0) {
@@ -18,7 +18,7 @@ const determineText = function(matched, status) {
  * @param {boolean} matched
  * @param {(number|null)} status
  */
-const draw = function(tabId, matched, status) {
+const draw = (tabId, matched, status) => {
   chrome.browserAction.setBadgeText({
     text: determineText(matched, status),
     tabId: tabId,

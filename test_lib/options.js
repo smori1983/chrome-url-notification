@@ -1,78 +1,78 @@
 const Color = require('color-js');
 
-const header = function () {
+const header = () => {
   const $ = require('jquery');
 
   return {
-    version: function () {
+    version: () => {
       return $('#js_version').text();
     },
-    clickAdd: function () {
+    clickAdd: () => {
       $('#js_button_add_pattern').trigger('click');
     },
-    clickExport: function () {
+    clickExport: () => {
       $('#js_button_export').trigger('click');
     },
-    clickImport: function () {
+    clickImport: () => {
       $('#js_button_import').trigger('click');
     },
   };
 };
 
-const exportForm = function () {
+const exportForm = () => {
   const $ = require('jquery');
 
   return {
     /**
      * @returns {boolean}
      */
-    shown: function () {
+    shown: () => {
       return modalIsActivated($('#js_modal_export'));
     },
-    json: function () {
+    json: () => {
       modalShouldActivated($('#js_modal_export'));
       return JSON.parse($('#js_export_display').text());
     },
   };
 };
 
-const importForm = function () {
+const importForm = () => {
   const $ = require('jquery');
 
   return {
     /**
      * @returns {boolean}
      */
-    shown: function () {
+    shown: () => {
       return modalIsActivated($('#js_modal_import'));
     },
     /**
      * @param {string} [input]
      */
-    json: function (input) {
+    json: (input) => {
       modalShouldActivated($('#js_modal_import'));
       if (typeof input === 'string') {
         $('#js_form_import_json').val(input);
       }
     },
-    submit: function () {
+    submit: () => {
       modalShouldActivated($('#js_modal_import'));
       $('#js_form_import_submit').trigger('click');
     },
     /**
      * @returns {string}
      */
-    errorMessage: function () {
+    errorMessage: () => {
       modalShouldActivated($('#js_modal_import'));
       return $('#js_import_message').text();
     },
   };
 };
 
-const list = function () {
+const list = () => {
   const $ = require('jquery');
 
-  const all = function () {
+  const all = () => {
     return $('#js_list_pattern tbody').find('tr');
   };
 
@@ -80,73 +80,72 @@ const list = function () {
     /**
      * @returns {string}
      */
-    badge: function () {
+    badge: () => {
       return $('#js_pattern_list_badge').text();
     },
-    header: function () {
+    header: () => {
       return $('#js_list_pattern thead').find('tr');
     },
     /**
      * @returns {number}
      */
-    numOfItems: function () {
+    numOfItems: () => {
       return all().length;
     },
     /**
      * @param {number} index
      */
-    item: function (index) {
+    item: (index) => {
       return listItem($(all()[index]));
     },
   };
 };
 
-const listItem = function ($item) {
+const listItem = ($item) => {
   return {
-    pattern: function () {
+    pattern: () => {
       return $item.find('.pattern').text();
     },
-    message: function () {
+    message: () => {
       return $item.find('.list-message').text();
     },
-    backgroundColor: function () {
-      /** @type {net.brehaut.Color} */
+    backgroundColor: () => {
       const color = Color($item.find('.list-message').css('background-color'));
       return color.toCSS();
     },
-    displayPosition: function () {
+    displayPosition: () => {
       return $item.find('.display_position').text();
     },
-    status: function () {
+    status: () => {
       return $item.find('.status').text();
     },
-    clickCopy: function () {
+    clickCopy: () => {
       $item.find('.copy_button').trigger('click');
     },
-    clickEdit: function () {
+    clickEdit: () => {
       $item.find('.edit_button').trigger('click');
     },
-    clickDelete: function () {
+    clickDelete: () => {
       $item.find('.delete_button').trigger('click');
     },
   };
 };
 
-const patternForm = function () {
+const patternForm = () => {
   const $ = require('jquery');
 
   return {
     /**
      * @returns {boolean}
      */
-    shown: function () {
+    shown: () => {
       return modalIsActivated($('#js_modal_pattern'));
     },
     /**
      * @param {string} [value]
      * @returns {string}
      */
-    pattern: function (value) {
+    pattern: (value) => {
       modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_url');
       if (typeof value === 'string') {
@@ -158,7 +157,7 @@ const patternForm = function () {
      * @param {string} [value]
      * @returns {string}
      */
-    message: function (value) {
+    message: (value) => {
       modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_msg');
       if (typeof value === 'string') {
@@ -170,7 +169,7 @@ const patternForm = function () {
      * @param {string} [value]
      * @returns {string}
      */
-    backgroundColor: function(value) {
+    backgroundColor: (value) => {
       modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_background_color');
       if (typeof value === 'string') {
@@ -182,7 +181,7 @@ const patternForm = function () {
      * @param {string} [value] 'top' or 'bottom'
      * @returns {string}
      */
-    displayPosition: function(value) {
+    displayPosition: (value) => {
       modalShouldActivated($('#js_modal_pattern'));
       const $form = $('#js_form_pattern');
       if (typeof value === 'string') {
@@ -194,7 +193,7 @@ const patternForm = function () {
      * @param {boolean} [value]
      * @returns {boolean}
      */
-    status: function(value) {
+    status: (value) => {
       modalShouldActivated($('#js_modal_pattern'));
       const $element = $('#js_input_status');
       if (typeof value === 'boolean') {
@@ -202,15 +201,15 @@ const patternForm = function () {
       }
       return $element.prop('checked');
     },
-    submit: function () {
+    submit: () => {
       modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_submit').trigger('click');
     },
-    clear: function () {
+    clear: () => {
       modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_clear').trigger('click');
     },
-    cancel: function () {
+    cancel: () => {
       modalShouldActivated($('#js_modal_pattern'));
       $('#js_form_pattern_cancel').trigger('click');
     },
@@ -218,7 +217,7 @@ const patternForm = function () {
      * @param {string} name
      * @returns {string}
      */
-    errorMessage: function (name) {
+    errorMessage: (name) => {
       modalShouldActivated($('#js_modal_pattern'));
       if (name === 'display_position') {
         return $('#display_position-error').text();
@@ -231,26 +230,26 @@ const patternForm = function () {
   }
 };
 
-const deleteForm = function () {
+const deleteForm = () => {
   const $ = require('jquery');
 
   return {
-    shown: function() {
+    shown: () => {
       return modalIsActivated($('#js_modal_delete'));
     },
-    pattern: function () {
+    pattern: () => {
       modalShouldActivated($('#js_modal_delete'));
       return $('#js_form_delete_pattern').text();
     },
-    message: function () {
+    message: () => {
       modalShouldActivated($('#js_modal_delete'));
       return $('#js_form_delete_message').text();
     },
-    submit: function () {
+    submit: () => {
       modalShouldActivated($('#js_modal_delete'));
       $('#js_form_delete_submit').trigger('click');
     },
-    cancel: function () {
+    cancel: () => {
       modalShouldActivated($('#js_modal_delete'));
       $('#js_form_delete_cancel').trigger('click');
     },
@@ -261,7 +260,7 @@ const deleteForm = function () {
  * @param {JQuery} $element
  * @throws {Error}
  */
-const modalShouldActivated = function ($element) {
+const modalShouldActivated = ($element) => {
   if (modalIsActivated($element) === false) {
     /* istanbul ignore next */
     throw new Error('modal is not activated');
@@ -278,7 +277,7 @@ const modalShouldActivated = function ($element) {
  * @param {JQuery} $element
  * @returns {boolean}
  */
-const modalIsActivated = function ($element) {
+const modalIsActivated = ($element) => {
   return $element.hasClass('modal') && $element.hasClass('in');
 };
 
