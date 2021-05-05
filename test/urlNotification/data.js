@@ -3,13 +3,13 @@ const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/data');
 
-describe('urlNotification.data', function() {
-  beforeEach(function() {
+describe('urlNotification.data', () => {
+  beforeEach(() => {
     testUtil.clearStorage();
   });
 
-  describe('URLソート', function() {
-    it('データなし', function () {
+  describe('URLソート', () => {
+    it('データなし', () => {
       const patterns = [];
 
       const sorted = SUT.sortByUrl(patterns);
@@ -17,7 +17,7 @@ describe('urlNotification.data', function() {
       assert.strictEqual(sorted.length, 0);
     });
 
-    it('整数の比較', function () {
+    it('整数の比較', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: '2' },
         { url: 'http://example.com/1', msg: '1' },
@@ -32,7 +32,7 @@ describe('urlNotification.data', function() {
       assert.strictEqual(sorted[2].msg, '3');
     });
 
-    it('整数と "*" の比較 : "*" が先に並ぶ', function () {
+    it('整数と "*" の比較 : "*" が先に並ぶ', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: '2' },
         { url: 'http://example.com/1', msg: '1' },
@@ -48,8 +48,8 @@ describe('urlNotification.data', function() {
     });
   });
 
-  describe('メッセージソート', function() {
-    it('データなし', function() {
+  describe('メッセージソート', () => {
+    it('データなし', () => {
       const patterns = [];
 
       const sorted = SUT.sortByMessage(patterns);
@@ -57,7 +57,7 @@ describe('urlNotification.data', function() {
       assert.strictEqual(sorted.length, 0);
     });
 
-    it('アルファベット', function() {
+    it('アルファベット', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: 'two' },
         { url: 'http://example.com/3', msg: 'one' },
@@ -72,7 +72,7 @@ describe('urlNotification.data', function() {
       assert.strictEqual(sorted[2].msg, 'two');
     });
 
-    it('メッセージが同一の場合はURLが比較される', function() {
+    it('メッセージが同一の場合はURLが比較される', () => {
       const patterns = [
         { url: 'http://example.com/3', msg: 'message' },
         { url: 'http://example.com/1', msg: 'message' },

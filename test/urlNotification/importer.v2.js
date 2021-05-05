@@ -5,8 +5,8 @@ const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/importer');
 const storage = require('../../src/js/urlNotification/storage');
 
-describe('urlNotification.importer.v2', function() {
-  describe('import v2 and migrate to v4', function () {
+describe('urlNotification.importer.v2', () => {
+  describe('import v2 and migrate to v4', () => {
     given([
       {
         item: {url: 'example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top'},
@@ -16,7 +16,7 @@ describe('urlNotification.importer.v2', function() {
         item: {url: 'example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'bottom'},
         to:   {url: 'example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'bottom', status: 1},
       },
-    ]).it('without existing data', function (arg) {
+    ]).it('without existing data', (arg) => {
       testUtil.clearStorage();
 
       SUT.importJson({version: 2, pattern: [arg.item]});
@@ -35,7 +35,7 @@ describe('urlNotification.importer.v2', function() {
         item: {url: 'example.com/1', msg: '2', backgroundColor: '222222', displayPosition: 'bottom'},
         to:   {url: 'example.com/1', msg: '2', backgroundColor: '222222', displayPosition: 'bottom', status: 1},
       },
-    ]).it('with existing data', function (arg) {
+    ]).it('with existing data', (arg) => {
       testUtil.setUpStorage('2', [arg.from]);
 
       SUT.importJson({ version: 2, pattern: [arg.item]});

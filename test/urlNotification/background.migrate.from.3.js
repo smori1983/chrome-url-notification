@@ -6,12 +6,12 @@ const SUT = require('../../src/js/urlNotification/background');
 const storage = require('../../src/js/urlNotification/storage');
 const sharedMigrate = require('./shared/migrate');
 
-describe('urlNotification.background.migrate.from.3', function() {
-  describe('no data', function() {
+describe('urlNotification.background.migrate.from.3', () => {
+  describe('no data', () => {
     sharedMigrate.runNoData('3');
   });
 
-  describe('with data', function() {
+  describe('with data', () => {
     given([
       {
         from: {url: 'example.com/1', msg: '1', backgroundColor: '111111', displayPosition: 'top', status: 1},
@@ -29,7 +29,7 @@ describe('urlNotification.background.migrate.from.3', function() {
         from: {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'bottom', status: 0},
         to:   {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'bottom', status: 0},
       },
-    ]).it('migrate', function (arg) {
+    ]).it('migrate', (arg) => {
       testUtil.setUpStorage('3', [arg.from]);
 
       SUT.migrate();

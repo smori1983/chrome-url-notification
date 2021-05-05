@@ -5,8 +5,8 @@ const testUtil = require('../../test_lib/util');
 const sharedBasic = require('./shared/importJson.basic');
 const sharedPattern = require('./shared/importJson.pattern');
 
-describe('urlNotification.validator.importJson.v4', function() {
-  describe('basic structure', function () {
+describe('urlNotification.validator.importJson.v4', () => {
+  describe('basic structure', () => {
     sharedBasic.run(4, {
       url: 'sample1',
       msg: 'sample1',
@@ -16,7 +16,7 @@ describe('urlNotification.validator.importJson.v4', function() {
     });
   });
 
-  describe('pattern data', function () {
+  describe('pattern data', () => {
     sharedPattern.runUrl(4, {
       url: 'sample1',
       msg: 'sample1',
@@ -85,7 +85,7 @@ describe('urlNotification.validator.importJson.v4', function() {
       {item: {url: 'sample5', msg: 'sample5', backgroundColor: 'ffffff', displayPosition: 'bottom_left',  status: 0}},
       {item: {url: 'sample6', msg: 'sample6', backgroundColor: 'ffffff', displayPosition: 'bottom_right', status: 1}},
       {item: {url: 'sample6', msg: 'sample6', backgroundColor: 'ffffff', displayPosition: 'bottom_right', status: 0}},
-    ]).it('ok', function (arg) {
+    ]).it('ok', (arg) => {
       assert.ok(testUtil.isValidJson({
         version: 4,
         pattern: [arg.item],
