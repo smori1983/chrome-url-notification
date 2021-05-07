@@ -42,14 +42,14 @@
     "istanbul": "^0.4.5",
     "jsdom": "^16.5.3",
     "license-checker": "^25.0.1",
-    "mocha": "^8.3.2",
+    "mocha": "^8.4.0",
     "mocha-testdata": "^1.2.0",
     "mock-local-storage": "^1.1.17",
     "sinon-chrome": "^3.0.1",
     "style-loader": "^2.0.0",
     "watch": "^1.0.2",
     "webpack": "^5.36.2",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.7.0"
   },
   "repository": {
     "type": "git",
