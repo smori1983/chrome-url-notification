@@ -27,9 +27,9 @@
     "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/preset-env": "^7.14.1",
-    "@types/chrome": "0.0.139",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@types/chrome": "0.0.140",
     "@types/jquery": "^3.5.5",
     "@types/node": "^12.20.12",
     "babel-loader": "^8.2.2",
