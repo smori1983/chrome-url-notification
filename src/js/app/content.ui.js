@@ -20,11 +20,11 @@ const main = (pageInfo) => {
         .attr('id', messageContainerId)
         .css(css.forMessage(item))
         .text(item.message)
-        .on('mouseover', () => {
-          $(this).css(css.forMessageMouseOver(item));
+        .on('mouseover', (e) => {
+          $(e.currentTarget).css(css.forMessageMouseOver(item));
         })
-        .on('mouseout', () => {
-          $(this).css(css.forMessageMouseOut(item));
+        .on('mouseout', (e) => {
+          $(e.currentTarget).css(css.forMessageMouseOut(item));
         })
         .appendTo($body);
     },

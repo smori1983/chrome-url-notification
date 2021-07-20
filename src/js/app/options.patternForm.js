@@ -132,7 +132,7 @@ const setUpValidator = () => {
  * @param {string} mode
  * @param {function} callback
  */
-const submit = function(item, mode, callback) {
+const submit = (item, mode, callback) => {
   const $ = require('jquery');
 
   const validator = $('#js_form_pattern').validate(validatorConfig({
@@ -228,7 +228,7 @@ const validatorConfig = (config) => {
     onclick: false,
     errorClass: 'text-danger',
     errorElement: 'div',
-    errorPlacement: function (error, element) {
+    errorPlacement: (error, element) => {
       if (element.attr('name') === 'background_color') {
         error.appendTo(element.parent().parent());
       } else if (element.attr('name') === 'display_position') {
