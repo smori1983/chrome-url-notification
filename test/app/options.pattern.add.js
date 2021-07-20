@@ -11,6 +11,28 @@ describe('options.pattern.add', () => {
   afterEach(testUtil.uiBase.afterEach);
   after(testUtil.uiBase.after);
 
+  describe('i18n', () => {
+    beforeEach(() => {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
+      header.show();
+      testUtil.options.header().clickAdd();
+    });
+
+    it('url field placeholder', () => {
+      const $ = require('jquery');
+      const $element = $('#js_input_url').eq(0);
+
+      assert.strictEqual($element.attr('placeholder'), 'e.g. http://*.example.com/');
+    });
+
+    it('message field placeholder', () => {
+      const $ = require('jquery');
+      const $element = $('#js_input_msg').eq(0);
+
+      assert.strictEqual($element.attr('placeholder'), 'e.g. example.com production site');
+    });
+  });
+
   describe('error', () => {
     beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
