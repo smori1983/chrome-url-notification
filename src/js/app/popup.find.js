@@ -31,9 +31,9 @@ const sendMessage = (tab) => {
 
     $('#pattern_status')
       .prop('checked', response.data.status === 1)
-      .on('click', function () {
+      .on('click', (e) => {
         const url = response.data.url;
-        const status = $(this).prop('checked') ? 1 : 0;
+        const status = $(e.currentTarget).prop('checked') ? 1 : 0;
 
         statusManager.updateStatus(tab.id, url, status);
       });
