@@ -132,7 +132,7 @@ const setUpValidator = () => {
  * @param {string} mode
  * @param {function} callback
  */
-const submit = function(item, mode, callback) {
+const submit = (item, mode, callback) => {
   const $ = require('jquery');
 
   const validator = $('#js_form_pattern').validate(validatorConfig({
