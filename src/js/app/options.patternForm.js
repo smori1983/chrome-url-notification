@@ -228,7 +228,7 @@ const validatorConfig = (config) => {
     onclick: false,
     errorClass: 'text-danger',
     errorElement: 'div',
-    errorPlacement: function (error, element) {
+    errorPlacement: (error, element) => {
       if (element.attr('name') === 'background_color') {
         error.appendTo(element.parent().parent());
       } else if (element.attr('name') === 'display_position') {
