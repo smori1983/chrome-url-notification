@@ -24,7 +24,8 @@
     "jquery-validation": "^1.19.3",
     "jsonschema": "^1.4.0",
     "lodash": "^4.17.21",
-    "sprintf-js": "^1.1.2"
+    "sprintf-js": "^1.1.2",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
