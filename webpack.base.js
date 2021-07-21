@@ -72,11 +72,6 @@ const prepare = (mode, imageDir, outputPath) => {
         },
       ],
     },
-    resolve: {
-      fallback: {
-        'url': false,
-      },
-    },
   };
 };
 
