@@ -112,7 +112,7 @@ describe('options.pattern.actions', () => {
 
   describe('submit add form with invalid inputs and open copy form', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain11.example.com',
           msg: 'domain11',
@@ -172,7 +172,7 @@ describe('options.pattern.actions', () => {
 
   describe('submit add form with invalid inputs and open edit form', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain21.example.com',
           msg: 'domain21',

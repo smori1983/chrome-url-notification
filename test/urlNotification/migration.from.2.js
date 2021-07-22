@@ -9,7 +9,7 @@ const sharedMigration = require('./shared/migration');
 describe('urlNotification.migration.from.2', () => {
   describe('shared patterns', () => {
     beforeEach(() => {
-      testUtil.setUpStorage('2', [
+      testUtil.initStorage('2', [
         {url: 'example.com/1', msg: '1', backgroundColor: '000000', displayPosition: 'bottom'},
       ]);
     });
@@ -27,7 +27,7 @@ describe('urlNotification.migration.from.2', () => {
       to:   {url: 'example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'bottom', status: 1},
     },
   ]).it('migrated pattern', (arg) => {
-    testUtil.setUpStorage('2', [arg.from]);
+    testUtil.initStorage('2', [arg.from]);
 
     SUT.execute();
 

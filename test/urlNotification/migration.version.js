@@ -13,28 +13,28 @@ describe('urlNotification.migration.version', () => {
     });
 
     it('invalid - key is true as string', () => {
-      testUtil.setUpStorage('true', []);
+      testUtil.initStorage('true', []);
 
       assert.strictEqual(SUT.hasVersion(), false);
       assert.strictEqual(SUT.currentVersion(), 0);
     });
 
     it('invalid - key is float as string', () => {
-      testUtil.setUpStorage('1.1', []);
+      testUtil.initStorage('1.1', []);
 
       assert.strictEqual(SUT.hasVersion(), false);
       assert.strictEqual(SUT.currentVersion(), 0);
     });
 
     it('invalid - key is string', () => {
-      testUtil.setUpStorage('foo', []);
+      testUtil.initStorage('foo', []);
 
       assert.strictEqual(SUT.hasVersion(), false);
       assert.strictEqual(SUT.currentVersion(), 0);
     });
 
     it('valid', () => {
-      testUtil.setUpStorage('1', []);
+      testUtil.initStorage('1', []);
 
       assert.strictEqual(SUT.hasVersion(), true);
       assert.strictEqual(SUT.currentVersion(), 1);

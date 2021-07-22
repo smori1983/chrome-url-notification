@@ -15,7 +15,7 @@ const clearStorage = () => {
  * @param {string} version
  * @param {PatternItem[]} patterns
  */
-const setUpStorage = (version, patterns) => {
+const initStorage = (version, patterns) => {
   storage.init(version, patterns);
 };
 
@@ -67,7 +67,7 @@ const makeFoundItem = (diff) => {
 };
 
 module.exports.clearStorage = clearStorage;
-module.exports.setUpStorage = setUpStorage;
+module.exports.initStorage = initStorage;
 module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;

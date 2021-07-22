@@ -23,7 +23,7 @@ describe('options.list', () => {
     });
 
     it('with 1 pattern', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -32,7 +32,7 @@ describe('options.list', () => {
     });
 
     it('with 3 patterns', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'site1.example.com'}),
         testUtil.makePatternItem({url: 'site2.example.com'}),
         testUtil.makePatternItem({url: 'site3.example.com'}),
@@ -54,7 +54,7 @@ describe('options.list', () => {
     });
 
     it('with pattern data', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -68,7 +68,7 @@ describe('options.list', () => {
 
   describe('header area', () => {
     it('labels', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       SUT.show();
@@ -87,7 +87,7 @@ describe('options.list', () => {
 
   describe('list area', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -213,7 +213,7 @@ describe('options.list', () => {
 
   describe('list area - display position', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'site1.example.com', displayPosition: 'top'}),
         testUtil.makePatternItem({url: 'site2.example.com', displayPosition: 'bottom'}),
         testUtil.makePatternItem({url: 'site3.example.com', displayPosition: 'top_left'}),
@@ -240,7 +240,7 @@ describe('options.list', () => {
 
   describe('behavior for broken or invalid data', () => {
     it('url not registered', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           msg: 'site1',
           backgroundColor: '111111',
@@ -260,7 +260,7 @@ describe('options.list', () => {
     });
 
     it('message not registered', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           backgroundColor: '111111',
@@ -280,7 +280,7 @@ describe('options.list', () => {
     });
 
     it('display position not registered', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -300,7 +300,7 @@ describe('options.list', () => {
     });
 
     it('display position is invalid', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -321,7 +321,7 @@ describe('options.list', () => {
     });
 
     it('status not registered', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -341,7 +341,7 @@ describe('options.list', () => {
     });
 
     it('status is invalid', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',

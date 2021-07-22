@@ -9,7 +9,7 @@ const storage = require('../../../src/js/urlNotification/storage');
  */
 module.exports.runNoData = (version) => {
   it('migrate', () => {
-    testUtil.setUpStorage(version, []);
+    testUtil.initStorage(version, []);
 
     background.migrate();
 

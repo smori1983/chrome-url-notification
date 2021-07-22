@@ -13,7 +13,7 @@ describe('options.pattern.copy', () => {
 
   describe('error', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',
@@ -57,7 +57,7 @@ describe('options.pattern.copy', () => {
 
   describe('ok', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',

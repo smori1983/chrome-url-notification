@@ -5,7 +5,7 @@ const SUT = require('../../src/js/urlNotification/background');
 
 describe('urlNotification.background', () => {
   beforeEach(() => {
-    testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+    testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({url: 'https://example.com/1', msg: '1'}),
       testUtil.makePatternItem({url: 'https://example.com/2', msg: '2'}),
       testUtil.makePatternItem({url: 'https://example.com/3', msg: '3'}),

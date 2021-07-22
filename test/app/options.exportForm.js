@@ -35,7 +35,7 @@ describe('options.exportForm', () => {
     });
 
     it('with pattern data', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
       testUtil.options.header().clickExport();
