@@ -16,7 +16,7 @@ const clearStorage = () => {
  * @param {PatternItem[]} patterns
  */
 const setUpStorage = (version, patterns) => {
-  storage.setUp(version, patterns);
+  storage.init(version, patterns);
 };
 
 /**
