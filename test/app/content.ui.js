@@ -24,8 +24,7 @@ describe('content.ui', () => {
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().jqueryObject();
-    $message.trigger('mouseover');
+    testUtil.content.message().mouseover();
   });
 
   it('mouseout (test for coverage)', () => {
@@ -38,7 +37,6 @@ describe('content.ui', () => {
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().jqueryObject();
-    $message.trigger('mouseout');
+    testUtil.content.message().mouseout();
   });
 });

@@ -31,9 +31,6 @@ const message = () => {
   };
 
   return {
-    jqueryObject: () => {
-      return container();
-    },
     /**
      * @returns {boolean}
      */
@@ -51,6 +48,12 @@ const message = () => {
      */
     hidden: () => {
       return exists() && container().css('display') === 'none';
+    },
+    mouseover: () => {
+      container().trigger('mouseover');
+    },
+    mouseout: () => {
+      container().trigger('mouseout');
     },
   }
 };
