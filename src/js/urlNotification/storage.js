@@ -1,4 +1,4 @@
-const util = require('./strageUtil');
+const util = require('./strage-util');
 
 /**
  * @typedef {object} PatternItem
