@@ -1,4 +1,4 @@
-const migrationExecutor = require('./migrationExecutor');
+const migrationExecutor = require('./migration-executor');
 const storage = require('./storage');
 
 /**
