@@ -8,8 +8,8 @@ describe('urlNotification.data', () => {
     testUtil.clearStorage();
   });
 
-  describe('URLソート', () => {
-    it('データなし', () => {
+  describe('sort by URL', () => {
+    it('no data', () => {
       const patterns = [];
 
       const sorted = SUT.sortByUrl(patterns);
@@ -17,7 +17,7 @@ describe('urlNotification.data', () => {
       assert.strictEqual(sorted.length, 0);
     });
 
-    it('整数の比較', () => {
+    it('comparison of integer', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: '2' },
         { url: 'http://example.com/1', msg: '1' },
@@ -32,7 +32,7 @@ describe('urlNotification.data', () => {
       assert.strictEqual(sorted[2].msg, '3');
     });
 
-    it('整数と "*" の比較 : "*" が先に並ぶ', () => {
+    it('comparison of integer and "*"', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: '2' },
         { url: 'http://example.com/1', msg: '1' },
@@ -48,8 +48,8 @@ describe('urlNotification.data', () => {
     });
   });
 
-  describe('メッセージソート', () => {
-    it('データなし', () => {
+  describe('sort by message', () => {
+    it('no data', () => {
       const patterns = [];
 
       const sorted = SUT.sortByMessage(patterns);
@@ -57,7 +57,7 @@ describe('urlNotification.data', () => {
       assert.strictEqual(sorted.length, 0);
     });
 
-    it('アルファベット', () => {
+    it('alphabet', () => {
       const patterns = [
         { url: 'http://example.com/2', msg: 'two' },
         { url: 'http://example.com/3', msg: 'one' },
@@ -72,7 +72,7 @@ describe('urlNotification.data', () => {
       assert.strictEqual(sorted[2].msg, 'two');
     });
 
-    it('メッセージが同一の場合はURLが比較される', () => {
+    it('url is compared when message is same', () => {
       const patterns = [
         { url: 'http://example.com/3', msg: 'message' },
         { url: 'http://example.com/1', msg: 'message' },
