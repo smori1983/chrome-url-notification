@@ -81,7 +81,8 @@ const getAll = () => {
  * @returns {(PatternItem|null)}
  */
 const findByUrl = (url) => {
-  let i, len, patterns = getAll();
+  const patterns = getAll();
+  let i, len;
 
   for (i = 0, len = patterns.length; i < len; i++) {
     if (patterns[i].url === url) {
