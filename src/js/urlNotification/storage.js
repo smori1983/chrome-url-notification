@@ -119,11 +119,11 @@ const updatePattern = (originalUrl, pattern) => {
  * @param {string} url
  */
 const deletePattern = (url) => {
-  const newData = getAll().filter((pattern) => {
+  const filtered = getAll().filter((pattern) => {
     return pattern.url !== url;
   });
 
-  savePattern(newData);
+  savePattern(filtered);
 };
 
 const deleteAll = () => {
