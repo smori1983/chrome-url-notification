@@ -4,7 +4,7 @@ const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/finder');
 
 describe('urlNotification.finder', () => {
-  describe('ステータスが全て1', () => {
+  describe('status is all 1', () => {
     beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
@@ -18,13 +18,13 @@ describe('urlNotification.finder', () => {
       ]);
     });
 
-    it('URLで検索 該当データなし', () => {
+    it('find by url - no matching data', () => {
       const result = SUT.findFor('http://example.com/');
 
       assert.strictEqual(result, null);
     });
 
-    it('URLで検索 *パターンにマッチ', () => {
+    it('find by url - matches with "*" pattern', () => {
       const result = SUT.findFor('http://example.com/3');
 
       const expected = {
@@ -39,7 +39,7 @@ describe('urlNotification.finder', () => {
       assert.deepStrictEqual(result, expected);
     });
 
-    it('URLで検索 部分一致', () => {
+    it('find by url - matches partially', () => {
       const result = SUT.findFor('http://example.com/1/1.html');
 
       const expected = {
@@ -54,20 +54,20 @@ describe('urlNotification.finder', () => {
       assert.deepStrictEqual(result, expected);
     });
 
-    it('URLで検索 エスケープ処理 : -', () => {
+    it('find by url - escape of "-"', () => {
       const result = SUT.findFor('http://abc-123.net/1.html');
 
       assert.strictEqual(result.message, 'abc-123-1');
     });
 
-    it('URLで検索 *パターンエスケープ処理 : -', () => {
+    it('find by url - escape of "-" for "*" pattern', () => {
       const result = SUT.findFor('http://a-b-c.example.com/');
 
       assert.strictEqual(result.message, 'subdomain-1');
     });
   });
 
-  describe('ステータスを考慮', () => {
+  describe('consider status', () => {
     beforeEach(() => {
       testUtil.setUpStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'http://example.com/1', msg: '1', status: 1}),
@@ -76,13 +76,13 @@ describe('urlNotification.finder', () => {
       ]);
     });
 
-    it('ステータスが 1 のパターン', () => {
+    it('pattern that status is 1', () => {
       const result = SUT.findFor('http://example.com/3');
 
       assert.strictEqual(result.message, '3');
     });
 
-    it('ステータスが 0 のパターン', () => {
+    it('pattern that status is 0', () => {
       const result = SUT.findFor('http://example.com/2');
 
       assert.strictEqual(result, null);
