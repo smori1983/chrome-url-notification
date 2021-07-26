@@ -14,21 +14,21 @@ describe('urlNotification.background', () => {
   });
 
   describe('find()', () => {
-    it('該当データなし', () => {
+    it('no matching data', () => {
       const result = SUT.find('foo');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
-    it('該当データなし - パターン', () => {
+    it('no matching data - pattern', () => {
       const result = SUT.find('http://example.com/item/');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
-    it('該当データあり', () => {
+    it('has matching data', () => {
       const result = SUT.find('http://example.com/1');
 
       const expectedData = {
@@ -44,7 +44,7 @@ describe('urlNotification.background', () => {
       assert.deepStrictEqual(result.data, expectedData);
     });
 
-    it('該当データあり - パターンにマッチ', () => {
+    it('has matching data - pattern', () => {
       const result = SUT.find('http://example.com/item/5');
 
       const expectedData = {
