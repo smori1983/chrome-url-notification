@@ -112,16 +112,12 @@ const patternFor = (version) => {
   return patterns[version]();
 };
 
-const create = () => {
-  return new Validator();
-};
-
 /**
  * @param {object} json
  * @returns {boolean}
  */
 const validateEssentialPart = (json) => {
-  const validator = create();
+  const validator = new Validator();
 
   return validator.validate(json, schemaForEssentialPart()).valid;
 };
@@ -131,7 +127,7 @@ const validateEssentialPart = (json) => {
  * @returns {boolean}
  */
 const validatePatternPart = (json) => {
-  const validator = create();
+  const validator = new Validator();
 
   validator.addSchema(patternFor(json.version), '/item');
 
