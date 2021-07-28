@@ -11,34 +11,34 @@ describe('urlNotification.storage.withoutData', () => {
     background.migrate();
   });
 
-  describe('削除', () => {
-    it('全件削除', () => {
+  describe('delete', () => {
+    it('delete all items', () => {
       SUT.deleteAll();
 
       assert.strictEqual(SUT.getCount(), 0);
     });
 
-    it('1件削除 - 該当データ無し', () => {
+    it('delete 1 item - no matching data', () => {
       SUT.deletePattern('http://example.com/');
 
       assert.strictEqual(SUT.getCount(), 0);
     });
   });
 
-  describe('参照', () => {
-    it('全件取得', () => {
+  describe('read', () => {
+    it('get all items', () => {
       const all = SUT.getAll();
 
       assert.strictEqual(all.length, 0);
     });
 
-    it('URLで検索 該当データなし', () => {
+    it('find by url - no matching data', () => {
       assert.strictEqual(SUT.findByUrl('http://example.com/'), null);
     });
   });
 
-  describe('更新', () => {
-    it('データ更新 - 該当データ無し', () => {
+  describe('update', () => {
+    it('update data - no matching data', () => {
       const item = {
         url: 'http://example.com/',
         msg: '!',
@@ -51,7 +51,7 @@ describe('urlNotification.storage.withoutData', () => {
       assert.strictEqual(SUT.findByUrl('http://example.com/'), null);
     });
 
-    it('パターンの重複登録はできない', () => {
+    it('duplicated pattern cannot be registered', () => {
       const item = {
         url: 'http://example.com/1',
         msg: '1',
