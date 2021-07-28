@@ -19,9 +19,9 @@ describe('urlNotification.data', () => {
 
     it('comparison of integer', () => {
       const patterns = [
-        { url: 'http://example.com/2', msg: '2' },
-        { url: 'http://example.com/1', msg: '1' },
-        { url: 'http://example.com/3', msg: '3' },
+        { url: 'https://example.com/2', msg: '2' },
+        { url: 'https://example.com/1', msg: '1' },
+        { url: 'https://example.com/3', msg: '3' },
       ];
 
       const sorted = SUT.sortByUrl(patterns);
@@ -34,9 +34,9 @@ describe('urlNotification.data', () => {
 
     it('comparison of integer and "*"', () => {
       const patterns = [
-        { url: 'http://example.com/2', msg: '2' },
-        { url: 'http://example.com/1', msg: '1' },
-        { url: 'http://example.com/*', msg: '*' },
+        { url: 'https://example.com/2', msg: '2' },
+        { url: 'https://example.com/1', msg: '1' },
+        { url: 'https://example.com/*', msg: '*' },
       ];
 
       const sorted = SUT.sortByUrl(patterns);
@@ -59,9 +59,9 @@ describe('urlNotification.data', () => {
 
     it('alphabet', () => {
       const patterns = [
-        { url: 'http://example.com/2', msg: 'two' },
-        { url: 'http://example.com/3', msg: 'one' },
-        { url: 'http://example.com/1', msg: 'three' },
+        { url: 'https://example.com/2', msg: 'two' },
+        { url: 'https://example.com/3', msg: 'one' },
+        { url: 'https://example.com/1', msg: 'three' },
       ];
 
       const sorted = SUT.sortByMessage(patterns);
@@ -74,17 +74,17 @@ describe('urlNotification.data', () => {
 
     it('url is compared when message is same', () => {
       const patterns = [
-        { url: 'http://example.com/3', msg: 'message' },
-        { url: 'http://example.com/1', msg: 'message' },
-        { url: 'http://example.com/2', msg: 'message' },
+        { url: 'https://example.com/3', msg: 'message' },
+        { url: 'https://example.com/1', msg: 'message' },
+        { url: 'https://example.com/2', msg: 'message' },
       ];
 
       const sorted = SUT.sortByMessage(patterns);
 
       assert.strictEqual(sorted.length, 3);
-      assert.strictEqual(sorted[0].url, 'http://example.com/1');
-      assert.strictEqual(sorted[1].url, 'http://example.com/2');
-      assert.strictEqual(sorted[2].url, 'http://example.com/3');
+      assert.strictEqual(sorted[0].url, 'https://example.com/1');
+      assert.strictEqual(sorted[1].url, 'https://example.com/2');
+      assert.strictEqual(sorted[2].url, 'https://example.com/3');
     });
   });
 });

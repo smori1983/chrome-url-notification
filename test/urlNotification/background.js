@@ -6,10 +6,10 @@ const SUT = require('../../src/js/urlNotification/background');
 describe('urlNotification.background', () => {
   beforeEach(() => {
     testUtil.setUpStorage(testUtil.currentVersion().toString(), [
-      testUtil.makePatternItem({url: 'http://example.com/1', msg: '1'}),
-      testUtil.makePatternItem({url: 'http://example.com/2', msg: '2'}),
-      testUtil.makePatternItem({url: 'http://example.com/3', msg: '3'}),
-      testUtil.makePatternItem({url: 'http://example.com/item/*', msg: 'item'}),
+      testUtil.makePatternItem({url: 'https://example.com/1', msg: '1'}),
+      testUtil.makePatternItem({url: 'https://example.com/2', msg: '2'}),
+      testUtil.makePatternItem({url: 'https://example.com/3', msg: '3'}),
+      testUtil.makePatternItem({url: 'https://example.com/item/*', msg: 'item'}),
     ]);
   });
 
@@ -22,17 +22,17 @@ describe('urlNotification.background', () => {
     });
 
     it('no matching data - pattern', () => {
-      const result = SUT.find('http://example.com/item/');
+      const result = SUT.find('https://example.com/item/');
 
       assert.strictEqual(result.matched, false);
       assert.strictEqual(result.data, null);
     });
 
     it('has matching data', () => {
-      const result = SUT.find('http://example.com/1');
+      const result = SUT.find('https://example.com/1');
 
       const expectedData = {
-        url: 'http://example.com/1',
+        url: 'https://example.com/1',
         message: '1',
         backgroundColor: '000000',
         fontColor: 'ffffff',
@@ -45,10 +45,10 @@ describe('urlNotification.background', () => {
     });
 
     it('has matching data - pattern', () => {
-      const result = SUT.find('http://example.com/item/5');
+      const result = SUT.find('https://example.com/item/5');
 
       const expectedData = {
-        url: 'http://example.com/item/*',
+        url: 'https://example.com/item/*',
         message: 'item',
         backgroundColor: '000000',
         fontColor: 'ffffff',
@@ -63,7 +63,7 @@ describe('urlNotification.background', () => {
 
   describe('updatePattern()', () => {
     it('Call with non-existing pattern', () => {
-      const result = SUT.updatePattern('http://example.com/999', {
+      const result = SUT.updatePattern('https://example.com/999', {
         status: 0,
       });
 
@@ -71,7 +71,7 @@ describe('urlNotification.background', () => {
     });
 
     it('Normal case', () => {
-      const result = SUT.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('https://example.com/1', {
         status: 0,
       });
 
@@ -79,7 +79,7 @@ describe('urlNotification.background', () => {
     });
 
     it('Try to update with invalid value', () => {
-      const result = SUT.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('https://example.com/1', {
         status: 9,
       });
 
@@ -87,7 +87,7 @@ describe('urlNotification.background', () => {
     });
 
     it('Try to update with invalid key', () => {
-      const result = SUT.updatePattern('http://example.com/1', {
+      const result = SUT.updatePattern('https://example.com/1', {
         foo: 'bar',
       });
 
