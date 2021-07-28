@@ -1,6 +1,6 @@
 const config = require('./config');
 const storage = require('./storage');
-const migrationExecutor = require('./migrationExecutor');
+const migrationExecutor = require('./migration-executor');
 
 /**
  * @returns {boolean}

@@ -1,4 +1,4 @@
-const util = require('./strageUtil');
+const util = require('./strage-util');
 
 /**
  * @typedef {object} PatternItem
@@ -81,7 +81,8 @@ const getAll = () => {
  * @returns {(PatternItem|null)}
  */
 const findByUrl = (url) => {
-  let i, len, patterns = getAll();
+  const patterns = getAll();
+  let i, len;
 
   for (i = 0, len = patterns.length; i < len; i++) {
     if (patterns[i].url === url) {
@@ -118,11 +119,11 @@ const updatePattern = (originalUrl, pattern) => {
  * @param {string} url
  */
 const deletePattern = (url) => {
-  const newData = getAll().filter((pattern) => {
+  const filtered = getAll().filter((pattern) => {
     return pattern.url !== url;
   });
 
-  savePattern(newData);
+  savePattern(filtered);
 };
 
 const deleteAll = () => {
