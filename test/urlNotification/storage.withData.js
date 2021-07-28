@@ -15,28 +15,28 @@ describe('urlNotification.storage.withData', () => {
     background.migrate();
   });
 
-  describe('削除', () => {
-    it('全件削除', () => {
+  describe('delete', () => {
+    it('delete all data', () => {
       SUT.deleteAll();
 
       assert.strictEqual(SUT.getCount(), 0);
     });
 
-    it('1件削除 - 該当データ有り', () => {
+    it('delete 1 item - has matching data', () => {
       SUT.deletePattern('http://example.com/1');
 
       assert.strictEqual(SUT.getCount(), 2);
     });
 
-    it('1件削除 - 該当データ無し', () => {
+    it('delete 1 item - no matching data', () => {
       SUT.deletePattern('http://example.com/');
 
       assert.strictEqual(SUT.getCount(), 3);
     });
   });
 
-  describe('参照', () => {
-    it('全件取得', () => {
+  describe('read', () => {
+    it('get all items', () => {
       const all = SUT.getAll();
 
       assert.strictEqual(all.length, 3);
@@ -45,17 +45,17 @@ describe('urlNotification.storage.withData', () => {
       assert.strictEqual(all[2].msg, '3');
     });
 
-    it('URLで検索 該当データなし', () => {
+    it('find by url - no matching data', () => {
       assert.strictEqual(SUT.findByUrl('http://example.com/'), null);
     });
 
-    it('URLで検索 該当データあり', () => {
+    it('find by url - has matching data', () => {
       assert.strictEqual(SUT.findByUrl('http://example.com/2').msg, '2');
     });
   });
 
-  describe('更新', () => {
-    it('データ更新 - 該当データ無し', () => {
+  describe('update', () => {
+    it('update data - no matching data', () => {
       SUT.updatePattern('http://example.com/', {
         url: 'http://example.com/',
         msg: '!',
@@ -67,7 +67,7 @@ describe('urlNotification.storage.withData', () => {
       assert.strictEqual(SUT.findByUrl('http://example.com/3').msg, '3');
     });
 
-    it('データ更新 - 該当データ有り', () => {
+    it('update data - has matching data', () => {
       SUT.updatePattern('http://example.com/2', {
         url: 'http://example.com/2',
         msg: '!',
