@@ -49,7 +49,7 @@ const tabsCreateCalledWith = (url) => {
  * @param {number} tabId
  * @returns {boolean}
  */
-const setBadgeTextShould = (text, tabId) => {
+const setBadgeTextCalledWith = (text, tabId) => {
   return chrome.browserAction.setBadgeText
     .withArgs({
       text: text,
@@ -279,7 +279,7 @@ const popupUpdateStatusShould = (tabId, url, status) => {
 
 module.exports.createTab = createTab;
 module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
-module.exports.setBadgeTextShould = setBadgeTextShould;
+module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindChain = contentFindChain;

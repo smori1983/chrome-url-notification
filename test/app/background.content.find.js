@@ -31,7 +31,7 @@ describe('background.content.find', () => {
 
     /** @type {FindResult} */
     const data = res.data();
-    assert.ok(testUtil.chrome.setBadgeTextShould('', 10001));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith('', 10001));
     assert.strictEqual(data.matched, false);
     assert.strictEqual(data.data, null);
   });
@@ -45,7 +45,7 @@ describe('background.content.find', () => {
 
     /** @type {FindResult} */
     const data = res.data();
-    assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith('ON', 10002));
     assert.strictEqual(data.matched, true);
     assert.strictEqual(data.data.message, 'domain1');
   });
@@ -59,7 +59,7 @@ describe('background.content.find', () => {
 
     /** @type {FindResult} */
     const data = res.data();
-    assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10003));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith('OFF', 10003));
     assert.strictEqual(data.matched, true);
     assert.strictEqual(data.data.message, 'domain2');
   });

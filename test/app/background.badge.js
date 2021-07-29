@@ -18,6 +18,6 @@ describe('app.badge', () => {
   ]).it('badge text based on match result and status', (arg) => {
     SUT.draw(10001, arg.matched, arg.status);
 
-    assert.ok(testUtil.chrome.setBadgeTextShould(arg.text, 10001));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith(arg.text, 10001));
   });
 });
