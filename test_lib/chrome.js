@@ -31,6 +31,8 @@ const createTab = (diff) => {
 };
 
 /**
+ * Ensure chrome.tabs.create() called with argument.
+ *
  * @param {string} url
  * @returns {boolean}
  */
@@ -43,7 +45,7 @@ const tabsCreateCalledWith = (url) => {
 };
 
 /**
- * chrome.browserAction.setBadgeText()
+ * Ensure chrome.browserAction.setBadgeText() called with arguments.
  *
  * @param {string} text
  * @param {number} tabId
@@ -181,6 +183,8 @@ const popupFindDispatch = (url, callback) => {
 };
 
 /**
+ * Ensure chrome.tabs.sendMessage() for 'tab:notify:status' command called with arguments.
+ *
  * @param {number} tabId
  * @param {FindResult} item
  * @param {number} status
@@ -259,6 +263,8 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
 };
 
 /**
+ * Ensure chrome.runtime.sendMessage() for 'browser_action:update:status' command called with arguments.
+ *
  * @param {number} tabId
  * @param {string} url
  * @param {number} status
