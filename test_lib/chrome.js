@@ -34,7 +34,7 @@ const createTab = (diff) => {
  * @param {string} url
  * @returns {boolean}
  */
-const tabsCreateShould = (url) => {
+const tabsCreateCalledFor = (url) => {
   return chrome.tabs.create
     .withArgs({
       url: url,
@@ -278,7 +278,7 @@ const popupUpdateStatusShould = (tabId, url, status) => {
 };
 
 module.exports.createTab = createTab;
-module.exports.tabsCreateShould = tabsCreateShould;
+module.exports.tabsCreateCalledFor = tabsCreateCalledFor;
 module.exports.setBadgeTextShould = setBadgeTextShould;
 module.exports.sendResposne = sendResponse;
 
