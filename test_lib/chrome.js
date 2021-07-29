@@ -186,7 +186,7 @@ const popupFindDispatch = (url, callback) => {
  * @param {number} status
  * @returns {boolean}
  */
-const popupTabNotifyStatusShould = (tabId, item, status) => {
+const popupTabNotifyStatusCalledWith = (tabId, item, status) => {
   return chrome.tabs.sendMessage
     .withArgs(tabId, {
       command: 'tab:notify:status',
@@ -287,7 +287,7 @@ module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
 module.exports.popupFindDispatch = popupFindDispatch;
-module.exports.popupTabNotifyStatusShould = popupTabNotifyStatusShould;
+module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQueryChain = popupTabsQueryChain;
 module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;

@@ -23,7 +23,7 @@ describe('popup', () => {
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10001, result, 0));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(10001, result, 0));
     });
 
     it('update with 1', () => {
@@ -40,7 +40,7 @@ describe('popup', () => {
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10002, result, 1));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(10002, result, 1));
     });
   });
 });
