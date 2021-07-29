@@ -58,7 +58,7 @@ describe('message.popup.find', () => {
 
     testUtil.popup.matchedBlock().clickStatus();
 
-    assert.ok(testUtil.chrome.popupUpdateStatusShould(20002, 'https://example.com/', 1));
+    assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(20002, 'https://example.com/', 1));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
@@ -97,7 +97,7 @@ describe('message.popup.find', () => {
 
     testUtil.popup.matchedBlock().clickStatus();
 
-    assert.ok(testUtil.chrome.popupUpdateStatusShould(30002, 'https://example.com/', 0));
+    assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(30002, 'https://example.com/', 0));
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);

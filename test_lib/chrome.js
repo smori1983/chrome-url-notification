@@ -264,7 +264,7 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
  * @param {number} status
  * @returns {boolean}
  */
-const popupUpdateStatusShould = (tabId, url, status) => {
+const popupUpdateStatusCalledWith = (tabId, url, status) => {
   return chrome.runtime.sendMessage
     .withArgs({
       command: 'browser_action:update:status',
@@ -291,4 +291,4 @@ module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQueryChain = popupTabsQueryChain;
 module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
-module.exports.popupUpdateStatusShould = popupUpdateStatusShould;
+module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
