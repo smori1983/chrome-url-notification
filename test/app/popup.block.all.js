@@ -35,6 +35,6 @@ describe('popup.block.all', () => {
 
     $link.trigger('click');
 
-    assert.strictEqual(testUtil.chrome.tabsCreateCalledWith(path), true);
+    assert.ok(testUtil.chrome.tabsCreateCalledWith(path));
   });
 });
