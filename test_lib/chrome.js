@@ -60,7 +60,7 @@ const setBadgeTextCalledWith = (text, tabId) => {
     .calledOnce;
 };
 
-const sendMessage = (run) => {
+const createReqAndRes = (run) => {
   return {
     req: (req) => {
       return {
@@ -95,7 +95,7 @@ const sendResponse = () => {
 };
 
 const contentFindMessage = () => {
-  return sendMessage((req, res) => {
+  return createReqAndRes((req, res) => {
     chrome.runtime.sendMessage
       .withArgs({
         command: 'content_scripts:find',
@@ -155,7 +155,7 @@ const contentTabNotifyStatusDispatch = (displayPosition, status) => {
 };
 
 const popupFindMessage = () => {
-  return sendMessage((req, res) => {
+  return createReqAndRes((req, res) => {
     chrome.runtime.sendMessage
       .withArgs({
         command: 'browser_action:find',
