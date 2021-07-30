@@ -223,26 +223,22 @@ const popupTabsQuery = () => {
   });
 };
 
-/**
- * @param {number} tabId
- * @param {string} url
- * @param {number} status
- * @param {FindResult} item
- */
-const popupUpdateStatusChain = (tabId, url, status, item) => {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:update:status',
-      data: {
-        url: url,
-        status: status,
-        tabId: tabId,
-      },
-    })
-    .callsArgWith(1, {
-      item: item,
-      status: status,
-    });
+const popupUpdateStatus = () => {
+  return createReqAndRes((req, res) => {
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:update:status',
+        data: {
+          url: req.url,
+          status: req.status,
+          tabId: req.tabId,
+        },
+      })
+      .callsArgWith(1, {
+        item: res.item,
+        status: req.status,
+      });
+  });
 };
 
 /**
@@ -302,6 +298,6 @@ module.exports.popupFindMessage = popupFindMessage;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQuery = popupTabsQuery;
-module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
+module.exports.popupUpdateStatus = popupUpdateStatus;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
