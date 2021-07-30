@@ -20,7 +20,13 @@ describe('message.popup.find', () => {
 
     SUT.sendMessage(tab);
 
-    testUtil.chrome.popupFindChain(tab, null);
+    testUtil.chrome.popupFindMessage()
+      .req({
+        tab: tab,
+      })
+      .res({
+        item: null,
+      });
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), false);
   });
@@ -33,9 +39,15 @@ describe('message.popup.find', () => {
 
     SUT.sendMessage(tab);
 
-    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
-      status: 0,
-    }));
+    testUtil.chrome.popupFindMessage()
+      .req({
+        tab: tab,
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 0,
+        }),
+      });
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
@@ -49,9 +61,15 @@ describe('message.popup.find', () => {
 
     SUT.sendMessage(tab);
 
-    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
-      status: 0,
-    }));
+    testUtil.chrome.popupFindMessage()
+      .req({
+        tab: tab,
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 0,
+        }),
+      });
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
@@ -72,9 +90,15 @@ describe('message.popup.find', () => {
 
     SUT.sendMessage(tab);
 
-    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
-      status: 1,
-    }));
+    testUtil.chrome.popupFindMessage()
+      .req({
+        tab: tab,
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+        }),
+      });
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
@@ -88,9 +112,15 @@ describe('message.popup.find', () => {
 
     SUT.sendMessage(tab);
 
-    testUtil.chrome.popupFindChain(tab, testUtil.makeFoundItem({
-      status: 1,
-    }));
+    testUtil.chrome.popupFindMessage()
+      .req({
+        tab: tab,
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+        }),
+      });
 
     assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
     assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);

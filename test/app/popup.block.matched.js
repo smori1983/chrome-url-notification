@@ -33,26 +33,38 @@ describe('popup.block.matched', () => {
   describe('initial state of status checkbox', () => {
     it('pattern matched and status is 0', () => {
       testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
-      testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
-        id: 10001,
-        url: 'https://foo.example.com/page',
-      }), testUtil.makeFoundItem({
-        url: 'foo.example.com',
-        status: 0,
-      }));
+      testUtil.chrome.popupFindMessage()
+        .req({
+          tab: testUtil.chrome.createTab({
+            id: 10001,
+            url: 'https://foo.example.com/page',
+          }),
+        })
+        .res({
+          item: testUtil.makeFoundItem({
+            url: 'foo.example.com',
+            status: 0,
+          }),
+        });
 
       assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
     });
 
     it('pattern matched and status is 1', () => {
       testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
-      testUtil.chrome.popupFindChain(testUtil.chrome.createTab({
-        id: 10002,
-        url: 'https://foo.example.com/page',
-      }), testUtil.makeFoundItem({
-        url: 'foo.example.com',
-        status: 1,
-      }));
+      testUtil.chrome.popupFindMessage()
+        .req({
+          tab: testUtil.chrome.createTab({
+            id: 10002,
+            url: 'https://foo.example.com/page',
+          }),
+        })
+        .res({
+          item: testUtil.makeFoundItem({
+            url: 'foo.example.com',
+            status: 1,
+          }),
+        });
 
       assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
     });
