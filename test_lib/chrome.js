@@ -210,18 +210,17 @@ const popupTabNotifyStatusCalledWith = (tabId, item, status) => {
     .calledOnce;
 };
 
-/**
- * @param {string} url used to part of chrome.tabs.Tab
- */
-const popupTabsQueryChain = (url) => {
-  chrome.tabs.query
-    .withArgs({
-      currentWindow: true,
-      active: true,
-    })
-    .callArgWith(1, [{
-      url: url,
-    }]);
+const popupTabsQuery = () => {
+  return createReqAndRes((req, res) => {
+    chrome.tabs.query
+      .withArgs({
+        currentWindow: true,
+        active: true,
+      })
+      .callArgWith(1, [{
+        url: res.url,
+      }]);
+  });
 };
 
 /**
@@ -302,7 +301,7 @@ module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindMessage = popupFindMessage;
 module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
-module.exports.popupTabsQueryChain = popupTabsQueryChain;
+module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;

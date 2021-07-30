@@ -32,7 +32,11 @@ describe('popup.block.matched', () => {
 
   describe('initial state of status checkbox', () => {
     it('pattern matched and status is 0', () => {
-      testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
+      testUtil.chrome.popupTabsQuery()
+        .req({})
+        .res({
+          url: 'https://foo.example.com/page',
+        });
       testUtil.chrome.popupFindMessage()
         .req({
           tab: testUtil.chrome.createTab({
@@ -51,7 +55,11 @@ describe('popup.block.matched', () => {
     });
 
     it('pattern matched and status is 1', () => {
-      testUtil.chrome.popupTabsQueryChain('https://foo.example.com/page');
+      testUtil.chrome.popupTabsQuery()
+        .req({})
+        .res({
+          url: 'https://foo.example.com/page',
+        });
       testUtil.chrome.popupFindMessage()
         .req({
           tab: testUtil.chrome.createTab({
