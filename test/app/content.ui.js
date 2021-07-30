@@ -18,10 +18,16 @@ describe('content.ui', () => {
   it('mouseover (test for coverage)', () => {
     contentFind.sendMessage(pageInfo.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 1,
-      displayPosition: 'top_left',
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+          displayPosition: 'top_left',
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
@@ -31,10 +37,16 @@ describe('content.ui', () => {
   it('mouseout (test for coverage)', () => {
     contentFind.sendMessage(pageInfo.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 1,
-      displayPosition: 'top_left',
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+          displayPosition: 'top_left',
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 

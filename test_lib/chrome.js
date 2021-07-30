@@ -60,6 +60,18 @@ const setBadgeTextCalledWith = (text, tabId) => {
     .calledOnce;
 };
 
+const sendMessage = (run) => {
+  return {
+    req: (req) => {
+      return {
+        res: (res) => {
+          run(req, res);
+        },
+      };
+    },
+  };
+};
+
 const sendResponse = () => {
   /**
    * @type {Object}
@@ -82,22 +94,20 @@ const sendResponse = () => {
   };
 };
 
-/**
- * @param {string} url
- * @param {(FoundItem|null)} item
- */
-const contentFindChain = (url, item) => {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'content_scripts:find',
-      data: {
-        url: url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    })
+const contentFindMessage = () => {
+  return sendMessage((req, res) => {
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'content_scripts:find',
+        data: {
+          url: req.url,
+        },
+      })
+      .callArgWith(1, {
+        matched: res.item !== null,
+        data: res.item,
+      });
+  });
 };
 
 /**
@@ -288,7 +298,7 @@ module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.sendResposne = sendResponse;
 
-module.exports.contentFindChain = contentFindChain;
+module.exports.contentFindMessage = contentFindMessage;
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindChain = popupFindChain;
