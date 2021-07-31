@@ -1,7 +1,7 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const contentFind = require('../../src/js/app/content.find');
-const pageInfo = require('../../src/js/app/content.pageInfo');
+const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('content.ui', () => {
@@ -16,7 +16,7 @@ describe('content.ui', () => {
   after(testUtil.uiBase.after);
 
   it('mouseover (test for coverage)', () => {
-    contentFind.sendMessage(pageInfo.init().get());
+    contentFind.sendMessage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -35,7 +35,7 @@ describe('content.ui', () => {
   });
 
   it('mouseout (test for coverage)', () => {
-    contentFind.sendMessage(pageInfo.init().get());
+    contentFind.sendMessage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
