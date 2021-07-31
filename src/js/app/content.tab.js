@@ -1,3 +1,5 @@
+const uiFactory = require('./content.ui');
+
 /**
  * @typedef {Object} MessageTabNotifyStatus
  * @property {string} command
@@ -18,7 +20,7 @@ const listen = (pageInfo) => {
     }
 
     if (request.data.item) {
-      const ui = require('./content.ui').init(pageInfo);
+      const ui = uiFactory.init(pageInfo);
 
       ui.updateUI(request.data.item);
     }
