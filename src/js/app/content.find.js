@@ -1,3 +1,5 @@
+const uiFactory = require('./content.ui');
+
 /**
  * @param {PageInfo} pageInfo
  */
@@ -23,7 +25,7 @@ const sendMessage = (pageInfo) => {
       return;
     }
 
-    const ui = require('./content.ui').init(pageInfo);
+    const ui = uiFactory.init(pageInfo);
 
     ui.initUI(response.data);
     ui.updateUI(response.data);
