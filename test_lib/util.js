@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const validator = require('../src/js/urlNotification/validator');
 const factory = require('./factory');
