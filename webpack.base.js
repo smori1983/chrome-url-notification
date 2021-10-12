@@ -7,19 +7,19 @@ const prepare = (mode, imageDir, outputPath) => {
     mode: mode,
     entry: {
       background: {
-        import: './src/js/app/main.background.js',
+        import: './src/js/app/background.main.js',
         filename: 'js/background.js',
       },
       content: {
-        import: './src/js/app/main.content.js',
+        import: './src/js/app/content.main.js',
         filename: 'js/content.js',
       },
       options: {
-        import: './src/js/app/main.options.js',
+        import: './src/js/app/options.main.js',
         filename: 'js/options.js',
       },
       popup: {
-        import: './src/js/app/main.popup.js',
+        import: './src/js/app/popup.main.js',
         filename: 'js/popup.js',
       },
     },
