@@ -35,7 +35,7 @@ describe('options.pattern.add', () => {
 
   describe('error', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'example.com',
           msg: 'message',

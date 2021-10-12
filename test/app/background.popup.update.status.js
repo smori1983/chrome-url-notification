@@ -7,7 +7,7 @@ describe('background.popup.update.status', () => {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(() => {
-    testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+    testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
         url: 'domain1.example.com',
         status: 1,
@@ -29,7 +29,7 @@ describe('background.popup.update.status', () => {
 
     /** @type {MessageBrowserActionUpdateStatusResponse} */
     const data = res.data();
-    assert.ok(testUtil.chrome.setBadgeTextShould('OFF', 10001));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith('OFF', 10001));
     assert.strictEqual(data.item.status, 0);
     assert.strictEqual(data.status, 0);
   });
@@ -43,7 +43,7 @@ describe('background.popup.update.status', () => {
 
     /** @type {MessageBrowserActionUpdateStatusResponse} */
     const data = res.data();
-    assert.ok(testUtil.chrome.setBadgeTextShould('ON', 10002));
+    assert.ok(testUtil.chrome.setBadgeTextCalledWith('ON', 10002));
     assert.strictEqual(data.item.status, 1);
     assert.strictEqual(data.status, 1);
   });

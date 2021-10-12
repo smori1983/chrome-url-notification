@@ -26,7 +26,7 @@ describe('urlNotification.background.migrate.from.2', () => {
         to:   {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
       },
     ]).it('migrate', (arg) => {
-      testUtil.setUpStorage('2', [arg.from]);
+      testUtil.initStorage('2', [arg.from]);
 
       SUT.migrate();
 

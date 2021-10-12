@@ -19,11 +19,19 @@ describe('popup', () => {
         }),
       };
 
-      testUtil.chrome.popupUpdateStatusChain(10001, 'https://example.com/', 0, result);
+      testUtil.chrome.popupUpdateStatus()
+        .req({
+          tabId: 10001,
+          url: 'https://example.com/',
+          status: 0,
+        })
+        .res({
+          item: result,
+        });
 
       SUT.updateStatus(10001, 'https://example.com/', 0);
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10001, result, 0));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(10001, result, 0));
     });
 
     it('update with 1', () => {
@@ -31,16 +39,24 @@ describe('popup', () => {
       const result = {
         matched: true,
         data: testUtil.makeFoundItem({
-          url: 'https://example.com/',
+          url: 'https://example.net/',
           status: 1,
         }),
       };
 
-      testUtil.chrome.popupUpdateStatusChain(10002, 'https://example.net/', 1, result);
+      testUtil.chrome.popupUpdateStatus()
+        .req({
+          tabId: 10002,
+          url: 'https://example.net/',
+          status: 1,
+        })
+        .res({
+          item: result,
+        });
 
       SUT.updateStatus(10002, 'https://example.net/', 1);
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusShould(10002, result, 1));
+      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(10002, result, 1));
     });
   });
 });

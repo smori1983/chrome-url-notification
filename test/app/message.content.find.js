@@ -18,7 +18,13 @@ describe('message.content.find', () => {
   it('pattern not matched', () => {
     SUT.sendMessage(pageInfoFactory.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', null);
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: null,
+      });
 
     assert.strictEqual(testUtil.content.message().exists(), false);
   });
@@ -26,9 +32,15 @@ describe('message.content.find', () => {
   it('pattern matched and status is 0', () => {
     SUT.sendMessage(pageInfoFactory.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 0,
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 0,
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().hidden(), true);
   });
@@ -36,9 +48,15 @@ describe('message.content.find', () => {
   it('pattern matched and status is 1', () => {
     SUT.sendMessage(pageInfoFactory.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 1,
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().shown(), true);
   });

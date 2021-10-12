@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const validator = require('../src/js/urlNotification/validator');
 const factory = require('./factory');
@@ -15,8 +13,8 @@ const clearStorage = () => {
  * @param {string} version
  * @param {PatternItem[]} patterns
  */
-const setUpStorage = (version, patterns) => {
-  storage.setUp(version, patterns);
+const initStorage = (version, patterns) => {
+  storage.init(version, patterns);
 };
 
 /**
@@ -67,7 +65,7 @@ const makeFoundItem = (diff) => {
 };
 
 module.exports.clearStorage = clearStorage;
-module.exports.setUpStorage = setUpStorage;
+module.exports.initStorage = initStorage;
 module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;

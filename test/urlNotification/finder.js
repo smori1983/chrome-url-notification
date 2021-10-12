@@ -6,7 +6,7 @@ const SUT = require('../../src/js/urlNotification/finder');
 describe('urlNotification.finder', () => {
   describe('status is all 1', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'https://example.com/1', msg: '1'}),
         testUtil.makePatternItem({url: 'https://example.com/2', msg: '2'}),
         testUtil.makePatternItem({url: 'https://example.com/*', msg: '*'}),
@@ -69,7 +69,7 @@ describe('urlNotification.finder', () => {
 
   describe('consider status', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'https://example.com/1', msg: '1', status: 1}),
         testUtil.makePatternItem({url: 'https://example.com/2', msg: '2', status: 0}),
         testUtil.makePatternItem({url: 'https://example.com/3', msg: '3', status: 1}),
@@ -91,7 +91,7 @@ describe('urlNotification.finder', () => {
 
   describe('find option - ignoreStatus', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({url: 'https://example.com/1', msg: '1', status: 1 }),
         testUtil.makePatternItem({url: 'https://example.com/2', msg: '2', status: 0 }),
         testUtil.makePatternItem({url: 'https://example.com/3', msg: '3', status: 1 }),

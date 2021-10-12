@@ -13,7 +13,7 @@ describe('options.pattern.edit', () => {
 
   describe('error', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain7.example.com',
           msg: 'domain7',
@@ -49,7 +49,7 @@ describe('options.pattern.edit', () => {
 
   describe('ok', () => {
     beforeEach(() => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'domain9.example.com',
           msg: 'domain9',

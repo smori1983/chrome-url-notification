@@ -31,10 +31,12 @@ const createTab = (diff) => {
 };
 
 /**
+ * Ensure chrome.tabs.create() called with argument.
+ *
  * @param {string} url
  * @returns {boolean}
  */
-const tabsCreateShould = (url) => {
+const tabsCreateCalledWith = (url) => {
   return chrome.tabs.create
     .withArgs({
       url: url,
@@ -43,19 +45,31 @@ const tabsCreateShould = (url) => {
 };
 
 /**
- * chrome.browserAction.setBadgeText()
+ * Ensure chrome.browserAction.setBadgeText() called with arguments.
  *
  * @param {string} text
  * @param {number} tabId
  * @returns {boolean}
  */
-const setBadgeTextShould = (text, tabId) => {
+const setBadgeTextCalledWith = (text, tabId) => {
   return chrome.browserAction.setBadgeText
     .withArgs({
       text: text,
       tabId: tabId,
     })
     .calledOnce;
+};
+
+const createReqAndRes = (run) => {
+  return {
+    req: (req) => {
+      return {
+        res: (res) => {
+          run(req, res);
+        },
+      };
+    },
+  };
 };
 
 const sendResponse = () => {
@@ -80,22 +94,20 @@ const sendResponse = () => {
   };
 };
 
-/**
- * @param {string} url
- * @param {(FoundItem|null)} item
- */
-const contentFindChain = (url, item) => {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'content_scripts:find',
-      data: {
-        url: url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    })
+const contentFindMessage = () => {
+  return createReqAndRes((req, res) => {
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'content_scripts:find',
+        data: {
+          url: req.url,
+        },
+      })
+      .callArgWith(1, {
+        matched: res.item !== null,
+        data: res.item,
+      });
+  });
 };
 
 /**
@@ -142,22 +154,20 @@ const contentTabNotifyStatusDispatch = (displayPosition, status) => {
     });
 };
 
-/**
- * @param {chrome.tabs.Tab} tab
- * @param {(FoundItem|null)} item
- */
-const popupFindChain = (tab, item) => {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:find',
-      data: {
-        url: tab.url,
-      },
-    })
-    .callArgWith(1, {
-      matched: item !== null,
-      data: item,
-    });
+const popupFindMessage = () => {
+  return createReqAndRes((req, res) => {
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:find',
+        data: {
+          url: req.tab.url,
+        },
+      })
+      .callArgWith(1, {
+        matched: res.item !== null,
+        data: res.item,
+      });
+  });
 };
 
 /**
@@ -181,12 +191,14 @@ const popupFindDispatch = (url, callback) => {
 };
 
 /**
+ * Ensure chrome.tabs.sendMessage() for 'tab:notify:status' command called with arguments.
+ *
  * @param {number} tabId
  * @param {FindResult} item
  * @param {number} status
  * @returns {boolean}
  */
-const popupTabNotifyStatusShould = (tabId, item, status) => {
+const popupTabNotifyStatusCalledWith = (tabId, item, status) => {
   return chrome.tabs.sendMessage
     .withArgs(tabId, {
       command: 'tab:notify:status',
@@ -198,40 +210,35 @@ const popupTabNotifyStatusShould = (tabId, item, status) => {
     .calledOnce;
 };
 
-/**
- * @param {string} url used to part of chrome.tabs.Tab
- */
-const popupTabsQueryChain = (url) => {
-  chrome.tabs.query
-    .withArgs({
-      currentWindow: true,
-      active: true,
-    })
-    .callArgWith(1, [{
-      url: url,
-    }]);
+const popupTabsQuery = () => {
+  return createReqAndRes((req, res) => {
+    chrome.tabs.query
+      .withArgs({
+        currentWindow: true,
+        active: true,
+      })
+      .callArgWith(1, [{
+        url: res.url,
+      }]);
+  });
 };
 
-/**
- * @param {number} tabId
- * @param {string} url
- * @param {number} status
- * @param {FindResult} item
- */
-const popupUpdateStatusChain = (tabId, url, status, item) => {
-  chrome.runtime.sendMessage
-    .withArgs({
-      command: 'browser_action:update:status',
-      data: {
-        url: url,
-        status: status,
-        tabId: tabId,
-      },
-    })
-    .callsArgWith(1, {
-      item: item,
-      status: status,
-    });
+const popupUpdateStatus = () => {
+  return createReqAndRes((req, res) => {
+    chrome.runtime.sendMessage
+      .withArgs({
+        command: 'browser_action:update:status',
+        data: {
+          url: req.url,
+          status: req.status,
+          tabId: req.tabId,
+        },
+      })
+      .callsArgWith(1, {
+        item: res.item,
+        status: req.status,
+      });
+  });
 };
 
 /**
@@ -259,12 +266,14 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
 };
 
 /**
+ * Ensure chrome.runtime.sendMessage() for 'browser_action:update:status' command called with arguments.
+ *
  * @param {number} tabId
  * @param {string} url
  * @param {number} status
  * @returns {boolean}
  */
-const popupUpdateStatusShould = (tabId, url, status) => {
+const popupUpdateStatusCalledWith = (tabId, url, status) => {
   return chrome.runtime.sendMessage
     .withArgs({
       command: 'browser_action:update:status',
@@ -278,17 +287,17 @@ const popupUpdateStatusShould = (tabId, url, status) => {
 };
 
 module.exports.createTab = createTab;
-module.exports.tabsCreateShould = tabsCreateShould;
-module.exports.setBadgeTextShould = setBadgeTextShould;
+module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
+module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.sendResposne = sendResponse;
 
-module.exports.contentFindChain = contentFindChain;
+module.exports.contentFindMessage = contentFindMessage;
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
-module.exports.popupFindChain = popupFindChain;
+module.exports.popupFindMessage = popupFindMessage;
 module.exports.popupFindDispatch = popupFindDispatch;
-module.exports.popupTabNotifyStatusShould = popupTabNotifyStatusShould;
-module.exports.popupTabsQueryChain = popupTabsQueryChain;
-module.exports.popupUpdateStatusChain = popupUpdateStatusChain;
+module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
+module.exports.popupTabsQuery = popupTabsQuery;
+module.exports.popupUpdateStatus = popupUpdateStatus;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
-module.exports.popupUpdateStatusShould = popupUpdateStatusShould;
+module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;

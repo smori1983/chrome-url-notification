@@ -1,6 +1,7 @@
 const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
 const assert = require('assert');
 const contentFind = require('../../src/js/app/content.find');
+const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('content.ui', () => {
@@ -15,30 +16,40 @@ describe('content.ui', () => {
   after(testUtil.uiBase.after);
 
   it('mouseover (test for coverage)', () => {
-    contentFind.sendMessage();
+    contentFind.sendMessage(pageInfoFactory.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 1,
-      displayPosition: 'top_left',
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+          displayPosition: 'top_left',
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().jqueryObject();
-    $message.trigger('mouseover');
+    testUtil.content.message().mouseover();
   });
 
   it('mouseout (test for coverage)', () => {
-    contentFind.sendMessage();
+    contentFind.sendMessage(pageInfoFactory.init().get());
 
-    testUtil.chrome.contentFindChain('https://example.com/', testUtil.makeFoundItem({
-      status: 1,
-      displayPosition: 'top_left',
-    }));
+    testUtil.chrome.contentFindMessage()
+      .req({
+        url: 'https://example.com/',
+      })
+      .res({
+        item: testUtil.makeFoundItem({
+          status: 1,
+          displayPosition: 'top_left',
+        }),
+      });
 
     assert.strictEqual(testUtil.content.message().shown(), true);
 
-    const $message = testUtil.content.message().jqueryObject();
-    $message.trigger('mouseout');
+    testUtil.content.message().mouseout();
   });
 });

@@ -86,7 +86,7 @@ describe('options.importForm', () => {
     });
 
     it('with data - update existing data', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -123,7 +123,7 @@ describe('options.importForm', () => {
     });
 
     it('with data - add new data', () => {
-      testUtil.setUpStorage(testUtil.currentVersion().toString(), [
+      testUtil.initStorage(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',

@@ -36,7 +36,7 @@ describe('urlNotification.importer.v3', () => {
         to:   {url: 'example.com/1', msg: '2', backgroundColor: '222222', displayPosition: 'bottom', status: 0},
       },
     ]).it('with existing data', (arg) => {
-      testUtil.setUpStorage('3', [arg.from]);
+      testUtil.initStorage('3', [arg.from]);
 
       SUT.importJson({version: 3, pattern: [arg.item]});
 
