@@ -41,7 +41,7 @@
     "color-js": "^1.0.5",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.4.0",
-    "eslint": "^8.0.0",
+    "eslint": "^7.0.0",
     "istanbul": "^0.4.5",
     "jsdom": "^18.0.0",
     "license-checker": "^25.0.1",
