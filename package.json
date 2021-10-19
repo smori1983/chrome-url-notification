@@ -21,8 +21,8 @@
     "coverage:report": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
   },
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "bootstrap-colorpicker": "^2.5.3",
+    "bootstrap": "^4.6.0",
+    "bootstrap-colorpicker": "^3.4.0",
     "clipboard": "^2.0.8",
     "deepmerge": "^4.2.2",
     "joi": "^17.4.2",
