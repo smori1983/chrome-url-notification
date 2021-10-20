@@ -240,7 +240,7 @@ const makeRow = ($, item) => {
      * @param {PatternItem} item
      */
     const buttonCopy = (item) => {
-      return button(i18n.get('label_copy'), 'copy', item, 'btn-default');
+      return button(i18n.get('label_copy'), 'copy', item, 'btn-success');
     };
 
     /**
