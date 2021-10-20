@@ -142,7 +142,8 @@ const makeRow = ($, item) => {
    * @returns {JQuery}
    */
   const container = (label, className) => {
-    return $('<div>')
+    return $('<span>')
+      .addClass('align-middle')
       .addClass(className)
       .text(label);
   };
@@ -171,7 +172,7 @@ const makeRow = ($, item) => {
      * @param {PatternItem} item
      */
     return (item) => {
-      return column().append(container(item.msg, 'list-message').css(css(item)));
+      return column().append(container(item.msg, 'list-message d-block').css(css(item)));
     };
   })();
 
