@@ -4,10 +4,6 @@ body {
     padding-top: 70px;
 }
 
-#js_version {
-    margin-left: 10px;
-}
-
 #js_export_display {
     overflow-y: scroll;
     height: 200px;
