@@ -28,10 +28,6 @@ body {
     border-radius: 3px;
 }
 
-.list-action-delete-confirm {
-    display: none;
-}
-
 .modal-dialog {
     margin-top: 80px;
 }
