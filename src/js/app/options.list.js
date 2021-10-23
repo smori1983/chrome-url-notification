@@ -230,7 +230,7 @@ const makeRow = ($, item) => {
      */
     const button = (label, action, item, className) => {
       return $('<button>')
-        .addClass(sprintf('btn btn-sm %s_button', action))
+        .addClass(sprintf('mr-1 btn btn-sm %s_button', action))
         .addClass(className)
         .attr('data-un-action', sprintf('pattern-item-%s', action))
         .attr('data-un-pattern-item', JSON.stringify(item))
