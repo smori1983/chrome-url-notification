@@ -172,7 +172,7 @@ const makeRow = ($, item) => {
      * @param {PatternItem} item
      */
     return (item) => {
-      return column().append(container(item.msg, 'list-message d-block').css(css(item)));
+      return column().append(container(item.msg, 'list-message d-block p-1 rounded text-center').css(css(item)));
     };
   })();
 
