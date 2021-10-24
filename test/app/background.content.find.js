@@ -1,11 +1,10 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.content.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.content.find', () => {
-  before(testUtil.background.before);
-  beforeEach(testUtil.background.beforeEach);
+  testUtil.background.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
@@ -20,7 +19,6 @@ describe('app.background.content.find', () => {
       }),
     ]);
   });
-  after(testUtil.background.after);
 
   it('pattern not matched', () => {
     const res = testUtil.chrome.sendResposne();

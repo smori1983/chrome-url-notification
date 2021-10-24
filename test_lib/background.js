@@ -1,17 +1,18 @@
 const chrome = require('sinon-chrome');
+const { before, beforeEach, after } = require('mocha');
 
-const before = () => {
-  global.chrome = chrome;
+const registerHooks = () => {
+  before(() => {
+    global.chrome = chrome;
+  });
+
+  beforeEach(() => {
+    chrome.flush();
+  });
+
+  after(() => {
+    delete global.chrome;
+  })
 };
 
-const beforeEach = () => {
-  chrome.flush();
-};
-
-const after = () => {
-  delete global.chrome;
-};
-
-module.exports.before = before;
-module.exports.beforeEach = beforeEach;
-module.exports.after = after;
+module.exports.registerHooks = registerHooks;

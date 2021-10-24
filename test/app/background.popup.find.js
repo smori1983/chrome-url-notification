@@ -1,11 +1,10 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.popup.find', () => {
-  before(testUtil.background.before);
-  beforeEach(testUtil.background.beforeEach);
+  testUtil.background.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
@@ -20,7 +19,6 @@ describe('app.background.popup.find', () => {
       }),
     ]);
   });
-  after(testUtil.background.after);
 
   it('pattern not matched', () => {
     const sendResponse = testUtil.chrome.sendResposne();
