@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/i18n');
 const testUtil = require('../../test_lib/util');
 
-describe('i18n', () => {
+describe('app.i18n', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   afterEach(testUtil.uiBase.afterEach);
