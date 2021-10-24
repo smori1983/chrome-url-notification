@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.update.status');
 const testUtil = require('../../test_lib/util');
 
-describe('background.popup.update.status', () => {
+describe('app.background.popup.update.status', () => {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(() => {

@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.find');
 const testUtil = require('../../test_lib/util');
 
-describe('background.content.find', () => {
+describe('app.background.popup.find', () => {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   beforeEach(() => {

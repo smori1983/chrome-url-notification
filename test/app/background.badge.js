@@ -4,7 +4,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/background.badge');
 const testUtil = require('../../test_lib/util');
 
-describe('app.badge', () => {
+describe('app.background.badge', () => {
   before(testUtil.background.before);
   beforeEach(testUtil.background.beforeEach);
   after(testUtil.background.after);
