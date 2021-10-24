@@ -4,7 +4,7 @@ const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.block.all');
 const testUtil = require('../../test_lib/util');
 
-describe('popup.block.all', () => {
+describe('app.popup.block.all', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);

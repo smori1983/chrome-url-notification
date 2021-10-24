@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
 
-describe('popup.block.matched', () => {
+describe('app.popup.block.matched', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
