@@ -4,7 +4,7 @@ const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
 
-describe('options.pattern.edit', () => {
+describe('app.options.pattern.edit', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);

@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/options.util.modal');
 const testUtil = require('../../test_lib/util');
 
-describe('options.util.modal', () => {
+describe('app.options.util.modal', () => {
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/options.modal.01.html'));

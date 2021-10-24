@@ -4,7 +4,7 @@ const header = require('../../src/js/app/options.header');
 const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
-describe('options.pattern.actions', () => {
+describe('app.options.pattern.actions', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);

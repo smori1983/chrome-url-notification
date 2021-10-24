@@ -3,7 +3,7 @@ const assert = require('assert');
 const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
-describe('options.exportForm', () => {
+describe('app.options.exportForm', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
