@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.status');
 const testUtil = require('../../test_lib/util');
 
-describe('popup', () => {
+describe('app.popup.status', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   after(testUtil.uiBase.after);

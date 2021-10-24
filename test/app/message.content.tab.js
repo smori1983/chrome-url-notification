@@ -5,7 +5,7 @@ const SUT = require('../../src/js/app/content.tab');
 const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
-describe('message.content.tab', () => {
+describe('app.message.content.tab', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {

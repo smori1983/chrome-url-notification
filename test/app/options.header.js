@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
-describe('options.header', () => {
+describe('app.options.header', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {

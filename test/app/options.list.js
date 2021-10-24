@@ -5,7 +5,7 @@ const storage = require('../../src/js/urlNotification/storage');
 const SUT = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 
-describe('options.list', () => {
+describe('app.options.list', () => {
   before(testUtil.uiBase.initI18n('en'));
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);

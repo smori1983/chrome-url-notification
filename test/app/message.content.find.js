@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/content.find');
 const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
-describe('message.content.find', () => {
+describe('app.message.content.find', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {
