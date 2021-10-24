@@ -4,7 +4,7 @@ const contentFind = require('../../src/js/app/content.find');
 const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
-describe('content.ui', () => {
+describe('app.content.ui', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {

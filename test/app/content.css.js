@@ -12,7 +12,7 @@ const css = SUT.init({
   },
 });
 
-describe('app.css', () => {
+describe('app.content.css', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   after(testUtil.uiBase.after);
