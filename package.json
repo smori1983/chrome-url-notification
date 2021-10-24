@@ -37,7 +37,7 @@
     "@types/chrome": "0.0.160",
     "@types/jquery": "^3.5.8",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^12.20.33",
+    "@types/node": "^14.17.29",
     "@types/sinon-chrome": "^2.2.11",
     "babel-loader": "^8.2.3",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
