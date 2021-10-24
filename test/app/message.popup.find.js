@@ -3,7 +3,7 @@ const assert = require('assert');
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
-describe('message.popup.find', () => {
+describe('app.message.popup.find', () => {
   before(testUtil.uiBase.before);
   beforeEach(testUtil.uiBase.beforeEach);
   beforeEach(() => {
