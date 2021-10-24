@@ -7,7 +7,6 @@ body {
 #js_export_display {
     overflow-y: scroll;
     height: 200px;
-    font-size: 10px;
 }
 
 /**
@@ -15,7 +14,6 @@ body {
  */
 #js_form_import_json {
     font-family: SFMono-Regular, Menlo, Monaco,Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 10px;
 }
 
 .modal-dialog {
