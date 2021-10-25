@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, beforeEach, it } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const storage = require('../../src/js/urlNotification/storage');
@@ -7,13 +7,10 @@ const testUtil = require('../../test_lib/util');
 
 describe('app.options.list', () => {
   before(testUtil.uiBase.initI18n('en'));
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   describe('badge number', () => {
     it('without data', () => {

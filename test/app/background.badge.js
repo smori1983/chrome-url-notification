@@ -1,13 +1,11 @@
-const { describe, before, beforeEach, after } = require('mocha');
+const { describe } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.badge');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.badge', () => {
-  before(testUtil.background.before);
-  beforeEach(testUtil.background.beforeEach);
-  after(testUtil.background.after);
+  testUtil.background.registerHooks();
 
   given([
     {matched: true, status: 1, text: 'ON'},

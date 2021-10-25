@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, afterEach, after } = require('mocha');
+const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const SUT = require('../../src/js/app/content.tab');
@@ -6,13 +6,10 @@ const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('app.message.content.tab', () => {
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.02.html'));
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   given([
     {displayPosition: 'top', marginTop: '10px', marginBottom: '20px'},

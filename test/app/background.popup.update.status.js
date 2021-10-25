@@ -1,11 +1,10 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/background.popup.update.status');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.popup.update.status', () => {
-  before(testUtil.background.before);
-  beforeEach(testUtil.background.beforeEach);
+  testUtil.background.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
@@ -18,7 +17,6 @@ describe('app.background.popup.update.status', () => {
       }),
     ]);
   });
-  after(testUtil.background.after);
 
   it('status is 1, then disable', () => {
     const res = testUtil.chrome.sendResposne();

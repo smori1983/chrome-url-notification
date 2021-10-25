@@ -1,13 +1,10 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/i18n');
 const testUtil = require('../../test_lib/util');
 
 describe('app.i18n', () => {
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
+  testUtil.uiBase.registerHooks();
 
   describe('en', () => {
     before(testUtil.uiBase.initI18n('en'));

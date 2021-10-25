@@ -1,12 +1,10 @@
-const { describe, before, beforeEach, after, it } = require('mocha');
+const { describe, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/popup.status');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.status', () => {
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
-  after(testUtil.uiBase.after);
+  testUtil.uiBase.registerHooks();
 
   describe('updateStatus', () => {
     it('update with 0', () => {

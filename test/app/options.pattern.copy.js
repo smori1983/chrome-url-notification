@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
@@ -6,10 +6,7 @@ const sharedForm = require('./shared/options.form');
 
 describe('app.options.pattern.copy', () => {
   before(testUtil.uiBase.initI18n('en'));
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
+  testUtil.uiBase.registerHooks();
 
   describe('error', () => {
     beforeEach(() => {

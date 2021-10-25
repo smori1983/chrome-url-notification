@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const header = require('../../src/js/app/options.header');
 const list = require('../../src/js/app/options.list');
@@ -6,14 +6,11 @@ const testUtil = require('../../test_lib/util');
 
 describe('app.options.pattern.actions', () => {
   before(testUtil.uiBase.initI18n('en'));
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
     header.show();
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   describe('submit add form with invalid inputs and open again', () => {
     beforeEach(() => {

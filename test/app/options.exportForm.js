@@ -1,19 +1,16 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 
 describe('app.options.exportForm', () => {
   before(testUtil.uiBase.initI18n('en'));
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
     header.show();
     testUtil.options.header().clickExport();
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   it('i18n label', () => {
     const $ = require('jquery');
