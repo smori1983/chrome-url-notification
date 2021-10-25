@@ -1,14 +1,13 @@
-const { describe, beforeEach, afterEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/options.util.modal');
 const testUtil = require('../../test_lib/util');
 
 describe('app.options.util.modal', () => {
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/options.modal.01.html'));
   });
-  afterEach(testUtil.uiBase.afterEach);
 
   it('show and hide', () => {
     const $ = require('jquery');

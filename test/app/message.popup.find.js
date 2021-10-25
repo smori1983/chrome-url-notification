@@ -1,16 +1,13 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.message.popup.find', () => {
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   it('pattern not matched', () => {
     const tab = testUtil.chrome.createTab({

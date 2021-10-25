@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, after } = require('mocha');
+const { describe } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const _ = require('lodash');
@@ -13,9 +13,7 @@ const css = SUT.init({
 });
 
 describe('app.content.css', () => {
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
-  after(testUtil.uiBase.after);
+  testUtil.uiBase.registerHooks();
 
   describe('forBody', () => {
     given([

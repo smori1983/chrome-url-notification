@@ -1,18 +1,15 @@
-const { describe, before, beforeEach, afterEach, after, it } = require('mocha');
+const { describe, before, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/popup.block.matched');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.block.matched', () => {
   before(testUtil.uiBase.initI18n('en'));
-  before(testUtil.uiBase.before);
-  beforeEach(testUtil.uiBase.beforeEach);
+  testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
     SUT.show();
   });
-  afterEach(testUtil.uiBase.afterEach);
-  after(testUtil.uiBase.after);
 
   describe('i18n', () => {
     it('status label', () => {
