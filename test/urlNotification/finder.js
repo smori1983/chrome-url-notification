@@ -21,7 +21,7 @@ describe('urlNotification.finder', () => {
     it('find by url - no matching data', () => {
       const result = SUT.findFor('https://example.com/');
 
-      assert.strictEqual(result, null);
+      assert.strictEqual(result.data, null);
     });
 
     it('find by url - matches with "*" pattern', () => {
@@ -36,7 +36,7 @@ describe('urlNotification.finder', () => {
         status: 1,
       };
 
-      assert.deepStrictEqual(result, expected);
+      assert.deepStrictEqual(result.data, expected);
     });
 
     it('find by url - matches partially', () => {
@@ -51,19 +51,19 @@ describe('urlNotification.finder', () => {
         status: 1,
       };
 
-      assert.deepStrictEqual(result, expected);
+      assert.deepStrictEqual(result.data, expected);
     });
 
     it('find by url - escape of "-"', () => {
       const result = SUT.findFor('https://abc-123.net/1.html');
 
-      assert.strictEqual(result.message, 'abc-123-1');
+      assert.strictEqual(result.data.message, 'abc-123-1');
     });
 
     it('find by url - escape of "-" for "*" pattern', () => {
       const result = SUT.findFor('https://a-b-c.example.com/');
 
-      assert.strictEqual(result.message, 'subdomain-1');
+      assert.strictEqual(result.data.message, 'subdomain-1');
     });
   });
 
@@ -79,13 +79,13 @@ describe('urlNotification.finder', () => {
     it('pattern that status is 1', () => {
       const result = SUT.findFor('https://example.com/3');
 
-      assert.strictEqual(result.message, '3');
+      assert.strictEqual(result.data.message, '3');
     });
 
     it('pattern that status is 0', () => {
       const result = SUT.findFor('https://example.com/2');
 
-      assert.strictEqual(result, null);
+      assert.strictEqual(result.data, null);
     });
   });
 
@@ -101,37 +101,37 @@ describe('urlNotification.finder', () => {
     it('ignoreStatus not set and pattern exists with status is 1', () => {
       const result = SUT.findFor('https://example.com/1');
 
-      assert.strictEqual(result.message, '1');
+      assert.strictEqual(result.data.message, '1');
     });
 
     it('ignoreStatus not set and pattern exists with status is 0', () => {
       const result = SUT.findFor('https://example.com/2');
 
-      assert.strictEqual(result, null);
+      assert.strictEqual(result.data, null);
     });
 
     it('ignoreStatus is true and pattern exists with status is 1', () => {
       const result = SUT.findFor('https://example.com/1', { ignoreStatus: true });
 
-      assert.strictEqual(result.message, '1');
+      assert.strictEqual(result.data.message, '1');
     });
 
     it('ignoreStatus is true and pattern exists with status is 0', () => {
       const result = SUT.findFor('https://example.com/2', { ignoreStatus: true });
 
-      assert.strictEqual(result.message, '2');
+      assert.strictEqual(result.data.message, '2');
     });
 
     it('ignoreStatus is false and pattern exists with status is 1', () => {
       const result = SUT.findFor('https://example.com/1', { ignoreStatus: false });
 
-      assert.strictEqual(result.message, '1');
+      assert.strictEqual(result.data.message, '1');
     });
 
     it('ignoreStatus is false and pattern exists with status is 0', () => {
       const result = SUT.findFor('https://example.com/2', { ignoreStatus: false });
 
-      assert.strictEqual(result, null);
+      assert.strictEqual(result.data, null);
     });
   });
 });

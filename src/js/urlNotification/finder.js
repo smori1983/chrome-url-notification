@@ -18,6 +18,12 @@ const deepMerge = require('deepmerge');
  */
 
 /**
+ * @typedef {object} FindResult
+ * @property {boolean} matched
+ * @property {(FoundItem|null)} data Depends on the value of matched
+ */
+
+/**
  * Find pattern for content script.
  *
  * Conditions:
@@ -26,7 +32,7 @@ const deepMerge = require('deepmerge');
  *
  * @param {string} url
  * @param {FindOption} [option]
- * @returns {(FoundItem|null)}
+ * @returns {FindResult}
  */
 const find = (url, option) => {
   let i, len;
@@ -39,12 +45,18 @@ const find = (url, option) => {
   for (i = 0, len = patterns.length; i < len; i++) {
     if (makeRegExp(patterns[i].url).test(url)) {
       if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
-        return createData(patterns[i]);
+        return {
+          matched: true,
+          data: createData(patterns[i]),
+        }
       }
     }
   }
 
-  return null;
+  return {
+    matched: false,
+    data: null,
+  };
 };
 
 /**

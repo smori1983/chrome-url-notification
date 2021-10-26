@@ -1,4 +1,4 @@
-const background = require('../urlNotification/background');
+const finder = require('../urlNotification/finder');
 
 /**
  * @typedef {Object} MessageBrowserActionFind
@@ -17,7 +17,7 @@ const listener = (request, sender, sendResponse) => {
     return;
   }
 
-  const findResult = background.find(request.data.url, { ignoreStatus: true });
+  const findResult = finder.findFor(request.data.url, { ignoreStatus: true });
 
   sendResponse(findResult);
 };
