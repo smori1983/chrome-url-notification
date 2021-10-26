@@ -1,7 +1,7 @@
-const background = require('../urlNotification/background');
+const migration = require('../urlNotification/migration');
 
 const listener = () => {
-  background.migrate();
+  migration.execute();
 };
 
 const listen = () => {

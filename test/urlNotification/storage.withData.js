@@ -2,7 +2,7 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/urlNotification/storage');
-const background = require('../../src/js/urlNotification/background');
+const migration = require('../../src/js/urlNotification/migration');
 
 describe('urlNotification.storage.withData', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('urlNotification.storage.withData', () => {
     SUT.addPattern({url: 'https://example.com/2', msg: '2'});
     SUT.addPattern({url: 'https://example.com/3', msg: '3'});
 
-    background.migrate();
+    migration.execute();
   });
 
   describe('delete', () => {

@@ -1,4 +1,3 @@
-const background = require('../urlNotification/background');
 const badge = require('./background.badge');
 const data = require('../urlNotification/data');
 const storage = require('../urlNotification/storage');
