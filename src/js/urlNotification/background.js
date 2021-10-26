@@ -1,6 +1,5 @@
 const finder = require('./finder');
 const migration = require('./migration');
-const storage = require('./storage');
 
 /**
  * @typedef {object} FindResult
@@ -26,14 +25,5 @@ const find = (url, option) => {
   };
 };
 
-/**
- * @param {string} url
- * @returns {PatternItem}
- */
-const findByUrl = (url) => {
-  return storage.findByUrl(url);
-};
-
 module.exports.migrate = migrate;
 module.exports.find = find;
-module.exports.findByUrl = findByUrl;

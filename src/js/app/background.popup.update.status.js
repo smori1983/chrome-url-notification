@@ -1,6 +1,7 @@
 const background = require('../urlNotification/background');
 const badge = require('./background.badge');
 const data = require('../urlNotification/data');
+const storage = require('../urlNotification/storage');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
@@ -30,7 +31,7 @@ const listener = (request, sender, sendResponse) => {
 
   badge.draw(request.data.tabId, true, request.data.status);
 
-  const item = background.findByUrl(request.data.url);
+  const item = storage.findByUrl(request.data.url);
 
   sendResponse({
     item: item,
