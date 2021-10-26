@@ -31,12 +31,12 @@ describe('urlNotification.migration.from.3', () => {
       to:   {url: 'example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 0},
     },
     {
-      from: {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
-      to:   {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
+      from: {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'bottom', status: 1},
+      to:   {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'bottom', status: 1},
     },
     {
-      from: {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'top', status: 0},
-      to:   {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'top', status: 0},
+      from: {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'bottom', status: 0},
+      to:   {url: 'example.com/4', msg: '4', backgroundColor: '444444', displayPosition: 'bottom', status: 0},
     },
   ]).it('migrated pattern', (arg) => {
     testUtil.initStorage('3', [arg.from]);
@@ -44,5 +44,6 @@ describe('urlNotification.migration.from.3', () => {
     SUT.execute();
 
     assert.deepStrictEqual(storage.getAll(), [arg.to]);
+    assert.strictEqual(storage.currentVersion(), testUtil.currentVersion());
   });
 });

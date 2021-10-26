@@ -30,11 +30,16 @@ describe('urlNotification.migration.from.1', () => {
       from: {url: 'example.com/2', msg: '2', backgroundColor: '222222'},
       to:   {url: 'example.com/2', msg: '2', backgroundColor: '222222', displayPosition: 'top', status: 1},
     },
+    {
+      from: {url: 'example.com/3', msg: '3', backgroundColor: '333333'},
+      to:   {url: 'example.com/3', msg: '3', backgroundColor: '333333', displayPosition: 'top', status: 1},
+    },
   ]).it('migrated pattern', (arg) => {
     testUtil.initStorage('1', [arg.from]);
 
     SUT.execute();
 
     assert.deepStrictEqual(storage.getAll(), [arg.to]);
+    assert.strictEqual(storage.currentVersion(), testUtil.currentVersion());
   });
 });
