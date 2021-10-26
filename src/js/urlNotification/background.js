@@ -1,9 +1,6 @@
-const config = require('./config');
 const finder = require('./finder');
 const migration = require('./migration');
 const storage = require('./storage');
-const validator = require('./validator');
-const deepMerge = require('deepmerge');
 
 /**
  * @typedef {object} FindResult
@@ -37,35 +34,6 @@ const findByUrl = (url) => {
   return storage.findByUrl(url);
 };
 
-/**
- * @param {string} url
- * @param {object} data
- * @returns {boolean} true if successfully updated
- */
-const updatePattern = (url, data) => {
-  const item = storage.findByUrl(url);
-
-  if (item === null) {
-    return false;
-  }
-
-  const merged = deepMerge(item, data);
-
-  const dataForValidation = {
-    version: config.version(),
-    pattern: [merged],
-  };
-
-  if (validator.forImportJson(dataForValidation) === false) {
-    return false;
-  }
-
-  storage.updatePattern(url, merged);
-
-  return true;
-};
-
 module.exports.migrate = migrate;
 module.exports.find = find;
 module.exports.findByUrl = findByUrl;
-module.exports.updatePattern = updatePattern;

@@ -1,5 +1,6 @@
 const background = require('../urlNotification/background');
 const badge = require('./background.badge');
+const data = require('../urlNotification/data');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
@@ -25,7 +26,7 @@ const listener = (request, sender, sendResponse) => {
   }
 
   // TODO: Check return value.
-  background.updatePattern(request.data.url, { status: request.data.status });
+  data.updatePattern(request.data.url, { status: request.data.status });
 
   badge.draw(request.data.tabId, true, request.data.status);
 

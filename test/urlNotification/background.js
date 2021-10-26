@@ -60,38 +60,4 @@ describe('urlNotification.background', () => {
       assert.deepStrictEqual(result.data, expectedData);
     });
   });
-
-  describe('updatePattern()', () => {
-    it('Call with non-existing pattern', () => {
-      const result = SUT.updatePattern('https://example.com/999', {
-        status: 0,
-      });
-
-      assert.strictEqual(result, false);
-    });
-
-    it('Normal case', () => {
-      const result = SUT.updatePattern('https://example.com/1', {
-        status: 0,
-      });
-
-      assert.strictEqual(result, true);
-    });
-
-    it('Try to update with invalid value', () => {
-      const result = SUT.updatePattern('https://example.com/1', {
-        status: 9,
-      });
-
-      assert.strictEqual(result, false);
-    });
-
-    it('Try to update with invalid key', () => {
-      const result = SUT.updatePattern('https://example.com/1', {
-        foo: 'bar',
-      });
-
-      assert.strictEqual(result, false);
-    });
-  });
 });
