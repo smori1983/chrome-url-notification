@@ -7,6 +7,10 @@ const storage = require('../../src/js/urlNotification/storage');
 const sharedMigration = require('./shared/migration');
 
 describe('urlNotification.migration.from.0', () => {
+  describe('no data', () => {
+    sharedMigration.runNoData('');
+  });
+
   describe('shared patterns', () => {
     beforeEach(() => {
       testUtil.initStorage('', [
