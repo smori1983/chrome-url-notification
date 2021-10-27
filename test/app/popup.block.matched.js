@@ -8,7 +8,7 @@ describe('app.popup.block.matched', () => {
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-    SUT.show();
+    SUT.showMatchedMenu();
   });
 
   describe('i18n', () => {

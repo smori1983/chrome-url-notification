@@ -1,7 +1,7 @@
 const i18n = require('./i18n');
 const popupFind = require('./popup.find');
 
-const show = () => {
+const showMatchedMenu = () => {
   i18n.apply('#block_for_matched_page');
 
   chrome.tabs.query({
@@ -12,4 +12,4 @@ const show = () => {
   });
 };
 
-module.exports.show = show;
+module.exports.showMatchedMenu = showMatchedMenu;
