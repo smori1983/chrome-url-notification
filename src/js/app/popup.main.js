@@ -1,7 +1,5 @@
 require('../../css/popup.css');
 
-const blockAll = require('./popup.block.all');
-const blockMatched = require('./popup.block.matched');
+const ui = require('./popup.ui');
 
-blockAll.showCommonMenu();
-blockMatched.showMatchedMenu();
+ui.init();
