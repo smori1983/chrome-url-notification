@@ -9,7 +9,7 @@ describe('app.popup.block.all', () => {
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-    SUT.show();
+    SUT.showCommonMenu();
   });
 
   it('link to options page should be shown', () => {

@@ -1,4 +1,4 @@
-const show = () => {
+const showCommonMenu = () => {
   const $ = require('jquery');
 
   $('<a>')
@@ -13,4 +13,4 @@ const show = () => {
     .appendTo($('#link_options'));
 };
 
-module.exports.show = show;
+module.exports.showCommonMenu = showCommonMenu;
