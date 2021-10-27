@@ -30,10 +30,8 @@ const listener = (request, sender, sendResponse) => {
 
   badge.draw(request.data.tabId, true, request.data.status);
 
-  const item = storage.findByUrl(request.data.url);
-
   sendResponse({
-    item: item,
+    item: storage.findByUrl(request.data.url),
     status: request.data.status,
   });
 };
