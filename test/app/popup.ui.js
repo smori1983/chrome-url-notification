@@ -5,14 +5,14 @@ const SUT = require('../../src/js/app/popup.ui');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.ui', () => {
-  describe('common menu', () => {
-    before(testUtil.uiBase.initI18n('en'));
-    testUtil.uiBase.registerHooks();
-    beforeEach(() => {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-      SUT.init();
-    });
+  before(testUtil.uiBase.initI18n('en'));
+  testUtil.uiBase.registerHooks();
+  beforeEach(() => {
+    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
+    SUT.init();
+  });
 
+  describe('common menu', () => {
     it('link to options page should be shown', () => {
       const $ = require('jquery');
       const $link = $('#link_options a');
@@ -38,13 +38,6 @@ describe('app.popup.ui', () => {
   });
 
   describe('matched menu', () => {
-    before(testUtil.uiBase.initI18n('en'));
-    testUtil.uiBase.registerHooks();
-    beforeEach(() => {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-      SUT.init();
-    });
-
     describe('i18n', () => {
       it('status label', () => {
         const $ = require('jquery');
