@@ -36,4 +36,77 @@ describe('app.popup.ui', () => {
       assert.ok(testUtil.chrome.tabsCreateCalledWith(path));
     });
   });
+
+  describe('matched menu', () => {
+    before(testUtil.uiBase.initI18n('en'));
+    testUtil.uiBase.registerHooks();
+    beforeEach(() => {
+      testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
+      SUT.init();
+    });
+
+    describe('i18n', () => {
+      it('status label', () => {
+        const $ = require('jquery');
+        const $element = $('#block_for_matched_page span').eq(0);
+
+        assert.strictEqual($element.text(), 'Status');
+      });
+
+      it('enabled label', () => {
+        const $ = require('jquery');
+        const $element = $('#block_for_matched_page label').eq(0);
+
+        assert.strictEqual($element.text(), 'Enabled');
+      });
+    });
+
+    describe('initial state of status checkbox', () => {
+      it('pattern matched and status is 0', () => {
+        testUtil.chrome.popupTabsQuery()
+          .req({})
+          .res({
+            url: 'https://foo.example.com/page',
+          });
+        testUtil.chrome.popupFindMessage()
+          .req({
+            tab: testUtil.chrome.createTab({
+              id: 10001,
+              url: 'https://foo.example.com/page',
+            }),
+          })
+          .res({
+            item: testUtil.makeFoundItem({
+              url: 'foo.example.com',
+              status: 0,
+            }),
+          });
+
+        assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
+      });
+
+      it('pattern matched and status is 1', () => {
+        testUtil.chrome.popupTabsQuery()
+          .req({})
+          .res({
+            url: 'https://foo.example.com/page',
+          });
+        testUtil.chrome.popupFindMessage()
+          .req({
+            tab: testUtil.chrome.createTab({
+              id: 10002,
+              url: 'https://foo.example.com/page',
+            }),
+          })
+          .res({
+            item: testUtil.makeFoundItem({
+              url: 'foo.example.com',
+              status: 1,
+            }),
+          });
+
+        assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
+      });
+    });
+  });
 });
