@@ -18,12 +18,12 @@ const listener = (request, sender, sendResponse) => {
     return;
   }
 
-  const result = finder.findFor(request.data.url, { ignoreStatus: true });
-  const status = result.matched ? result.data.status : null;
+  const findResult = finder.findFor(request.data.url, { ignoreStatus: true });
+  const status = findResult.matched ? findResult.data.status : null;
 
-  badge.draw(sender.tab.id, result.matched, status);
+  badge.draw(sender.tab.id, findResult.matched, status);
 
-  sendResponse(result);
+  sendResponse(findResult);
 };
 
 const listen = () => {
