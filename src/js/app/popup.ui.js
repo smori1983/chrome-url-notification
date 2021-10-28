@@ -23,7 +23,7 @@ const showMatchedMenu = () => {
     currentWindow: true,
     active: true,
   }, (/** @type {chrome.tabs.Tab[]} */ tabs) => {
-    popupFind.sendMessage(tabs[0]);
+    popupFind.findForTab(tabs[0]);
   });
 };
 

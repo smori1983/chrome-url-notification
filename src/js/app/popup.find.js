@@ -3,7 +3,7 @@ const statusManager = require('./popup.status');
 /**
  * @param {chrome.tabs.Tab} tab
  */
-const sendMessage = (tab) => {
+const findForTab = (tab) => {
   /**
    * @param {string} url
    * @returns {MessageBrowserActionFind}
@@ -42,4 +42,4 @@ const sendMessage = (tab) => {
   chrome.runtime.sendMessage(createRequest(tab.url), process);
 };
 
-module.exports.sendMessage = sendMessage;
+module.exports.findForTab = findForTab;

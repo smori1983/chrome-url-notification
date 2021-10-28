@@ -15,7 +15,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.sendMessage(tab);
+    SUT.findForTab(tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -34,7 +34,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.sendMessage(tab);
+    SUT.findForTab(tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -56,7 +56,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.sendMessage(tab);
+    SUT.findForTab(tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -85,7 +85,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.sendMessage(tab);
+    SUT.findForTab(tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -107,7 +107,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.sendMessage(tab);
+    SUT.findForTab(tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
