@@ -3,7 +3,7 @@ const uiFactory = require('./content.ui');
 /**
  * @param {PageInfo} pageInfo
  */
-const sendMessage = (pageInfo) => {
+const findForPage = (pageInfo) => {
   /**
    * @param {string} url
    * @returns {MessageContentScriptsFind}
@@ -34,4 +34,4 @@ const sendMessage = (pageInfo) => {
   chrome.runtime.sendMessage(createRequest(window.location.href), process);
 };
 
-module.exports.sendMessage = sendMessage;
+module.exports.findForPage = findForPage;

@@ -13,7 +13,7 @@ describe('app.content.ui', () => {
   });
 
   it('mouseover (test for coverage)', () => {
-    contentFind.sendMessage(pageInfoFactory.init().get());
+    contentFind.findForPage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -32,7 +32,7 @@ describe('app.content.ui', () => {
   });
 
   it('mouseout (test for coverage)', () => {
-    contentFind.sendMessage(pageInfoFactory.init().get());
+    contentFind.findForPage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
