@@ -4,5 +4,5 @@ const contentTab = require('./content.tab');
 
 const pageInfo = pageInfoFactory.init();
 
-contentFind.sendMessage(pageInfo.get());
+contentFind.findForPage(pageInfo.get());
 contentTab.listen(pageInfo.get());

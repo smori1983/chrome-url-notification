@@ -13,7 +13,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern not matched', () => {
-    SUT.sendMessage(pageInfoFactory.init().get());
+    SUT.findForPage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -27,7 +27,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 0', () => {
-    SUT.sendMessage(pageInfoFactory.init().get());
+    SUT.findForPage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -43,7 +43,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 1', () => {
-    SUT.sendMessage(pageInfoFactory.init().get());
+    SUT.findForPage(pageInfoFactory.init().get());
 
     testUtil.chrome.contentFindMessage()
       .req({
