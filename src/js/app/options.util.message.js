@@ -2,7 +2,7 @@
  * @param {string} selector
  */
 const main = (selector) => {
-  const $ = global.jQuery = require('jquery');
+  const $ = require('jquery');
 
   let timeoutId = null;
 
