@@ -1,5 +1,6 @@
 const i18n = require('./i18n');
 const storage = require('../urlNotification/storage');
+const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
 
 /**
@@ -9,9 +10,7 @@ const modalFactory = require('./options.util.modal');
 const show = (item, callback) => {
   const $ = require('jquery');
 
-  $('#js_modal_delete_container')
-    .empty()
-    .append($('#js_modal_delete_html').html());
+  formFactory.initForm('#js_modal_delete_container', '#js_modal_delete_html');
 
   $('#js_form_delete_pattern').text(item.url);
   $('#js_form_delete_message').text(item.msg);

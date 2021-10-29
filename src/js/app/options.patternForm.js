@@ -1,6 +1,7 @@
 const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const storage = require('../urlNotification/storage');
+const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
 
 /**
@@ -66,9 +67,7 @@ const show = (mode, item, callback) => {
   require('jquery-validation');
   require('bootstrap-colorpicker');
 
-  $('#js_modal_pattern_container')
-    .empty()
-    .append($('#js_modal_pattern_html').html());
+  formFactory.initForm('#js_modal_pattern_container', '#js_modal_pattern_html');
 
   $('#js_colorpicker').colorpicker({
     align: 'left',
