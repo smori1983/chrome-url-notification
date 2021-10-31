@@ -1,6 +1,7 @@
 const i18n = require('./i18n');
 const importer = require('../urlNotification/importer');
 const validator = require('../urlNotification/validator');
+const formFactory = require('./options.util.form');
 const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
@@ -10,9 +11,7 @@ const modalFactory = require('./options.util.modal');
 const show = (callback) => {
   const $ = require('jquery');
 
-  $('#js_modal_import_container')
-    .empty()
-    .append($('#js_modal_import_html').html());
+  formFactory.initForm('#js_modal_import_container', '#js_modal_import_html');
 
   $('#js_form_import').on('submit', (e) => {
     e.preventDefault();

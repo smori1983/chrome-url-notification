@@ -17,23 +17,25 @@ const version = () => {
 const handlers = () => {
   const $ = require('jquery');
 
-  $('#js_button_add_pattern').on('click', (e) => {
-    e.preventDefault();
-    $(e.target).trigger('blur');
+  const onClick = (selector, callback) => {
+    $(selector).on('click', (e) => {
+      e.preventDefault();
+      $(e.target).trigger('blur');
+      callback();
+    });
+  };
+
+  onClick('#js_button_add_pattern', () => {
     patternForm.show('add', patternForm.defaultValues(), () => {
       patternList.refresh();
     });
   });
 
-  $('#js_button_export').on('click', (e) => {
-    e.preventDefault();
-    $(e.target).trigger('blur');
+  onClick('#js_button_export', () => {
     exportForm.show();
   });
 
-  $('#js_button_import').on('click', (e) => {
-    e.preventDefault();
-    $(e.target).trigger('blur');
+  onClick('#js_button_import', () => {
     importForm.show(() => {
       patternList.refresh();
     })
