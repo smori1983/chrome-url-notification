@@ -9,7 +9,8 @@ describe('app.popup.ui', () => {
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-    SUT.init();
+    const $ = require('jquery');
+    SUT.init($);
   });
 
   describe('common menu', () => {

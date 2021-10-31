@@ -1,9 +1,10 @@
 const statusManager = require('./popup.status');
 
 /**
+ * @param {jQuery} $
  * @param {chrome.tabs.Tab} tab
  */
-const findForTab = (tab) => {
+const findForTab = ($, tab) => {
   /**
    * @param {string} url
    * @returns {MessageBrowserActionFind}
@@ -21,8 +22,6 @@ const findForTab = (tab) => {
    * @param {FindResult} response
    */
   const process = (response) => {
-    const $ = require('jquery');
-
     if (response.matched === false) {
       $('#block_for_matched_page').hide();
 
