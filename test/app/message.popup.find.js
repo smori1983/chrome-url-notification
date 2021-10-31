@@ -4,9 +4,15 @@ const SUT = require('../../src/js/app/popup.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.message.popup.find', () => {
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
+    $ = require('jquery');
   });
 
   it('pattern not matched', () => {
@@ -15,7 +21,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.findForTab(tab);
+    SUT.findForTab($, tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -34,7 +40,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.findForTab(tab);
+    SUT.findForTab($, tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -56,7 +62,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.findForTab(tab);
+    SUT.findForTab($, tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -85,7 +91,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.findForTab(tab);
+    SUT.findForTab($, tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
@@ -107,7 +113,7 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    SUT.findForTab(tab);
+    SUT.findForTab($, tab);
 
     testUtil.chrome.popupFindMessage()
       .req({
