@@ -5,15 +5,27 @@ const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('app.content.ui', () => {
+  /**
+   * @type {Location}
+   */
+  let location;
+
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
+    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
+    location = dom.window.location;
+    $ = require('jquery')(dom.window);
   });
 
   it('mouseover (test for coverage)', () => {
-    contentFind.findForPage(pageInfoFactory.init().get());
+    contentFind.findForPage($, pageInfoFactory.init(location, $).get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -26,13 +38,13 @@ describe('app.content.ui', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message().shown(), true);
+    assert.strictEqual(testUtil.content.message($).shown(), true);
 
-    testUtil.content.message().mouseover();
+    testUtil.content.message($).mouseover();
   });
 
   it('mouseout (test for coverage)', () => {
-    contentFind.findForPage(pageInfoFactory.init().get());
+    contentFind.findForPage($, pageInfoFactory.init(location, $).get());
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -45,8 +57,8 @@ describe('app.content.ui', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message().shown(), true);
+    assert.strictEqual(testUtil.content.message($).shown(), true);
 
-    testUtil.content.message().mouseout();
+    testUtil.content.message($).mouseout();
   });
 });
