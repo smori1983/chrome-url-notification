@@ -3,10 +3,10 @@ const cssFactory = require('./content.css');
 const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
 
 /**
+ * @param {jQuery} $
  * @param {PageInfo} pageInfo
  */
-const main = (pageInfo) => {
-  const $ = require('jquery');
+const main = ($, pageInfo) => {
   const $body = $('body');
 
   const css = cssFactory.init(pageInfo);

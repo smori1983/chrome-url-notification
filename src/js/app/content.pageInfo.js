@@ -1,5 +1,7 @@
-const main = () => {
-  const $ = require('jquery');
+/**
+ * @param {jQuery} $
+ */
+const main = ($) => {
   const $body = $('body');
 
   /** @type {PageInfo} */
