@@ -5,17 +5,21 @@ const SUT = require('../../src/js/app/popup.ui');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.ui', () => {
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
   before(testUtil.uiBase.initI18n('en'));
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-    const $ = require('jquery');
+    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('src/html/popup.html'));
+    $ = require('jquery')(dom.window);
     SUT.init($);
   });
 
   describe('common menu', () => {
     it('link to options page should be shown', () => {
-      const $ = require('jquery');
       const $link = $('#link_options a');
 
       assert.strictEqual($link.length, 1);
@@ -29,7 +33,6 @@ describe('app.popup.ui', () => {
         .withArgs('html/options.html')
         .returns(path);
 
-      const $ = require('jquery');
       const $link = $('#link_options a').eq(0);
 
       $link.trigger('click');
@@ -41,14 +44,12 @@ describe('app.popup.ui', () => {
   describe('matched menu', () => {
     describe('i18n', () => {
       it('status label', () => {
-        const $ = require('jquery');
         const $element = $('#block_for_matched_page span').eq(0);
 
         assert.strictEqual($element.text(), 'Status');
       });
 
       it('enabled label', () => {
-        const $ = require('jquery');
         const $element = $('#block_for_matched_page label').eq(0);
 
         assert.strictEqual($element.text(), 'Enabled');
@@ -76,7 +77,7 @@ describe('app.popup.ui', () => {
             }),
           });
 
-        assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
+        assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), false);
       });
 
       it('pattern matched and status is 1', () => {
@@ -99,7 +100,7 @@ describe('app.popup.ui', () => {
             }),
           });
 
-        assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
+        assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), true);
       });
     });
   });

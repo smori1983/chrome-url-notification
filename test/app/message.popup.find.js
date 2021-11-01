@@ -11,8 +11,8 @@ describe('app.message.popup.find', () => {
 
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/popup.html'));
-    $ = require('jquery');
+    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('src/html/popup.html'));
+    $ = require('jquery')(dom.window);
   });
 
   it('pattern not matched', () => {
@@ -31,7 +31,7 @@ describe('app.message.popup.find', () => {
         item: null,
       });
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), false);
   });
 
   it('pattern matched and status is 0', () => {
@@ -52,8 +52,8 @@ describe('app.message.popup.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), false);
   });
 
   it('pattern matched and status is 0, then enable', () => {
@@ -74,15 +74,15 @@ describe('app.message.popup.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), false);
 
-    testUtil.popup.matchedBlock().clickStatus();
+    testUtil.popup.matchedBlock($).clickStatus();
 
     assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(20002, 'https://example.com/', 1));
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), true);
   });
 
   it('pattern matched and status is 1', () => {
@@ -103,8 +103,8 @@ describe('app.message.popup.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), true);
   });
 
   it('pattern matched and status is 1, then disable', () => {
@@ -125,14 +125,14 @@ describe('app.message.popup.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), true);
 
-    testUtil.popup.matchedBlock().clickStatus();
+    testUtil.popup.matchedBlock($).clickStatus();
 
     assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(30002, 'https://example.com/', 0));
 
-    assert.strictEqual(testUtil.popup.matchedBlock().shown(), true);
-    assert.strictEqual(testUtil.popup.matchedBlock().statusEnabled(), false);
+    assert.strictEqual(testUtil.popup.matchedBlock($).shown(), true);
+    assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), false);
   });
 });
