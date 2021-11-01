@@ -31,6 +31,15 @@ const initDom = (content, options) => {
   global.HTMLElement = dom.window.HTMLElement;
 };
 
+/**
+ * @param {string} content
+ * @param {Object} [options]
+ * @return {JSDOM}
+ */
+const initDom2 = (content, options) => {
+  return new JSDOM(content, options);
+};
+
 const registerHooks = () => {
   before(() => {
     global.chrome = chrome;
@@ -67,4 +76,5 @@ const registerHooks = () => {
 
 module.exports.initI18n = initI18n;
 module.exports.initDom = initDom;
+module.exports.initDom2 = initDom2;
 module.exports.registerHooks = registerHooks;

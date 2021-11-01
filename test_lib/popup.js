@@ -1,6 +1,7 @@
-const matchedBlock = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const matchedBlock = ($) => {
   const block = () => {
     return $('#block_for_matched_page');
   };
