@@ -206,6 +206,7 @@ module.exports.init = main;
 
 /**
  * @typedef {Object} PageInfo
+ * @property {Location} location
  * @property {PageBodyInfo} body
  */
 

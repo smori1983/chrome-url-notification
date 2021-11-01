@@ -32,7 +32,7 @@ const findForPage = ($, pageInfo) => {
     ui.updateUI(response.data);
   };
 
-  chrome.runtime.sendMessage(createRequest(window.location.href), process);
+  chrome.runtime.sendMessage(createRequest(pageInfo.location.href), process);
 };
 
 module.exports.findForPage = findForPage;
