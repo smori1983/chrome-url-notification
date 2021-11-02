@@ -1,9 +1,10 @@
 const uiFactory = require('./content.ui');
 
 /**
+ * @param {jQuery} $
  * @param {PageInfo} pageInfo
  */
-const findForPage = (pageInfo) => {
+const findForPage = ($, pageInfo) => {
   /**
    * @param {string} url
    * @returns {MessageContentScriptsFind}
@@ -25,13 +26,13 @@ const findForPage = (pageInfo) => {
       return;
     }
 
-    const ui = uiFactory.init(pageInfo);
+    const ui = uiFactory.init($, pageInfo);
 
     ui.initUI(response.data);
     ui.updateUI(response.data);
   };
 
-  chrome.runtime.sendMessage(createRequest(window.location.href), process);
+  chrome.runtime.sendMessage(createRequest(pageInfo.location.href), process);
 };
 
 module.exports.findForPage = findForPage;

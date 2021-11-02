@@ -5,15 +5,27 @@ const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const testUtil = require('../../test_lib/util');
 
 describe('app.message.content.find', () => {
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
+  /**
+   * @type {PageInfo}
+   */
+  let pageInfo;
+
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
-    testUtil.uiBase.initDom(testUtil.getHtml('test_resource/html/content.01.html'), {
+    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
+    $ = require('jquery')(dom.window);
+    pageInfo = pageInfoFactory.init(dom.window.location, $).get();
   });
 
   it('pattern not matched', () => {
-    SUT.findForPage(pageInfoFactory.init().get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -23,11 +35,11 @@ describe('app.message.content.find', () => {
         item: null,
       });
 
-    assert.strictEqual(testUtil.content.message().exists(), false);
+    assert.strictEqual(testUtil.content.message($).exists(), false);
   });
 
   it('pattern matched and status is 0', () => {
-    SUT.findForPage(pageInfoFactory.init().get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -39,11 +51,11 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message().hidden(), true);
+    assert.strictEqual(testUtil.content.message($).hidden(), true);
   });
 
   it('pattern matched and status is 1', () => {
-    SUT.findForPage(pageInfoFactory.init().get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -55,6 +67,6 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message().shown(), true);
+    assert.strictEqual(testUtil.content.message($).shown(), true);
   });
 });

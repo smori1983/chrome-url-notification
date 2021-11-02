@@ -1,19 +1,21 @@
-const { describe } = require('mocha');
+const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const _ = require('lodash');
+const pageInfoFactory = require('../../src/js/app/content.pageInfo');
 const SUT = require('../../src/js/app/content.css');
 const testUtil = require('../../test_lib/util');
 
-const css = SUT.init({
-  body: {
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-});
-
 describe('app.content.css', () => {
+  let css;
+
   testUtil.uiBase.registerHooks();
+  beforeEach(() => {
+    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.03.html'));
+    const $ = require('jquery')(dom.window);
+    const pageInfo = pageInfoFactory.init(dom.window.location, $);
+    css = SUT.init(pageInfo.get());
+  });
 
   describe('forBody', () => {
     given([

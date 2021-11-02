@@ -1,6 +1,7 @@
-const page = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const page = ($) => {
   return {
     /**
      * @returns {string}
@@ -17,10 +18,11 @@ const page = () => {
   };
 };
 
-const message = () => {
+/**
+ * @param {jQuery} $
+ */
+const message = ($) => {
   const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
-
-  const $ = require('jquery');
 
   const container = () => {
     return $('#' + messageContainerId);

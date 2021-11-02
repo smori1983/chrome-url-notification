@@ -7,9 +7,10 @@ const uiFactory = require('./content.ui');
  */
 
 /**
+ * @param {jQuery} $
  * @param {PageInfo} pageInfo
  */
-const listen = (pageInfo) => {
+const listen = ($, pageInfo) => {
   /**
    * @param {MessageTabNotifyStatus} request
    */
@@ -20,7 +21,7 @@ const listen = (pageInfo) => {
     }
 
     if (request.data.item) {
-      const ui = uiFactory.init(pageInfo);
+      const ui = uiFactory.init($, pageInfo);
 
       ui.updateUI(request.data.item);
     }
