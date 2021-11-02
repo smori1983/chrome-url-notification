@@ -10,7 +10,7 @@ const modalFactory = require('./options.util.modal');
 const show = () => {
   const $ = require('jquery');
 
-  formFactory.initForm('#js_modal_export_container', '#js_modal_export_html');
+  formFactory.initForm($, '#js_modal_export_container', '#js_modal_export_html');
 
   const clipboard = new ClipboardJS('#js_export_copy');
   const message = messageFactory.init('#js_export_message');

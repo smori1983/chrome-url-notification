@@ -11,7 +11,7 @@ const modalFactory = require('./options.util.modal');
 const show = (callback) => {
   const $ = require('jquery');
 
-  formFactory.initForm('#js_modal_import_container', '#js_modal_import_html');
+  formFactory.initForm($, '#js_modal_import_container', '#js_modal_import_html');
 
   $('#js_form_import').on('submit', (e) => {
     e.preventDefault();

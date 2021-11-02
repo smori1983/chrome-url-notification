@@ -82,7 +82,7 @@ const show = (mode, item, callback) => {
   const $ = require('jquery');
   require('bootstrap-colorpicker');
 
-  formFactory.initForm('#js_modal_pattern_container', '#js_modal_pattern_html');
+  formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
 
   $('#js_colorpicker').colorpicker({
     align: 'left',

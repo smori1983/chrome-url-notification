@@ -10,7 +10,7 @@ const modalFactory = require('./options.util.modal');
 const show = (item, callback) => {
   const $ = require('jquery');
 
-  formFactory.initForm('#js_modal_delete_container', '#js_modal_delete_html');
+  formFactory.initForm($, '#js_modal_delete_container', '#js_modal_delete_html');
 
   $('#js_form_delete_pattern').text(item.url);
   $('#js_form_delete_message').text(item.msg);
