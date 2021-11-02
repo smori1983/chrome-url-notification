@@ -25,7 +25,7 @@ const show = (callback) => {
 
   i18n.apply('#js_modal_import_container');
 
-  const modal = modalFactory.init('#js_modal_import', {
+  const modal = modalFactory.init($, '#js_modal_import', {
     'shown.bs.modal': () => {
       $('#js_form_import_json').trigger('focus');
     },

@@ -104,7 +104,7 @@ const show = (mode, item, callback) => {
 
   i18n.apply('#js_modal_pattern_container');
 
-  const modal = modalFactory.init('#js_modal_pattern', {
+  const modal = modalFactory.init($, '#js_modal_pattern', {
     'shown.bs.modal': () => {
       $('#js_input_url').trigger('focus');
     },

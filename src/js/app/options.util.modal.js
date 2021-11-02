@@ -1,9 +1,9 @@
 /**
+ * @param {jQuery} $
  * @param {string} selector
  * @param {Object} [events]
  */
-const main = (selector, events) => {
-  const $ = global.jQuery = require('jquery');
+const main = ($, selector, events) => {
   require('bootstrap');
 
   /**

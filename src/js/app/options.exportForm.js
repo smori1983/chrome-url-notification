@@ -32,7 +32,7 @@ const show = () => {
   i18n.apply('#js_modal_export_container');
 
   modalFactory
-    .init('#js_modal_export')
+    .init($, '#js_modal_export')
     .show();
 };
 
