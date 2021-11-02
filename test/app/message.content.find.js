@@ -6,26 +6,26 @@ const testUtil = require('../../test_lib/util');
 
 describe('app.message.content.find', () => {
   /**
-   * @type {Location}
-   */
-  let location;
-
-  /**
    * @type {jQuery}
    */
   let $;
+
+  /**
+   * @type {PageInfo}
+   */
+  let pageInfo;
 
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',
     });
-    location = dom.window.location;
     $ = require('jquery')(dom.window);
+    pageInfo = pageInfoFactory.init(dom.window.location, $).get();
   });
 
   it('pattern not matched', () => {
-    SUT.findForPage($, pageInfoFactory.init(location, $).get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -39,7 +39,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 0', () => {
-    SUT.findForPage($, pageInfoFactory.init(location, $).get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({
@@ -55,7 +55,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 1', () => {
-    SUT.findForPage($, pageInfoFactory.init(location, $).get());
+    SUT.findForPage($, pageInfo);
 
     testUtil.chrome.contentFindMessage()
       .req({

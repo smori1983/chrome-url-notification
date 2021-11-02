@@ -7,27 +7,27 @@ const testUtil = require('../../test_lib/util');
 
 describe('app.message.content.tab', () => {
   /**
-   * @type {Location}
-   */
-  let location;
-
-  /**
    * @type {jQuery}
    */
   let $;
 
+  /**
+   * @type {PageInfo}
+   */
+  let pageInfo;
+
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.02.html'));
-    location = dom.window.location;
     $ = require('jquery')(dom.window);
+    pageInfo = pageInfoFactory.init(dom.window.location, $).get();
   });
 
   given([
     {displayPosition: 'top', marginTop: '10px', marginBottom: '20px'},
     {displayPosition: 'bottom', marginTop: '10px', marginBottom: '20px'},
   ]).it('pattern matched and status is 0', (arg) => {
-    SUT.listen($, pageInfoFactory.init(location, $).get());
+    SUT.listen($, pageInfo);
 
     testUtil.chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 0);
 
@@ -40,7 +40,7 @@ describe('app.message.content.tab', () => {
     {displayPosition: 'top', marginTop: '50px', marginBottom: '20px'},
     {displayPosition: 'bottom', marginTop: '10px', marginBottom: '50px'},
   ]).it('pattern matched and status is 1', (arg) => {
-    SUT.listen($, pageInfoFactory.init(location, $).get());
+    SUT.listen($, pageInfo);
 
     testUtil.chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 1);
 
