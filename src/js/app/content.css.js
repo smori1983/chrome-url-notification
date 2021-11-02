@@ -203,15 +203,3 @@ const main = (pageInfo) => {
 };
 
 module.exports.init = main;
-
-/**
- * @typedef {Object} PageInfo
- * @property {Location} location
- * @property {PageBodyInfo} body
- */
-
-/**
- * @typedef {Object} PageBodyInfo
- * @property {string} marginTop
- * @property {string} marginBottom
- */
