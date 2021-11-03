@@ -13,7 +13,7 @@ const show = () => {
   formFactory.initForm($, '#js_modal_export_container', '#js_modal_export_html');
 
   const clipboard = new ClipboardJS('#js_export_copy');
-  const message = messageFactory.init('#js_export_message');
+  const message = messageFactory.init($, '#js_export_message');
 
   /* istanbul ignore next jsdom does not support document.execCommand() */
   clipboard.on('success', (e) => {

@@ -50,7 +50,7 @@ const submit = (callback) => {
     callback();
   } catch (e) {
     messageFactory
-      .init('#js_import_message')
+      .init($, '#js_import_message')
       .show(e.message);
   }
 };
