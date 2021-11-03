@@ -37,7 +37,7 @@ const initEventHandler = () => {
     if ($element.data('un-action') === 'pattern-item-delete') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      deleteForm.show($element.data('un-pattern-item'), () => {
+      deleteForm.show($, $element.data('un-pattern-item'), () => {
         refresh();
       });
     }

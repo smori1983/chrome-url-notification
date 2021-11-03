@@ -4,12 +4,11 @@ const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
 
 /**
+ * @param {jQuery} $
  * @param {PatternItem} item
  * @param {function} callback Called when delete form submitted
  */
-const show = (item, callback) => {
-  const $ = require('jquery');
-
+const show = ($, item, callback) => {
   formFactory.initForm($, '#js_modal_delete_container', '#js_modal_delete_html');
 
   $('#js_form_delete_pattern').text(item.url);
