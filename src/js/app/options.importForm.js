@@ -6,16 +6,15 @@ const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
 /**
+ * @param {jQuery} $
  * @param {function} callback Called when import form submitted
  */
-const show = (callback) => {
-  const $ = require('jquery');
-
+const show = ($, callback) => {
   formFactory.initForm($, '#js_modal_import_container', '#js_modal_import_html');
 
   $('#js_form_import').on('submit', (e) => {
     e.preventDefault();
-    submit(() => {
+    submit($, () => {
       modal.hide();
       callback();
     });
@@ -35,11 +34,10 @@ const show = (callback) => {
 };
 
 /**
+ * @param {jQuery} $
  * @param {function} callback
  */
-const submit = (callback) => {
-  const $ = require('jquery');
-
+const submit = ($, callback) => {
   const jsonText = $('#js_form_import_json').val().trim();
 
   try {

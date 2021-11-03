@@ -36,7 +36,7 @@ const handlers = () => {
   });
 
   onClick('#js_button_import', () => {
-    importForm.show(() => {
+    importForm.show($, () => {
       patternList.refresh();
     })
   });
