@@ -32,7 +32,7 @@ const handlers = () => {
   });
 
   onClick('#js_button_export', () => {
-    exportForm.show();
+    exportForm.show($);
   });
 
   onClick('#js_button_import', () => {
