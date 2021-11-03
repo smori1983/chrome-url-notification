@@ -66,7 +66,7 @@ describe('vendor.joi', () => {
                 args: {list},
               });
             },
-            validate(value, helpers, { list }, options) {
+            validate(value, helpers, { list }) {
               if (list.indexOf(value) < 0) {
                 return helpers.error('string.in');
               }
