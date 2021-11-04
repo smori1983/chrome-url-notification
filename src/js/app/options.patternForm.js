@@ -217,9 +217,11 @@ const setUpJoi = () => {
       },
     },
     messages: {
-      'string.hexColor': 'The error message of string.hexColor',
-      'string.in': 'The error message of string.in',
-      'string.existingUrl': 'The error message of string.existingUrl',
+      'string.empty': i18n.get('message_field_required'),
+
+      'string.hexColor': i18n.get('message_invalid_color_index'),
+      'string.in': i18n.get('message_invalid_choice'),
+      'string.existingUrl': i18n.get('message_pattern_existing_url_pattern'),
     },
   });
 };
