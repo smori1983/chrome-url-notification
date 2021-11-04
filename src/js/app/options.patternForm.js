@@ -65,7 +65,6 @@ const clear = () => {
  */
 const show = (mode, item, callback) => {
   const $ = require('jquery');
-  require('jquery-validation');
   require('bootstrap-colorpicker');
 
   formFactory.initForm('#js_modal_pattern_container', '#js_modal_pattern_html');
