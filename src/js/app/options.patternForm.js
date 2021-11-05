@@ -65,7 +65,7 @@ const getValues = () => {
 const resetValidator = () => {
   const $ = require('jquery');
 
-  $('.js_input_error_message').empty();
+  $('#js_form_pattern .js_input_error_message').empty();
 };
 
 const clear = () => {
