@@ -41,8 +41,8 @@ const getRawValues = () => {
   return {
     url: $('#js_input_url').val(),
     msg: $('#js_input_msg').val(),
-    backgroundColor: $('#js_input_background_color').val().replace(/^#/, ''),
-    displayPosition: $('input[name=display_position]:checked').val(),
+    background_color: $('#js_input_background_color').val().replace(/^#/, ''),
+    display_position: $('input[name=display_position]:checked').val(),
     status: $('#js_input_status').val(),
   };
 };
@@ -164,8 +164,8 @@ const validate = (mode, item) => {
   const schema = custom.object({
     url: custom.string().required().existingUrl(mode, item.url),
     msg: custom.string().required(),
-    backgroundColor: custom.string().required().hexColor(),
-    displayPosition: custom.string().required().in(displayPositionChoices),
+    background_color: custom.string().required().hexColor(),
+    display_position: custom.string().required().in(displayPositionChoices),
     status: custom.string().required().in(['0', '1']),
   });
 

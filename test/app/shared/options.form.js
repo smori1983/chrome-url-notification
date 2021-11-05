@@ -27,7 +27,7 @@ module.exports.runError = () => {
     form.backgroundColor('');
     form.submit();
 
-    assert.strictEqual(form.errorMessage('backgroundColor'), 'This field is required.');
+    assert.strictEqual(form.errorMessage('background_color'), 'This field is required.');
   });
 
   it('background color should be valid color index', () => {
@@ -36,7 +36,7 @@ module.exports.runError = () => {
     form.backgroundColor('#zzzzzz');
     form.submit();
 
-    assert.strictEqual(form.errorMessage('backgroundColor'), 'Invalid color index.');
+    assert.strictEqual(form.errorMessage('background_color'), 'Invalid color index.');
   });
 
   it('modify value of display position', () => {
@@ -46,7 +46,7 @@ module.exports.runError = () => {
     const form = testUtil.options.patternForm();
     form.submit();
 
-    assert.strictEqual(form.errorMessage('displayPosition'), 'Invalid choice.');
+    assert.strictEqual(form.errorMessage('display_position'), 'Invalid choice.');
   });
 
   it('modify value of status', () => {
