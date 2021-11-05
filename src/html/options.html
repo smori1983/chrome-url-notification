@@ -43,10 +43,12 @@
                         <label for="js_input_url" data-i18n="label_url_pattern"></label>
                         <p class="small text-info" data-i18n="text_url_pattern"></p>
                         <input type="text" name="url" value="" id="js_input_url" class="form-control" data-i18n-ph="ph_url_pattern" placeholder="" />
+                        <div id="js_input_url-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label for="js_input_msg" data-i18n="label_message"></label>
                         <input type="text" name="message" value="" id="js_input_msg" class="form-control" data-i18n-ph="ph_message" placeholder="" />
+                        <div id="js_input_msg-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label for="js_input_background_color" data-i18n="label_background_color"></label>
@@ -54,6 +56,7 @@
                             <span class="input-group-addon"><i><!-- // --></i></span>
                             <input type="text" name="background_color" value="" id="js_input_background_color" class="form-control" />
                         </div>
+                        <div id="js_input_background_color-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label data-i18n="label_display_position"></label>
@@ -66,12 +69,14 @@
                             <label class="radio-inline"><input type="radio" value="bottom_left" name="display_position"><span data-i18n="label_bottom_left"></span></label>
                             <label class="radio-inline"><input type="radio" value="bottom_right" name="display_position"><span data-i18n="label_bottom_right"></span></label>
                         </div>
+                        <div id="js_input_display_position-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
                         <label data-i18n="label_status"></label>
                         <div class="input-group">
                             <label class="checkbox-inline"><input id="js_input_status" type="checkbox" value="1" name="status"><span data-i18n="label_enabled"></span></label>
                         </div>
+                        <div id="js_input_status-error" class="js_input_error_message text-danger"></div>
                     </div>
                 </div>
                 <div class="modal-footer">

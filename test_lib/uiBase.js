@@ -56,7 +56,6 @@ const registerHooks = () => {
       });
 
     delete require.cache[require.resolve('jquery')];
-    delete require.cache[require.resolve('jquery-validation')];
     delete require.cache[require.resolve('bootstrap')];
     delete require.cache[require.resolve('bootstrap/js/modal')];
     //delete require.cache[require.resolve('bootstrap/js/dist/modal')];
