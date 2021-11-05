@@ -3,20 +3,25 @@ const importForm = require('./options.importForm');
 const patternForm = require('./options.patternForm');
 const patternList = require('./options.list');
 
-const show = () => {
-  version();
-  handlers();
+/**
+ * @param {jQuery} $
+ */
+const show = ($) => {
+  version($);
+  handlers($);
 };
 
-const version = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const version = ($) => {
   $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
 };
 
-const handlers = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const handlers = ($) => {
   const onClick = (selector, callback) => {
     $(selector).on('click', (e) => {
       e.preventDefault();

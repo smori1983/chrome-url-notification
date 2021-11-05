@@ -9,7 +9,7 @@ const header = require('./options.header');
 const patternList = require('./options.list');
 
 $(() => {
-  header.show();
+  header.show($);
   patternList.show($);
 
   i18n.apply('body');
