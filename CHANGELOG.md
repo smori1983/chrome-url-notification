@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Introduce `joi`.
+- Remove `jquery-validation`.
+
+
 ## v6.2.0
 
 ### Development
