@@ -15,7 +15,7 @@ const initEventHandler = () => {
     if ($element.data('un-action') === 'pattern-item-copy') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      patternForm.show('add', $element.data('un-pattern-item'), () => {
+      patternForm.show($, 'add', $element.data('un-pattern-item'), () => {
         refresh();
       });
     }
@@ -26,7 +26,7 @@ const initEventHandler = () => {
     if ($element.data('un-action') === 'pattern-item-edit') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      patternForm.show('edit', $element.data('un-pattern-item'), () => {
+      patternForm.show($, 'edit', $element.data('un-pattern-item'), () => {
         refresh();
       });
     }
