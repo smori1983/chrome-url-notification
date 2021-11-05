@@ -27,7 +27,7 @@ const handlers = () => {
 
   onClick('#js_button_add_pattern', () => {
     patternForm.show($, 'add', patternForm.defaultValues(), () => {
-      patternList.refresh();
+      patternList.refresh($);
     });
   });
 
@@ -37,7 +37,7 @@ const handlers = () => {
 
   onClick('#js_button_import', () => {
     importForm.show($, () => {
-      patternList.refresh();
+      patternList.refresh($);
     })
   });
 };

@@ -6,8 +6,10 @@ const storage = require('../urlNotification/storage');
 const patternForm = require('./options.patternForm');
 const deleteForm = require('./options.deleteForm');
 
-const initEventHandler = () => {
-  const $ = require('jquery');
+/**
+ * @param {jQuery} $
+ */
+const initEventHandler = ($) => {
   const $table = $('#js_list_pattern');
 
   $table.on('click', (e) => {
@@ -16,7 +18,7 @@ const initEventHandler = () => {
       e.preventDefault();
       $(e.target).trigger('blur');
       patternForm.show($, 'add', $element.data('un-pattern-item'), () => {
-        refresh();
+        refresh($);
       });
     }
   });
@@ -27,7 +29,7 @@ const initEventHandler = () => {
       e.preventDefault();
       $(e.target).trigger('blur');
       patternForm.show($, 'edit', $element.data('un-pattern-item'), () => {
-        refresh();
+        refresh($);
       });
     }
   });
@@ -38,42 +40,50 @@ const initEventHandler = () => {
       e.preventDefault();
       $(e.target).trigger('blur');
       deleteForm.show($, $element.data('un-pattern-item'), () => {
-        refresh();
+        refresh($);
       });
     }
   });
 };
 
-const show = () => {
-  initEventHandler();
-  draw();
-};
-
-const refresh = () => {
-  draw();
-};
-
-const draw = () => {
-  const items = data.sortByMessage(storage.getAll());
-
-  drawBadge(items);
-  drawTable(items);
+/**
+ * @param {jQuery} $
+ */
+const show = ($) => {
+  initEventHandler($);
+  draw($);
 };
 
 /**
+ * @param {jQuery} $
+ */
+const refresh = ($) => {
+  draw($);
+};
+
+/**
+ * @param {jQuery} $
+ */
+const draw = ($) => {
+  const items = data.sortByMessage(storage.getAll());
+
+  drawBadge($, items);
+  drawTable($, items);
+};
+
+/**
+ * @param {jQuery} $
  * @param {PatternItem[]} items
  */
-const drawBadge = (items) => {
-  const $ = require('jquery');
-
+const drawBadge = ($, items) => {
   $('#js_pattern_list_badge').text(items.length);
 };
 
 /**
+ * @param {jQuery} $
  * @param {PatternItem[]} items
  */
-const drawTable = (items) => {
-  const $ = require('jquery');
+const drawTable = ($, items) => {
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
@@ -81,16 +91,17 @@ const drawTable = (items) => {
   $listArea.empty();
 
   if (items.length > 0) {
-    makeHeader().appendTo($headerArea);
+    makeHeader($).appendTo($headerArea);
     items.forEach((item) => {
-      makeRow(item).appendTo($listArea);
+      makeRow($, item).appendTo($listArea);
     });
   }
 };
 
-const makeHeader = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const makeHeader = ($) => {
   const row = () => {
     return $('<tr>');
   };
@@ -108,11 +119,10 @@ const makeHeader = () => {
 };
 
 /**
+ * @param {jQuery} $
  * @param {PatternItem} item
  */
-const makeRow = (item) => {
-  const $ = require('jquery');
-
+const makeRow = ($, item) => {
   const row = () => {
     return $('<tr>');
   };
