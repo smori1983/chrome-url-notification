@@ -35,6 +35,21 @@ const bindValues = (item) => {
 /**
  * @returns {PatternItem}
  */
+const getRawValues = () => {
+  const $ = require('jquery');
+
+  return {
+    url: $('#js_input_url').val(),
+    msg: $('#js_input_msg').val(),
+    backgroundColor: $('#js_input_background_color').val().replace(/^#/, ''),
+    displayPosition: $('input[name=display_position]:checked').val(),
+    status: $('#js_input_status').val(),
+  };
+};
+
+/**
+ * @returns {PatternItem}
+ */
 const getValues = () => {
   const $ = require('jquery');
 
@@ -151,10 +166,10 @@ const validate = (mode, item) => {
     msg: custom.string().required(),
     backgroundColor: custom.string().required().hexColor(),
     displayPosition: custom.string().required().in(displayPositionChoices),
-    status: custom.any().allow(0, 1),
+    status: custom.string().required().in(['0', '1']),
   });
 
-  return schema.validate(getValues(), {
+  return schema.validate(getRawValues(), {
     abortEarly: false,
   });
 };
