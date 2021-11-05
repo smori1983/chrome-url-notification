@@ -219,12 +219,6 @@ const patternForm = () => {
      */
     errorMessage: (name) => {
       modalShouldActivated($('#js_modal_pattern'));
-      if (name === 'display_position') {
-        return $('#display_position-error').text();
-      }
-      if (name === 'status') {
-        return $('#status-error').text();
-      }
       return $('#js_input_' + name + '-error').text();
     },
   }
