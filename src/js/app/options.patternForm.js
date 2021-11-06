@@ -103,7 +103,7 @@ const show = ($, mode, item, callback) => {
     });
   });
 
-  i18n.apply('#js_modal_pattern_container');
+  i18n.apply2($, '#js_modal_pattern_container');
 
   const modal = modalFactory.init($, '#js_modal_pattern', {
     'shown.bs.modal': () => {

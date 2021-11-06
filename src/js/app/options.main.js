@@ -12,5 +12,5 @@ $(() => {
   header.show($);
   patternList.show($);
 
-  i18n.apply('body');
+  i18n.apply2($, 'body');
 });

@@ -30,7 +30,7 @@ const show = ($) => {
 
   $('#js_export_display').html(json);
 
-  i18n.apply('#js_modal_export_container');
+  i18n.apply2($, '#js_modal_export_container');
 
   modalFactory
     .init($, '#js_modal_export')
