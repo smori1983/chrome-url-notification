@@ -4,8 +4,6 @@
  * @param {Object} [events]
  */
 const main = ($, selector, events) => {
-  require('bootstrap');
-
   /**
    * @param {string} eventName
    * @param {function} callback
