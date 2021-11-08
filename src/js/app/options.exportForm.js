@@ -13,7 +13,9 @@ const modalFactory = require('./options.util.modal');
 const show = ($) => {
   formFactory.initForm($, '#js_modal_export_container', '#js_modal_export_html');
 
-  const clipboard = new ClipboardJS('#js_export_copy');
+  const clipboard = new ClipboardJS('#js_export_copy', {
+    container: $('body').get(0), // default value of the option.
+  });
   const message = messageFactory.init($, '#js_export_message');
 
   /* istanbul ignore next jsdom does not support document.execCommand() */
