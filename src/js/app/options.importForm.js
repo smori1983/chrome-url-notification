@@ -6,16 +6,15 @@ const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
 /**
+ * @param {jQuery} $
  * @param {function} callback Called when import form submitted
  */
-const show = (callback) => {
-  const $ = require('jquery');
-
-  formFactory.initForm('#js_modal_import_container', '#js_modal_import_html');
+const show = ($, callback) => {
+  formFactory.initForm($, '#js_modal_import_container', '#js_modal_import_html');
 
   $('#js_form_import').on('submit', (e) => {
     e.preventDefault();
-    submit(() => {
+    submit($, () => {
       modal.hide();
       callback();
     });
@@ -23,9 +22,9 @@ const show = (callback) => {
 
   $('#js_form_import_json').val('');
 
-  i18n.apply('#js_modal_import_container');
+  i18n.apply2($, '#js_modal_import_container');
 
-  const modal = modalFactory.init('#js_modal_import', {
+  const modal = modalFactory.init($, '#js_modal_import', {
     'shown.bs.modal': () => {
       $('#js_form_import_json').trigger('focus');
     },
@@ -35,11 +34,10 @@ const show = (callback) => {
 };
 
 /**
+ * @param {jQuery} $
  * @param {function} callback
  */
-const submit = (callback) => {
-  const $ = require('jquery');
-
+const submit = ($, callback) => {
   const jsonText = $('#js_form_import_json').val().trim();
 
   try {
@@ -50,7 +48,7 @@ const submit = (callback) => {
     callback();
   } catch (e) {
     messageFactory
-      .init('#js_import_message')
+      .init($, '#js_import_message')
       .show(e.message);
   }
 };

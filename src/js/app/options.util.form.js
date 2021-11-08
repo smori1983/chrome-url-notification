@@ -1,10 +1,9 @@
 /**
+ * @param {jQuery} $
  * @param {string} containerElementId
  * @param {string} templateElementId
  */
-const initForm = (containerElementId, templateElementId) => {
-  const $ = require('jquery');
-
+const initForm = ($, containerElementId, templateElementId) => {
   $(containerElementId)
     .empty()
     .append($(templateElementId).html());

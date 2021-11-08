@@ -13,7 +13,7 @@ describe('app.options.util.modal', () => {
     const $ = require('jquery');
     const $modal = $('#modal');
 
-    const modal = SUT.init('#modal');
+    const modal = SUT.init($, '#modal');
 
     assert.strictEqual($modal.css('display'), 'none');
 
@@ -30,7 +30,7 @@ describe('app.options.util.modal', () => {
     const $ = require('jquery');
     const $modal = $('#modal');
 
-    const modal = SUT.init('#modal', {
+    const modal = SUT.init($, '#modal', {
       'shown.bs.modal': () => {
         $('#modal').text('Activated');
       },

@@ -7,13 +7,16 @@ const formFactory = require('./options.util.form');
 const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
-const show = () => {
-  const $ = require('jquery');
+/**
+ * @param {jQuery} $
+ */
+const show = ($) => {
+  formFactory.initForm($, '#js_modal_export_container', '#js_modal_export_html');
 
-  formFactory.initForm('#js_modal_export_container', '#js_modal_export_html');
-
-  const clipboard = new ClipboardJS('#js_export_copy');
-  const message = messageFactory.init('#js_export_message');
+  const clipboard = new ClipboardJS('#js_export_copy', {
+    container: $('body').get(0), // default value of the option.
+  });
+  const message = messageFactory.init($, '#js_export_message');
 
   /* istanbul ignore next jsdom does not support document.execCommand() */
   clipboard.on('success', (e) => {
@@ -29,10 +32,10 @@ const show = () => {
 
   $('#js_export_display').html(json);
 
-  i18n.apply('#js_modal_export_container');
+  i18n.apply2($, '#js_modal_export_container');
 
   modalFactory
-    .init('#js_modal_export')
+    .init($, '#js_modal_export')
     .show();
 };
 

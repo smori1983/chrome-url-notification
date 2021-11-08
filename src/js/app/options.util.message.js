@@ -1,9 +1,8 @@
 /**
+ * @param {jQuery} $
  * @param {string} selector
  */
-const main = (selector) => {
-  const $ = require('jquery');
-
+const main = ($, selector) => {
   let timeoutId = null;
 
   /**

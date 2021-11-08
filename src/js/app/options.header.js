@@ -3,20 +3,25 @@ const importForm = require('./options.importForm');
 const patternForm = require('./options.patternForm');
 const patternList = require('./options.list');
 
-const show = () => {
-  version();
-  handlers();
+/**
+ * @param {jQuery} $
+ */
+const show = ($) => {
+  version($);
+  handlers($);
 };
 
-const version = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const version = ($) => {
   $('#js_version').text('Ver. ' + chrome.runtime.getManifest().version);
 };
 
-const handlers = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const handlers = ($) => {
   const onClick = (selector, callback) => {
     $(selector).on('click', (e) => {
       e.preventDefault();
@@ -26,18 +31,18 @@ const handlers = () => {
   };
 
   onClick('#js_button_add_pattern', () => {
-    patternForm.show('add', patternForm.defaultValues(), () => {
-      patternList.refresh();
+    patternForm.show($, 'add', patternForm.defaultValues(), () => {
+      patternList.refresh($);
     });
   });
 
   onClick('#js_button_export', () => {
-    exportForm.show();
+    exportForm.show($);
   });
 
   onClick('#js_button_import', () => {
-    importForm.show(() => {
-      patternList.refresh();
+    importForm.show($, () => {
+      patternList.refresh($);
     })
   });
 };

@@ -19,11 +19,10 @@ const defaultValues = () => {
 };
 
 /**
+ * @param {jQuery} $
  * @param {PatternItem} item
  */
-const bindValues = (item) => {
-  const $ = require('jquery');
-
+const bindValues = ($, item) => {
   $('#js_input_url').val(item.url);
   $('#js_input_msg').val(item.msg);
   $('#js_input_background_color').val('#' + item.backgroundColor);
@@ -33,11 +32,10 @@ const bindValues = (item) => {
 };
 
 /**
+ * @param {jQuery} $
  * @returns {PatternItem}
  */
-const getRawValues = () => {
-  const $ = require('jquery');
-
+const getRawValues = ($) => {
   return {
     url: $('#js_input_url').val(),
     msg: $('#js_input_msg').val(),
@@ -48,12 +46,11 @@ const getRawValues = () => {
 };
 
 /**
+ * @param {jQuery} $
  * @returns {PatternItem}
  */
-const getValues = () => {
-  const $ = require('jquery');
-
-  return  {
+const getValues = ($) => {
+  return {
     url: $('#js_input_url').val().trim(),
     msg: $('#js_input_msg').val().trim(),
     backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
@@ -62,27 +59,31 @@ const getValues = () => {
   };
 };
 
-const resetValidator = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const resetValidator = ($) => {
   $('#js_form_pattern .js_input_error_message').empty();
 };
 
-const clear = () => {
-  resetValidator();
-  bindValues(defaultValues());
+/**
+ * @param {jQuery} $
+ */
+const clear = ($) => {
+  resetValidator($);
+  bindValues($, defaultValues());
 };
 
 /**
+ * @param {jQuery} $
  * @param {string} mode 'add' or 'edit'
  * @param {PatternItem} item
  * @param {function} callback
  */
-const show = (mode, item, callback) => {
-  const $ = require('jquery');
+const show = ($, mode, item, callback) => {
   require('bootstrap-colorpicker');
 
-  formFactory.initForm('#js_modal_pattern_container', '#js_modal_pattern_html');
+  formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
 
   $('#js_colorpicker').colorpicker({
     align: 'left',
@@ -91,40 +92,39 @@ const show = (mode, item, callback) => {
 
   $('#js_form_pattern_clear').on('click', (e) => {
     e.preventDefault();
-    clear();
+    clear($);
   });
 
   $('#js_form_pattern').on('submit', (e) => {
     e.preventDefault();
-    submit(item, mode, () => {
+    submit($, item, mode, () => {
       modal.hide();
       callback();
     });
   });
 
-  i18n.apply('#js_modal_pattern_container');
+  i18n.apply2($, '#js_modal_pattern_container');
 
-  const modal = modalFactory.init('#js_modal_pattern', {
+  const modal = modalFactory.init($, '#js_modal_pattern', {
     'shown.bs.modal': () => {
       $('#js_input_url').trigger('focus');
     },
   });
 
-  bindValues(item);
+  bindValues($, item);
   modal.show();
 };
 
 /**
+ * @param {jQuery} $
  * @param {PatternItem} item
  * @param {string} mode
  * @param {function} callback
  */
-const submit = (item, mode, callback) => {
-  const $ = require('jquery');
+const submit = ($, item, mode, callback) => {
+  resetValidator($);
 
-  resetValidator();
-
-  const result = validate(mode, item);
+  const result = validate($, mode, item);
   if (result.error) {
     result.error.details.forEach((item) => {
       const selector = '#js_input_' + item.path[0] + '-error';
@@ -134,7 +134,7 @@ const submit = (item, mode, callback) => {
     return;
   }
 
-  const saveData = getValues();
+  const saveData = getValues($);
 
   if (mode === 'add') {
     storage.addPattern(saveData);
@@ -148,10 +148,11 @@ const submit = (item, mode, callback) => {
 };
 
 /**
+ * @param {jQuery} $
  * @param {string} mode
  * @param {PatternItem} item
  */
-const validate = (mode, item) => {
+const validate = ($, mode, item) => {
   const displayPositionChoices = [
     'top',
     'top_left',
@@ -169,7 +170,7 @@ const validate = (mode, item) => {
     status: custom.string().required().in(['0', '1']),
   });
 
-  return schema.validate(getRawValues(), {
+  return schema.validate(getRawValues($), {
     abortEarly: false,
   });
 };
