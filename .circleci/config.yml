@@ -29,6 +29,9 @@ jobs:
       # - node/install-packages:
       #     pkg-manager: yarn
       - run:
+          name: Webpack build for test
+          command: npm run build:test
+      - run:
           name: Run tests
           command: npm test
       - run:
