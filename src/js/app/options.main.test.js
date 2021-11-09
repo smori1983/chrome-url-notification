@@ -2,6 +2,14 @@
 // require('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');
 // require('../../css/bootstrap-custom.css');
 
+const chrome = require('sinon-chrome');
+chrome.runtime.getManifest
+  .returns({
+    version: '1.2.3',
+  });
+
+global.chrome = chrome;
+
 // Necessary for @sideway/address/lib/email.js, used by joi.
 global.TextEncoder = require('text-encoder').TextEncoder;
 
