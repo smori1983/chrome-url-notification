@@ -40,6 +40,29 @@ const initDom2 = (content, options) => {
   return new JSDOM(content, options);
 };
 
+/**
+ * @param {string} content
+ * @param {Object} [options]
+ * @return {JSDOM}
+ */
+const initDom3 = (content, options) => {
+  options = options || {};
+
+  // Necessary for usage of localStorage.
+  options.url = options.url || 'https://localhost';
+
+  options.runScripts = 'outside-only';
+
+  const dom = new JSDOM(content, options);
+
+  const js = fs.readFileSync(__dirname + '/../dist/test/js/options.js', {
+    encoding: 'utf-8',
+  });
+  dom.window.eval(js);
+
+  return dom;
+};
+
 const registerHooks = () => {
   before(() => {
     global.chrome = chrome;
@@ -76,4 +99,5 @@ const registerHooks = () => {
 module.exports.initI18n = initI18n;
 module.exports.initDom = initDom;
 module.exports.initDom2 = initDom2;
+module.exports.initDom3 = initDom3;
 module.exports.registerHooks = registerHooks;
