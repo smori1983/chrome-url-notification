@@ -23,9 +23,9 @@ const i18n = require('./i18n');
 const header = require('./options.header');
 const patternList = require('./options.list');
 
-$(() => {
-  header.show($);
-  patternList.show($);
+// Immediately invoke onload codes (for jsdom).
 
-  i18n.apply2($, 'body');
-});
+header.show($);
+patternList.show($);
+
+i18n.apply2($, 'body');
