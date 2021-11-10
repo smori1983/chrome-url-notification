@@ -81,9 +81,6 @@ const clear = ($) => {
  * @param {function} callback
  */
 const show = ($, mode, item, callback) => {
-  require('bootstrap');
-  require('bootstrap-colorpicker');
-
   formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
 
   $('#js_colorpicker').colorpicker({
