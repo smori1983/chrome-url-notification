@@ -16,6 +16,12 @@ const initI18n = (locale) => {
   };
 };
 
+const initI18n2 = (chrome, locale) => {
+  const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
+  const message = fs.readFileSync(localeFile).toString();
+  chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
+};
+
 /**
  * @param {string} content
  * @param {Object} [options]
@@ -97,6 +103,7 @@ const registerHooks = () => {
 };
 
 module.exports.initI18n = initI18n;
+module.exports.initI18n2 = initI18n2;
 module.exports.initDom = initDom;
 module.exports.initDom2 = initDom2;
 module.exports.initDom3 = initDom3;
