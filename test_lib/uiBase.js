@@ -3,7 +3,6 @@ const { before, beforeEach, after, afterEach } = require('mocha');
 const chrome = require('sinon-chrome');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
-const storage = require('./storage');
 
 /**
  * @param {string} locale 'en' or 'ja'
@@ -75,26 +74,15 @@ const registerHooks = () => {
   });
 
   beforeEach(() => {
-    storage.clear();
-
     chrome.flush();
 
     chrome.runtime.getManifest
       .returns({
         version: '1.2.3',
       });
-
-    delete require.cache[require.resolve('jquery')];
-    delete require.cache[require.resolve('bootstrap')];
-    delete require.cache[require.resolve('bootstrap/js/modal')];
-    //delete require.cache[require.resolve('bootstrap/js/dist/modal')];
-    delete require.cache[require.resolve('bootstrap-colorpicker')];
   });
 
   afterEach(() => {
-    delete global.window;
-    delete global.document;
-    delete global.HTMLElement;
   });
 
   after(() => {
