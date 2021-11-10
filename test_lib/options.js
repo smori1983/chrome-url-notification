@@ -1,8 +1,9 @@
 const Color = require('color-js');
 
-const header = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const header = ($) => {
   return {
     version: () => {
       return $('#js_version').text();
@@ -19,9 +20,10 @@ const header = () => {
   };
 };
 
-const exportForm = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const exportForm = ($) => {
   return {
     /**
      * @returns {boolean}
@@ -36,9 +38,10 @@ const exportForm = () => {
   };
 };
 
-const importForm = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const importForm = ($) => {
   return {
     /**
      * @returns {boolean}
@@ -69,14 +72,18 @@ const importForm = () => {
   };
 };
 
-const list = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const list = ($) => {
   const all = () => {
     return $('#js_list_pattern tbody').find('tr');
   };
 
   return {
+    reload: () => {
+      $('#js_list_pattern_reload').trigger('click');
+    },
     /**
      * @returns {string}
      */
@@ -131,9 +138,10 @@ const listItem = ($item) => {
   };
 };
 
-const patternForm = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const patternForm = ($) => {
   return {
     /**
      * @returns {boolean}
@@ -224,9 +232,10 @@ const patternForm = () => {
   }
 };
 
-const deleteForm = () => {
-  const $ = require('jquery');
-
+/**
+ * @param {jQuery} $
+ */
+const deleteForm = ($) => {
   return {
     shown: () => {
       return modalIsActivated($('#js_modal_delete'));

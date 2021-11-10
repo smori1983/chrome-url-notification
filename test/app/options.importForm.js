@@ -1,20 +1,31 @@
-const { describe, before, beforeEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const header = require('../../src/js/app/options.header');
-const storage = require('../../src/js/urlNotification/storage');
 const testUtil = require('../../test_lib/util');
+const Storage = require('../../test_lib/storage');
 
 describe('app.options.importForm', () => {
-  before(testUtil.uiBase.initI18n('en'));
-  testUtil.uiBase.registerHooks();
+  /**
+   * @type {Storage}
+   */
+  let storage;
+
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
   beforeEach(() => {
-    testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-    header.show();
-    testUtil.options.header().clickImport();
+    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+
+    storage = new Storage(dom.window.localStorage);
+    $ = dom.window.jQuery;
+
+    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+
+    testUtil.options.header($).clickImport();
   });
 
   it('i18n label', () => {
-    const $ = require('jquery');
     const $container = $('#js_modal_import_container');
 
     assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
@@ -24,22 +35,22 @@ describe('app.options.importForm', () => {
 
   describe('import - failure', () => {
     it('input is empty', () => {
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is required.');
+      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is required.');
     });
 
     it('not a JSON text', () => {
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.json('foo');
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
     });
 
     it('invalid JSON structure', () => {
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -51,13 +62,13 @@ describe('app.options.importForm', () => {
       }));
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm().errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
     });
   });
 
   describe('import - success', () => {
     it('without data', () => {
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -83,7 +94,7 @@ describe('app.options.importForm', () => {
     });
 
     it('with data - update existing data', () => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
+      storage.init(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -93,7 +104,7 @@ describe('app.options.importForm', () => {
         },
       ]);
 
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -120,7 +131,7 @@ describe('app.options.importForm', () => {
     });
 
     it('with data - add new data', () => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
+      storage.init(testUtil.currentVersion().toString(), [
         {
           url: 'site1.example.com',
           msg: 'site1',
@@ -130,7 +141,7 @@ describe('app.options.importForm', () => {
         },
       ]);
 
-      const form = testUtil.options.importForm();
+      const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [

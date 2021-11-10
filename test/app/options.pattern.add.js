@@ -1,56 +1,64 @@
-const { describe, before, beforeEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const header = require('../../src/js/app/options.header');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
+const Storage = require('../../test_lib/storage');
 
-describe('app.options.pattern.add', () => {
-  before(testUtil.uiBase.initI18n('en'));
-  testUtil.uiBase.registerHooks();
+// See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
+
+describe('app.options.pattern.add', function () {
+  /**
+   * @type {Storage}
+   */
+  let storage;
+
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
+  beforeEach(function () {
+    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+
+    storage = new Storage(dom.window.localStorage);
+    this.$ = $ = dom.window.jQuery;
+
+    storage.init(testUtil.currentVersion().toString(), [
+      {
+        url: 'example.com',
+        msg: 'message',
+        backgroundColor: '111111',
+        displayPosition: 'top',
+        status: 1,
+      },
+    ]);
+
+    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+
+    testUtil.options.list($).reload();
+
+    testUtil.options.header($).clickAdd();
+  });
 
   describe('i18n', () => {
-    beforeEach(() => {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-      header.show();
-      testUtil.options.header().clickAdd();
-    });
-
     it('url field placeholder', () => {
-      const $ = require('jquery');
       const $element = $('#js_input_url').eq(0);
 
       assert.strictEqual($element.attr('placeholder'), 'e.g. http://*.example.com/');
     });
 
     it('message field placeholder', () => {
-      const $ = require('jquery');
       const $element = $('#js_input_msg').eq(0);
 
       assert.strictEqual($element.attr('placeholder'), 'e.g. example.com production site');
     });
   });
 
-  describe('error', () => {
-    beforeEach(() => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
-        {
-          url: 'example.com',
-          msg: 'message',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
-      ]);
-
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-      header.show();
-      testUtil.options.header().clickAdd();
-    });
-
+  describe('error', function () {
     sharedForm.runError();
 
     it('patten cannot be duplicated', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
 
       form.pattern('example.com');
       form.submit();
@@ -61,21 +69,21 @@ describe('app.options.pattern.add', () => {
 
   describe('ok', () => {
     beforeEach(() => {
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-      header.show();
-      testUtil.options.header().clickAdd();
+      storage.clear();
+
+      testUtil.options.list($).reload();
     });
 
     it('register simple data', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
 
       form.pattern('example.com');
       form.message('example');
       form.submit();
 
-      assert.strictEqual(testUtil.options.list().numOfItems(), 1);
+      assert.strictEqual(testUtil.options.list($).numOfItems(), 1);
 
-      const item = testUtil.options.list().item(0);
+      const item = testUtil.options.list($).item(0);
       assert.strictEqual(item.pattern(), 'example.com');
       assert.strictEqual(item.message(), 'example');
       assert.strictEqual(item.backgroundColor(), '#000000');

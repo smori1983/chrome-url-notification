@@ -3,6 +3,7 @@
 // require('../../css/bootstrap-custom.css');
 
 const chrome = require('sinon-chrome');
+
 chrome.runtime.getManifest
   .returns({
     version: '1.2.3',

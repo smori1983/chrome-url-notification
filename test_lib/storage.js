@@ -1,18 +1,54 @@
-const clear = () => {
-  localStorage.clear();
-};
+class Storage {
+  /**
+   * @param {Storage} localStorage
+   */
+  constructor(localStorage) {
+    /**
+     * @private
+     */
+    this._localStorage = localStorage;
 
-/**
- * Initialize localStorage.
- *
- * @param {string} version
- * @param {PatternItem[]} patterns
- */
-const init = (version, patterns) => {
-  localStorage.clear();
-  localStorage.setItem('version', version);
-  localStorage.setItem('pattern', JSON.stringify(patterns));
-};
+    this._key = {
+      version: 'version',
+      pattern: 'pattern',
+    };
+  }
 
-module.exports.clear = clear;
-module.exports.init = init;
+  /**
+   * Set up localStorage.
+   *
+   * @param {string} version
+   * @param {PatternItem[]} patterns
+   */
+  init(version, patterns) {
+    this.clear();
+    this._localStorage.setItem('version', version);
+    this._localStorage.setItem('pattern', JSON.stringify(patterns));
+  }
+
+  clear() {
+    this._localStorage.clear();
+  }
+
+  /**
+   * @returns {number}
+   */
+  getCount() {
+    return this.getAll().length;
+  }
+
+  /**
+   * @returns {PatternItem[]}
+   */
+  getAll() {
+    const data = this._localStorage.getItem(this._key.pattern);
+
+    if (data === null) {
+      return [];
+    }
+
+    return JSON.parse(data);
+  }
+}
+
+module.exports = Storage;

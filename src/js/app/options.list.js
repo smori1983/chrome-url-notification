@@ -44,6 +44,11 @@ const initEventHandler = ($) => {
       });
     }
   });
+
+  $('#js_list_pattern_reload').on('click', (e) => {
+    e.preventDefault();
+    refresh($);
+  });
 };
 
 /**

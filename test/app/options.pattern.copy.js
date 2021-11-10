@@ -1,16 +1,36 @@
-const { describe, before, beforeEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const list = require('../../src/js/app/options.list');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
+const Storage = require('../../test_lib/storage');
 
-describe('app.options.pattern.copy', () => {
-  before(testUtil.uiBase.initI18n('en'));
-  testUtil.uiBase.registerHooks();
+// See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
+
+describe('app.options.pattern.copy', function () {
+  /**
+   * @type {Storage}
+   */
+  let storage;
+
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
+  beforeEach(function () {
+    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+
+    storage = new Storage(dom.window.localStorage);
+    this.$ = $ = dom.window.jQuery;
+
+    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+
+    testUtil.options.header($).clickAdd();
+  });
 
   describe('error', () => {
     beforeEach(() => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
+      storage.init(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',
@@ -27,15 +47,15 @@ describe('app.options.pattern.copy', () => {
         },
       ]);
 
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-      list.show();
-      testUtil.options.list().item(0).clickCopy();
+      testUtil.options.list($).reload();
+
+      testUtil.options.list($).item(0).clickCopy();
     });
 
     sharedForm.runError();
 
     it('patten cannot be duplicated - keep original value', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
 
       form.submit();
 
@@ -43,7 +63,7 @@ describe('app.options.pattern.copy', () => {
     });
 
     it('patten cannot be duplicated - change to existing value', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
 
       form.pattern('domain2.example.com');
       form.submit();
@@ -54,7 +74,7 @@ describe('app.options.pattern.copy', () => {
 
   describe('ok', () => {
     beforeEach(() => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
+      storage.init(testUtil.currentVersion().toString(), [
         {
           url: 'domain1.example.com',
           msg: 'domain1',
@@ -64,13 +84,13 @@ describe('app.options.pattern.copy', () => {
         },
       ]);
 
-      testUtil.uiBase.initDom(testUtil.getHtml('src/html/options.html'));
-      list.show();
-      testUtil.options.list().item(0).clickCopy();
+      testUtil.options.list($).reload();
+
+      testUtil.options.list($).item(0).clickCopy();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
 
       assert.strictEqual(form.pattern(), 'domain1.example.com');
       assert.strictEqual(form.message(), 'domain1');
@@ -80,7 +100,7 @@ describe('app.options.pattern.copy', () => {
     });
 
     it('edit form and save', () => {
-      const form = testUtil.options.patternForm();
+      const form = testUtil.options.patternForm($);
       form.pattern('domain2.example.com');
       form.message('domain2');
       form.backgroundColor('#222222');
@@ -88,16 +108,16 @@ describe('app.options.pattern.copy', () => {
       form.status(false);
       form.submit();
 
-      assert.strictEqual(testUtil.options.list().numOfItems(), 2);
+      assert.strictEqual(testUtil.options.list($).numOfItems(), 2);
 
-      const item1 = testUtil.options.list().item(0);
+      const item1 = testUtil.options.list($).item(0);
       assert.strictEqual(item1.pattern(), 'domain1.example.com');
       assert.strictEqual(item1.message(), 'domain1');
       assert.strictEqual(item1.backgroundColor(), '#111111');
       assert.strictEqual(item1.displayPosition(), 'Bottom');
       assert.strictEqual(item1.status(), 'Y');
 
-      const item2 = testUtil.options.list().item(1);
+      const item2 = testUtil.options.list($).item(1);
       assert.strictEqual(item2.pattern(), 'domain2.example.com');
       assert.strictEqual(item2.message(), 'domain2');
       assert.strictEqual(item2.backgroundColor(), '#222222');
