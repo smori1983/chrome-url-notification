@@ -24,21 +24,6 @@ const initI18n2 = (chrome, locale) => {
 /**
  * @param {string} content
  * @param {Object} [options]
- */
-const initDom = (content, options) => {
-  const dom = new JSDOM(content, options);
-
-  global.window = dom.window;
-  global.document = dom.window.document;
-
-  // clipboard checks constructor argument is instance of HTMLElement or not.
-  // We have to expose to global.
-  global.HTMLElement = dom.window.HTMLElement;
-};
-
-/**
- * @param {string} content
- * @param {Object} [options]
  * @return {JSDOM}
  */
 const initDom2 = (content, options) => {
@@ -92,7 +77,6 @@ const registerHooks = () => {
 
 module.exports.initI18n = initI18n;
 module.exports.initI18n2 = initI18n2;
-module.exports.initDom = initDom;
 module.exports.initDom2 = initDom2;
 module.exports.initDom3 = initDom3;
 module.exports.registerHooks = registerHooks;
