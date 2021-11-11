@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { before, beforeEach, after, afterEach } = require('mocha');
 const chrome = require('sinon-chrome');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
