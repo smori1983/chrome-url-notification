@@ -56,6 +56,8 @@ const initDom3 = (content, options) => {
 const registerHooks = () => {
   before(() => {
     global.chrome = chrome;
+
+    initI18n2(chrome, 'en');
   });
 
   beforeEach(() => {
