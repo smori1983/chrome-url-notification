@@ -7,4 +7,7 @@ global.chrome = chrome;
 const $ = global.jQuery = require('jquery');
 const ui = require('./popup.ui');
 
-ui.init($);
+$('#js_init').on('click', (e) => {
+  e.preventDefault();
+  ui.init($);
+});

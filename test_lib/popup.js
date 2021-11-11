@@ -1,6 +1,13 @@
 /**
  * @param {jQuery} $
  */
+const init = ($) => {
+  $('#js_init').trigger('click');
+};
+
+/**
+ * @param {jQuery} $
+ */
 const matchedBlock = ($) => {
   const block = () => {
     return $('#block_for_matched_page');
@@ -42,4 +49,5 @@ const matchedBlock = ($) => {
   };
 };
 
+module.exports.init = init;
 module.exports.matchedBlock = matchedBlock;
