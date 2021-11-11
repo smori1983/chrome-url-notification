@@ -10,6 +10,10 @@ config.entry = {
     import: './src/js/app/options.main.test.js',
     filename: 'js/options.js',
   },
+  popup: {
+    import: './src/js/app/popup.main.test.js',
+    filename: 'js/popup.js',
+  },
 };
 
 module.exports = config;
