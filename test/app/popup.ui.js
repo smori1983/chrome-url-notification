@@ -1,4 +1,4 @@
-const { describe, before, beforeEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const chrome = require('sinon-chrome');
 const SUT = require('../../src/js/app/popup.ui');
@@ -10,7 +10,6 @@ describe('app.popup.ui', () => {
    */
   let $;
 
-  before(testUtil.uiBase.initI18n('en'));
   testUtil.uiBase.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('src/html/popup.html'));
