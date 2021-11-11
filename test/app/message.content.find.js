@@ -15,7 +15,7 @@ describe('app.message.content.find', () => {
    */
   let pageInfo;
 
-  testUtil.uiBase.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.01.html'), {
       url: 'https://example.com/',

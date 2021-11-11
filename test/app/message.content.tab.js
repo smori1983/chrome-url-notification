@@ -16,7 +16,7 @@ describe('app.message.content.tab', () => {
    */
   let pageInfo;
 
-  testUtil.uiBase.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.02.html'));
     $ = require('jquery')(dom.window);

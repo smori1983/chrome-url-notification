@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/background.content.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.content.find', () => {
-  testUtil.background.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({

@@ -9,7 +9,7 @@ const testUtil = require('../../test_lib/util');
 describe('app.content.css', () => {
   let css;
 
-  testUtil.uiBase.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('test_resource/html/content.03.html'));
     const $ = require('jquery')(dom.window);

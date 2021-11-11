@@ -9,7 +9,7 @@ describe('app.message.popup.find', () => {
    */
   let $;
 
-  testUtil.uiBase.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     const dom = testUtil.uiBase.initDom2(testUtil.getHtml('src/html/popup.html'));
     $ = require('jquery')(dom.window);
