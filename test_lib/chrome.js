@@ -1,3 +1,4 @@
+const { before, beforeEach, afterEach, after } = require('mocha');
 const chrome = require('sinon-chrome');
 const deepMerge = require('deepmerge');
 const factory = require('./factory');
@@ -286,6 +287,28 @@ const popupUpdateStatusCalledWith = (tabId, url, status) => {
     .calledOnce;
 };
 
+const registerHooks = () => {
+  before(() => {
+    global.chrome = chrome;
+  });
+
+  beforeEach(() => {
+    chrome.flush();
+
+    chrome.runtime.getManifest
+      .returns({
+        version: '1.2.3',
+      });
+  });
+
+  afterEach(() => {
+  });
+
+  after(() => {
+    delete global.chrome;
+  });
+};
+
 module.exports.createTab = createTab;
 module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
@@ -301,3 +324,5 @@ module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatus = popupUpdateStatus;
 module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
+
+module.exports.registerHooks = registerHooks;

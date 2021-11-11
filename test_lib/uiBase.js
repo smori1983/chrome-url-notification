@@ -53,32 +53,7 @@ const initDom3 = (content, options) => {
   return dom;
 };
 
-const registerHooks = () => {
-  before(() => {
-    global.chrome = chrome;
-
-    initI18n2(chrome, 'en');
-  });
-
-  beforeEach(() => {
-    chrome.flush();
-
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
-  });
-
-  afterEach(() => {
-  });
-
-  after(() => {
-    delete global.chrome;
-  });
-};
-
 module.exports.initI18n = initI18n;
 module.exports.initI18n2 = initI18n2;
 module.exports.initDom2 = initDom2;
 module.exports.initDom3 = initDom3;
-module.exports.registerHooks = registerHooks;

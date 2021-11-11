@@ -5,7 +5,7 @@ const SUT = require('../../src/js/app/background.badge');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.badge', () => {
-  testUtil.background.registerHooks();
+  testUtil.chrome.registerHooks();
 
   given([
     {matched: true, status: 1, text: 'ON'},

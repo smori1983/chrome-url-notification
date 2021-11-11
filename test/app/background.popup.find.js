@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/background.popup.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.popup.find', () => {
-  testUtil.background.registerHooks();
+  testUtil.chrome.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({

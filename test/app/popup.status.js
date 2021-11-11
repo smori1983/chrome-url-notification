@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/popup.status');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.status', () => {
-  testUtil.uiBase.registerHooks();
+  testUtil.chrome.registerHooks();
 
   describe('updateStatus', () => {
     it('update with 0', () => {
