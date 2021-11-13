@@ -99,9 +99,15 @@ const sendResponse = () => {
   };
 };
 
-const contentFindMessage = () => {
+/**
+ * @param {SinonChrome} chrome
+ */
+const contentFindMessage = (chrome) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
   return createReqAndRes((req, res) => {
-    chrome.runtime.sendMessage
+    runtime.sendMessage
       .withArgs({
         command: 'content_scripts:find',
         data: {
