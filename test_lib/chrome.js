@@ -34,11 +34,15 @@ const createTab = (diff) => {
 /**
  * Ensure chrome.tabs.create() called with argument.
  *
+ * @param {SinonChrome} chrome
  * @param {string} url
  * @returns {boolean}
  */
-const tabsCreateCalledWith = (url) => {
-  return chrome.tabs.create
+const tabsCreateCalledWith = (chrome, url) => {
+  /** @type {SinonChrome.tabs} */
+  const tabs = chrome.tabs;
+
+  return tabs.create
     .withArgs({
       url: url,
     })
@@ -155,9 +159,15 @@ const contentTabNotifyStatusDispatch = (displayPosition, status) => {
     });
 };
 
-const popupFindMessage = () => {
+/**
+ * @param {SinonChrome} chrome
+ */
+const popupFindMessage = (chrome) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
   return createReqAndRes((req, res) => {
-    chrome.runtime.sendMessage
+    runtime.sendMessage
       .withArgs({
         command: 'browser_action:find',
         data: {
@@ -211,14 +221,21 @@ const popupTabNotifyStatusCalledWith = (tabId, item, status) => {
     .calledOnce;
 };
 
-const popupTabsQuery = () => {
+/**
+ * @param {SinonChrome} chrome
+ */
+const popupTabsQuery = (chrome) => {
+  /** @type {SinonChrome.tabs} */
+  const tabs = chrome.tabs;
+
   return createReqAndRes((req, res) => {
-    chrome.tabs.query
+    tabs.query
       .withArgs({
         currentWindow: true,
         active: true,
       })
       .callArgWith(1, [{
+        id: res.id,
         url: res.url,
       }]);
   });
@@ -269,13 +286,17 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
 /**
  * Ensure chrome.runtime.sendMessage() for 'browser_action:update:status' command called with arguments.
  *
+ * @param {SinonChrome} chrome
  * @param {number} tabId
  * @param {string} url
  * @param {number} status
  * @returns {boolean}
  */
-const popupUpdateStatusCalledWith = (tabId, url, status) => {
-  return chrome.runtime.sendMessage
+const popupUpdateStatusCalledWith = (chrome, tabId, url, status) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
+  return runtime.sendMessage
     .withArgs({
       command: 'browser_action:update:status',
       data: {
