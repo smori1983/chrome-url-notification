@@ -1,7 +1,5 @@
-const { describe, before, beforeEach, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
-const chrome = require('sinon-chrome');
-const SUT = require('../../src/js/app/popup.ui');
 const testUtil = require('../../test_lib/util');
 
 describe('app.popup.ui', () => {
@@ -10,12 +8,20 @@ describe('app.popup.ui', () => {
    */
   let $;
 
-  testUtil.chrome.registerHooks();
-  before(testUtil.uiBase.initI18n('en'));
+  /**
+   * @type {SinonChrome}
+   */
+  let chrome;
+
   beforeEach(() => {
-    const dom = testUtil.uiBase.initDom2(testUtil.getHtml('src/html/popup.html'));
-    $ = require('jquery')(dom.window);
-    SUT.init($);
+    const dom = testUtil.uiBase.initPopup(testUtil.getHtml('src/html/popup.html'));
+
+    chrome = dom.window.chrome;
+    $ = dom.window.jQuery;
+
+    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+
+    testUtil.popup.init($);
   });
 
   describe('common menu', () => {
@@ -29,7 +35,10 @@ describe('app.popup.ui', () => {
     it('click link to options page', () => {
       const path = 'chrome-extension://xxx/html/options.html';
 
-      chrome.runtime.getURL
+      /** @type {SinonChrome.runtime} */
+      const runtime = chrome.runtime;
+
+      runtime.getURL
         .withArgs('html/options.html')
         .returns(path);
 
@@ -37,7 +46,7 @@ describe('app.popup.ui', () => {
 
       $link.trigger('click');
 
-      assert.ok(testUtil.chrome.tabsCreateCalledWith(path));
+      assert.ok(testUtil.chrome.tabsCreateCalledWith(chrome, path));
     });
   });
 
@@ -58,12 +67,12 @@ describe('app.popup.ui', () => {
 
     describe('initial state of status checkbox', () => {
       it('pattern matched and status is 0', () => {
-        testUtil.chrome.popupTabsQuery()
+        testUtil.chrome.popupTabsQuery(chrome)
           .req({})
           .res({
             url: 'https://foo.example.com/page',
           });
-        testUtil.chrome.popupFindMessage()
+        testUtil.chrome.popupFindMessage(chrome)
           .req({
             tab: testUtil.chrome.createTab({
               id: 10001,
@@ -81,12 +90,12 @@ describe('app.popup.ui', () => {
       });
 
       it('pattern matched and status is 1', () => {
-        testUtil.chrome.popupTabsQuery()
+        testUtil.chrome.popupTabsQuery(chrome)
           .req({})
           .res({
             url: 'https://foo.example.com/page',
           });
-        testUtil.chrome.popupFindMessage()
+        testUtil.chrome.popupFindMessage(chrome)
           .req({
             tab: testUtil.chrome.createTab({
               id: 10002,
