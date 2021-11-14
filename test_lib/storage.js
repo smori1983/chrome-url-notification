@@ -8,6 +8,9 @@ class Storage {
      */
     this._localStorage = localStorage;
 
+    /**
+     * @private
+     */
     this._key = {
       version: 'version',
       pattern: 'pattern',
