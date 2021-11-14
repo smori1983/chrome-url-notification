@@ -8,11 +8,6 @@ describe('app.message.content.find', () => {
    */
   let chrome;
 
-  /**
-   * @type {jQuery}
-   */
-  let $;
-
   let content;
 
   beforeEach(() => {
@@ -21,9 +16,7 @@ describe('app.message.content.find', () => {
     });
 
     chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
-
-    content = new testUtil.Content($);
+    content = new testUtil.Content(dom.window.jQuery);
   });
 
   it('pattern not matched', () => {

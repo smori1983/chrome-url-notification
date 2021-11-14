@@ -1,6 +1,6 @@
 class Content {
   /**
-   * @param {jQuery} $
+   * @param {JQuery} $
    */
   constructor($) {
     /**
@@ -20,7 +20,7 @@ class Content {
 
 class Page {
   /**
-   * @param {jQuery} $
+   * @param {JQuery} $
    */
   constructor($) {
     /**
@@ -44,7 +44,7 @@ class Page {
   }
 
   /**
-   * @returns {jQuery}
+   * @returns {JQuery}
    * @private
    */
   _body() {
@@ -54,7 +54,7 @@ class Page {
 
 class Message {
   /**
-   * @param {jQuery} $
+   * @param {JQuery} $
    */
   constructor($) {
     /**

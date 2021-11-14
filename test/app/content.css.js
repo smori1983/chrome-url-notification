@@ -10,11 +10,6 @@ describe('app.content.css', () => {
    */
   let chrome;
 
-  /**
-   * @type {jQuery}
-   */
-  let $;
-
   let content;
 
   beforeEach(() => {
@@ -23,9 +18,7 @@ describe('app.content.css', () => {
     });
 
     chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
-
-    content = new testUtil.Content($);
+    content = new testUtil.Content(dom.window.jQuery);
   });
 
   describe('forBody', () => {

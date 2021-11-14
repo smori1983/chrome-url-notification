@@ -9,11 +9,6 @@ describe('app.message.content.tab', () => {
    */
   let chrome;
 
-  /**
-   * @type {jQuery}
-   */
-  let $;
-
   let content;
 
   beforeEach(() => {
@@ -22,9 +17,7 @@ describe('app.message.content.tab', () => {
     });
 
     chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
-
-    content = new testUtil.Content($);
+    content = new testUtil.Content(dom.window.jQuery);
   });
 
   given([
