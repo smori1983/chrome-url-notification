@@ -18,7 +18,7 @@ describe('app.options.pattern.edit', function () {
   let $;
 
   beforeEach(function () {
-    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
     storage = new Storage(dom.window.localStorage);
     this.$ = $ = dom.window.jQuery;

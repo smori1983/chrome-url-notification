@@ -15,17 +15,17 @@ describe('app.options.importForm', () => {
   let $;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
     storage = new Storage(dom.window.localStorage);
     $ = dom.window.jQuery;
 
     testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
-
-    testUtil.options.header($).clickImport();
   });
 
   it('i18n label', () => {
+    testUtil.options.header($).clickImport();
+
     const $container = $('#js_modal_import_container');
 
     assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
@@ -35,21 +35,27 @@ describe('app.options.importForm', () => {
 
   describe('import - failure', () => {
     it('input is empty', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is required.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is required.');
     });
 
     it('not a JSON text', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json('foo');
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is invalid.');
     });
 
     it('invalid JSON structure', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -62,12 +68,27 @@ describe('app.options.importForm', () => {
       }));
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is invalid.');
     });
   });
 
   describe('import - success', () => {
-    it('without data', () => {
+    it('without data - add no data', () => {
+      testUtil.options.header($).clickImport();
+
+      const form = testUtil.options.importForm($);
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 0);
+    });
+
+    it('without data - add new data', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -93,6 +114,37 @@ describe('app.options.importForm', () => {
       assert.strictEqual(data[0].status, 0);
     });
 
+    it('with data - add no data', () => {
+      storage.init(testUtil.currentVersion().toString(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '000000',
+          displayPosition: 'bottom_right',
+          status: 1,
+        },
+      ]);
+
+      testUtil.options.header($).clickImport();
+
+      const form = testUtil.options.importForm($);
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+
+      const data = storage.getAll();
+
+      assert.strictEqual(data[0].url, 'site1.example.com');
+      assert.strictEqual(data[0].msg, 'site1');
+      assert.strictEqual(data[0].backgroundColor, '000000');
+      assert.strictEqual(data[0].displayPosition, 'bottom_right');
+      assert.strictEqual(data[0].status, 1);
+    });
+
     it('with data - update existing data', () => {
       storage.init(testUtil.currentVersion().toString(), [
         {
@@ -103,6 +155,8 @@ describe('app.options.importForm', () => {
           status: 0,
         },
       ]);
+
+      testUtil.options.header($).clickImport();
 
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
@@ -140,6 +194,8 @@ describe('app.options.importForm', () => {
           status: 1,
         },
       ]);
+
+      testUtil.options.header($).clickImport();
 
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({

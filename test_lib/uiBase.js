@@ -34,7 +34,7 @@ const initDom2 = (content, options) => {
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initDom3 = (content, options) => {
+const initContentScript = (content, options) => {
   options = options || {};
 
   // Necessary for usage of localStorage.
@@ -44,7 +44,7 @@ const initDom3 = (content, options) => {
 
   const dom = new JSDOM(content, options);
 
-  const js = fs.readFileSync(__dirname + '/../dist/test/js/options.js', {
+  const js = fs.readFileSync(__dirname + '/../dist/test/js/content.js', {
     encoding: 'utf-8',
   });
   dom.window.eval(js);
@@ -57,7 +57,7 @@ const initDom3 = (content, options) => {
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initContentScript = (content, options) => {
+const initOptions = (content, options) => {
   options = options || {};
 
   // Necessary for usage of localStorage.
@@ -67,7 +67,7 @@ const initContentScript = (content, options) => {
 
   const dom = new JSDOM(content, options);
 
-  const js = fs.readFileSync(__dirname + '/../dist/test/js/content.js', {
+  const js = fs.readFileSync(__dirname + '/../dist/test/js/options.js', {
     encoding: 'utf-8',
   });
   dom.window.eval(js);
@@ -101,6 +101,6 @@ const initPopup = (content, options) => {
 module.exports.initI18n = initI18n;
 module.exports.initI18n2 = initI18n2;
 module.exports.initDom2 = initDom2;
-module.exports.initDom3 = initDom3;
 module.exports.initContentScript = initContentScript;
+module.exports.initOptions = initOptions;
 module.exports.initPopup = initPopup;
