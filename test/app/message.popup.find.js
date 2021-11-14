@@ -16,7 +16,7 @@ describe('app.message.popup.find', () => {
   let popup;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initPopup(testUtil.getHtml('src/html/popup.html'));
+    const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
     chrome = dom.window.chrome;
     $ = dom.window.jQuery;

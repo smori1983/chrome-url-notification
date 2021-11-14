@@ -11,7 +11,7 @@ describe('app.options.header', () => {
   let options;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
     $ = dom.window.jQuery;
 

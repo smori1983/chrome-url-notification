@@ -2,43 +2,55 @@ const fs = require('fs');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
 
+/**
+ * @param {string} path Relative path from project root.
+ * @returns {string}
+ */
+const readFile = (path) => {
+  return fs.readFileSync(__dirname + '/../' + path).toString();
+};
+
 const i18n = (chrome, locale) => {
-  const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
-  const message = fs.readFileSync(localeFile).toString();
+  const path = 'src/_locales/' + locale + '/messages.json';
+  const message = readFile(path);
+
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
 };
 
 /**
- * @param {string} content
+ * @param {string} path
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initContentScript = (content, options) => {
-  const path = __dirname + '/../dist/test/js/content.js';
+const initContentScript = (path, options) => {
+  const content = readFile(path);
+  const jsFilePath = __dirname + '/../dist/test/js/content.js';
 
-  return initDom(content, options || {}, path);
+  return initDom(content, options || {}, jsFilePath);
 };
 
 /**
- * @param {string} content
+ * @param {string} path
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initOptions = (content, options) => {
-  const path = __dirname + '/../dist/test/js/options.js';
+const initOptions = (path, options) => {
+  const content = readFile(path);
+  const jsFilePath = __dirname + '/../dist/test/js/options.js';
 
-  return initDom(content, options || {}, path);
+  return initDom(content, options || {}, jsFilePath);
 };
 
 /**
- * @param {string} content
+ * @param {string} path
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initPopup = (content, options) => {
-  const path = __dirname + '/../dist/test/js/popup.js';
+const initPopup = (path, options) => {
+  const content = readFile(path);
+  const jsFilePath = __dirname + '/../dist/test/js/popup.js';
 
-  return initDom(content, options || {}, path);
+  return initDom(content, options || {}, jsFilePath);
 };
 
 /**

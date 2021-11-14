@@ -1,4 +1,3 @@
-const fs = require('fs');
 const validator = require('../src/js/urlNotification/validator');
 const factory = require('./factory');
 
@@ -42,14 +41,6 @@ const isNotValidJson = (json) => {
 };
 
 /**
- * @param {string} path Relative path from project root.
- * @returns {string}
- */
-const getHtml = (path) => {
-  return fs.readFileSync(__dirname + '/../' + path).toString();
-};
-
-/**
  * @param {PatternItemDiff} diff
  * @returns {PatternItem}
  */
@@ -70,7 +61,6 @@ module.exports.initStorage = initStorage;
 module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;
-module.exports.getHtml = getHtml;
 module.exports.makePatternItem = makePatternItem;
 module.exports.makeFoundItem = makeFoundItem;
 
