@@ -21,22 +21,26 @@ describe('app.options.exportForm', () => {
     $ = dom.window.jQuery;
 
     testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
-
-    testUtil.options.header($).clickExport();
   });
 
   it('i18n label', () => {
+    testUtil.options.header($).clickExport();
+
     assert.strictEqual($('#js_export_copy').text(), 'Copy');
   });
 
   describe('exported json', () => {
     it('version should be current', () => {
+      testUtil.options.header($).clickExport();
+
       const json = testUtil.options.exportForm($).json();
 
       assert.strictEqual(json.version, testUtil.currentVersion());
     });
 
     it('without pattern data', () => {
+      testUtil.options.header($).clickExport();
+
       const json = testUtil.options.exportForm($).json();
 
       assert.deepStrictEqual(json.pattern, []);
