@@ -139,7 +139,7 @@ describe('app.options.list', () => {
       assert.strictEqual(item2.status(), 'n');
     });
 
-    it('click copy button twice and form should be updated', () => {
+    it('click copy button twice and form should be refreshed', () => {
       const list = testUtil.options.list($);
       const form = testUtil.options.patternForm($);
 
@@ -154,7 +154,7 @@ describe('app.options.list', () => {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('click edit button twice and form should be updated', () => {
+    it('click edit button twice and form should be refreshed', () => {
       const list = testUtil.options.list($);
       const form = testUtil.options.patternForm($);
 
@@ -169,7 +169,7 @@ describe('app.options.list', () => {
       assert.strictEqual(form.pattern(), 'site2.example.com');
     });
 
-    it('click delete button twice and form should be updated', () => {
+    it('click delete button twice and form should be refreshed', () => {
       const list = testUtil.options.list($);
       const form = testUtil.options.deleteForm($);
 
