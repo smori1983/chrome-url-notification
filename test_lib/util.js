@@ -76,6 +76,6 @@ module.exports.makeFoundItem = makeFoundItem;
 
 module.exports.chrome = require('./chrome');
 module.exports.uiBase = require('./uiBase');
-module.exports.popup = require('./popup');
+module.exports.Popup = require('./popup');
 module.exports.content = require('./content');
 module.exports.options = require('./options');

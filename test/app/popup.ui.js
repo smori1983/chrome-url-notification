@@ -13,6 +13,8 @@ describe('app.popup.ui', () => {
    */
   let chrome;
 
+  let popup;
+
   beforeEach(() => {
     const dom = testUtil.uiBase.initPopup(testUtil.getHtml('src/html/popup.html'));
 
@@ -21,7 +23,8 @@ describe('app.popup.ui', () => {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    testUtil.popup.init($);
+    popup = new testUtil.Popup($);
+    popup.init();
   });
 
   describe('common menu', () => {
@@ -86,7 +89,7 @@ describe('app.popup.ui', () => {
             }),
           });
 
-        assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), false);
+        assert.strictEqual(popup.matchedBlock().statusEnabled(), false);
       });
 
       it('pattern matched and status is 1', () => {
@@ -109,7 +112,7 @@ describe('app.popup.ui', () => {
             }),
           });
 
-        assert.strictEqual(testUtil.popup.matchedBlock($).statusEnabled(), true);
+        assert.strictEqual(popup.matchedBlock().statusEnabled(), true);
       });
     });
   });
