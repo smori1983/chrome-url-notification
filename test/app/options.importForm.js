@@ -40,7 +40,7 @@ describe('app.options.importForm', () => {
       const form = testUtil.options.importForm($);
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is required.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is required.');
     });
 
     it('not a JSON text', () => {
@@ -50,7 +50,7 @@ describe('app.options.importForm', () => {
       form.json('foo');
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is invalid.');
     });
 
     it('invalid JSON structure', () => {
@@ -68,12 +68,12 @@ describe('app.options.importForm', () => {
       }));
       form.submit();
 
-      assert.strictEqual(testUtil.options.importForm($).errorMessage(), 'JSON text is invalid.');
+      assert.strictEqual(form.errorMessage(), 'JSON text is invalid.');
     });
   });
 
   describe('import - success', () => {
-    it('without data', () => {
+    it('without data - add new data', () => {
       testUtil.options.header($).clickImport();
 
       const form = testUtil.options.importForm($);
