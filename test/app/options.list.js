@@ -16,7 +16,7 @@ describe('app.options.list', () => {
   let $;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
     storage = new Storage(dom.window.localStorage);
     $ = dom.window.jQuery;

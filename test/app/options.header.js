@@ -9,7 +9,7 @@ describe('app.options.header', () => {
   let $;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initDom3(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
     $ = dom.window.jQuery;
   });
