@@ -15,6 +15,8 @@ describe('app.content.css', () => {
    */
   let $;
 
+  let content;
+
   beforeEach(() => {
     const dom = testUtil.uiBase.initContentScript(testUtil.getHtml('test_resource/html/content.03.html'), {
       url: 'https://example.com/',
@@ -22,6 +24,8 @@ describe('app.content.css', () => {
 
     chrome = dom.window.chrome;
     $ = dom.window.jQuery;
+
+    content = new testUtil.Content($);
   });
 
   describe('forBody', () => {
@@ -52,7 +56,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const page = testUtil.content.page($);
+      const page = content.page();
 
       assert.deepStrictEqual(page.marginTop(), arg.expected.top);
       assert.deepStrictEqual(page.marginBottom(), arg.expected.bottom);
@@ -75,7 +79,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       assert.deepStrictEqual(arg.shown, message.shown());
     });
@@ -99,7 +103,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       assert.deepStrictEqual(true, message.shown());
 
@@ -131,7 +135,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       message.mouseover();
 
@@ -161,7 +165,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       message.mouseover();
       message.mouseout();

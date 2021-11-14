@@ -14,6 +14,8 @@ describe('app.message.content.tab', () => {
    */
   let $;
 
+  let content;
+
   beforeEach(() => {
     const dom = testUtil.uiBase.initContentScript(testUtil.getHtml('test_resource/html/content.03.html'), {
       url: 'https://example.com/',
@@ -21,6 +23,8 @@ describe('app.message.content.tab', () => {
 
     chrome = dom.window.chrome;
     $ = dom.window.jQuery;
+
+    content = new testUtil.Content($);
   });
 
   given([
@@ -40,9 +44,9 @@ describe('app.message.content.tab', () => {
 
     testUtil.chrome.contentTabNotifyStatusDispatch(chrome, arg.displayPosition, 0);
 
-    assert.strictEqual(testUtil.content.page($).marginTop(), arg.marginTop);
-    assert.strictEqual(testUtil.content.page($).marginBottom(), arg.marginBottom);
-    assert.strictEqual(testUtil.content.message($).hidden(), true);
+    assert.strictEqual(content.page().marginTop(), arg.marginTop);
+    assert.strictEqual(content.page().marginBottom(), arg.marginBottom);
+    assert.strictEqual(content.message().hidden(), true);
   });
 
   given([
@@ -62,8 +66,8 @@ describe('app.message.content.tab', () => {
 
     testUtil.chrome.contentTabNotifyStatusDispatch(chrome, arg.displayPosition, 1);
 
-    assert.strictEqual(testUtil.content.page($).marginTop(), arg.marginTop);
-    assert.strictEqual(testUtil.content.page($).marginBottom(), arg.marginBottom);
-    assert.strictEqual(testUtil.content.message($).shown(), true);
+    assert.strictEqual(content.page().marginTop(), arg.marginTop);
+    assert.strictEqual(content.page().marginBottom(), arg.marginBottom);
+    assert.strictEqual(content.message().shown(), true);
   });
 });

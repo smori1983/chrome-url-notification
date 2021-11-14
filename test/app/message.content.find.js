@@ -13,6 +13,8 @@ describe('app.message.content.find', () => {
    */
   let $;
 
+  let content;
+
   beforeEach(() => {
     const dom = testUtil.uiBase.initContentScript(testUtil.getHtml('test_resource/html/content.03.html'), {
       url: 'https://example.com/',
@@ -20,6 +22,8 @@ describe('app.message.content.find', () => {
 
     chrome = dom.window.chrome;
     $ = dom.window.jQuery;
+
+    content = new testUtil.Content($);
   });
 
   it('pattern not matched', () => {
@@ -31,7 +35,7 @@ describe('app.message.content.find', () => {
         item: null,
       });
 
-    assert.strictEqual(testUtil.content.message($).exists(), false);
+    assert.strictEqual(content.message().exists(), false);
   });
 
   it('pattern matched and status is 0', () => {
@@ -45,7 +49,7 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message($).hidden(), true);
+    assert.strictEqual(content.message().hidden(), true);
   });
 
   it('pattern matched and status is 1', () => {
@@ -59,6 +63,6 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message($).shown(), true);
+    assert.strictEqual(content.message().shown(), true);
   });
 });
