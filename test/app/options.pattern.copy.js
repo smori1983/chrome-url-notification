@@ -23,7 +23,7 @@ describe('app.options.pattern.copy', function () {
     storage = new Storage(dom.window.localStorage);
     this.$ = $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
     testUtil.options.header($).clickAdd();
   });

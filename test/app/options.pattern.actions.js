@@ -20,7 +20,7 @@ describe('app.options.pattern.actions', () => {
     storage = new Storage(dom.window.localStorage);
     $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    testUtil.uiBase.i18n(dom.window.chrome, 'en');
   });
 
   describe('submit add form with invalid inputs and open again', () => {

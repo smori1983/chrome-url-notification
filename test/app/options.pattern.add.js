@@ -33,7 +33,7 @@ describe('app.options.pattern.add', function () {
       },
     ]);
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
     testUtil.options.list($).reload();
 

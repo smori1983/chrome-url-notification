@@ -19,7 +19,7 @@ describe('app.popup.ui', () => {
     chrome = dom.window.chrome;
     $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
     testUtil.popup.init($);
   });

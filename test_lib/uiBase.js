@@ -2,7 +2,7 @@ const fs = require('fs');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
 
-const initI18n2 = (chrome, locale) => {
+const i18n = (chrome, locale) => {
   const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
   const message = fs.readFileSync(localeFile).toString();
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
@@ -61,7 +61,7 @@ const initDom = (content, options, jsFilePath) => {
   return dom;
 };
 
-module.exports.initI18n2 = initI18n2;
+module.exports.i18n = i18n;
 module.exports.initContentScript = initContentScript;
 module.exports.initOptions = initOptions;
 module.exports.initPopup = initPopup;
