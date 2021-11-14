@@ -21,11 +21,11 @@ describe('app.options.importForm', () => {
     $ = dom.window.jQuery;
 
     testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
-
-    testUtil.options.header($).clickImport();
   });
 
   it('i18n label', () => {
+    testUtil.options.header($).clickImport();
+
     const $container = $('#js_modal_import_container');
 
     assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
@@ -35,6 +35,8 @@ describe('app.options.importForm', () => {
 
   describe('import - failure', () => {
     it('input is empty', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.submit();
 
@@ -42,6 +44,8 @@ describe('app.options.importForm', () => {
     });
 
     it('not a JSON text', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json('foo');
       form.submit();
@@ -50,6 +54,8 @@ describe('app.options.importForm', () => {
     });
 
     it('invalid JSON structure', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -68,6 +74,8 @@ describe('app.options.importForm', () => {
 
   describe('import - success', () => {
     it('without data', () => {
+      testUtil.options.header($).clickImport();
+
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
@@ -103,6 +111,8 @@ describe('app.options.importForm', () => {
           status: 0,
         },
       ]);
+
+      testUtil.options.header($).clickImport();
 
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
@@ -140,6 +150,8 @@ describe('app.options.importForm', () => {
           status: 1,
         },
       ]);
+
+      testUtil.options.header($).clickImport();
 
       const form = testUtil.options.importForm($);
       form.json(JSON.stringify({
