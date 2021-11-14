@@ -73,6 +73,19 @@ describe('app.options.importForm', () => {
   });
 
   describe('import - success', () => {
+    it('without data - add no data', () => {
+      testUtil.options.header($).clickImport();
+
+      const form = testUtil.options.importForm($);
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 0);
+    });
+
     it('without data - add new data', () => {
       testUtil.options.header($).clickImport();
 
@@ -99,6 +112,37 @@ describe('app.options.importForm', () => {
       assert.strictEqual(data[0].backgroundColor, '111111');
       assert.strictEqual(data[0].displayPosition, 'bottom_left');
       assert.strictEqual(data[0].status, 0);
+    });
+
+    it('with data - add no data', () => {
+      storage.init(testUtil.currentVersion().toString(), [
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '000000',
+          displayPosition: 'bottom_right',
+          status: 1,
+        },
+      ]);
+
+      testUtil.options.header($).clickImport();
+
+      const form = testUtil.options.importForm($);
+      form.json(JSON.stringify({
+        version: testUtil.currentVersion(),
+        pattern: [],
+      }));
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+
+      const data = storage.getAll();
+
+      assert.strictEqual(data[0].url, 'site1.example.com');
+      assert.strictEqual(data[0].msg, 'site1');
+      assert.strictEqual(data[0].backgroundColor, '000000');
+      assert.strictEqual(data[0].displayPosition, 'bottom_right');
+      assert.strictEqual(data[0].status, 1);
     });
 
     it('with data - update existing data', () => {
