@@ -17,6 +17,8 @@ describe('app.options.pattern.add', function () {
    */
   let $;
 
+  let options;
+
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
@@ -35,9 +37,9 @@ describe('app.options.pattern.add', function () {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    testUtil.options.list($).reload();
-
-    testUtil.options.header($).clickAdd();
+    this.options = options = new testUtil.Options($);
+    options.list().reload();
+    options.header().clickAdd();
   });
 
   describe('i18n', () => {
@@ -58,7 +60,7 @@ describe('app.options.pattern.add', function () {
     sharedForm.runError();
 
     it('patten cannot be duplicated', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('example.com');
       form.submit();
@@ -71,19 +73,19 @@ describe('app.options.pattern.add', function () {
     beforeEach(() => {
       storage.clear();
 
-      testUtil.options.list($).reload();
+      options.list().reload();
     });
 
     it('register simple data', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('example.com');
       form.message('example');
       form.submit();
 
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 1);
+      assert.strictEqual(options.list().numOfItems(), 1);
 
-      const item = testUtil.options.list($).item(0);
+      const item = options.list().item(0);
       assert.strictEqual(item.pattern(), 'example.com');
       assert.strictEqual(item.message(), 'example');
       assert.strictEqual(item.backgroundColor(), '#000000');

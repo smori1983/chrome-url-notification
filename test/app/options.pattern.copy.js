@@ -17,6 +17,8 @@ describe('app.options.pattern.copy', function () {
    */
   let $;
 
+  let options;
+
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
@@ -25,7 +27,7 @@ describe('app.options.pattern.copy', function () {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    testUtil.options.header($).clickAdd();
+    this.options = options = new testUtil.Options($);
   });
 
   describe('error', () => {
@@ -47,15 +49,14 @@ describe('app.options.pattern.copy', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickCopy();
+      options.list().reload();
+      options.list().item(0).clickCopy();
     });
 
     sharedForm.runError();
 
     it('patten cannot be duplicated - keep original value', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.submit();
 
@@ -63,7 +64,7 @@ describe('app.options.pattern.copy', function () {
     });
 
     it('patten cannot be duplicated - change to existing value', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('domain2.example.com');
       form.submit();
@@ -84,13 +85,12 @@ describe('app.options.pattern.copy', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickCopy();
+      options.list().reload();
+      options.list().item(0).clickCopy();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain1.example.com');
       assert.strictEqual(form.message(), 'domain1');
@@ -100,7 +100,7 @@ describe('app.options.pattern.copy', function () {
     });
 
     it('edit form and save', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.pattern('domain2.example.com');
       form.message('domain2');
       form.backgroundColor('#222222');
@@ -108,16 +108,16 @@ describe('app.options.pattern.copy', function () {
       form.status(false);
       form.submit();
 
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 2);
+      assert.strictEqual(options.list().numOfItems(), 2);
 
-      const item1 = testUtil.options.list($).item(0);
+      const item1 = options.list().item(0);
       assert.strictEqual(item1.pattern(), 'domain1.example.com');
       assert.strictEqual(item1.message(), 'domain1');
       assert.strictEqual(item1.backgroundColor(), '#111111');
       assert.strictEqual(item1.displayPosition(), 'Bottom');
       assert.strictEqual(item1.status(), 'Y');
 
-      const item2 = testUtil.options.list($).item(1);
+      const item2 = options.list().item(1);
       assert.strictEqual(item2.pattern(), 'domain2.example.com');
       assert.strictEqual(item2.message(), 'domain2');
       assert.strictEqual(item2.backgroundColor(), '#222222');

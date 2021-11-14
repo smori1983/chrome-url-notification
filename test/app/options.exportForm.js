@@ -14,6 +14,8 @@ describe('app.options.exportForm', () => {
    */
   let $;
 
+  let options;
+
   beforeEach(() => {
     const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
@@ -21,27 +23,29 @@ describe('app.options.exportForm', () => {
     $ = dom.window.jQuery;
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
+
+    options = new testUtil.Options($);
   });
 
   it('i18n label', () => {
-    testUtil.options.header($).clickExport();
+    options.header().clickExport();
 
     assert.strictEqual($('#js_export_copy').text(), 'Copy');
   });
 
   describe('exported json', () => {
     it('version should be current', () => {
-      testUtil.options.header($).clickExport();
+      options.header().clickExport();
 
-      const json = testUtil.options.exportForm($).json();
+      const json = options.exportForm().json();
 
       assert.strictEqual(json.version, testUtil.currentVersion());
     });
 
     it('without pattern data', () => {
-      testUtil.options.header($).clickExport();
+      options.header().clickExport();
 
-      const json = testUtil.options.exportForm($).json();
+      const json = options.exportForm().json();
 
       assert.deepStrictEqual(json.pattern, []);
     });
@@ -50,9 +54,9 @@ describe('app.options.exportForm', () => {
       storage.init(testUtil.currentVersion().toString(), [
         testUtil.makePatternItem({}),
       ]);
-      testUtil.options.header($).clickExport();
+      options.header().clickExport();
 
-      const json = testUtil.options.exportForm($).json();
+      const json = options.exportForm().json();
 
       assert.strictEqual(json.pattern.length, 1);
       assert.deepStrictEqual(json.pattern[0], testUtil.makePatternItem({}));

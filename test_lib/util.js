@@ -78,4 +78,4 @@ module.exports.chrome = require('./chrome');
 module.exports.uiBase = require('./uiBase');
 module.exports.Popup = require('./popup');
 module.exports.Content = require('./content');
-module.exports.options = require('./options');
+module.exports.Options = require('./options');

@@ -17,6 +17,8 @@ describe('app.options.pattern.edit', function () {
    */
   let $;
 
+  let options;
+
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
 
@@ -25,7 +27,7 @@ describe('app.options.pattern.edit', function () {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    testUtil.options.header($).clickAdd();
+    this.options = options = new testUtil.Options($);
   });
 
   describe('error', () => {
@@ -47,15 +49,14 @@ describe('app.options.pattern.edit', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickEdit();
+      options.list().reload();
+      options.list().item(0).clickEdit();
     });
 
     sharedForm.runError();
 
     it('patten cannot be duplicated - change to existing value', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('domain8.example.com');
       form.submit();
@@ -76,13 +77,12 @@ describe('app.options.pattern.edit', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickEdit();
+      options.list().reload();
+      options.list().item(0).clickEdit();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain9.example.com');
       assert.strictEqual(form.message(), 'domain9');
@@ -92,7 +92,7 @@ describe('app.options.pattern.edit', function () {
     });
 
     it('keeping original pattern is not an error', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.submit();
 
@@ -100,7 +100,7 @@ describe('app.options.pattern.edit', function () {
     });
 
     it('edit form and save', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.pattern('domain10.example.com');
       form.message('domain10');
       form.backgroundColor('#333333');
@@ -108,9 +108,9 @@ describe('app.options.pattern.edit', function () {
       form.status(true);
       form.submit();
 
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 1);
+      assert.strictEqual(options.list().numOfItems(), 1);
 
-      const item1 = testUtil.options.list($).item(0);
+      const item1 = options.list().item(0);
       assert.strictEqual(item1.pattern(), 'domain10.example.com');
       assert.strictEqual(item1.message(), 'domain10');
       assert.strictEqual(item1.backgroundColor(), '#333333');
