@@ -14,21 +14,9 @@ const initI18n2 = (chrome, locale) => {
  * @return {JSDOM}
  */
 const initContentScript = (content, options) => {
-  options = options || {};
+  const path = __dirname + '/../dist/test/js/content.js';
 
-  // Necessary for usage of localStorage.
-  options.url = options.url || 'https://localhost';
-
-  options.runScripts = 'outside-only';
-
-  const dom = new JSDOM(content, options);
-
-  const js = fs.readFileSync(__dirname + '/../dist/test/js/content.js', {
-    encoding: 'utf-8',
-  });
-  dom.window.eval(js);
-
-  return dom;
+  return initDom(content, options || {}, path);
 };
 
 /**
@@ -37,21 +25,9 @@ const initContentScript = (content, options) => {
  * @return {JSDOM}
  */
 const initOptions = (content, options) => {
-  options = options || {};
+  const path = __dirname + '/../dist/test/js/options.js';
 
-  // Necessary for usage of localStorage.
-  options.url = options.url || 'https://localhost';
-
-  options.runScripts = 'outside-only';
-
-  const dom = new JSDOM(content, options);
-
-  const js = fs.readFileSync(__dirname + '/../dist/test/js/options.js', {
-    encoding: 'utf-8',
-  });
-  dom.window.eval(js);
-
-  return dom;
+  return initDom(content, options || {}, path);
 };
 
 /**
@@ -60,19 +36,27 @@ const initOptions = (content, options) => {
  * @return {JSDOM}
  */
 const initPopup = (content, options) => {
-  options = options || {};
+  const path = __dirname + '/../dist/test/js/popup.js';
 
+  return initDom(content, options || {}, path);
+};
+
+/**
+ * @param {string} content
+ * @param {Object} options
+ * @param {string} jsFilePath
+ * @return {JSDOM}
+ */
+const initDom = (content, options, jsFilePath) => {
   // Necessary for usage of localStorage.
   options.url = options.url || 'https://localhost';
-
   options.runScripts = 'outside-only';
 
   const dom = new JSDOM(content, options);
 
-  const js = fs.readFileSync(__dirname + '/../dist/test/js/popup.js', {
+  dom.window.eval(fs.readFileSync(jsFilePath, {
     encoding: 'utf-8',
-  });
-  dom.window.eval(js);
+  }));
 
   return dom;
 };
