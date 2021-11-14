@@ -6,6 +6,10 @@ const outputPath = 'dist/test';
 const config = webpack.prepare(mode, imageDir, outputPath);
 
 config.entry = {
+  content: {
+    import: './src/js/app/content.main.test.js',
+    filename: 'js/content.js',
+  },
   options: {
     import: './src/js/app/options.main.test.js',
     filename: 'js/options.js',

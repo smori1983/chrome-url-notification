@@ -32,6 +32,14 @@ const message = ($) => {
     return container().length === 1;
   };
 
+  /**
+   * @param {string} property
+   * @returns {string}
+   */
+  const css = (property) => {
+    return container().css(property);
+  };
+
   return {
     /**
      * @returns {boolean}
@@ -43,13 +51,29 @@ const message = ($) => {
      * @returns {boolean}
      */
     shown: () => {
-      return exists() && container().css('display') === 'block';
+      return exists() && css('display') === 'block';
     },
     /**
      * @returns {boolean}
      */
     hidden: () => {
-      return exists() && container().css('display') === 'none';
+      return exists() && css('display') === 'none';
+    },
+    /**
+     * @param {string} text
+     * @returns {boolean}
+     */
+    styleContains: (text) => {
+      const styleAttr = container().attr('style') || '';
+
+      return styleAttr.indexOf(text) >= 0;
+    },
+    /**
+     * @param {string} property
+     * @returns {string}
+     */
+    css: (property) => {
+      return css(property);
     },
     mouseover: () => {
       container().trigger('mouseover');

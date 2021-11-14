@@ -57,6 +57,29 @@ const initDom3 = (content, options) => {
  * @param {Object} [options]
  * @return {JSDOM}
  */
+const initContentScript = (content, options) => {
+  options = options || {};
+
+  // Necessary for usage of localStorage.
+  options.url = options.url || 'https://localhost';
+
+  options.runScripts = 'outside-only';
+
+  const dom = new JSDOM(content, options);
+
+  const js = fs.readFileSync(__dirname + '/../dist/test/js/content.js', {
+    encoding: 'utf-8',
+  });
+  dom.window.eval(js);
+
+  return dom;
+};
+
+/**
+ * @param {string} content
+ * @param {Object} [options]
+ * @return {JSDOM}
+ */
 const initPopup = (content, options) => {
   options = options || {};
 
@@ -79,4 +102,5 @@ module.exports.initI18n = initI18n;
 module.exports.initI18n2 = initI18n2;
 module.exports.initDom2 = initDom2;
 module.exports.initDom3 = initDom3;
+module.exports.initContentScript = initContentScript;
 module.exports.initPopup = initPopup;

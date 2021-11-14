@@ -99,9 +99,15 @@ const sendResponse = () => {
   };
 };
 
-const contentFindMessage = () => {
+/**
+ * @param {SinonChrome} chrome
+ */
+const contentFindMessage = (chrome) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
   return createReqAndRes((req, res) => {
-    chrome.runtime.sendMessage
+    runtime.sendMessage
       .withArgs({
         command: 'content_scripts:find',
         data: {
@@ -143,11 +149,15 @@ const contentFindDispatch = (url, tabId, callback) => {
 /**
  * chrome.runtime.onMessage() for 'content:tab:notify:status'
  *
+ * @param {SinonChrome} chrome
  * @param {string} displayPosition
  * @param {number} status
  */
-const contentTabNotifyStatusDispatch = (displayPosition, status) => {
-  chrome.runtime.onMessage
+const contentTabNotifyStatusDispatch = (chrome, displayPosition, status) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
+  runtime.onMessage
     .dispatch({
       command: 'tab:notify:status',
       data: {
