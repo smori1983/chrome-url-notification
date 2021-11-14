@@ -1,6 +1,6 @@
 class Popup {
   /**
-   * @param {jQuery} $
+   * @param {JQuery} $
    */
   constructor($) {
     /**
@@ -20,7 +20,7 @@ class Popup {
 
 class MatchedBlock {
   /**
-   * @param {jQuery} $
+   * @param {JQuery} $
    */
   constructor($) {
     /**

@@ -4,11 +4,6 @@ const testUtil = require('../../test_lib/util');
 
 describe('app.message.popup.find', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {SinonChrome}
    */
   let chrome;
@@ -19,11 +14,10 @@ describe('app.message.popup.find', () => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
     chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    popup = new testUtil.Popup($);
+    popup = new testUtil.Popup(dom.window.jQuery);
     popup.init();
   });
 
