@@ -25,15 +25,6 @@ const initI18n2 = (chrome, locale) => {
  * @param {Object} [options]
  * @return {JSDOM}
  */
-const initDom2 = (content, options) => {
-  return new JSDOM(content, options);
-};
-
-/**
- * @param {string} content
- * @param {Object} [options]
- * @return {JSDOM}
- */
 const initContentScript = (content, options) => {
   options = options || {};
 
@@ -100,7 +91,6 @@ const initPopup = (content, options) => {
 
 module.exports.initI18n = initI18n;
 module.exports.initI18n2 = initI18n2;
-module.exports.initDom2 = initDom2;
 module.exports.initContentScript = initContentScript;
 module.exports.initOptions = initOptions;
 module.exports.initPopup = initPopup;
