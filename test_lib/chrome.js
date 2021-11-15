@@ -155,13 +155,17 @@ const popupFindMessage = (chrome) => {
 /**
  * Ensure chrome.tabs.sendMessage() for 'tab:notify:status' command called with arguments.
  *
+ * @param {SinonChrome} chrome
  * @param {number} tabId
  * @param {FindResult} item
  * @param {number} status
  * @returns {boolean}
  */
-const popupTabNotifyStatusCalledWith = (tabId, item, status) => {
-  return chrome.tabs.sendMessage
+const popupTabNotifyStatusCalledWith = (chrome, tabId, item, status) => {
+  /** @type {SinonChrome.tabs} */
+  const tabs = chrome.tabs;
+
+  return tabs.sendMessage
     .withArgs(tabId, {
       command: 'tab:notify:status',
       data: {
@@ -192,9 +196,15 @@ const popupTabsQuery = (chrome) => {
   });
 };
 
-const popupUpdateStatus = () => {
+/**
+ * @param {SinonChrome} chrome
+ */
+const popupUpdateStatus = (chrome) => {
+  /** @type {SinonChrome.runtime} */
+  const runtime = chrome.runtime;
+
   return createReqAndRes((req, res) => {
-    chrome.runtime.sendMessage
+    runtime.sendMessage
       .withArgs({
         command: 'browser_action:update:status',
         data: {
