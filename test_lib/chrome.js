@@ -108,31 +108,6 @@ const contentFindMessage = (chrome) => {
 };
 
 /**
- * chrome.runtime.onMessage() for 'content_scripts:find'
- *
- * @param {string} url
- * @param {number} tabId
- * @param {function} callback
- */
-const contentFindDispatch = (url, tabId, callback) => {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'content_scripts:find',
-        data: {
-          url: url,
-        },
-      },
-      {
-        tab: {
-          id: tabId,
-        },
-      },
-      callback
-    );
-};
-
-/**
  * chrome.runtime.onMessage() for 'content:tab:notify:status'
  *
  * @param {SinonChrome} chrome
@@ -340,7 +315,6 @@ module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
 module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindMessage = contentFindMessage;
-module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindMessage = popupFindMessage;
 module.exports.popupFindDispatch = popupFindDispatch;

@@ -25,7 +25,7 @@ describe('app.background.content.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.contentFindDispatch('https://www.example.com/', 10001, res.callback);
+    testUtil.chromeBackground.contentFindDispatch('https://www.example.com/', 10001, res.callback);
 
     /** @type {FindResult} */
     const data = res.data();
@@ -39,7 +39,7 @@ describe('app.background.content.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.contentFindDispatch('https://domain1.example.com/page', 10002, res.callback);
+    testUtil.chromeBackground.contentFindDispatch('https://domain1.example.com/page', 10002, res.callback);
 
     /** @type {FindResult} */
     const data = res.data();
@@ -53,7 +53,7 @@ describe('app.background.content.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.contentFindDispatch('https://domain2.example.com/page', 10003, res.callback);
+    testUtil.chromeBackground.contentFindDispatch('https://domain2.example.com/page', 10003, res.callback);
 
     /** @type {FindResult} */
     const data = res.data();
