@@ -211,30 +211,6 @@ const popupUpdateStatus = () => {
 };
 
 /**
- * chrome.runtime.onMessage() for 'browser_action:update:status'
- *
- * @param {number} tabId
- * @param {string} url
- * @param {number} status
- * @param {function} callback
- */
-const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'browser_action:update:status',
-        data: {
-          url: url,
-          status: status,
-          tabId: tabId,
-        },
-      },
-      {},
-      callback
-    );
-};
-
-/**
  * Ensure chrome.runtime.sendMessage() for 'browser_action:update:status' command called with arguments.
  *
  * @param {SinonChrome} chrome
@@ -300,7 +276,6 @@ module.exports.popupFindMessage = popupFindMessage;
 module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatus = popupUpdateStatus;
-module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
 
 module.exports.registerHooks = registerHooks;

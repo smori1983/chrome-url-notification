@@ -23,7 +23,7 @@ describe('app.background.popup.update.status', () => {
 
     SUT.listen();
 
-    testUtil.chrome.popupUpdateStatusDispatch(10001, 'domain1.example.com', 0, res.callback);
+    testUtil.chromeBackground.popupUpdateStatusDispatch(10001, 'domain1.example.com', 0, res.callback);
 
     /** @type {MessageBrowserActionUpdateStatusResponse} */
     const data = res.data();
@@ -37,7 +37,7 @@ describe('app.background.popup.update.status', () => {
 
     SUT.listen();
 
-    testUtil.chrome.popupUpdateStatusDispatch(10002, 'domain2.example.com', 1, res.callback);
+    testUtil.chromeBackground.popupUpdateStatusDispatch(10002, 'domain2.example.com', 1, res.callback);
 
     /** @type {MessageBrowserActionUpdateStatusResponse} */
     const data = res.data();

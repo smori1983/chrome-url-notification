@@ -61,6 +61,31 @@ const popupFindDispatch = (url, callback) => {
     );
 };
 
+/**
+ * chrome.runtime.onMessage() for 'browser_action:update:status'
+ *
+ * @param {number} tabId
+ * @param {string} url
+ * @param {number} status
+ * @param {function} callback
+ */
+const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
+  chrome.runtime.onMessage
+    .dispatch(
+      {
+        command: 'browser_action:update:status',
+        data: {
+          url: url,
+          status: status,
+          tabId: tabId,
+        },
+      },
+      {},
+      callback
+    );
+};
+
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.contentFindDispatch = contentFindDispatch;
 module.exports.popupFindDispatch = popupFindDispatch;
+module.exports.popupUpdateStatusDispatch = popupUpdateStatusDispatch;
