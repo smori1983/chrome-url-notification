@@ -65,6 +65,7 @@ module.exports.makePatternItem = makePatternItem;
 module.exports.makeFoundItem = makeFoundItem;
 
 module.exports.chrome = require('./chrome');
+module.exports.chromeBackground = require('./chrome-background');
 module.exports.uiBase = require('./uiBase');
 module.exports.Popup = require('./popup');
 module.exports.Content = require('./content');

@@ -51,22 +51,6 @@ const tabsCreateCalledWith = (chrome, url) => {
     .calledOnce;
 };
 
-/**
- * Ensure chrome.browserAction.setBadgeText() called with arguments.
- *
- * @param {string} text
- * @param {number} tabId
- * @returns {boolean}
- */
-const setBadgeTextCalledWith = (text, tabId) => {
-  return chrome.browserAction.setBadgeText
-    .withArgs({
-      text: text,
-      tabId: tabId,
-    })
-    .calledOnce;
-};
-
 const createReqAndRes = (run) => {
   return {
     req: (req) => {
@@ -353,7 +337,6 @@ const i18n = (locale) => {
 
 module.exports.createTab = createTab;
 module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
-module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.sendResposne = sendResponse;
 
 module.exports.contentFindMessage = contentFindMessage;
