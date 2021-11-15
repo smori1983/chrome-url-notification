@@ -153,26 +153,6 @@ const popupFindMessage = (chrome) => {
 };
 
 /**
- * chrome.runtime.onMessage() for 'browser_action:find'
- *
- * @param {string} url
- * @param {function} callback
- */
-const popupFindDispatch = (url, callback) => {
-  chrome.runtime.onMessage
-    .dispatch(
-      {
-        command: 'browser_action:find',
-        data: {
-          url: url,
-        },
-      },
-      {},
-      callback
-    );
-};
-
-/**
  * Ensure chrome.tabs.sendMessage() for 'tab:notify:status' command called with arguments.
  *
  * @param {number} tabId
@@ -317,7 +297,6 @@ module.exports.sendResposne = sendResponse;
 module.exports.contentFindMessage = contentFindMessage;
 module.exports.contentTabNotifyStatusDispatch = contentTabNotifyStatusDispatch;
 module.exports.popupFindMessage = popupFindMessage;
-module.exports.popupFindDispatch = popupFindDispatch;
 module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatus = popupUpdateStatus;

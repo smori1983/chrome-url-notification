@@ -41,5 +41,26 @@ const contentFindDispatch = (url, tabId, callback) => {
     );
 };
 
+/**
+ * chrome.runtime.onMessage() for 'browser_action:find'
+ *
+ * @param {string} url
+ * @param {function} callback
+ */
+const popupFindDispatch = (url, callback) => {
+  chrome.runtime.onMessage
+    .dispatch(
+      {
+        command: 'browser_action:find',
+        data: {
+          url: url,
+        },
+      },
+      {},
+      callback
+    );
+};
+
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.contentFindDispatch = contentFindDispatch;
+module.exports.popupFindDispatch = popupFindDispatch;

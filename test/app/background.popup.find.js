@@ -25,7 +25,7 @@ describe('app.background.popup.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://www.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://www.example.com/', sendResponse.callback);
 
     /** @type {FindResult} */
     const data = sendResponse.data();
@@ -38,7 +38,7 @@ describe('app.background.popup.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://domain1.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://domain1.example.com/', sendResponse.callback);
 
     /** @type {FindResult} */
     const data = sendResponse.data();
@@ -51,7 +51,7 @@ describe('app.background.popup.find', () => {
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://domain2.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://domain2.example.com/', sendResponse.callback);
 
     /** @type {FindResult} */
     const data = sendResponse.data();
