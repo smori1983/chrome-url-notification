@@ -3,10 +3,11 @@ const { given } = require('mocha-testdata');
 const assert = require('assert');
 const _ = require('lodash');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.content.css', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -17,7 +18,7 @@ describe('app.content.css', () => {
       url: 'https://example.com/',
     });
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
     content = new testUtil.Content(dom.window.jQuery);
   });
 
@@ -38,7 +39,7 @@ describe('app.content.css', () => {
       {displayPosition: 'unknown',      status: 1, expected: {top: '0px',  bottom: '0px'}},
       {displayPosition: 'unknown',      status: 0, expected: {top: '0px',  bottom: '0px'}},
     ]).it('display position and status', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -61,7 +62,7 @@ describe('app.content.css', () => {
       {status: 0, shown: false},
       {status: 1, shown: true},
     ]).it('initial state', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -85,7 +86,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: '50px', bottom: '10px', left: '10px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px', bottom: '10px', right: '10px'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -117,7 +118,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: 'calc(100% - 20px)'}},
       {displayPosition: 'bottom_right', expected: {width: 'calc(100% - 20px)'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -147,7 +148,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: '50px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })

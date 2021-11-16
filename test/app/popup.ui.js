@@ -1,6 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.popup.ui', () => {
   /**
@@ -9,7 +10,7 @@ describe('app.popup.ui', () => {
   let $;
 
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -18,7 +19,7 @@ describe('app.popup.ui', () => {
   beforeEach(() => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
     $ = dom.window.jQuery;
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
@@ -38,18 +39,13 @@ describe('app.popup.ui', () => {
     it('click link to options page', () => {
       const path = 'chrome-extension://xxx/html/options.html';
 
-      /** @type {SinonChrome.runtime} */
-      const runtime = chrome.runtime;
-
-      runtime.getURL
-        .withArgs('html/options.html')
-        .returns(path);
+      chrome.getURL('html/options.html', path);
 
       const $link = $('#link_options a').eq(0);
 
       $link.trigger('click');
 
-      assert.ok(testUtil.chrome.tabsCreateCalledWith(chrome, path));
+      assert.ok(chrome.tabsCreateCalledWith(path));
     });
   });
 
@@ -70,12 +66,12 @@ describe('app.popup.ui', () => {
 
     describe('initial state of status checkbox', () => {
       it('pattern matched and status is 0', () => {
-        testUtil.chrome.popupTabsQuery(chrome)
+        chrome.popupTabsQuery()
           .req({})
           .res({
             url: 'https://foo.example.com/page',
           });
-        testUtil.chrome.popupFindMessage(chrome)
+        chrome.popupFindMessage()
           .req({
             tab: testUtil.chrome.createTab({
               id: 10001,
@@ -93,12 +89,12 @@ describe('app.popup.ui', () => {
       });
 
       it('pattern matched and status is 1', () => {
-        testUtil.chrome.popupTabsQuery(chrome)
+        chrome.popupTabsQuery()
           .req({})
           .res({
             url: 'https://foo.example.com/page',
           });
-        testUtil.chrome.popupFindMessage(chrome)
+        chrome.popupFindMessage()
           .req({
             tab: testUtil.chrome.createTab({
               id: 10002,

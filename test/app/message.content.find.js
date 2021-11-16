@@ -1,10 +1,11 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.message.content.find', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -15,12 +16,12 @@ describe('app.message.content.find', () => {
       url: 'https://example.com/',
     });
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
     content = new testUtil.Content(dom.window.jQuery);
   });
 
   it('pattern not matched', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -32,7 +33,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 0', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -46,7 +47,7 @@ describe('app.message.content.find', () => {
   });
 
   it('pattern matched and status is 1', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })

@@ -2,10 +2,11 @@ const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.message.content.tab', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -16,7 +17,7 @@ describe('app.message.content.tab', () => {
       url: 'https://example.com/',
     });
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
     content = new testUtil.Content(dom.window.jQuery);
   });
 
@@ -24,7 +25,7 @@ describe('app.message.content.tab', () => {
     {displayPosition: 'top', marginTop: '0px', marginBottom: '0px'},
     {displayPosition: 'bottom', marginTop: '0px', marginBottom: '0px'},
   ]).it('pattern matched and status was changed from 1 to 0', (arg) => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -35,7 +36,7 @@ describe('app.message.content.tab', () => {
         }),
       });
 
-    testUtil.chrome.contentTabNotifyStatusDispatch(chrome, arg.displayPosition, 0);
+    chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 0);
 
     assert.strictEqual(content.page().marginTop(), arg.marginTop);
     assert.strictEqual(content.page().marginBottom(), arg.marginBottom);
@@ -46,7 +47,7 @@ describe('app.message.content.tab', () => {
     {displayPosition: 'top', marginTop: '50px', marginBottom: '0px'},
     {displayPosition: 'bottom', marginTop: '0px', marginBottom: '50px'},
   ]).it('pattern matched and status was changed from 0 to 1', (arg) => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -57,7 +58,7 @@ describe('app.message.content.tab', () => {
         }),
       });
 
-    testUtil.chrome.contentTabNotifyStatusDispatch(chrome, arg.displayPosition, 1);
+    chrome.contentTabNotifyStatusDispatch(arg.displayPosition, 1);
 
     assert.strictEqual(content.page().marginTop(), arg.marginTop);
     assert.strictEqual(content.page().marginBottom(), arg.marginBottom);

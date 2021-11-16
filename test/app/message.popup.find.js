@@ -1,10 +1,11 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.message.popup.find', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -13,7 +14,7 @@ describe('app.message.popup.find', () => {
   beforeEach(() => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
@@ -27,14 +28,14 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    testUtil.chrome.popupTabsQuery(chrome)
+    chrome.popupTabsQuery()
       .req({})
       .res({
         id: 10001,
         url: 'https://example.com/',
       });
 
-    testUtil.chrome.popupFindMessage(chrome)
+    chrome.popupFindMessage()
       .req({
         tab: tab,
       })
@@ -51,14 +52,14 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    testUtil.chrome.popupTabsQuery(chrome)
+    chrome.popupTabsQuery()
       .req({})
       .res({
         id: 20001,
         url: 'https://example.com/',
       });
 
-    testUtil.chrome.popupFindMessage(chrome)
+    chrome.popupFindMessage()
       .req({
         tab: tab,
       })
@@ -78,14 +79,14 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    testUtil.chrome.popupTabsQuery(chrome)
+    chrome.popupTabsQuery()
       .req({})
       .res({
         id: 20002,
         url: 'https://example.com/',
       });
 
-    testUtil.chrome.popupFindMessage(chrome)
+    chrome.popupFindMessage()
       .req({
         tab: tab,
       })
@@ -100,7 +101,7 @@ describe('app.message.popup.find', () => {
 
     popup.matchedBlock().clickStatus();
 
-    assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(chrome, 20002, 'https://example.com/', 1));
+    assert.ok(chrome.popupUpdateStatusCalledWith(20002, 'https://example.com/', 1));
 
     assert.strictEqual(popup.matchedBlock().shown(), true);
     assert.strictEqual(popup.matchedBlock().statusEnabled(), true);
@@ -112,14 +113,14 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    testUtil.chrome.popupTabsQuery(chrome)
+    chrome.popupTabsQuery()
       .req({})
       .res({
         id: 30001,
         url: 'https://example.com/',
       });
 
-    testUtil.chrome.popupFindMessage(chrome)
+    chrome.popupFindMessage()
       .req({
         tab: tab,
       })
@@ -139,14 +140,14 @@ describe('app.message.popup.find', () => {
       url: 'https://example.com/',
     });
 
-    testUtil.chrome.popupTabsQuery(chrome)
+    chrome.popupTabsQuery()
       .req({})
       .res({
         id: 30002,
         url: 'https://example.com/',
       });
 
-    testUtil.chrome.popupFindMessage(chrome)
+    chrome.popupFindMessage()
       .req({
         tab: tab,
       })
@@ -161,7 +162,7 @@ describe('app.message.popup.find', () => {
 
     popup.matchedBlock().clickStatus();
 
-    assert.ok(testUtil.chrome.popupUpdateStatusCalledWith(chrome, 30002, 'https://example.com/', 0));
+    assert.ok(chrome.popupUpdateStatusCalledWith(30002, 'https://example.com/', 0));
 
     assert.strictEqual(popup.matchedBlock().shown(), true);
     assert.strictEqual(popup.matchedBlock().statusEnabled(), false);

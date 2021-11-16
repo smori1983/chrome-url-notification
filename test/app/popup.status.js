@@ -1,10 +1,11 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 
 describe('app.popup.status', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
@@ -13,7 +14,7 @@ describe('app.popup.status', () => {
   beforeEach(() => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
-    chrome = dom.window.chrome;
+    chrome = new ChromeMock(dom.window.chrome);
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
@@ -23,13 +24,13 @@ describe('app.popup.status', () => {
 
   describe('updateStatus', () => {
     it('update with 0', () => {
-      testUtil.chrome.popupTabsQuery(chrome)
+      chrome.popupTabsQuery()
         .req({})
         .res({
           id: 10001,
           url: 'example.com',
         });
-      testUtil.chrome.popupFindMessage(chrome)
+      chrome.popupFindMessage()
         .req({
           tab: testUtil.chrome.createTab({
             id: 10001,
@@ -52,7 +53,7 @@ describe('app.popup.status', () => {
         }),
       };
 
-      testUtil.chrome.popupUpdateStatus(chrome)
+      chrome.popupUpdateStatus()
         .req({
           tabId: 10001,
           url: 'example.com',
@@ -64,17 +65,17 @@ describe('app.popup.status', () => {
 
       popup.matchedBlock().clickStatus();
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(chrome, 10001, result, 0));
+      assert.ok(chrome.popupTabNotifyStatusCalledWith(10001, result, 0));
     });
 
     it('update with 1', () => {
-      testUtil.chrome.popupTabsQuery(chrome)
+      chrome.popupTabsQuery()
         .req({})
         .res({
           id: 10002,
           url: 'example.com',
         });
-      testUtil.chrome.popupFindMessage(chrome)
+      chrome.popupFindMessage()
         .req({
           tab: testUtil.chrome.createTab({
             id: 10002,
@@ -97,7 +98,7 @@ describe('app.popup.status', () => {
         }),
       };
 
-      testUtil.chrome.popupUpdateStatus(chrome)
+      chrome.popupUpdateStatus()
         .req({
           tabId: 10002,
           url: 'example.com',
@@ -109,7 +110,7 @@ describe('app.popup.status', () => {
 
       popup.matchedBlock().clickStatus();
 
-      assert.ok(testUtil.chrome.popupTabNotifyStatusCalledWith(chrome, 10002, result, 1));
+      assert.ok(chrome.popupTabNotifyStatusCalledWith(10002, result, 1));
     });
   });
 });
