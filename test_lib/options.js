@@ -351,6 +351,13 @@ class PatternForm extends FormBase {
   }
 
   /**
+   * @returns {string}
+   */
+  patternPlaceholder() {
+    return this._$('#js_input_url').attr('placeholder');
+  }
+
+  /**
    * @param {string} [value]
    * @returns {string}
    */
@@ -364,6 +371,13 @@ class PatternForm extends FormBase {
     }
 
     return element.val();
+  }
+
+  /**
+   * @returns {string}
+   */
+  messagePlaceholder() {
+    return this._$('#js_input_msg').attr('placeholder');
   }
 
   /**

@@ -10,11 +10,6 @@ const Storage = testUtil.Storage;
 
 describe('app.options.pattern.add', function () {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Storage}
    */
   let storage;
@@ -32,9 +27,9 @@ describe('app.options.pattern.add', function () {
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
-    storage = new Storage(dom.window.localStorage);
-    this.$ = $ = dom.window.jQuery;
+    this.$ = dom.window.jQuery;
 
+    storage = new Storage(dom.window.localStorage);
     storage.init(testUtil.currentVersion().toString(), [
       {
         url: 'example.com',
@@ -48,22 +43,18 @@ describe('app.options.pattern.add', function () {
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    this.options = options = new Options($);
+    this.options = options = new Options(dom.window.jQuery);
     options.list().reload();
     options.header().clickAdd();
   });
 
   describe('i18n', () => {
     it('url field placeholder', () => {
-      const $element = $('#js_input_url').eq(0);
-
-      assert.strictEqual($element.attr('placeholder'), 'e.g. http://*.example.com/');
+      assert.strictEqual(options.patternForm().patternPlaceholder(), 'e.g. http://*.example.com/');
     });
 
     it('message field placeholder', () => {
-      const $element = $('#js_input_msg').eq(0);
-
-      assert.strictEqual($element.attr('placeholder'), 'e.g. example.com production site');
+      assert.strictEqual(options.patternForm().messagePlaceholder(), 'e.g. example.com production site');
     });
   });
 
