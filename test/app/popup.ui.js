@@ -6,11 +6,6 @@ const Popup = testUtil.Popup;
 
 describe('app.popup.ui', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {ChromeMock}
    */
   let chrome;
@@ -23,21 +18,16 @@ describe('app.popup.ui', () => {
   beforeEach(() => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
-    $ = dom.window.jQuery;
-
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    popup = new Popup($);
+    popup = new Popup(dom.window.jQuery);
     popup.init();
   });
 
   describe('common menu', () => {
     it('link to options page should be shown', () => {
-      const $link = $('#link_options a');
-
-      assert.strictEqual($link.length, 1);
-      assert.strictEqual($link.eq(0).text(), 'Options');
+      assert.strictEqual(popup.commonBlock().labelOptionsLink(), 'Options');
     });
 
     it('click link to options page', () => {
@@ -45,9 +35,7 @@ describe('app.popup.ui', () => {
 
       chrome.getURL('html/options.html', path);
 
-      const $link = $('#link_options a').eq(0);
-
-      $link.trigger('click');
+      popup.commonBlock().clickOptionsLink();
 
       assert.ok(chrome.tabsCreateCalledWith(path));
     });
@@ -56,15 +44,11 @@ describe('app.popup.ui', () => {
   describe('matched menu', () => {
     describe('i18n', () => {
       it('status label', () => {
-        const $element = $('#block_for_matched_page span').eq(0);
-
-        assert.strictEqual($element.text(), 'Status');
+        assert.strictEqual(popup.matchedBlock().labelStatus(), 'Status');
       });
 
       it('enabled label', () => {
-        const $element = $('#block_for_matched_page label').eq(0);
-
-        assert.strictEqual($element.text(), 'Enabled');
+        assert.strictEqual(popup.matchedBlock().labelEnabled(), 'Enabled');
       });
     });
 
