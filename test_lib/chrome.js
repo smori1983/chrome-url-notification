@@ -28,27 +28,4 @@ const createTab = (diff) => {
   return /** @type {chrome.tabs.Tab} */ deepMerge(base, diff);
 };
 
-const sendResponse = () => {
-  /**
-   * @type {Object}
-   */
-  let data;
-
-  return {
-    /**
-     * @param {Object} args
-     */
-    callback: (args) => {
-      data = args;
-    },
-    /**
-     * @returns {Object}
-     */
-    data: () => {
-      return data;
-    },
-  };
-};
-
 module.exports.createTab = createTab;
-module.exports.sendResposne = sendResponse;

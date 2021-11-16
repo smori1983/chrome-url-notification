@@ -19,7 +19,7 @@ describe('app.background.popup.update.status', () => {
   });
 
   it('status is 1, then disable', () => {
-    const res = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
@@ -33,7 +33,7 @@ describe('app.background.popup.update.status', () => {
   });
 
   it('status is 0, then enable', () => {
-    const res = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 

@@ -34,6 +34,28 @@ const i18n = (locale) => {
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
 };
 
+const sendResponse = () => {
+  /**
+   * @type {Object}
+   */
+  let data;
+
+  return {
+    /**
+     * @param {Object} args
+     */
+    callback: (args) => {
+      data = args;
+    },
+    /**
+     * @returns {Object}
+     */
+    data: () => {
+      return data;
+    },
+  };
+};
+
 /**
  * Ensure chrome.browserAction.setBadgeText() called with arguments.
  *
@@ -121,6 +143,8 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
 
 module.exports.registerHooks = registerHooks;
 module.exports.i18n = i18n;
+
+module.exports.sendResponse = sendResponse;
 
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.contentFindDispatch = contentFindDispatch;

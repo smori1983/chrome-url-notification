@@ -21,7 +21,7 @@ describe('app.background.content.find', () => {
   });
 
   it('pattern not matched', () => {
-    const res = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
@@ -35,7 +35,7 @@ describe('app.background.content.find', () => {
   });
 
   it('patten matched and status is 1', () => {
-    const res = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
@@ -49,7 +49,7 @@ describe('app.background.content.find', () => {
   });
 
   it('patten matched and status is 0', () => {
-    const res = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
