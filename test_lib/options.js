@@ -125,7 +125,7 @@ class ExportForm extends FormBase {
   /**
    * @returns {string}
    */
-  labelCopy() {
+  labelCopyButton() {
     return this._$('#js_export_copy').text();
   }
 }

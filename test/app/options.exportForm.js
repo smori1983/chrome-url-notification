@@ -35,7 +35,7 @@ describe('app.options.exportForm', () => {
   it('i18n label', () => {
     options.header().clickExport();
 
-    assert.strictEqual(options.exportForm().labelCopy(), 'Copy');
+    assert.strictEqual(options.exportForm().labelCopyButton(), 'Copy');
   });
 
   describe('exported json', () => {
