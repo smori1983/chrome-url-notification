@@ -7,11 +7,6 @@ const Storage = testUtil.Storage;
 
 describe('app.options.importForm', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Storage}
    */
   let storage;
@@ -30,22 +25,21 @@ describe('app.options.importForm', () => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    options = new Options($);
+    options = new Options(dom.window.jQuery);
   });
 
   it('i18n label', () => {
     options.header().clickImport();
 
-    const $container = $('#js_modal_import_container');
+    const importForm = options.importForm();
 
-    assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
-    assert.strictEqual($container.find('input[data-i18n-val=label_import]').val(), 'Import');
-    assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
+    assert.strictEqual(importForm.labelJsonTextInput(), 'JSON text');
+    assert.strictEqual(importForm.labelImportButton(), 'Import');
+    assert.strictEqual(importForm.labelCancelButton(), 'Cancel');
   });
 
   describe('import - failure', () => {

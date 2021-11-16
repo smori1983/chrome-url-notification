@@ -171,6 +171,34 @@ class ImportForm extends FormBase {
 
     return this._$('#js_import_message').text();
   }
+
+  /**
+   * @returns {string}
+   */
+  labelJsonTextInput() {
+    return this._container().find('label[data-i18n=label_json_text]').text();
+  }
+
+  /**
+   * @returns {string}
+   */
+  labelImportButton() {
+    return this._container().find('input[data-i18n-val=label_import]').val();
+  }
+
+  /**
+   * @returns {string}
+   */
+  labelCancelButton() {
+    return this._container().find('input[data-i18n-val=label_cancel]').val();
+  }
+
+  /**
+   * @private
+   */
+  _container() {
+    return this._$('#js_modal_import_container');
+  }
 }
 
 class List {
