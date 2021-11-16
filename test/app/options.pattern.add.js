@@ -41,9 +41,11 @@ describe('app.options.pattern.add', function () {
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    this.options = options = new Options(dom.window.jQuery);
+    options = new Options(dom.window.jQuery);
     options.list().reload();
     options.header().clickAdd();
+
+    this.options = options;
   });
 
   describe('i18n', () => {

@@ -32,7 +32,9 @@ describe('app.options.pattern.copy', function () {
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    this.options = options = new Options(dom.window.jQuery);
+    options = new Options(dom.window.jQuery);
+
+    this.options = options;
   });
 
   describe('error', () => {
