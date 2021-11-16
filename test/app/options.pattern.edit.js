@@ -10,11 +10,6 @@ const Storage = testUtil.Storage;
 
 describe('app.options.pattern.edit', function () {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Storage}
    */
   let storage;
@@ -32,13 +27,14 @@ describe('app.options.pattern.edit', function () {
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
+    this.$ = dom.window.jQuery;
+
     storage = new Storage(dom.window.localStorage);
-    this.$ = $ = dom.window.jQuery;
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    this.options = options = new Options($);
+    this.options = options = new Options(dom.window.jQuery);
   });
 
   describe('error', () => {
