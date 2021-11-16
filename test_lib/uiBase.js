@@ -1,4 +1,3 @@
-const fs = require('fs');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
 const file = require('./file');
@@ -17,7 +16,7 @@ const i18n = (chrome, locale) => {
  */
 const initContentScript = (path, options) => {
   const content = file.read(path);
-  const jsFilePath = __dirname + '/../dist/test/js/content.js';
+  const jsFilePath = 'dist/test/js/content.js';
 
   return initDom(content, options || {}, jsFilePath);
 };
@@ -29,7 +28,7 @@ const initContentScript = (path, options) => {
  */
 const initOptions = (path, options) => {
   const content = file.read(path);
-  const jsFilePath = __dirname + '/../dist/test/js/options.js';
+  const jsFilePath = 'dist/test/js/options.js';
 
   return initDom(content, options || {}, jsFilePath);
 };
@@ -41,7 +40,7 @@ const initOptions = (path, options) => {
  */
 const initPopup = (path, options) => {
   const content = file.read(path);
-  const jsFilePath = __dirname + '/../dist/test/js/popup.js';
+  const jsFilePath = 'dist/test/js/popup.js';
 
   return initDom(content, options || {}, jsFilePath);
 };
@@ -59,9 +58,7 @@ const initDom = (content, options, jsFilePath) => {
 
   const dom = new JSDOM(content, options);
 
-  dom.window.eval(fs.readFileSync(jsFilePath, {
-    encoding: 'utf-8',
-  }));
+  dom.window.eval(file.read(jsFilePath));
 
   return dom;
 };
