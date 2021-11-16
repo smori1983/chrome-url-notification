@@ -2,19 +2,25 @@ const { describe, beforeEach, it } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
 const Options = testUtil.Options;
 const Storage = testUtil.Storage;
 
 describe('app.options.list', () => {
+  /**
+   * @type {jQuery}
+   */
+  let $;
+
   /**
    * @type {Storage}
    */
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
 
   /**
    * @type {Options}
@@ -27,7 +33,8 @@ describe('app.options.list', () => {
     storage = new Storage(dom.window.localStorage);
     $ = dom.window.jQuery;
 
-    testUtil.uiBase.i18n(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
 
     options = new Options($);
   });

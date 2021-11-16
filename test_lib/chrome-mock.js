@@ -1,10 +1,18 @@
+const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const factory = require('./factory');
+const file = require('./file');
 
 class ChromeMock {
   /**
    * @param {SinonChrome} chrome
    */
   constructor(chrome) {
+    /**
+     * @type {SinonChrome}
+     * @private
+     */
+    this._chrome = chrome;
+
     /**
      * @type {SinonChrome.runtime}
      * @private
@@ -16,6 +24,13 @@ class ChromeMock {
      * @private
      */
     this._tabs = chrome.tabs;
+  }
+
+  i18n(locale) {
+    const path = 'src/_locales/' + locale + '/messages.json';
+    const message = file.read(path);
+
+    this._chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
   }
 
   /**

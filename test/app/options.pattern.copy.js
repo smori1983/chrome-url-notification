@@ -2,6 +2,7 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
+const ChromeMock = testUtil.ChromeMock;
 const Options = testUtil.Options;
 const Storage = testUtil.Storage;
 
@@ -9,14 +10,19 @@ const Storage = testUtil.Storage;
 
 describe('app.options.pattern.copy', function () {
   /**
+   * @type {jQuery}
+   */
+  let $;
+
+  /**
    * @type {Storage}
    */
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
 
   /**
    * @type {Options}
@@ -29,7 +35,8 @@ describe('app.options.pattern.copy', function () {
     storage = new Storage(dom.window.localStorage);
     this.$ = $ = dom.window.jQuery;
 
-    testUtil.uiBase.i18n(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
 
     this.options = options = new Options($);
   });

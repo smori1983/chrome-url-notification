@@ -16,8 +16,7 @@ describe('app.message.popup.find', () => {
     const dom = testUtil.uiBase.initPopup('src/html/popup.html');
 
     chrome = new ChromeMock(dom.window.chrome);
-
-    testUtil.uiBase.i18n(dom.window.chrome, 'en');
+    chrome.i18n('en');
 
     popup = new Popup(dom.window.jQuery);
     popup.init();
