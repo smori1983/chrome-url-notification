@@ -7,11 +7,6 @@ const Storage = testUtil.Storage;
 
 describe('app.options.pattern.actions', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Storage}
    */
   let storage;
@@ -30,12 +25,11 @@ describe('app.options.pattern.actions', () => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    options = new Options($);
+    options = new Options(dom.window.jQuery);
   });
 
   describe('submit add form with invalid inputs and open again', () => {
