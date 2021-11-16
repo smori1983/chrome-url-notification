@@ -5,11 +5,6 @@ const Options = testUtil.Options;
 
 describe('app.options.header', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Options}
    */
   let options;
@@ -17,9 +12,7 @@ describe('app.options.header', () => {
   beforeEach(() => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
-    $ = dom.window.jQuery;
-
-    options = new Options($);
+    options = new Options(dom.window.jQuery);
   });
 
   it('version', () => {
