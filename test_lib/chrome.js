@@ -245,28 +245,6 @@ const popupUpdateStatusCalledWith = (chrome, tabId, url, status) => {
     .calledOnce;
 };
 
-const registerHooks = () => {
-  before(() => {
-    global.chrome = chrome;
-  });
-
-  beforeEach(() => {
-    chrome.flush();
-
-    chrome.runtime.getManifest
-      .returns({
-        version: '1.2.3',
-      });
-  });
-
-  afterEach(() => {
-  });
-
-  after(() => {
-    delete global.chrome;
-  });
-};
-
 /**
  * @param {string} locale 'en' or 'ja'
  */
@@ -288,5 +266,4 @@ module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatus = popupUpdateStatus;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
 
-module.exports.registerHooks = registerHooks;
 module.exports.i18n = i18n;

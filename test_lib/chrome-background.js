@@ -1,4 +1,27 @@
 const chrome = require('sinon-chrome');
+const {before, beforeEach, afterEach, after} = require('mocha');
+
+const registerHooks = () => {
+  before(() => {
+    global.chrome = chrome;
+  });
+
+  beforeEach(() => {
+    chrome.flush();
+
+    chrome.runtime.getManifest
+      .returns({
+        version: '1.2.3',
+      });
+  });
+
+  afterEach(() => {
+  });
+
+  after(() => {
+    delete global.chrome;
+  });
+};
 
 /**
  * Ensure chrome.browserAction.setBadgeText() called with arguments.
@@ -84,6 +107,8 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
       callback
     );
 };
+
+module.exports.registerHooks = registerHooks;
 
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.contentFindDispatch = contentFindDispatch;

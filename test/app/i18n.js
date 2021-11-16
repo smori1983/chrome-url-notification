@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/i18n');
 const testUtil = require('../../test_lib/util');
 
 describe('app.i18n', () => {
-  testUtil.chrome.registerHooks();
+  testUtil.chromeBackground.registerHooks();
 
   describe('en', () => {
     beforeEach(() => {
