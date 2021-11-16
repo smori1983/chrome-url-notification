@@ -5,7 +5,7 @@ const SUT = require('../../src/js/app/background.badge');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.badge', () => {
-  testUtil.chrome.registerHooks();
+  testUtil.chromeBackground.registerHooks();
 
   given([
     {matched: true, status: 1, text: 'ON'},
@@ -16,6 +16,6 @@ describe('app.background.badge', () => {
   ]).it('badge text based on match result and status', (arg) => {
     SUT.draw(10001, arg.matched, arg.status);
 
-    assert.ok(testUtil.chrome.setBadgeTextCalledWith(arg.text, 10001));
+    assert.ok(testUtil.chromeBackground.setBadgeTextCalledWith(arg.text, 10001));
   });
 });

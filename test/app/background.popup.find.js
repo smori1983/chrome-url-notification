@@ -4,7 +4,7 @@ const SUT = require('../../src/js/app/background.popup.find');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.popup.find', () => {
-  testUtil.chrome.registerHooks();
+  testUtil.chromeBackground.registerHooks();
   beforeEach(() => {
     testUtil.initStorage(testUtil.currentVersion().toString(), [
       testUtil.makePatternItem({
@@ -21,40 +21,40 @@ describe('app.background.popup.find', () => {
   });
 
   it('pattern not matched', () => {
-    const sendResponse = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://www.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://www.example.com/', res.callback);
 
     /** @type {FindResult} */
-    const data = sendResponse.data();
+    const data = res.data();
     assert.strictEqual(data.matched, false);
     assert.strictEqual(data.data, null);
   });
 
   it('pattern matched and status is 1', () => {
-    const sendResponse = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://domain1.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://domain1.example.com/', res.callback);
 
     /** @type {FindResult} */
-    const data = sendResponse.data();
+    const data = res.data();
     assert.strictEqual(data.matched, true);
     assert.strictEqual(data.data.message, 'domain1');
   });
 
   it('pattern matched and status is 0', () => {
-    const sendResponse = testUtil.chrome.sendResposne();
+    const res = testUtil.chromeBackground.sendResponse();
 
     SUT.listen();
 
-    testUtil.chrome.popupFindDispatch('https://domain2.example.com/', sendResponse.callback);
+    testUtil.chromeBackground.popupFindDispatch('https://domain2.example.com/', res.callback);
 
     /** @type {FindResult} */
-    const data = sendResponse.data();
+    const data = res.data();
     assert.strictEqual(data.matched, true);
     assert.strictEqual(data.data.message, 'domain2');
   });

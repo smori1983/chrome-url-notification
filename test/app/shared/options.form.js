@@ -1,12 +1,11 @@
 const { it } = require('mocha');
 const assert = require('assert');
-const testUtil = require('../../../test_lib/util');
 
 // See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
 
 module.exports.runError = function () {
   it('patten is required', function () {
-    const form = testUtil.options.patternForm(this.$);
+    const form = this.options.patternForm();
 
     form.pattern('');
     form.submit();
@@ -15,7 +14,7 @@ module.exports.runError = function () {
   });
 
   it('message is required', function () {
-    const form = testUtil.options.patternForm(this.$);
+    const form = this.options.patternForm();
 
     form.message('');
     form.submit();
@@ -24,7 +23,7 @@ module.exports.runError = function () {
   });
 
   it('background color is required', function () {
-    const form = testUtil.options.patternForm(this.$);
+    const form = this.options.patternForm();
 
     form.backgroundColor('');
     form.submit();
@@ -33,7 +32,7 @@ module.exports.runError = function () {
   });
 
   it('background color should be valid color index', function () {
-    const form = testUtil.options.patternForm(this.$);
+    const form = this.options.patternForm();
 
     form.backgroundColor('#zzzzzz');
     form.submit();
@@ -42,18 +41,18 @@ module.exports.runError = function () {
   });
 
   it('modify value of display position', function () {
-    this.$('input[name=display_position]').val('foo');
+    const form = this.options.patternForm();
 
-    const form = testUtil.options.patternForm(this.$);
+    form.displayPositionInvalidValue('foo');
     form.submit();
 
     assert.strictEqual(form.errorMessage('display_position'), 'Invalid choice.');
   });
 
   it('modify value of status', function () {
-    this.$('#js_input_status').val('2');
+    const form = this.options.patternForm();
 
-    const form = testUtil.options.patternForm(this.$);
+    form.statusInvalidValue('2');
     form.status(true);
     form.submit();
 
@@ -61,12 +60,12 @@ module.exports.runError = function () {
   });
 
   it('open form and submit invalid inputs multiple times', function () {
-    const form = testUtil.options.patternForm(this.$);
+    const form = this.options.patternForm();
 
     form.pattern('');
     form.submit();
 
-    testUtil.options.header(this.$).clickAdd();
+    this.options.header().clickAdd();
 
     form.pattern('');
     form.submit();

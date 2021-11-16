@@ -1,53 +1,119 @@
-/**
- * @param {jQuery} $
- */
-const init = ($) => {
-  $('#js_init').trigger('click');
-};
+class Popup {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
+    /**
+     * @private
+     */
+    this._$ = $;
+  }
 
-/**
- * @param {jQuery} $
- */
-const matchedBlock = ($) => {
-  const block = () => {
-    return $('#block_for_matched_page');
-  };
+  init() {
+    this._$('#js_init').trigger('click');
+  }
 
-  const shown = () => {
-    return block().css('display') === 'block';
-  };
+  commonBlock() {
+    return new CommonBlock(this._$);
+  }
 
-  const shouldShown = () => {
-    if (shown() === false) {
+  matchedBlock() {
+    return new MatchedBlock(this._$);
+  }
+}
+
+class CommonBlock {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
+    /**
+     * @private
+     */
+    this._$ = $;
+  }
+
+  clickOptionsLink() {
+    this._$('#link_options a').eq(0).trigger('click');
+  }
+
+  /**
+   * @returns {string}
+   */
+  labelOptionsLink() {
+    return this._$('#link_options a').eq(0).text();
+  }
+}
+
+class MatchedBlock {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
+    /**
+     * @private
+     */
+    this._$ = $;
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  shown() {
+    return this._block().css('display') === 'block';
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  statusEnabled() {
+    this._shouldShown();
+
+    return this._status().prop('checked') === true;
+  }
+
+  clickStatus() {
+    this._shouldShown();
+    this._status().trigger('click');
+  }
+
+  /**
+   * @returns {string}
+   */
+  labelStatus() {
+    return this._$('#block_for_matched_page span').eq(0).text();
+  }
+
+  /**
+   * @returns {string}
+   */
+  labelEnabled() {
+    return this._$('#block_for_matched_page label').eq(0).text();
+  }
+
+  /**
+   * @private
+   */
+  _block() {
+    return this._$('#block_for_matched_page');
+  }
+
+  /**
+   * @private
+   */
+  _shouldShown() {
+    if (this.shown() === false) {
       /* istanbul ignore next */
       throw new Error('matched block is not shown');
     }
-  };
+  }
 
-  const status = () => {
-    return $('#pattern_status');
-  };
+  /**
+   * @private
+   */
+  _status() {
+    return this._$('#pattern_status');
+  }
+}
 
-  return {
-    /**
-     * @returns {boolean}
-     */
-    shown: () => {
-      return shown();
-    },
-    /**
-     * @returns {boolean}
-     */
-    statusEnabled: () => {
-      shouldShown();
-      return status().prop('checked') === true;
-    },
-    clickStatus: () => {
-      shouldShown();
-      status().trigger('click');
-    },
-  };
-};
-
-module.exports.init = init;
-module.exports.matchedBlock = matchedBlock;
+module.exports = Popup;

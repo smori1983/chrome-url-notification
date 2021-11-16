@@ -1,4 +1,3 @@
-const fs = require('fs');
 const validator = require('../src/js/urlNotification/validator');
 const factory = require('./factory');
 
@@ -42,14 +41,6 @@ const isNotValidJson = (json) => {
 };
 
 /**
- * @param {string} path Relative path from project root.
- * @returns {string}
- */
-const getHtml = (path) => {
-  return fs.readFileSync(__dirname + '/../' + path).toString();
-};
-
-/**
  * @param {PatternItemDiff} diff
  * @returns {PatternItem}
  */
@@ -70,12 +61,15 @@ module.exports.initStorage = initStorage;
 module.exports.currentVersion = currentVersion;
 module.exports.isValidJson = isValidJson;
 module.exports.isNotValidJson = isNotValidJson;
-module.exports.getHtml = getHtml;
 module.exports.makePatternItem = makePatternItem;
 module.exports.makeFoundItem = makeFoundItem;
 
 module.exports.chrome = require('./chrome');
-module.exports.uiBase = require('./uiBase');
-module.exports.popup = require('./popup');
-module.exports.content = require('./content');
-module.exports.options = require('./options');
+module.exports.chromeBackground = require('./chrome-background');
+module.exports.dom = require('./dom');
+
+module.exports.ChromeMock = require('./chrome-mock');
+module.exports.Popup = require('./popup');
+module.exports.Content = require('./content');
+module.exports.Options = require('./options');
+module.exports.Storage = require('./storage');

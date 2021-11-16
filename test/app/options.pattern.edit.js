@@ -2,7 +2,9 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
-const Storage = require('../../test_lib/storage');
+const ChromeMock = testUtil.ChromeMock;
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 // See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
 
@@ -13,19 +15,26 @@ describe('app.options.pattern.edit', function () {
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
+
+  /**
+   * @type {Options}
+   */
+  let options;
 
   beforeEach(function () {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    this.$ = $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
 
-    testUtil.options.header($).clickAdd();
+    options = new Options(dom.window.jQuery);
+
+    this.options = options;
   });
 
   describe('error', () => {
@@ -47,15 +56,14 @@ describe('app.options.pattern.edit', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickEdit();
+      options.list().reload();
+      options.list().item(0).clickEdit();
     });
 
     sharedForm.runError();
 
     it('patten cannot be duplicated - change to existing value', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('domain8.example.com');
       form.submit();
@@ -76,13 +84,12 @@ describe('app.options.pattern.edit', function () {
         },
       ]);
 
-      testUtil.options.list($).reload();
-
-      testUtil.options.list($).item(0).clickEdit();
+      options.list().reload();
+      options.list().item(0).clickEdit();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain9.example.com');
       assert.strictEqual(form.message(), 'domain9');
@@ -92,7 +99,7 @@ describe('app.options.pattern.edit', function () {
     });
 
     it('keeping original pattern is not an error', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.submit();
 
@@ -100,7 +107,7 @@ describe('app.options.pattern.edit', function () {
     });
 
     it('edit form and save', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.pattern('domain10.example.com');
       form.message('domain10');
       form.backgroundColor('#333333');
@@ -108,9 +115,9 @@ describe('app.options.pattern.edit', function () {
       form.status(true);
       form.submit();
 
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 1);
+      assert.strictEqual(options.list().numOfItems(), 1);
 
-      const item1 = testUtil.options.list($).item(0);
+      const item1 = options.list().item(0);
       assert.strictEqual(item1.pattern(), 'domain10.example.com');
       assert.strictEqual(item1.message(), 'domain10');
       assert.strictEqual(item1.backgroundColor(), '#333333');

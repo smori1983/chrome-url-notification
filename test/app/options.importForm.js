@@ -1,7 +1,9 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const ChromeMock = testUtil.ChromeMock;
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.importForm', () => {
   /**
@@ -10,43 +12,50 @@ describe('app.options.importForm', () => {
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
+
+  /**
+   * @type {Options}
+   */
+  let options;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
+
+    options = new Options(dom.window.jQuery);
   });
 
   it('i18n label', () => {
-    testUtil.options.header($).clickImport();
+    options.header().clickImport();
 
-    const $container = $('#js_modal_import_container');
+    const importForm = options.importForm();
 
-    assert.strictEqual($container.find('label[data-i18n=label_json_text]').text(), 'JSON text');
-    assert.strictEqual($container.find('input[data-i18n-val=label_import]').val(), 'Import');
-    assert.strictEqual($container.find('input[data-i18n-val=label_cancel]').val(), 'Cancel');
+    assert.strictEqual(importForm.labelJsonTextInput(), 'JSON text');
+    assert.strictEqual(importForm.labelImportButton(), 'Import');
+    assert.strictEqual(importForm.labelCancelButton(), 'Cancel');
   });
 
   describe('import - failure', () => {
     it('input is empty', () => {
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.submit();
 
       assert.strictEqual(form.errorMessage(), 'JSON text is required.');
     });
 
     it('not a JSON text', () => {
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json('foo');
       form.submit();
 
@@ -54,9 +63,9 @@ describe('app.options.importForm', () => {
     });
 
     it('invalid JSON structure', () => {
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -74,9 +83,9 @@ describe('app.options.importForm', () => {
 
   describe('import - success', () => {
     it('without data - add no data', () => {
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [],
@@ -87,9 +96,9 @@ describe('app.options.importForm', () => {
     });
 
     it('without data - add new data', () => {
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -125,9 +134,9 @@ describe('app.options.importForm', () => {
         },
       ]);
 
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [],
@@ -156,9 +165,9 @@ describe('app.options.importForm', () => {
         },
       ]);
 
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [
@@ -195,9 +204,9 @@ describe('app.options.importForm', () => {
         },
       ]);
 
-      testUtil.options.header($).clickImport();
+      options.header().clickImport();
 
-      const form = testUtil.options.importForm($);
+      const form = options.importForm();
       form.json(JSON.stringify({
         version: testUtil.currentVersion(),
         pattern: [

@@ -1,29 +1,31 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
+const Content = testUtil.Content;
 
 describe('app.message.content.find', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
   /**
-   * @type {jQuery}
+   * @type {Content}
    */
-  let $;
+  let content;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initContentScript(testUtil.getHtml('test_resource/html/content.03.html'), {
+    const dom = testUtil.dom.initContentScript('test_resource/html/content.03.html', {
       url: 'https://example.com/',
     });
 
-    chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
+    chrome = new ChromeMock(dom.window.chrome);
+    content = new Content(dom.window.jQuery);
   });
 
   it('pattern not matched', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -31,11 +33,11 @@ describe('app.message.content.find', () => {
         item: null,
       });
 
-    assert.strictEqual(testUtil.content.message($).exists(), false);
+    assert.strictEqual(content.message().exists(), false);
   });
 
   it('pattern matched and status is 0', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -45,11 +47,11 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message($).hidden(), true);
+    assert.strictEqual(content.message().hidden(), true);
   });
 
   it('pattern matched and status is 1', () => {
-    testUtil.chrome.contentFindMessage(chrome)
+    chrome.contentFindMessage()
       .req({
         url: 'https://example.com/',
       })
@@ -59,6 +61,6 @@ describe('app.message.content.find', () => {
         }),
       });
 
-    assert.strictEqual(testUtil.content.message($).shown(), true);
+    assert.strictEqual(content.message().shown(), true);
   });
 });

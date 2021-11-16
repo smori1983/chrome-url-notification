@@ -1,88 +1,124 @@
-/**
- * @param {jQuery} $
- */
-const page = ($) => {
-  return {
+class Content {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
     /**
-     * @returns {string}
+     * @private
      */
-    marginTop: () => {
-      return $('body').css('margin-top');
-    },
+    this._$ = $;
+  }
+
+  page() {
+    return new Page(this._$);
+  }
+
+  message() {
+    return new Message(this._$);
+  }
+}
+
+class Page {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
     /**
-     * @returns {string}
+     * @private
      */
-    marginBottom: () => {
-      return $('body').css('margin-bottom');
-    },
-  };
-};
+    this._$ = $;
+  }
 
-/**
- * @param {jQuery} $
- */
-const message = ($) => {
-  const messageContainerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
+  /**
+   * @returns {string}
+   */
+  marginTop() {
+    return this._body().css('margin-top');
+  }
 
-  const container = () => {
-    return $('#' + messageContainerId);
-  };
+  /**
+   * @returns {string}
+   */
+  marginBottom() {
+    return this._body().css('margin-bottom');
+  }
 
-  const exists = () => {
-    return container().length === 1;
-  };
+  /**
+   * @returns {JQuery}
+   * @private
+   */
+  _body() {
+    return this._$('body');
+  }
+}
+
+class Message {
+  /**
+   * @param {JQuery} $
+   */
+  constructor($) {
+    /**
+     * @private
+     */
+    this._$ = $;
+
+    this._containerId = 'chrome-url-notification-container-9b7414d403c1287ca963';
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  exists() {
+    return this._container().length === 1;
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  shown() {
+    return this.exists() && this.css('display') === 'block';
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  hidden() {
+    return this.exists() && this.css('display') === 'none';
+  }
 
   /**
    * @param {string} property
    * @returns {string}
    */
-  const css = (property) => {
-    return container().css(property);
-  };
-
-  return {
-    /**
-     * @returns {boolean}
-     */
-    exists: () => {
-      return exists();
-    },
-    /**
-     * @returns {boolean}
-     */
-    shown: () => {
-      return exists() && css('display') === 'block';
-    },
-    /**
-     * @returns {boolean}
-     */
-    hidden: () => {
-      return exists() && css('display') === 'none';
-    },
-    /**
-     * @param {string} text
-     * @returns {boolean}
-     */
-    styleContains: (text) => {
-      const styleAttr = container().attr('style') || '';
-
-      return styleAttr.indexOf(text) >= 0;
-    },
-    /**
-     * @param {string} property
-     * @returns {string}
-     */
-    css: (property) => {
-      return css(property);
-    },
-    mouseover: () => {
-      container().trigger('mouseover');
-    },
-    mouseout: () => {
-      container().trigger('mouseout');
-    },
+  css(property) {
+    return this._container().css(property);
   }
-};
 
-module.exports.page = page;
-module.exports.message = message;
+  /**
+   * @param {string} text
+   * @returns {boolean}
+   */
+  styleContains(text) {
+    const styleAttr = this._container().attr('style') || '';
+
+    return styleAttr.indexOf(text) >= 0;
+  }
+
+  mouseover() {
+    this._container().trigger('mouseover');
+  }
+
+  mouseout() {
+    this._container().trigger('mouseout');
+  }
+
+  /**
+   * @private
+   * @returns {jQuery}
+   */
+  _container() {
+    return this._$('#' + this._containerId);
+  }
+}
+
+module.exports = Content;

@@ -3,25 +3,27 @@ const { given } = require('mocha-testdata');
 const assert = require('assert');
 const _ = require('lodash');
 const testUtil = require('../../test_lib/util');
+const ChromeMock = testUtil.ChromeMock;
+const Content = testUtil.Content;
 
 describe('app.content.css', () => {
   /**
-   * @type {SinonChrome}
+   * @type {ChromeMock}
    */
   let chrome;
 
   /**
-   * @type {jQuery}
+   * @type {Content}
    */
-  let $;
+  let content;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initContentScript(testUtil.getHtml('test_resource/html/content.03.html'), {
+    const dom = testUtil.dom.initContentScript('test_resource/html/content.03.html', {
       url: 'https://example.com/',
     });
 
-    chrome = dom.window.chrome;
-    $ = dom.window.jQuery;
+    chrome = new ChromeMock(dom.window.chrome);
+    content = new Content(dom.window.jQuery);
   });
 
   describe('forBody', () => {
@@ -41,7 +43,7 @@ describe('app.content.css', () => {
       {displayPosition: 'unknown',      status: 1, expected: {top: '0px',  bottom: '0px'}},
       {displayPosition: 'unknown',      status: 0, expected: {top: '0px',  bottom: '0px'}},
     ]).it('display position and status', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -52,7 +54,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const page = testUtil.content.page($);
+      const page = content.page();
 
       assert.deepStrictEqual(page.marginTop(), arg.expected.top);
       assert.deepStrictEqual(page.marginBottom(), arg.expected.bottom);
@@ -64,7 +66,7 @@ describe('app.content.css', () => {
       {status: 0, shown: false},
       {status: 1, shown: true},
     ]).it('initial state', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -75,7 +77,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       assert.deepStrictEqual(arg.shown, message.shown());
     });
@@ -88,7 +90,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: '50px', bottom: '10px', left: '10px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px', bottom: '10px', right: '10px'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -99,7 +101,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       assert.deepStrictEqual(true, message.shown());
 
@@ -120,7 +122,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: 'calc(100% - 20px)'}},
       {displayPosition: 'bottom_right', expected: {width: 'calc(100% - 20px)'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -131,7 +133,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       message.mouseover();
 
@@ -150,7 +152,7 @@ describe('app.content.css', () => {
       {displayPosition: 'bottom_left',  expected: {width: '50px'}},
       {displayPosition: 'bottom_right', expected: {width: '50px'}},
     ]).it('display position', (arg) => {
-      testUtil.chrome.contentFindMessage(chrome)
+      chrome.contentFindMessage()
         .req({
           url: 'https://example.com/',
         })
@@ -161,7 +163,7 @@ describe('app.content.css', () => {
           }),
         });
 
-      const message = testUtil.content.message($);
+      const message = content.message();
 
       message.mouseover();
       message.mouseout();

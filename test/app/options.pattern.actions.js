@@ -1,7 +1,9 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const ChromeMock = testUtil.ChromeMock;
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.pattern.actions', () => {
   /**
@@ -10,34 +12,41 @@ describe('app.options.pattern.actions', () => {
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
+
+  /**
+   * @type {Options}
+   */
+  let options;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
+
+    options = new Options(dom.window.jQuery);
   });
 
   describe('submit add form with invalid inputs and open again', () => {
     beforeEach(() => {
-      testUtil.options.header($).clickAdd();
+      options.header().clickAdd();
 
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.submit();
 
       assert.strictEqual(form.errorMessage('url'), 'This field is required.');
       assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
 
-      testUtil.options.header($).clickAdd();
+      options.header().clickAdd();
     });
 
     it('form fields should be initialized', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), '');
       assert.strictEqual(form.message(), '');
@@ -47,14 +56,14 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('error messages should not be shown', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
     it('submit add form with invalid inputs again', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.submit();
 
       assert.strictEqual(form.errorMessage('url'), 'This field is required.');
@@ -62,7 +71,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('clear button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.clear();
 
       assert.strictEqual(form.pattern(), '');
@@ -76,7 +85,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('cancel button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.cancel();
 
       assert.strictEqual(form.shown(), false);
@@ -85,9 +94,9 @@ describe('app.options.pattern.actions', () => {
 
   describe('submit add form multiple times with invalid inputs', () => {
     beforeEach(() => {
-      testUtil.options.header($).clickAdd();
+      options.header().clickAdd();
 
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.submit();
       form.submit();
       form.submit();
@@ -97,7 +106,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('clear button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.clear();
 
       assert.strictEqual(form.pattern(), '');
@@ -111,7 +120,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('cancel button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.cancel();
 
       assert.strictEqual(form.shown(), false);
@@ -130,21 +139,21 @@ describe('app.options.pattern.actions', () => {
         },
       ]);
 
-      testUtil.options.list($).reload();
+      options.list().reload();
 
-      testUtil.options.header($).clickAdd();
+      options.header().clickAdd();
 
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.submit();
 
       assert.strictEqual(form.errorMessage('url'), 'This field is required.');
       assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
 
-      testUtil.options.list($).item(0).clickCopy();
+      options.list().item(0).clickCopy();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain11.example.com');
       assert.strictEqual(form.message(), 'domain11');
@@ -154,14 +163,14 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('error messages should not be shown', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
     it('clear button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.clear();
 
       assert.strictEqual(form.pattern(), '');
@@ -172,7 +181,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('cancel button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.cancel();
 
       assert.strictEqual(form.shown(), false);
@@ -191,21 +200,21 @@ describe('app.options.pattern.actions', () => {
         },
       ]);
 
-      testUtil.options.list($).reload();
+      options.list().reload();
 
-      testUtil.options.header($).clickAdd();
+      options.header().clickAdd();
 
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.submit();
 
       assert.strictEqual(form.errorMessage('url'), 'This field is required.');
       assert.strictEqual(form.errorMessage('msg'), 'This field is required.');
 
-      testUtil.options.list($).item(0).clickEdit();
+      options.list().item(0).clickEdit();
     });
 
     it('initial state', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.pattern(), 'domain21.example.com');
       assert.strictEqual(form.message(), 'domain21');
@@ -215,14 +224,14 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('error messages should not be shown', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       assert.strictEqual(form.errorMessage('url'), '');
       assert.strictEqual(form.errorMessage('msg'), '');
     });
 
     it('clear button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.clear();
 
       assert.strictEqual(form.pattern(), '');
@@ -233,7 +242,7 @@ describe('app.options.pattern.actions', () => {
     });
 
     it('cancel button works', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
       form.cancel();
 
       assert.strictEqual(form.shown(), false);

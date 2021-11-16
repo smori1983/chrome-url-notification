@@ -1,13 +1,15 @@
-const { describe, before, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const SUT = require('../../src/js/app/i18n');
 const testUtil = require('../../test_lib/util');
 
 describe('app.i18n', () => {
-  testUtil.chrome.registerHooks();
+  testUtil.chromeBackground.registerHooks();
 
   describe('en', () => {
-    before(testUtil.uiBase.initI18n('en'));
+    beforeEach(() => {
+      testUtil.chromeBackground.i18n('en');
+    });
 
     describe('get', () => {
       it('label_background_color', () => {
@@ -17,7 +19,9 @@ describe('app.i18n', () => {
   });
 
   describe('ja', () => {
-    before(testUtil.uiBase.initI18n('ja'));
+    beforeEach(() => {
+      testUtil.chromeBackground.i18n('ja');
+    });
 
     describe('get', () => {
       it('label_background_color', () => {

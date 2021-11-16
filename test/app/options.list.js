@@ -2,7 +2,9 @@ const { describe, beforeEach, it } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const ChromeMock = testUtil.ChromeMock;
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.list', () => {
   /**
@@ -11,22 +13,29 @@ describe('app.options.list', () => {
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
+
+  /**
+   * @type {Options}
+   */
+  let options;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
+
+    options = new Options(dom.window.jQuery);
   });
 
   describe('badge number', () => {
     it('without data', () => {
-      assert.strictEqual(testUtil.options.list($).badge(), '0');
+      assert.strictEqual(options.list().badge(), '0');
     });
 
     it('with 1 pattern', () => {
@@ -34,7 +43,7 @@ describe('app.options.list', () => {
         testUtil.makePatternItem({}),
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -48,7 +57,7 @@ describe('app.options.list', () => {
         testUtil.makePatternItem({url: 'site3.example.com'}),
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -58,7 +67,7 @@ describe('app.options.list', () => {
 
   describe('table tr element', () => {
     it('without pattern data', () => {
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       assert.strictEqual(list.header().length, 0);
       assert.strictEqual(list.numOfItems(), 0);
@@ -69,7 +78,7 @@ describe('app.options.list', () => {
         testUtil.makePatternItem({}),
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -84,18 +93,18 @@ describe('app.options.list', () => {
         testUtil.makePatternItem({}),
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
-      const $columns = list.header().find('th');
+      const columns = list.header().find('th');
 
-      assert.strictEqual($columns.length, 5);
-      assert.strictEqual($($columns[0]).text(), 'URL pattern');
-      assert.strictEqual($($columns[1]).text(), 'Message');
-      assert.strictEqual($($columns[2]).text(), 'Display position');
-      assert.strictEqual($($columns[3]).text(), 'Enabled');
-      assert.strictEqual($($columns[4]).text(), 'Operation');
+      assert.strictEqual(columns.length, 5);
+      assert.strictEqual(columns.eq(0).text(), 'URL pattern');
+      assert.strictEqual(columns.eq(1).text(), 'Message');
+      assert.strictEqual(columns.eq(2).text(), 'Display position');
+      assert.strictEqual(columns.eq(3).text(), 'Enabled');
+      assert.strictEqual(columns.eq(4).text(), 'Operation');
     });
   });
 
@@ -118,20 +127,20 @@ describe('app.options.list', () => {
         },
       ]);
 
-      testUtil.options.list($).reload();
+      options.list().reload();
     });
 
     it('displayed elements of item', () => {
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 2);
+      assert.strictEqual(options.list().numOfItems(), 2);
 
-      const item1 = testUtil.options.list($).item(0);
+      const item1 = options.list().item(0);
       assert.strictEqual(item1.pattern(), 'site1.example.com');
       assert.strictEqual(item1.message(), 'site1');
       assert.strictEqual(item1.backgroundColor(), '#111111');
       assert.strictEqual(item1.displayPosition(), 'Top');
       assert.strictEqual(item1.status(), 'Y');
 
-      const item2 = testUtil.options.list($).item(1);
+      const item2 = options.list().item(1);
       assert.strictEqual(item2.pattern(), 'site2.example.com');
       assert.strictEqual(item2.message(), 'site2');
       assert.strictEqual(item2.backgroundColor(), '#222222');
@@ -140,8 +149,8 @@ describe('app.options.list', () => {
     });
 
     it('click copy button twice and form should be refreshed', () => {
-      const list = testUtil.options.list($);
-      const form = testUtil.options.patternForm($);
+      const list = options.list();
+      const form = options.patternForm();
 
       list.item(0).clickCopy();
 
@@ -155,8 +164,8 @@ describe('app.options.list', () => {
     });
 
     it('click edit button twice and form should be refreshed', () => {
-      const list = testUtil.options.list($);
-      const form = testUtil.options.patternForm($);
+      const list = options.list();
+      const form = options.patternForm();
 
       list.item(0).clickEdit();
 
@@ -170,8 +179,8 @@ describe('app.options.list', () => {
     });
 
     it('click delete button twice and form should be refreshed', () => {
-      const list = testUtil.options.list($);
-      const form = testUtil.options.deleteForm($);
+      const list = options.list();
+      const form = options.deleteForm();
 
       list.item(0).clickDelete();
 
@@ -208,8 +217,8 @@ describe('app.options.list', () => {
         }],
       },
     ]).it('execute delete', (arg) => {
-      testUtil.options.list($).item(arg.itemIndex).clickDelete();
-      testUtil.options.deleteForm($).submit();
+      options.list().item(arg.itemIndex).clickDelete();
+      options.deleteForm().submit();
 
       assert.strictEqual(storage.getCount(), 1);
       assert.deepStrictEqual(storage.getAll(), arg.remained);
@@ -219,8 +228,8 @@ describe('app.options.list', () => {
       {itemIndex: 0},
       {itemIndex: 1},
     ]).it('cancel delete', (arg) => {
-      testUtil.options.list($).item(arg.itemIndex).clickDelete();
-      testUtil.options.deleteForm($).cancel();
+      options.list().item(arg.itemIndex).clickDelete();
+      options.deleteForm().cancel();
 
       assert.strictEqual(storage.getCount(), 2);
     });
@@ -237,7 +246,7 @@ describe('app.options.list', () => {
         testUtil.makePatternItem({url: 'site6.example.com', displayPosition: 'bottom_right'}),
       ]);
 
-      testUtil.options.list($).reload();
+      options.list().reload();
     });
 
     given([
@@ -248,7 +257,7 @@ describe('app.options.list', () => {
       {itemIndex: 4, expected: 'Bottom left'},
       {itemIndex: 5, expected: 'Bottom right'},
     ]).it('label of display position', (arg) => {
-      const item = testUtil.options.list($).item(arg.itemIndex);
+      const item = options.list().item(arg.itemIndex);
 
       assert.strictEqual(item.displayPosition(), arg.expected);
     });
@@ -265,7 +274,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -287,7 +296,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -309,7 +318,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -332,7 +341,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -354,7 +363,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 
@@ -377,7 +386,7 @@ describe('app.options.list', () => {
         },
       ]);
 
-      const list = testUtil.options.list($);
+      const list = options.list();
 
       list.reload();
 

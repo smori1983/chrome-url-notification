@@ -2,7 +2,9 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
-const Storage = require('../../test_lib/storage');
+const ChromeMock = testUtil.ChromeMock;
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 // See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
 
@@ -13,16 +15,19 @@ describe('app.options.pattern.add', function () {
   let storage;
 
   /**
-   * @type {jQuery}
+   * @type {ChromeMock}
    */
-  let $;
+  let chrome;
+
+  /**
+   * @type {Options}
+   */
+  let options;
 
   beforeEach(function () {
-    const dom = testUtil.uiBase.initOptions(testUtil.getHtml('src/html/options.html'));
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    this.$ = $ = dom.window.jQuery;
-
     storage.init(testUtil.currentVersion().toString(), [
       {
         url: 'example.com',
@@ -33,24 +38,23 @@ describe('app.options.pattern.add', function () {
       },
     ]);
 
-    testUtil.uiBase.initI18n2(dom.window.chrome, 'en');
+    chrome = new ChromeMock(dom.window.chrome);
+    chrome.i18n('en');
 
-    testUtil.options.list($).reload();
+    options = new Options(dom.window.jQuery);
+    options.list().reload();
+    options.header().clickAdd();
 
-    testUtil.options.header($).clickAdd();
+    this.options = options;
   });
 
   describe('i18n', () => {
     it('url field placeholder', () => {
-      const $element = $('#js_input_url').eq(0);
-
-      assert.strictEqual($element.attr('placeholder'), 'e.g. http://*.example.com/');
+      assert.strictEqual(options.patternForm().patternPlaceholder(), 'e.g. http://*.example.com/');
     });
 
     it('message field placeholder', () => {
-      const $element = $('#js_input_msg').eq(0);
-
-      assert.strictEqual($element.attr('placeholder'), 'e.g. example.com production site');
+      assert.strictEqual(options.patternForm().messagePlaceholder(), 'e.g. example.com production site');
     });
   });
 
@@ -58,7 +62,7 @@ describe('app.options.pattern.add', function () {
     sharedForm.runError();
 
     it('patten cannot be duplicated', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('example.com');
       form.submit();
@@ -71,19 +75,19 @@ describe('app.options.pattern.add', function () {
     beforeEach(() => {
       storage.clear();
 
-      testUtil.options.list($).reload();
+      options.list().reload();
     });
 
     it('register simple data', () => {
-      const form = testUtil.options.patternForm($);
+      const form = options.patternForm();
 
       form.pattern('example.com');
       form.message('example');
       form.submit();
 
-      assert.strictEqual(testUtil.options.list($).numOfItems(), 1);
+      assert.strictEqual(options.list().numOfItems(), 1);
 
-      const item = testUtil.options.list($).item(0);
+      const item = options.list().item(0);
       assert.strictEqual(item.pattern(), 'example.com');
       assert.strictEqual(item.message(), 'example');
       assert.strictEqual(item.backgroundColor(), '#000000');
