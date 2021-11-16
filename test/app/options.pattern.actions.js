@@ -1,7 +1,8 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.pattern.actions', () => {
   /**
@@ -14,6 +15,9 @@ describe('app.options.pattern.actions', () => {
    */
   let $;
 
+  /**
+   * @type {Options}
+   */
   let options;
 
   beforeEach(() => {
@@ -24,7 +28,7 @@ describe('app.options.pattern.actions', () => {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    options = new testUtil.Options($);
+    options = new Options($);
   });
 
   describe('submit add form with invalid inputs and open again', () => {

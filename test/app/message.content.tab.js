@@ -3,6 +3,7 @@ const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const ChromeMock = testUtil.ChromeMock;
+const Content = testUtil.Content;
 
 describe('app.message.content.tab', () => {
   /**
@@ -10,6 +11,9 @@ describe('app.message.content.tab', () => {
    */
   let chrome;
 
+  /**
+   * @type {Content}
+   */
   let content;
 
   beforeEach(() => {
@@ -18,7 +22,7 @@ describe('app.message.content.tab', () => {
     });
 
     chrome = new ChromeMock(dom.window.chrome);
-    content = new testUtil.Content(dom.window.jQuery);
+    content = new Content(dom.window.jQuery);
   });
 
   given([

@@ -2,6 +2,7 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const ChromeMock = testUtil.ChromeMock;
+const Popup = testUtil.Popup;
 
 describe('app.popup.status', () => {
   /**
@@ -9,6 +10,9 @@ describe('app.popup.status', () => {
    */
   let chrome;
 
+  /**
+   * @type {Popup}
+   */
   let popup;
 
   beforeEach(() => {
@@ -18,7 +22,7 @@ describe('app.popup.status', () => {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    popup = new testUtil.Popup(dom.window.jQuery);
+    popup = new Popup(dom.window.jQuery);
     popup.init();
   });
 

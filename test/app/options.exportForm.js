@@ -1,20 +1,24 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.exportForm', () => {
-  /**
-   * @type {Storage}
-   */
-  let storage;
-
   /**
    * @type {jQuery}
    */
   let $;
 
+  /**
+   * @type {Options}
+   */
   let options;
+
+  /**
+   * @type {Storage}
+   */
+  let storage;
 
   beforeEach(() => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
@@ -24,7 +28,7 @@ describe('app.options.exportForm', () => {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    options = new testUtil.Options($);
+    options = new Options($);
   });
 
   it('i18n label', () => {

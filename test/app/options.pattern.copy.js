@@ -2,7 +2,8 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const sharedForm = require('./shared/options.form');
-const Storage = require('../../test_lib/storage');
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 // See: https://github.com/mochajs/mocha/wiki/Shared-Behaviours
 
@@ -17,6 +18,9 @@ describe('app.options.pattern.copy', function () {
    */
   let $;
 
+  /**
+   * @type {Options}
+   */
   let options;
 
   beforeEach(function () {
@@ -27,7 +31,7 @@ describe('app.options.pattern.copy', function () {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    this.options = options = new testUtil.Options($);
+    this.options = options = new Options($);
   });
 
   describe('error', () => {

@@ -4,6 +4,7 @@ const assert = require('assert');
 const _ = require('lodash');
 const testUtil = require('../../test_lib/util');
 const ChromeMock = testUtil.ChromeMock;
+const Content = testUtil.Content;
 
 describe('app.content.css', () => {
   /**
@@ -11,6 +12,9 @@ describe('app.content.css', () => {
    */
   let chrome;
 
+  /**
+   * @type {Content}
+   */
   let content;
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('app.content.css', () => {
     });
 
     chrome = new ChromeMock(dom.window.chrome);
-    content = new testUtil.Content(dom.window.jQuery);
+    content = new Content(dom.window.jQuery);
   });
 
   describe('forBody', () => {

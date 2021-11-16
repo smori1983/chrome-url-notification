@@ -71,3 +71,4 @@ module.exports.uiBase = require('./uiBase');
 module.exports.Popup = require('./popup');
 module.exports.Content = require('./content');
 module.exports.Options = require('./options');
+module.exports.Storage = require('./storage');

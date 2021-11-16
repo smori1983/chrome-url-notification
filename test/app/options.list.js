@@ -2,7 +2,8 @@ const { describe, beforeEach, it } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Storage = require('../../test_lib/storage');
+const Options = testUtil.Options;
+const Storage = testUtil.Storage;
 
 describe('app.options.list', () => {
   /**
@@ -15,6 +16,9 @@ describe('app.options.list', () => {
    */
   let $;
 
+  /**
+   * @type {Options}
+   */
   let options;
 
   beforeEach(() => {
@@ -25,7 +29,7 @@ describe('app.options.list', () => {
 
     testUtil.uiBase.i18n(dom.window.chrome, 'en');
 
-    options = new testUtil.Options($);
+    options = new Options($);
   });
 
   describe('badge number', () => {

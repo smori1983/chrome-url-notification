@@ -1,6 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
+const Options = testUtil.Options;
 
 describe('app.options.header', () => {
   /**
@@ -8,6 +9,9 @@ describe('app.options.header', () => {
    */
   let $;
 
+  /**
+   * @type {Options}
+   */
   let options;
 
   beforeEach(() => {
@@ -15,7 +19,7 @@ describe('app.options.header', () => {
 
     $ = dom.window.jQuery;
 
-    options = new testUtil.Options($);
+    options = new Options($);
   });
 
   it('version', () => {
