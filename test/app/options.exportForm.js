@@ -7,9 +7,9 @@ const Storage = testUtil.Storage;
 
 describe('app.options.exportForm', () => {
   /**
-   * @type {jQuery}
+   * @type {Storage}
    */
-  let $;
+  let storage;
 
   /**
    * @type {ChromeMock}
@@ -21,27 +21,21 @@ describe('app.options.exportForm', () => {
    */
   let options;
 
-  /**
-   * @type {Storage}
-   */
-  let storage;
-
   beforeEach(() => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    options = new Options($);
+    options = new Options(dom.window.jQuery);
   });
 
   it('i18n label', () => {
     options.header().clickExport();
 
-    assert.strictEqual($('#js_export_copy').text(), 'Copy');
+    assert.strictEqual(options.exportForm().labelCopy(), 'Copy');
   });
 
   describe('exported json', () => {

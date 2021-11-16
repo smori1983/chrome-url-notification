@@ -121,6 +121,13 @@ class ExportForm extends FormBase {
 
     return JSON.parse(this._$('#js_export_display').text());
   }
+
+  /**
+   * @returns {string}
+   */
+  labelCopy() {
+    return this._$('#js_export_copy').text();
+  }
 }
 
 class ImportForm extends FormBase {
