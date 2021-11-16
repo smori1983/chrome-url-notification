@@ -66,8 +66,9 @@ module.exports.makeFoundItem = makeFoundItem;
 
 module.exports.chrome = require('./chrome');
 module.exports.chromeBackground = require('./chrome-background');
+module.exports.dom = require('./dom');
+
 module.exports.ChromeMock = require('./chrome-mock');
-module.exports.uiBase = require('./uiBase');
 module.exports.Popup = require('./popup');
 module.exports.Content = require('./content');
 module.exports.Options = require('./options');

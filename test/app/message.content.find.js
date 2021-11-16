@@ -16,7 +16,7 @@ describe('app.message.content.find', () => {
   let content;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initContentScript('test_resource/html/content.03.html', {
+    const dom = testUtil.dom.initContentScript('test_resource/html/content.03.html', {
       url: 'https://example.com/',
     });
 

@@ -16,7 +16,7 @@ describe('app.popup.ui', () => {
   let popup;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initPopup('src/html/popup.html');
+    const dom = testUtil.dom.initPopup('src/html/popup.html');
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');

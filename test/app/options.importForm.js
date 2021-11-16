@@ -22,7 +22,7 @@ describe('app.options.importForm', () => {
   let options;
 
   beforeEach(() => {
-    const dom = testUtil.uiBase.initOptions('src/html/options.html');
+    const dom = testUtil.dom.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
 
