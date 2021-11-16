@@ -413,6 +413,14 @@ class PatternForm extends FormBase {
   }
 
   /**
+   * @param {string} value
+   */
+  displayPositionInvalidValue(value) {
+    this._modalShouldActivated(this._$('#js_modal_pattern'));
+    this._$('input[name=display_position]').val(value);
+  }
+
+  /**
    * @param {boolean} [value]
    * @returns {boolean}
    */
@@ -426,6 +434,14 @@ class PatternForm extends FormBase {
     }
 
     return element.prop('checked');
+  }
+
+  /**
+   * @param {string} value
+   */
+  statusInvalidValue(value) {
+    this._modalShouldActivated(this._$('#js_modal_pattern'));
+    this._$('#js_input_status').val(value);
   }
 
   submit() {

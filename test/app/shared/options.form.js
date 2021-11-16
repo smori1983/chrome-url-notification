@@ -41,18 +41,18 @@ module.exports.runError = function () {
   });
 
   it('modify value of display position', function () {
-    this.$('input[name=display_position]').val('foo');
-
     const form = this.options.patternForm();
+
+    form.displayPositionInvalidValue('foo');
     form.submit();
 
     assert.strictEqual(form.errorMessage('display_position'), 'Invalid choice.');
   });
 
   it('modify value of status', function () {
-    this.$('#js_input_status').val('2');
-
     const form = this.options.patternForm();
+
+    form.statusInvalidValue('2');
     form.status(true);
     form.submit();
 

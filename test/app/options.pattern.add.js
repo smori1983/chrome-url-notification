@@ -27,8 +27,6 @@ describe('app.options.pattern.add', function () {
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
-    this.$ = dom.window.jQuery;
-
     storage = new Storage(dom.window.localStorage);
     storage.init(testUtil.currentVersion().toString(), [
       {

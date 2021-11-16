@@ -27,8 +27,6 @@ describe('app.options.pattern.copy', function () {
   beforeEach(function () {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
-    this.$ = dom.window.jQuery;
-
     storage = new Storage(dom.window.localStorage);
 
     chrome = new ChromeMock(dom.window.chrome);
