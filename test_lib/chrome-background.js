@@ -1,5 +1,7 @@
+const fs = require('fs');
+const { before, beforeEach, afterEach, after } = require('mocha');
 const chrome = require('sinon-chrome');
-const {before, beforeEach, afterEach, after} = require('mocha');
+const I18nPlugin = require('sinon-chrome/plugins/i18n');
 
 const registerHooks = () => {
   before(() => {
@@ -21,6 +23,15 @@ const registerHooks = () => {
   after(() => {
     delete global.chrome;
   });
+};
+
+/**
+ * @param {string} locale 'en' or 'ja'
+ */
+const i18n = (locale) => {
+  const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
+  const message = fs.readFileSync(localeFile).toString();
+  chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
 };
 
 /**
@@ -109,6 +120,7 @@ const popupUpdateStatusDispatch = (tabId, url, status, callback) => {
 };
 
 module.exports.registerHooks = registerHooks;
+module.exports.i18n = i18n;
 
 module.exports.setBadgeTextCalledWith = setBadgeTextCalledWith;
 module.exports.contentFindDispatch = contentFindDispatch;

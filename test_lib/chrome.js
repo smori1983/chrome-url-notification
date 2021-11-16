@@ -1,8 +1,4 @@
-const { before, beforeEach, afterEach, after } = require('mocha');
-const chrome = require('sinon-chrome');
-const fs = require('fs');
 const deepMerge = require('deepmerge');
-const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const factory = require('./factory');
 
 /**
@@ -245,15 +241,6 @@ const popupUpdateStatusCalledWith = (chrome, tabId, url, status) => {
     .calledOnce;
 };
 
-/**
- * @param {string} locale 'en' or 'ja'
- */
-const i18n = (locale) => {
-  const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
-  const message = fs.readFileSync(localeFile).toString();
-  chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
-};
-
 module.exports.createTab = createTab;
 module.exports.tabsCreateCalledWith = tabsCreateCalledWith;
 module.exports.sendResposne = sendResponse;
@@ -265,5 +252,3 @@ module.exports.popupTabNotifyStatusCalledWith = popupTabNotifyStatusCalledWith;
 module.exports.popupTabsQuery = popupTabsQuery;
 module.exports.popupUpdateStatus = popupUpdateStatus;
 module.exports.popupUpdateStatusCalledWith = popupUpdateStatusCalledWith;
-
-module.exports.i18n = i18n;

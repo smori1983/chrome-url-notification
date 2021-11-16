@@ -8,7 +8,7 @@ describe('app.i18n', () => {
 
   describe('en', () => {
     beforeEach(() => {
-      testUtil.chrome.i18n('en');
+      testUtil.chromeBackground.i18n('en');
     });
 
     describe('get', () => {
@@ -20,7 +20,7 @@ describe('app.i18n', () => {
 
   describe('ja', () => {
     beforeEach(() => {
-      testUtil.chrome.i18n('ja');
+      testUtil.chromeBackground.i18n('ja');
     });
 
     describe('get', () => {
