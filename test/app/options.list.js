@@ -8,11 +8,6 @@ const Storage = testUtil.Storage;
 
 describe('app.options.list', () => {
   /**
-   * @type {jQuery}
-   */
-  let $;
-
-  /**
    * @type {Storage}
    */
   let storage;
@@ -31,12 +26,11 @@ describe('app.options.list', () => {
     const dom = testUtil.uiBase.initOptions('src/html/options.html');
 
     storage = new Storage(dom.window.localStorage);
-    $ = dom.window.jQuery;
 
     chrome = new ChromeMock(dom.window.chrome);
     chrome.i18n('en');
 
-    options = new Options($);
+    options = new Options(dom.window.jQuery);
   });
 
   describe('badge number', () => {
@@ -103,14 +97,14 @@ describe('app.options.list', () => {
 
       list.reload();
 
-      const $columns = list.header().find('th');
+      const columns = list.header().find('th');
 
-      assert.strictEqual($columns.length, 5);
-      assert.strictEqual($($columns[0]).text(), 'URL pattern');
-      assert.strictEqual($($columns[1]).text(), 'Message');
-      assert.strictEqual($($columns[2]).text(), 'Display position');
-      assert.strictEqual($($columns[3]).text(), 'Enabled');
-      assert.strictEqual($($columns[4]).text(), 'Operation');
+      assert.strictEqual(columns.length, 5);
+      assert.strictEqual(columns.eq(0).text(), 'URL pattern');
+      assert.strictEqual(columns.eq(1).text(), 'Message');
+      assert.strictEqual(columns.eq(2).text(), 'Display position');
+      assert.strictEqual(columns.eq(3).text(), 'Enabled');
+      assert.strictEqual(columns.eq(4).text(), 'Operation');
     });
   });
 
