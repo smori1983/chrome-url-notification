@@ -1,18 +1,11 @@
 const fs = require('fs');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
 const JSDOM = require('jsdom').JSDOM;
-
-/**
- * @param {string} path Relative path from project root.
- * @returns {string}
- */
-const readFile = (path) => {
-  return fs.readFileSync(__dirname + '/../' + path).toString();
-};
+const file = require('./file');
 
 const i18n = (chrome, locale) => {
   const path = 'src/_locales/' + locale + '/messages.json';
-  const message = readFile(path);
+  const message = file.read(path);
 
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
 };
@@ -23,7 +16,7 @@ const i18n = (chrome, locale) => {
  * @return {JSDOM}
  */
 const initContentScript = (path, options) => {
-  const content = readFile(path);
+  const content = file.read(path);
   const jsFilePath = __dirname + '/../dist/test/js/content.js';
 
   return initDom(content, options || {}, jsFilePath);
@@ -35,7 +28,7 @@ const initContentScript = (path, options) => {
  * @return {JSDOM}
  */
 const initOptions = (path, options) => {
-  const content = readFile(path);
+  const content = file.read(path);
   const jsFilePath = __dirname + '/../dist/test/js/options.js';
 
   return initDom(content, options || {}, jsFilePath);
@@ -47,7 +40,7 @@ const initOptions = (path, options) => {
  * @return {JSDOM}
  */
 const initPopup = (path, options) => {
-  const content = readFile(path);
+  const content = file.read(path);
   const jsFilePath = __dirname + '/../dist/test/js/popup.js';
 
   return initDom(content, options || {}, jsFilePath);

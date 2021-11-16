@@ -1,7 +1,7 @@
-const fs = require('fs');
 const { before, beforeEach, afterEach, after } = require('mocha');
 const chrome = require('sinon-chrome');
 const I18nPlugin = require('sinon-chrome/plugins/i18n');
+const file = require('./file');
 
 const registerHooks = () => {
   before(() => {
@@ -29,8 +29,8 @@ const registerHooks = () => {
  * @param {string} locale 'en' or 'ja'
  */
 const i18n = (locale) => {
-  const localeFile = __dirname + '/../src/_locales/' + locale + '/messages.json';
-  const message = fs.readFileSync(localeFile).toString();
+  const path = 'src/_locales/' + locale + '/messages.json';
+  const message = file.read(path);
   chrome.registerPlugin(new I18nPlugin(JSON.parse(message)));
 };
 
