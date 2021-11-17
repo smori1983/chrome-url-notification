@@ -7,6 +7,7 @@
 
 - Introduce `joi`.
 - Remove `jquery-validation`.
+- Overall update for tests using `jsdom`.
 
 
 ## v6.2.0
