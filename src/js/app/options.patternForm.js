@@ -39,7 +39,7 @@ const getRawValues = ($) => {
   return {
     url: $('#js_input_url').val(),
     msg: $('#js_input_msg').val(),
-    background_color: $('#js_input_background_color').val().replace(/^#/, ''),
+    background_color: $('#js_input_background_color').val().replace(/^#/, '').toLowerCase(),
     display_position: $('input[name=display_position]:checked').val(),
     status: $('#js_input_status').val(),
   };
@@ -53,7 +53,7 @@ const getValues = ($) => {
   return {
     url: $('#js_input_url').val().trim(),
     msg: $('#js_input_msg').val().trim(),
-    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
+    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, '').toLowerCase(),
     displayPosition: $('input[name=display_position]:checked').val().trim(),
     status: $('#js_input_status').is(':checked') ? 1 : 0,
   };
