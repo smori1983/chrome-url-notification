@@ -73,14 +73,14 @@ class FormBase {
    * that element has following class attributes.
    *
    * - modal
-   * - in
+   * - show
    *
    * @param {JQuery} element
    * @returns {boolean}
    * @protected
    */
   _modalIsActivated(element) {
-    return element.hasClass('modal') && element.hasClass('in');
+    return element.hasClass('modal') && element.hasClass('show');
   }
 
   /**
