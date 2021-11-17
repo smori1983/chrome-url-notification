@@ -157,7 +157,7 @@ describe('app.options.pattern.actions', () => {
 
       assert.strictEqual(form.pattern(), 'domain11.example.com');
       assert.strictEqual(form.message(), 'domain11');
-      assert.strictEqual(form.backgroundColor(), '#cccccc');
+      assert.strictEqual(form.backgroundColor(), '#CCCCCC');
       assert.strictEqual(form.displayPosition(), 'bottom');
       assert.strictEqual(form.status(), true);
     });
