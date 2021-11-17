@@ -94,5 +94,19 @@ describe('app.options.pattern.add', function () {
       assert.strictEqual(item.displayPosition(), 'Top');
       assert.strictEqual(item.status(), 'Y');
     });
+
+    it('colorpicker data on storage', () => {
+      const form = options.patternForm();
+
+      form.pattern('site2.example.com');
+      form.message('site2.example');
+      form.backgroundColor('#B45D5D');
+      form.submit();
+
+      assert.strictEqual(storage.getCount(), 1);
+
+      const item = storage.getAll()[0];
+      assert.strictEqual(item.backgroundColor, 'b45d5d');
+    });
   });
 });
