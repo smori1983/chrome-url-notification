@@ -78,7 +78,7 @@ describe('app.options.pattern.edit', function () {
         {
           url: 'domain9.example.com',
           msg: 'domain9',
-          backgroundColor: '111111',
+          backgroundColor: '0044cc',
           displayPosition: 'top',
           status: 0,
         },
@@ -93,9 +93,18 @@ describe('app.options.pattern.edit', function () {
 
       assert.strictEqual(form.pattern(), 'domain9.example.com');
       assert.strictEqual(form.message(), 'domain9');
-      assert.strictEqual(form.backgroundColor(), '#111111');
+      assert.strictEqual(form.backgroundColor(), '#0044CC');
       assert.strictEqual(form.displayPosition(), 'top');
       assert.strictEqual(form.status(), false);
+    });
+
+    it('colorpicker data on storage', () => {
+      const form = options.patternForm();
+
+      form.submit();
+
+      const item = storage.getAll()[0];
+      assert.strictEqual(item.backgroundColor, '0044cc');
     });
 
     it('keeping original pattern is not an error', () => {
