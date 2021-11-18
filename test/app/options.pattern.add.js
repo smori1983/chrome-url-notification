@@ -95,7 +95,7 @@ describe('app.options.pattern.add', function () {
       assert.strictEqual(item.status(), 'Y');
     });
 
-    it('colorpicker data on storage', () => {
+    it('colorpicker data in storage', () => {
       const form = options.patternForm();
 
       form.pattern('site2.example.com');
