@@ -25,8 +25,13 @@ const defaultValues = () => {
 const bindValues = ($, item) => {
   $('#js_input_url').val(item.url);
   $('#js_input_msg').val(item.msg);
-  $('#js_input_background_color').val('#' + item.backgroundColor);
-  $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
+  $('#js_input_background_color').val('#' + item.backgroundColor.toUpperCase());
+  $('#js_colorpicker')
+    .colorpicker({
+      color: '#' + item.backgroundColor.toUpperCase(),
+      format: 'hex',
+    })
+    .colorpicker('setValue', '#' + item.backgroundColor.toUpperCase());
   $('input[name=display_position]').val([item.displayPosition]);
   $('#js_input_status').prop('checked', item.status === 1);
 };
@@ -82,11 +87,6 @@ const clear = ($) => {
  */
 const show = ($, mode, item, callback) => {
   formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
-
-  $('#js_colorpicker').colorpicker({
-    fallbackColor: '#000000',
-    format: 'hex',
-  });
 
   $('#js_form_pattern_clear').on('click', (e) => {
     e.preventDefault();
