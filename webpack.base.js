@@ -66,6 +66,14 @@ const prepare = (mode, imageDir, outputPath) => {
           ],
         },
         {
+          test: /\.s[ac]ss$/i,
+          use: [
+            'style-loader',
+            'css-loader',
+            'sass-loader',
+          ],
+        },
+        {
           // More information here https://webpack.js.org/guides/asset-modules/
           test: /\.(svg|eot|ttf|woff|woff2)$/i,
           type: 'asset',
