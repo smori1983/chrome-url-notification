@@ -84,6 +84,7 @@ const show = ($, mode, item, callback) => {
   formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
 
   $('#js_colorpicker').colorpicker({
+    fallbackColor: '#000000',
     format: 'hex',
   });
 
