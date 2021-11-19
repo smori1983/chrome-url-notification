@@ -1,4 +1,4 @@
-require('bootstrap/dist/css/bootstrap.min.css');
+require('../../css/options.scss');
 require('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');
 require('../../css/bootstrap-custom.css');
 
