@@ -1,7 +1,3 @@
-// require('bootstrap/dist/css/bootstrap.min.css');
-// require('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');
-// require('../../css/bootstrap-custom.css');
-
 const chrome = require('sinon-chrome');
 
 chrome.runtime.getManifest
@@ -9,12 +5,19 @@ chrome.runtime.getManifest
     version: '1.2.3',
   });
 
+//
+// Accessed from test code.
+//
 global.chrome = chrome;
 
+//
 // Necessary for @sideway/address/lib/email.js, used by joi.
+//
 global.TextEncoder = require('text-encoder').TextEncoder;
 
-// global.jQuery is necessary for bootstrap 3.
+//
+// global.jQuery is accessed from test code.
+//
 const $ = global.jQuery = require('jquery');
 
 require('bootstrap');
