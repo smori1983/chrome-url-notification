@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## Next
+
+### Development
+
+- Update `bootstrap` (`v4.6`)
+- Update `bootstrap-colorpicker` (`v3.4`)
+
+
 ## v6.3.0
 
 ### Development
