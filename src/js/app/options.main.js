@@ -1,9 +1,8 @@
-require('bootstrap/dist/css/bootstrap.min.css');
+require('../../css/options.scss');
 require('bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');
 require('../../css/bootstrap-custom.css');
 
-// global.jQuery is necessary for bootstrap 3.
-const $ = global.jQuery = require('jquery');
+const $ = require('jquery');
 
 require('bootstrap');
 require('bootstrap-colorpicker');

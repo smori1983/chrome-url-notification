@@ -25,8 +25,13 @@ const defaultValues = () => {
 const bindValues = ($, item) => {
   $('#js_input_url').val(item.url);
   $('#js_input_msg').val(item.msg);
-  $('#js_input_background_color').val('#' + item.backgroundColor);
-  $('#js_colorpicker').colorpicker('setValue', '#' + item.backgroundColor);
+  $('#js_input_background_color').val('#' + item.backgroundColor.toUpperCase());
+  $('#js_colorpicker')
+    .colorpicker({
+      color: '#' + item.backgroundColor.toUpperCase(),
+      format: 'hex',
+    })
+    .colorpicker('setValue', '#' + item.backgroundColor.toUpperCase());
   $('input[name=display_position]').val([item.displayPosition]);
   $('#js_input_status').prop('checked', item.status === 1);
 };
@@ -39,7 +44,7 @@ const getRawValues = ($) => {
   return {
     url: $('#js_input_url').val(),
     msg: $('#js_input_msg').val(),
-    background_color: $('#js_input_background_color').val().replace(/^#/, ''),
+    background_color: $('#js_input_background_color').val().replace(/^#/, '').toLowerCase(),
     display_position: $('input[name=display_position]:checked').val(),
     status: $('#js_input_status').val(),
   };
@@ -53,7 +58,7 @@ const getValues = ($) => {
   return {
     url: $('#js_input_url').val().trim(),
     msg: $('#js_input_msg').val().trim(),
-    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, ''),
+    backgroundColor: $('#js_input_background_color').val().trim().replace(/^#/, '').toLowerCase(),
     displayPosition: $('input[name=display_position]:checked').val().trim(),
     status: $('#js_input_status').is(':checked') ? 1 : 0,
   };
@@ -82,11 +87,6 @@ const clear = ($) => {
  */
 const show = ($, mode, item, callback) => {
   formFactory.initForm($, '#js_modal_pattern_container', '#js_modal_pattern_html');
-
-  $('#js_colorpicker').colorpicker({
-    align: 'left',
-    format: 'hex',
-  });
 
   $('#js_form_pattern_clear').on('click', (e) => {
     e.preventDefault();

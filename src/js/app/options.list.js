@@ -142,7 +142,8 @@ const makeRow = ($, item) => {
    * @returns {JQuery}
    */
   const container = (label, className) => {
-    return $('<div>')
+    return $('<span>')
+      .addClass('align-middle')
       .addClass(className)
       .text(label);
   };
@@ -171,7 +172,7 @@ const makeRow = ($, item) => {
      * @param {PatternItem} item
      */
     return (item) => {
-      return column().append(container(item.msg, 'list-message').css(css(item)));
+      return column().append(container(item.msg, 'list-message d-block p-1 rounded text-center').css(css(item)));
     };
   })();
 
@@ -229,7 +230,7 @@ const makeRow = ($, item) => {
      */
     const button = (label, action, item, className) => {
       return $('<button>')
-        .addClass(sprintf('btn btn-sm %s_button', action))
+        .addClass(sprintf('mr-1 btn btn-sm %s_button', action))
         .addClass(className)
         .attr('data-un-action', sprintf('pattern-item-%s', action))
         .attr('data-un-pattern-item', JSON.stringify(item))
@@ -240,7 +241,7 @@ const makeRow = ($, item) => {
      * @param {PatternItem} item
      */
     const buttonCopy = (item) => {
-      return button(i18n.get('label_copy'), 'copy', item, 'btn-default');
+      return button(i18n.get('label_copy'), 'copy', item, 'btn-success');
     };
 
     /**

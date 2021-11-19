@@ -8,22 +8,21 @@
 
 <div class="container">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
         <div class="container">
-            <div class="navbar-header">
-                <span class="navbar-brand">Chrome URL Notification<span id="js_version"></span></span>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#" id="js_button_add_pattern" data-i18n="label_pattern_add"></a></li>
-                    <li><a href="#" id="js_button_export" data-i18n="label_export"></a></li>
-                    <li><a href="#" id="js_button_import" data-i18n="label_import"></a></li>
+            <span class="navbar-brand">Chrome URL Notification<span id="js_version" class="ml-3"></span></span>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" id="js_button_add_pattern" data-i18n="label_pattern_add"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="js_button_export" data-i18n="label_export"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="js_button_import" data-i18n="label_import"></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <h2><span data-i18n="label_pattern_list"></span><span id="js_pattern_list_badge" class="badge"><!-- 0 --></span></h2>
+    <h2><span class="align-middle" data-i18n="label_pattern_list"></span><span id="js_pattern_list_badge" class="ml-3 align-middle badge badge-pill badge-secondary"></span></h2>
+
     <table id="js_list_pattern" class="table">
         <thead></thead>
         <tbody></tbody>
@@ -36,55 +35,71 @@
 
 <script type="text/template" id="js_modal_pattern_html">
 <div id="js_modal_pattern" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="js_form_pattern" action="#">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="js_input_url" data-i18n="label_url_pattern"></label>
-                        <p class="small text-info" data-i18n="text_url_pattern"></p>
+                        <div for="js_input_url" data-i18n="label_url_pattern"></div>
+                        <p class="small text-dark" data-i18n="text_url_pattern"></p>
                         <input type="text" name="url" value="" id="js_input_url" class="form-control" data-i18n-ph="ph_url_pattern" placeholder="" />
                         <div id="js_input_url-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
-                        <label for="js_input_msg" data-i18n="label_message"></label>
+                        <div for="js_input_msg" data-i18n="label_message"></div>
                         <input type="text" name="message" value="" id="js_input_msg" class="form-control" data-i18n-ph="ph_message" placeholder="" />
                         <div id="js_input_msg-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
-                        <label for="js_input_background_color" data-i18n="label_background_color"></label>
-                        <div id="js_colorpicker" class="input-group colorpicker-component">
-                            <span class="input-group-addon"><i><!-- // --></i></span>
+                        <div for="js_input_background_color" data-i18n="label_background_color"></div>
+                        <div id="js_colorpicker" class="input-group">
+                            <span class="input-group-prepend"><span class="input-group-text colorpicker-input-addon"><i></i></span></span>
                             <input type="text" name="background_color" value="" id="js_input_background_color" class="form-control" />
                         </div>
                         <div id="js_input_background_color-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_display_position"></label>
-                        <div id="js_input_display_position" class="input-group">
-                            <label class="radio-inline"><input type="radio" value="top" name="display_position"><span data-i18n="label_top"></span></label>
-                            <label class="radio-inline"><input type="radio" value="bottom" name="display_position"><span data-i18n="label_bottom"></span></label>
-
-                            <label class="radio-inline"><input type="radio" value="top_left" name="display_position"><span data-i18n="label_top_left"></span></label>
-                            <label class="radio-inline"><input type="radio" value="top_right" name="display_position"><span data-i18n="label_top_right"></span></label>
-                            <label class="radio-inline"><input type="radio" value="bottom_left" name="display_position"><span data-i18n="label_bottom_left"></span></label>
-                            <label class="radio-inline"><input type="radio" value="bottom_right" name="display_position"><span data-i18n="label_bottom_right"></span></label>
+                        <div data-i18n="label_display_position"></div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_top" type="radio" name="display_position" value="top">
+                            <label class="form-check-label" for="js_input_display_position_top" data-i18n="label_top"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_bottom" type="radio" name="display_position" value="bottom">
+                            <label class="form-check-label" for="js_input_display_position_bottom" data-i18n="label_bottom"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_top_left" type="radio" name="display_position" value="top_left">
+                            <label class="form-check-label" for="js_input_display_position_top_left" data-i18n="label_top_left"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_top_right" type="radio" name="display_position" value="top_right">
+                            <label class="form-check-label" for="js_input_display_position_top_right" data-i18n="label_top_right"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_bottom_left" type="radio" name="display_position" value="bottom_left">
+                            <label class="form-check-label" for="js_input_display_position_bottom_left" data-i18n="label_bottom_left"></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" id="js_input_display_position_bottom_right" type="radio" name="display_position" value="bottom_right">
+                            <label class="form-check-label" for="js_input_display_position_bottom_right" data-i18n="label_bottom_right"></label>
                         </div>
                         <div id="js_input_display_position-error" class="js_input_error_message text-danger"></div>
                     </div>
                     <div class="form-group">
-                        <label data-i18n="label_status"></label>
-                        <div class="input-group">
-                            <label class="checkbox-inline"><input id="js_input_status" type="checkbox" value="1" name="status"><span data-i18n="label_enabled"></span></label>
+                        <div data-i18n="label_status"></div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="js_input_status" type="checkbox" value="1" name="status">
+                            <label class="form-check-label" for="js_input_status" data-i18n="label_enabled"></label>
                         </div>
                         <div id="js_input_status-error" class="js_input_error_message text-danger"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <span id="js_pattern_message" class="text-danger"></span>
-                    <input id="js_form_pattern_submit" type="submit" class="btn btn-success" data-i18n-val="label_save" value="" />
+                    <input id="js_form_pattern_submit" type="submit" class="btn btn-primary" data-i18n-val="label_save" value="" />
                     <input id="js_form_pattern_clear" type="button" class="btn btn-warning" data-i18n-val="label_clear" value="" />
-                    <input id="js_form_pattern_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_pattern_cancel" type="button" class="btn btn-secondary" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
@@ -96,7 +111,7 @@
 
 <script type="text/template" id="js_modal_delete_html">
 <div id="js_modal_delete" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="js_form_delete" action="#">
                 <div class="modal-body">
@@ -111,7 +126,7 @@
                 </div>
                 <div class="modal-footer">
                     <input id="js_form_delete_submit" type="submit" class="btn btn-danger" data-i18n-val="label_delete" value="" />
-                    <input id="js_form_delete_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_delete_cancel" type="button" class="btn btn-secondary" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>
@@ -123,14 +138,14 @@
 
 <script type="text/template" id="js_modal_export_html">
 <div id="js_modal_export" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <pre id="js_export_display"></pre>
+                <pre id="js_export_display" class="border p-2"></pre>
             </div>
             <div class="modal-footer">
                 <span id="js_export_message" class="text-success"></span>
-                <button id="js_export_copy" class="btn btn-default" data-clipboard-target="#js_export_display" data-i18n="label_copy"></button>
+                <button id="js_export_copy" class="btn btn-success" data-clipboard-target="#js_export_display" data-i18n="label_copy"></button>
             </div>
         </div>
     </div>
@@ -141,7 +156,7 @@
 
 <script type="text/template" id="js_modal_import_html">
 <div id="js_modal_import" class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="js_form_import" action="#">
                 <div class="modal-body">
@@ -152,8 +167,8 @@
                 </div>
                 <div class="modal-footer">
                     <span id="js_import_message" class="text-danger"></span>
-                    <input id="js_form_import_submit" type="submit" class="btn btn-success" data-i18n-val="label_import" value="" />
-                    <input id="js_form_import_cancel" type="button" class="btn btn-default" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
+                    <input id="js_form_import_submit" type="submit" class="btn btn-primary" data-i18n-val="label_import" value="" />
+                    <input id="js_form_import_cancel" type="button" class="btn btn-secondary" data-i18n-val="label_cancel" value="" data-dismiss="modal" />
                 </div>
             </form>
         </div>

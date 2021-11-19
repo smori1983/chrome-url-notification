@@ -1,43 +1,19 @@
 @charset "UTF-8";
 
 body {
-    padding-top: 70px;
-}
-
-#js_version {
-    margin-left: 10px;
+    padding-top: 80px;
 }
 
 #js_export_display {
     overflow-y: scroll;
     height: 200px;
-    font-size: 10px;
 }
 
 /**
- * font-family is same with the value for pre in bootstrap code.less
+ * font-family is same with the value for pre in bootstrap
  */
 #js_form_import_json {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size: 10px;
-}
-
-#js_pattern_list_badge {
-    margin-left: 10px;
-}
-
-.table .action .btn {
-    margin-right: 10px;
-}
-
-.list-message {
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 3px;
-}
-
-.list-action-delete-confirm {
-    display: none;
+    font-family: SFMono-Regular, Menlo, Monaco,Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .modal-dialog {

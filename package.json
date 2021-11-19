@@ -21,14 +21,15 @@
     "coverage:report": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
   },
   "dependencies": {
-    "bootstrap": "^3.4.1",
-    "bootstrap-colorpicker": "^2.5.3",
+    "bootstrap": "^4.6.1",
+    "bootstrap-colorpicker": "^3.4.0",
     "clipboard": "^2.0.8",
     "deepmerge": "^4.2.2",
     "joi": "^17.4.2",
     "jquery": "^3.6.0",
     "jsonschema": "^1.4.0",
     "lodash": "^4.17.21",
+    "popper.js": "^1.16.1",
     "sprintf-js": "^1.1.2",
     "url": "^0.11.0"
   },
@@ -53,6 +54,8 @@
     "mocha": "^9.1.3",
     "mocha-testdata": "^1.2.0",
     "mock-local-storage": "^1.1.17",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
     "sinon-chrome": "^3.0.1",
     "style-loader": "^3.3.1",
     "text-encoder": "0.0.4",
