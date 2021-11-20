@@ -1,13 +1,4 @@
 /**
- * @param {string} selector
- */
-const apply = (selector) => {
-  const $ = require('jquery');
-
-  apply2($, selector);
-};
-
-/**
  * @param {jQuery} $
  * @param {string} selector
  */
@@ -35,6 +26,5 @@ const get = (key) => {
   return chrome.i18n.getMessage(key);
 };
 
-module.exports.apply = apply;
 module.exports.apply2 = apply2;
 module.exports.get = get;
