@@ -1,8 +1,9 @@
 const validator = require('../src/js/url-notification/validator');
 const factory = require('./factory');
+const Storage = require('./storage');
 
 const clearStorage = () => {
-  localStorage.clear();
+  new Storage(localStorage).clear();
 };
 
 /**
@@ -12,9 +13,7 @@ const clearStorage = () => {
  * @param {PatternItem[]} patterns
  */
 const initStorage = (version, patterns) => {
-  localStorage.clear();
-  localStorage.setItem('version', version);
-  localStorage.setItem('pattern', JSON.stringify(patterns));
+  new Storage(localStorage).init(version, patterns);
 };
 
 /**
