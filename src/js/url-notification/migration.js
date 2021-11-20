@@ -1,9 +1,15 @@
-const config = require('./config');
+const Config = require('./config');
 const storage = require('./storage');
 const MigrationExecutor = require('./migration-executor');
 
 class Migration {
   constructor() {
+    /**
+     * @type {Config}
+     * @private
+     */
+    this._config = new Config();
+
     /**
      * @type {MigrationExecutor}
      * @private
@@ -27,7 +33,7 @@ class Migration {
    * @private
    */
   _persist(patterns) {
-    storage.replace(config.version(), patterns);
+    storage.replace(this._config.version(), patterns);
   }
 
   /**

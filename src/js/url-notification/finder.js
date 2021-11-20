@@ -1,4 +1,4 @@
-const config = require('./config');
+const Config = require('./config');
 const storage = require('./storage');
 const deepMerge = require('deepmerge');
 
@@ -24,6 +24,14 @@ const deepMerge = require('deepmerge');
  */
 
 class Finder {
+  constructor() {
+    /**
+     * @type {Config}
+     * @private
+     */
+    this._config = new Config();
+  }
+
   /**
    * Find pattern.
    *
@@ -104,7 +112,7 @@ class Finder {
       url: item.url,
       message: item.msg,
       backgroundColor: item.backgroundColor,
-      fontColor: config.defaultFontColor(),
+      fontColor: this._config.defaultFontColor(),
       displayPosition: item.displayPosition,
       status: item.status,
     };

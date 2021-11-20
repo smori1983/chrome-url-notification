@@ -1,6 +1,8 @@
 const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
-const config = require('./config');
+const Config = require('./config');
+
+const config = new Config();
 
 const schemaForEssentialPart = () => {
   return {

@@ -1,7 +1,9 @@
 const deepMerge = require('deepmerge');
-const config = require('./config');
+const Config = require('./config');
 const storage = require('./storage');
 const validator = require('./validator');
+
+const config = new Config();
 
 /**
  * @param {string} url

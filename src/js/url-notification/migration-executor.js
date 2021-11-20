@@ -1,8 +1,14 @@
 const _ = require('lodash');
-const config = require('./config');
+const Config = require('./config');
 
 class MigrationExecutor {
   constructor() {
+    /**
+     * @type {Config}
+     * @protected
+     */
+    this._config = new Config();
+
     /**
      * @type {Executor[]}
      * @private
@@ -25,7 +31,7 @@ class MigrationExecutor {
     let version;
     let migrated = _.cloneDeep(patterns);
 
-    for (version = fromVersion; version < config.version(); version++) {
+    for (version = fromVersion; version < this._config.version(); version++) {
       migrated = this._execute(migrated, version);
     }
 
@@ -78,6 +84,14 @@ class MigrationExecutor {
 }
 
 class Executor {
+  constructor() {
+    /**
+     * @type {Config}
+     * @protected
+     */
+    this._config = new Config();
+  }
+
   /**
    * @param {number} version
    * @returns {boolean}
@@ -104,7 +118,7 @@ class For0 extends Executor {
   }
 
   execute(item) {
-    item.backgroundColor = config.defaultBackgroundColor();
+    item.backgroundColor = this._config.defaultBackgroundColor();
 
     return item;
   }
@@ -121,7 +135,7 @@ class For1 extends Executor {
   }
 
   execute(item) {
-    item.displayPosition = config.defaultDisplayPosition();
+    item.displayPosition = this._config.defaultDisplayPosition();
 
     return item;
   }
@@ -138,7 +152,7 @@ class For2 extends Executor {
   }
 
   execute(item) {
-    item.status = config.defaultStatus();
+    item.status = this._config.defaultStatus();
 
     return item;
   }
