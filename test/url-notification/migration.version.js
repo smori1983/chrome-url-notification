@@ -1,7 +1,7 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Migration = require('../../src/js/url-notification/migration');
+const Migration = require('../../src/js/notification/migration');
 
 describe('urlNotification.migration.version', () => {
   /**

@@ -1,4 +1,4 @@
-const Migration = require('../url-notification/migration');
+const Migration = require('../notification/migration');
 
 const listener = () => {
   const migration = new Migration();

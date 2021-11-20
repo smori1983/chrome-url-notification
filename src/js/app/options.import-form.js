@@ -1,5 +1,5 @@
-const Importer = require('../url-notification/importer');
-const Validator = require('../url-notification/validator');
+const Importer = require('../notification/importer');
+const Validator = require('../notification/validator');
 const i18n = require('./i18n');
 const formFactory = require('./options.util.form');
 const messageFactory = require('./options.util.message');

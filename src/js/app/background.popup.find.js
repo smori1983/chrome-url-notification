@@ -1,4 +1,4 @@
-const Finder = require('../url-notification/finder');
+const Finder = require('../notification/finder');
 
 /**
  * @typedef {Object} MessageBrowserActionFind
