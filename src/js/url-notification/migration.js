@@ -3,7 +3,7 @@ const storage = require('./storage');
 const migrationExecutor = require('./migration-executor');
 
 class Migration {
-  execute () {
+  execute() {
     const version = this.currentVersion();
     const patterns = storage.getAll();
 
@@ -18,7 +18,7 @@ class Migration {
    * @param {PatternItem[]} patterns
    * @private
    */
-  _persist (patterns) {
+  _persist(patterns) {
     storage.replace(config.version(), patterns);
   }
 
