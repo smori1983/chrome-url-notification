@@ -25,7 +25,7 @@ const show = ($, callback) => {
 
   $('#js_form_import_json').val('');
 
-  i18n.apply2($, '#js_modal_import_container');
+  i18n.apply($, '#js_modal_import_container');
 
   const modal = modalFactory.init($, '#js_modal_import', {
     'shown.bs.modal': () => {

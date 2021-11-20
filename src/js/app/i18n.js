@@ -1,17 +1,8 @@
 /**
- * @param {string} selector
- */
-const apply = (selector) => {
-  const $ = require('jquery');
-
-  apply2($, selector);
-};
-
-/**
  * @param {jQuery} $
  * @param {string} selector
  */
-const apply2 = ($, selector) => {
+const apply = ($, selector) => {
   const $element = $(selector);
 
   $element.find('*[data-i18n]').each((index, element) => {
@@ -36,5 +27,4 @@ const get = (key) => {
 };
 
 module.exports.apply = apply;
-module.exports.apply2 = apply2;
 module.exports.get = get;
