@@ -1,5 +1,5 @@
 const badge = require('./background.badge');
-const finder = require('../urlNotification/finder');
+const finder = require('../url-notification/finder');
 
 /**
  * @typedef {Object} MessageContentScriptsFind

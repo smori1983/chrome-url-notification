@@ -1,8 +1,8 @@
 const { it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../../test_lib/util');
-const migration = require('../../../src/js/urlNotification/migration');
-const storage = require('../../../src/js/urlNotification/storage');
+const migration = require('../../../src/js/url-notification/migration');
+const storage = require('../../../src/js/url-notification/storage');
 
 module.exports.runNoData = (version) => {
   it('execute migration', () => {

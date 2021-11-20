@@ -1,7 +1,7 @@
 const { describe, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/urlNotification/migration');
+const SUT = require('../../src/js/url-notification/migration');
 
 describe('urlNotification.migration.version', () => {
   describe('handling of version data', () => {
