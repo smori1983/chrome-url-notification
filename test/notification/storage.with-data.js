@@ -1,8 +1,8 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Migration = require('../../src/js/url-notification/migration');
-const Storage = require('../../src/js/url-notification/storage');
+const Migration = require('../../src/js/notification/migration');
+const Storage = require('../../src/js/notification/storage');
 
 describe('urlNotification.storage.withData', () => {
   /**

@@ -1,5 +1,5 @@
 const sprintf = require('sprintf-js').sprintf;
-const Config = require('../url-notification/config');
+const Config = require('../notification/config');
 
 const config = new Config();
 

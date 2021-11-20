@@ -1,4 +1,4 @@
-const Validator = require('../src/js/url-notification/validator');
+const Validator = require('../src/js/notification/validator');
 const factory = require('./factory');
 const Storage = require('./storage');
 

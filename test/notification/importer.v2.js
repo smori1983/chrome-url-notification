@@ -2,8 +2,8 @@ const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const Importer = require('../../src/js/url-notification/importer');
-const Storage = require('../../src/js/url-notification/storage');
+const Importer = require('../../src/js/notification/importer');
+const Storage = require('../../src/js/notification/storage');
 
 describe('urlNotification.importer.v2', () => {
   /**
