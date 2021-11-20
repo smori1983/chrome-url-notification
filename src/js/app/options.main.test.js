@@ -32,4 +32,4 @@ const patternList = require('./options.list');
 header.show($);
 patternList.show($);
 
-i18n.apply2($, 'body');
+i18n.apply($, 'body');

@@ -23,7 +23,7 @@ const show = ($, item, callback) => {
     callback();
   });
 
-  i18n.apply2($, '#js_modal_delete_container');
+  i18n.apply($, '#js_modal_delete_container');
 
   const modal = modalFactory.init($, '#js_modal_delete');
   modal.show();

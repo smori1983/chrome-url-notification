@@ -2,7 +2,7 @@
  * @param {jQuery} $
  * @param {string} selector
  */
-const apply2 = ($, selector) => {
+const apply = ($, selector) => {
   const $element = $(selector);
 
   $element.find('*[data-i18n]').each((index, element) => {
@@ -26,5 +26,5 @@ const get = (key) => {
   return chrome.i18n.getMessage(key);
 };
 
-module.exports.apply2 = apply2;
+module.exports.apply = apply;
 module.exports.get = get;

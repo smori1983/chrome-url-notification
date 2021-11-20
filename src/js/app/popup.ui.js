@@ -21,7 +21,7 @@ const showCommonMenu = ($) => {
  * @param {jQuery} $
  */
 const showMatchedMenu = ($) => {
-  i18n.apply2($, '#block_for_matched_page');
+  i18n.apply($, '#block_for_matched_page');
 
   chrome.tabs.query({
     currentWindow: true,
