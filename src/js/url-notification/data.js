@@ -1,7 +1,7 @@
 const deepMerge = require('deepmerge');
 const Config = require('./config');
 const Storage = require('./storage');
-const validator = require('./validator');
+const Validator = require('./validator');
 
 class Data {
   constructor() {
@@ -16,6 +16,12 @@ class Data {
      * @private
      */
     this._storage = new Storage();
+
+    /**
+     * @type {Validator}
+     * @private
+     */
+    this._validator = new Validator();
   }
 
   /**
@@ -37,7 +43,7 @@ class Data {
       pattern: [merged],
     };
 
-    if (validator.forImportJson(dataForValidation) === false) {
+    if (this._validator.forImportJson(dataForValidation) === false) {
       return false;
     }
 
