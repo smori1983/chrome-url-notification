@@ -1,5 +1,5 @@
 const Config = require('./config');
-const storage = require('./storage');
+const Storage = require('./storage');
 const deepMerge = require('deepmerge');
 
 /**
@@ -30,6 +30,12 @@ class Finder {
      * @private
      */
     this._config = new Config();
+
+    /**
+     * @type {Storage}
+     * @private
+     */
+    this._storage = new Storage();
   }
 
   /**
@@ -49,7 +55,7 @@ class Finder {
     option = deepMerge(this._defaultFindOption(), option || {});
 
     /** @type {PatternItem[]} */
-    const patterns = storage.getAll();
+    const patterns = this._storage.getAll();
 
     for (i = 0, len = patterns.length; i < len; i++) {
       if (this._makeRegExp(patterns[i].url).test(url)) {

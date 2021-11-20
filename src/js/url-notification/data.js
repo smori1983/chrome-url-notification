@@ -1,6 +1,6 @@
 const deepMerge = require('deepmerge');
 const Config = require('./config');
-const storage = require('./storage');
+const Storage = require('./storage');
 const validator = require('./validator');
 
 class Data {
@@ -10,6 +10,12 @@ class Data {
      * @private
      */
     this._config = new Config();
+
+    /**
+     * @type {Storage}
+     * @private
+     */
+    this._storage = new Storage();
   }
 
   /**
@@ -18,7 +24,7 @@ class Data {
    * @returns {boolean} true if successfully updated
    */
   updatePattern(url, data) {
-    const item = storage.findByUrl(url);
+    const item = this._storage.findByUrl(url);
 
     if (item === null) {
       return false;
@@ -35,7 +41,7 @@ class Data {
       return false;
     }
 
-    storage.updatePattern(url, merged);
+    this._storage.updatePattern(url, merged);
 
     return true;
   }

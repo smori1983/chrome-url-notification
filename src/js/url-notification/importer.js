@@ -1,5 +1,5 @@
 const MigrationExecutor = require('./migration-executor');
-const storage = require('./storage');
+const Storage = require('./storage');
 
 /**
  * @typedef {object} ImportJson
@@ -14,6 +14,12 @@ class Importer {
      * @private
      */
     this._migrationExecutor = new MigrationExecutor();
+
+    /**
+     * @type {Storage}
+     * @private
+     */
+    this._storage = new Storage();
   }
 
   /**
@@ -36,10 +42,10 @@ class Importer {
    */
   _persist(patterns) {
     patterns.forEach((pattern) => {
-      if (storage.findByUrl(pattern.url)) {
-        storage.updatePattern(pattern.url, pattern);
+      if (this._storage.findByUrl(pattern.url)) {
+        this._storage.updatePattern(pattern.url, pattern);
       } else {
-        storage.addPattern(pattern);
+        this._storage.addPattern(pattern);
       }
     });
   }

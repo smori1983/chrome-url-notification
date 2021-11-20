@@ -1,6 +1,6 @@
 const badge = require('./background.badge');
 const Data = require('../url-notification/data');
-const storage = require('../url-notification/storage');
+const Storage = require('../url-notification/storage');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
@@ -25,8 +25,10 @@ const listener = (request, sender, sendResponse) => {
     return;
   }
 
-  // TODO: Check return value.
   const data = new Data();
+  const storage = new Storage();
+
+  // TODO: Check return value.
   data.updatePattern(request.data.url, { status: request.data.status });
 
   badge.draw(request.data.tabId, true, request.data.status);
