@@ -1,12 +1,13 @@
 const sprintf = require('sprintf-js').sprintf;
 const i18n = require('./i18n');
 const Config = require('../url-notification/config');
-const data = require('../url-notification/data');
+const Data = require('../url-notification/data');
 const storage = require('../url-notification/storage');
 const patternForm = require('./options.pattern-form');
 const deleteForm = require('./options.delete-form');
 
 const config = new Config();
+const data = new Data();
 
 /**
  * @param {jQuery} $

@@ -1,5 +1,5 @@
 const badge = require('./background.badge');
-const data = require('../url-notification/data');
+const Data = require('../url-notification/data');
 const storage = require('../url-notification/storage');
 
 /**
@@ -26,6 +26,7 @@ const listener = (request, sender, sendResponse) => {
   }
 
   // TODO: Check return value.
+  const data = new Data();
   data.updatePattern(request.data.url, { status: request.data.status });
 
   badge.draw(request.data.tabId, true, request.data.status);
