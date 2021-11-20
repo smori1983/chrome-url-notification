@@ -73,7 +73,7 @@ class MigrationExecutor {
    * @private
    */
   _find(fromVersion) {
-    for (let i = 0; i < this._executors.length; i++) {
+    for (let i = 0, len = this._executors.length; i < len; i++) {
       if (this._executors[i].supports(fromVersion)) {
         return this._executors[i];
       }

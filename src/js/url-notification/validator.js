@@ -80,7 +80,7 @@ class Validator {
    * @private
    */
   _patternFor(version) {
-    for (let i = 0; i < this._generations.length; i++) {
+    for (let i = 0, len = this._generations.length; i < len; i++) {
       if (this._generations[i].supports(version)) {
         return this._generations[i].get();
       }
