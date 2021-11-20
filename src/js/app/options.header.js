@@ -1,6 +1,6 @@
-const exportForm = require('./options.exportForm');
-const importForm = require('./options.importForm');
-const patternForm = require('./options.patternForm');
+const exportForm = require('./options.export-form');
+const importForm = require('./options.import-form');
+const patternForm = require('./options.pattern-form');
 const patternList = require('./options.list');
 
 /**

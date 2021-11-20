@@ -1,6 +1,6 @@
 const badge = require('./background.badge');
-const data = require('../urlNotification/data');
-const storage = require('../urlNotification/storage');
+const data = require('../url-notification/data');
+const storage = require('../url-notification/storage');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
