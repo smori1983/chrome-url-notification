@@ -2,11 +2,20 @@ const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/migration');
+const Migration = require('../../src/js/url-notification/migration');
 const storage = require('../../src/js/url-notification/storage');
 const sharedMigration = require('./shared/migration');
 
 describe('urlNotification.migration.from.2', () => {
+  /**
+   * @type {Migration}
+   */
+  let SUT;
+
+  beforeEach(() => {
+    SUT = new Migration();
+  });
+
   describe('no data', () => {
     sharedMigration.runNoData('2');
   });

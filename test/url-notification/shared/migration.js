@@ -1,13 +1,14 @@
 const { it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../../test_lib/util');
-const migration = require('../../../src/js/url-notification/migration');
+const Migration = require('../../../src/js/url-notification/migration');
 const storage = require('../../../src/js/url-notification/storage');
 
 module.exports.runNoData = (version) => {
   it('execute migration', () => {
     testUtil.initStorage(version, []);
 
+    const migration = new Migration();
     migration.execute();
 
     assert.deepStrictEqual(storage.getAll(), []);
@@ -17,10 +18,13 @@ module.exports.runNoData = (version) => {
 
 module.exports.run = (version) => {
   it('current version', () => {
+    const migration = new Migration();
+
     assert.strictEqual(migration.currentVersion(), version);
   });
 
   it('migrated version', () => {
+    const migration = new Migration();
     migration.execute();
 
     assert.strictEqual(migration.currentVersion(), testUtil.currentVersion());

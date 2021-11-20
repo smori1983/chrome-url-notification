@@ -1,9 +1,18 @@
-const { describe, it } = require('mocha');
+const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/migration');
+const Migration = require('../../src/js/url-notification/migration');
 
 describe('urlNotification.migration.version', () => {
+  /**
+   * @type {Migration}
+   */
+  let SUT;
+
+  beforeEach(() => {
+    SUT = new Migration();
+  });
+
   describe('handling of version data', () => {
     it('key not defined', () => {
       testUtil.clearStorage();

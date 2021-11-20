@@ -2,12 +2,13 @@ const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
 const SUT = require('../../src/js/url-notification/storage');
-const migration = require('../../src/js/url-notification/migration');
+const Migration = require('../../src/js/url-notification/migration');
 
 describe('urlNotification.storage.withoutData', () => {
   beforeEach(() => {
     testUtil.clearStorage();
 
+    const migration = new Migration();
     migration.execute();
   });
 

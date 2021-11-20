@@ -2,38 +2,39 @@ const config = require('./config');
 const storage = require('./storage');
 const migrationExecutor = require('./migration-executor');
 
-/**
- * @returns {boolean}
- */
-const hasVersion = () => {
-  return storage.hasVersion();
-};
+class Migration {
+  execute () {
+    const version = this.currentVersion();
+    const patterns = storage.getAll();
 
-/**
- * @returns {number}
- */
-const currentVersion = () => {
-  return storage.currentVersion();
-};
+    this._persist(migrationExecutor.toLatest(patterns, version));
+  }
 
-/**
- * Persistence phase using storage.
- *
- * Assumes that patterns are fully migrated.
- *
- * @param {PatternItem[]} patterns
- */
-const persist = (patterns) => {
-  storage.replace(config.version(), patterns);
-};
+  /**
+   * Persistence phase using storage.
+   *
+   * Assumes that patterns are fully migrated.
+   *
+   * @param {PatternItem[]} patterns
+   * @private
+   */
+  _persist (patterns) {
+    storage.replace(config.version(), patterns);
+  }
 
-const execute = () => {
-  const version = currentVersion();
-  const patterns = storage.getAll();
+  /**
+   * @returns {boolean}
+   */
+  hasVersion() {
+    return storage.hasVersion();
+  }
 
-  persist(migrationExecutor.toLatest(patterns, version));
-};
+  /**
+   * @returns {number}
+   */
+  currentVersion() {
+    return storage.currentVersion();
+  }
+}
 
-module.exports.hasVersion = hasVersion;
-module.exports.currentVersion = currentVersion;
-module.exports.execute = execute;
+module.exports = Migration;
