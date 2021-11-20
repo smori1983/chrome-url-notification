@@ -1,5 +1,3 @@
-const util = require('./strage-util');
-
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -15,10 +13,18 @@ const key = {
 };
 
 /**
+ * @param {*} value
+ * @returns {boolean}
+ */
+const isValidStringAsVersion = (value) => {
+  return (typeof value === 'string') && (/^\d+$/.test(value));
+};
+
+/**
  * @returns {boolean}
  */
 const hasVersion = () => {
-  return util.isValidStringAsVersion(getVersion());
+  return isValidStringAsVersion(getVersion());
 };
 
 /**
@@ -29,7 +35,7 @@ const hasVersion = () => {
 const currentVersion = () => {
   const version = getVersion();
 
-  if (util.isValidStringAsVersion(version)) {
+  if (isValidStringAsVersion(version)) {
     return parseInt(version, 10);
   }
 
