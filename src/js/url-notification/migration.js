@@ -1,13 +1,21 @@
 const config = require('./config');
 const storage = require('./storage');
-const migrationExecutor = require('./migration-executor');
+const MigrationExecutor = require('./migration-executor');
 
 class Migration {
+  constructor() {
+    /**
+     * @type {MigrationExecutor}
+     * @private
+     */
+    this._migrationExecutor = new MigrationExecutor();
+  }
+
   execute() {
     const version = this.currentVersion();
     const patterns = storage.getAll();
 
-    this._persist(migrationExecutor.toLatest(patterns, version));
+    this._persist(this._migrationExecutor.toLatest(patterns, version));
   }
 
   /**

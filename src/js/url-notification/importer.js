@@ -1,4 +1,4 @@
-const migrationExecutor = require('./migration-executor');
+const MigrationExecutor = require('./migration-executor');
 const storage = require('./storage');
 
 /**
@@ -8,6 +8,14 @@ const storage = require('./storage');
  */
 
 class Importer {
+  constructor() {
+    /**
+     * @type {MigrationExecutor}
+     * @private
+     */
+    this._migrationExecutor = new MigrationExecutor();
+  }
+
   /**
    * Assumes that json is validated.
    *
@@ -17,7 +25,7 @@ class Importer {
     const version = json.version;
     const patterns = json.pattern;
 
-    this._persist(migrationExecutor.toLatest(patterns, version));
+    this._persist(this._migrationExecutor.toLatest(patterns, version));
   }
 
   /**
