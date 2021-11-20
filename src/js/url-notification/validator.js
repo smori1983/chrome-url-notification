@@ -1,5 +1,5 @@
-const JsonschemaValidator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
+const JsonschemaValidator = require('jsonschema').Validator;
 const Config = require('./config');
 
 class Validator {

@@ -1,6 +1,6 @@
+const deepMerge = require('deepmerge');
 const Config = require('./config');
 const Storage = require('./storage');
-const deepMerge = require('deepmerge');
 
 /**
  * @typedef {object} FindOption
