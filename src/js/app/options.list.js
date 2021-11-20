@@ -3,8 +3,8 @@ const i18n = require('./i18n');
 const config = require('../urlNotification/config');
 const data = require('../urlNotification/data');
 const storage = require('../urlNotification/storage');
-const patternForm = require('./options.patternForm');
-const deleteForm = require('./options.deleteForm');
+const patternForm = require('./options.pattern-form');
+const deleteForm = require('./options.delete-form');
 
 /**
  * @param {jQuery} $
