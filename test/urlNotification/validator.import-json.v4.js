@@ -2,8 +2,8 @@ const { describe } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const sharedBasic = require('./shared/importJson.basic');
-const sharedPattern = require('./shared/importJson.pattern');
+const sharedBasic = require('./shared/import-json.basic');
+const sharedPattern = require('./shared/import-json.pattern');
 
 describe('urlNotification.validator.importJson.v4', () => {
   describe('basic structure', () => {
