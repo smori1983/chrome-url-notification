@@ -5,7 +5,7 @@ class MigrationExecutor {
   constructor() {
     /**
      * @type {Config}
-     * @protected
+     * @private
      */
     this._config = new Config();
 
