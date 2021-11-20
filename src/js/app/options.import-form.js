@@ -1,5 +1,5 @@
 const i18n = require('./i18n');
-const importer = require('../url-notification/importer');
+const Importer = require('../url-notification/importer');
 const validator = require('../url-notification/validator');
 const formFactory = require('./options.util.form');
 const messageFactory = require('./options.util.message');
@@ -44,7 +44,10 @@ const submit = ($, callback) => {
     const json = parse(jsonText);
 
     validate(json);
-    importer.importJson(/** @type {ImportJson} */ json);
+
+    const importer = new Importer();
+    importer.importJson(/** @type {ImportJson} */ json)
+
     callback();
   } catch (e) {
     messageFactory

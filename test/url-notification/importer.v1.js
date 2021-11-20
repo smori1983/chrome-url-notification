@@ -1,11 +1,20 @@
-const { describe } = require('mocha');
+const { describe, beforeEach } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/importer');
+const Importer = require('../../src/js/url-notification/importer');
 const storage = require('../../src/js/url-notification/storage');
 
 describe('urlNotification.importer.v1', () => {
+  /**
+   * @type {Importer}
+   */
+  let SUT;
+
+  beforeEach(() => {
+    SUT = new Importer();
+  });
+
   describe('import v1 and migrate to v4', () => {
     given([
       {
