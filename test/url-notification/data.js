@@ -1,11 +1,17 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/data');
+const Data = require('../../src/js/url-notification/data');
 
 describe('urlNotification.data', () => {
+  /**
+   * @type {Data}
+   */
+  let SUT;
+
   beforeEach(() => {
     testUtil.clearStorage();
+    SUT = new Data();
   });
 
   describe('updatePattern()', () => {

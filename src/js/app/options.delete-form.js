@@ -1,7 +1,9 @@
+const Storage = require('../url-notification/storage');
 const i18n = require('./i18n');
-const storage = require('../url-notification/storage');
 const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
+
+const storage = new Storage();
 
 /**
  * @param {jQuery} $

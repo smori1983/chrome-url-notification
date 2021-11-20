@@ -1,6 +1,6 @@
 const badge = require('./background.badge');
-const data = require('../url-notification/data');
-const storage = require('../url-notification/storage');
+const Data = require('../url-notification/data');
+const Storage = require('../url-notification/storage');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
@@ -24,6 +24,9 @@ const listener = (request, sender, sendResponse) => {
   if (request.command !== 'browser_action:update:status') {
     return;
   }
+
+  const data = new Data();
+  const storage = new Storage();
 
   // TODO: Check return value.
   data.updatePattern(request.data.url, { status: request.data.status });

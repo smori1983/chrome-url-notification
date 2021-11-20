@@ -1,5 +1,3 @@
-const util = require('./strage-util');
-
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -9,143 +7,154 @@ const util = require('./strage-util');
  * @property {number} [status] Added schema version: 3
  */
 
-const key = {
-  version: 'version',
-  pattern: 'pattern',
-};
-
-/**
- * @returns {boolean}
- */
-const hasVersion = () => {
-  return util.isValidStringAsVersion(getVersion());
-};
-
-/**
- * Gets the version stored in storage.
- *
- * @returns {number}
- */
-const currentVersion = () => {
-  const version = getVersion();
-
-  if (util.isValidStringAsVersion(version)) {
-    return parseInt(version, 10);
+class Storage {
+  constructor() {
+    /**
+     * @private
+     */
+    this._key = {
+      version: 'version',
+      pattern: 'pattern',
+    };
   }
 
-  return 0;
-};
-
-const getVersion = () => {
-  return localStorage.getItem(key.version);
-};
-
-/**
- * @param {number} version
- */
-const saveVersion = (version) => {
-  localStorage.setItem(key.version, version.toString());
-};
-
-/**
- * @param {PatternItem[]} data
- */
-const savePattern = (data) => {
-  localStorage.setItem(key.pattern, JSON.stringify(data));
-};
-
-/**
- * @returns {number}
- */
-const getCount = () => {
-  return getAll().length;
-};
-
-/**
- * @returns {PatternItem[]}
- */
-const getAll = () => {
-  const data = localStorage.getItem(key.pattern);
-
-  if (data === null) {
-    return [];
+  /**
+   * @returns {boolean}
+   */
+  hasVersion() {
+    return this._isValidStringAsVersion(this._getVersion());
   }
 
-  return JSON.parse(data);
-};
+  /**
+   * Gets the version stored in storage.
+   *
+   * @returns {number}
+   */
+  currentVersion() {
+    const version = this._getVersion();
 
-/**
- * Finds pattern item by exact match of URL pattern.
- *
- * @param {string} url
- * @returns {(PatternItem|null)}
- */
-const findByUrl = (url) => {
-  const patterns = getAll();
-  let i, len;
+    if (this._isValidStringAsVersion(version)) {
+      return parseInt(version, 10);
+    }
 
-  for (i = 0, len = patterns.length; i < len; i++) {
-    if (patterns[i].url === url) {
-      return patterns[i];
+    return 0;
+  }
+
+  /**
+   * @private
+   */
+  _getVersion() {
+    return localStorage.getItem(this._key.version);
+  }
+
+  /**
+   * @param {*} value
+   * @returns {boolean}
+   * @private
+   */
+  _isValidStringAsVersion(value) {
+    return (typeof value === 'string') && (/^\d+$/.test(value));
+  }
+
+  /**
+   * @returns {number}
+   */
+  getCount() {
+    return this.getAll().length;
+  }
+
+  /**
+   * @returns {PatternItem[]}
+   */
+  getAll() {
+    const data = localStorage.getItem(this._key.pattern);
+
+    if (data === null) {
+      return [];
+    }
+
+    return JSON.parse(data);
+  }
+
+  /**
+   * Finds pattern item by exact match of URL pattern.
+   *
+   * @param {string} url
+   * @returns {(PatternItem|null)}
+   */
+  findByUrl(url) {
+    const patterns = this.getAll();
+
+    for (let i = 0, len = patterns.length; i < len; i++) {
+      if (patterns[i].url === url) {
+        return patterns[i];
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @param {PatternItem} pattern
+   */
+  addPattern(pattern) {
+    if (this.findByUrl(pattern.url)) {
+      return;
+    }
+
+    this._savePattern(this.getAll().concat(pattern));
+  }
+
+  /**
+   * @param {string} originalUrl
+   * @param {PatternItem} pattern
+   */
+  updatePattern(originalUrl, pattern) {
+    if (this.findByUrl(originalUrl)) {
+      this.deletePattern(originalUrl);
+      this.addPattern(pattern);
     }
   }
 
-  return null;
-};
+  /**
+   * @param {string} url
+   */
+  deletePattern(url) {
+    const filtered = this.getAll().filter((pattern) => {
+      return pattern.url !== url;
+    });
 
-/**
- * @param {PatternItem} pattern
- */
-const addPattern = (pattern) => {
-  if (findByUrl(pattern.url)) {
-    return;
+    this._savePattern(filtered);
   }
 
-  savePattern(getAll().concat(pattern));
-};
-
-/**
- * @param {string} originalUrl
- * @param {PatternItem} pattern
- */
-const updatePattern = (originalUrl, pattern) => {
-  if (findByUrl(originalUrl)) {
-    deletePattern(originalUrl);
-    addPattern(pattern);
+  deleteAll() {
+    this._savePattern([]);
   }
-};
 
-/**
- * @param {string} url
- */
-const deletePattern = (url) => {
-  const filtered = getAll().filter((pattern) => {
-    return pattern.url !== url;
-  });
+  /**
+   * @param {number} version
+   * @param {PatternItem[]} patterns
+   */
+  replace(version, patterns) {
+    this._saveVersion(version);
+    this._savePattern(patterns);
+  }
 
-  savePattern(filtered);
-};
+  /**
+   * @param {number} version
+   * @private
+   */
+  _saveVersion(version) {
+    localStorage.setItem(this._key.version, version.toString());
+  }
 
-const deleteAll = () => {
-  savePattern([]);
-};
+  /**
+   * @param {PatternItem[]} data
+   * @private
+   */
+  _savePattern(data) {
+    localStorage.setItem(this._key.pattern, JSON.stringify(data));
+  }
+}
 
-/**
- * @param {number} version
- * @param {PatternItem[]} patterns
- */
-const replace = (version, patterns) => {
-  saveVersion(version);
-  savePattern(patterns);
-};
-
-module.exports.hasVersion = hasVersion;
-module.exports.currentVersion = currentVersion;
-module.exports.getCount = getCount;
-module.exports.getAll = getAll;
-module.exports.findByUrl = findByUrl;
-module.exports.addPattern = addPattern;
-module.exports.updatePattern = updatePattern;
-module.exports.deletePattern = deletePattern;
-module.exports.deleteAll = deleteAll;
-module.exports.replace = replace;
+module.exports = Storage;

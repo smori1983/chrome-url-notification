@@ -1,17 +1,24 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/storage');
-const migration = require('../../src/js/url-notification/migration');
+const Migration = require('../../src/js/url-notification/migration');
+const Storage = require('../../src/js/url-notification/storage');
 
 describe('urlNotification.storage.withData', () => {
+  /**
+   * @type {Storage}
+   */
+  let SUT;
+
   beforeEach(() => {
     testUtil.clearStorage();
 
+    SUT = new Storage();
     SUT.addPattern({url: 'https://example.com/1', msg: '1'});
     SUT.addPattern({url: 'https://example.com/2', msg: '2'});
     SUT.addPattern({url: 'https://example.com/3', msg: '3'});
 
+    const migration = new Migration();
     migration.execute();
   });
 

@@ -1,9 +1,18 @@
 const { describe, beforeEach, it } = require('mocha');
 const assert = require('assert');
 const testUtil = require('../../test_lib/util');
-const SUT = require('../../src/js/url-notification/finder');
+const Finder = require('../../src/js/url-notification/finder');
 
 describe('urlNotification.finder', () => {
+  /**
+   * @type {Finder}
+   */
+  let SUT;
+
+  beforeEach(() => {
+    SUT = new Finder();
+  });
+
   describe('status is all 1', () => {
     beforeEach(() => {
       testUtil.initStorage(testUtil.currentVersion().toString(), [

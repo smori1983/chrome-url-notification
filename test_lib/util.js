@@ -1,4 +1,4 @@
-const validator = require('../src/js/url-notification/validator');
+const Validator = require('../src/js/url-notification/validator');
 const factory = require('./factory');
 const Storage = require('./storage');
 
@@ -28,7 +28,7 @@ const currentVersion = () => {
  * @returns {boolean}
  */
 const isValidJson = (json) => {
-  return validator.forImportJson(json) === true;
+  return new Validator().forImportJson(json) === true;
 };
 
 /**
@@ -36,7 +36,7 @@ const isValidJson = (json) => {
  * @returns {boolean}
  */
 const isNotValidJson = (json) => {
-  return validator.forImportJson(json) === false;
+  return new Validator().forImportJson(json) === false;
 };
 
 /**

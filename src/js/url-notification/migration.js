@@ -1,39 +1,60 @@
-const config = require('./config');
-const storage = require('./storage');
-const migrationExecutor = require('./migration-executor');
+const Config = require('./config');
+const MigrationExecutor = require('./migration-executor');
+const Storage = require('./storage');
 
-/**
- * @returns {boolean}
- */
-const hasVersion = () => {
-  return storage.hasVersion();
-};
+class Migration {
+  constructor() {
+    /**
+     * @type {Config}
+     * @private
+     */
+    this._config = new Config();
 
-/**
- * @returns {number}
- */
-const currentVersion = () => {
-  return storage.currentVersion();
-};
+    /**
+     * @type {MigrationExecutor}
+     * @private
+     */
+    this._migrationExecutor = new MigrationExecutor();
 
-/**
- * Persistence phase using storage.
- *
- * Assumes that patterns are fully migrated.
- *
- * @param {PatternItem[]} patterns
- */
-const persist = (patterns) => {
-  storage.replace(config.version(), patterns);
-};
+    /**
+     * @type {Storage}
+     * @private
+     */
+    this._storage = new Storage();
+  }
 
-const execute = () => {
-  const version = currentVersion();
-  const patterns = storage.getAll();
+  execute() {
+    const version = this.currentVersion();
+    const patterns = this._storage.getAll();
 
-  persist(migrationExecutor.toLatest(patterns, version));
-};
+    this._persist(this._migrationExecutor.toLatest(patterns, version));
+  }
 
-module.exports.hasVersion = hasVersion;
-module.exports.currentVersion = currentVersion;
-module.exports.execute = execute;
+  /**
+   * Persistence phase using storage.
+   *
+   * Assumes that patterns are fully migrated.
+   *
+   * @param {PatternItem[]} patterns
+   * @private
+   */
+  _persist(patterns) {
+    this._storage.replace(this._config.version(), patterns);
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  hasVersion() {
+    return this._storage.hasVersion();
+  }
+
+  /**
+   * @returns {number}
+   */
+  currentVersion() {
+    return this._storage.currentVersion();
+  }
+}
+
+module.exports = Migration;

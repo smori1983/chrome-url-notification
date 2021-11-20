@@ -1,9 +1,12 @@
 const Joi = require('joi');
+const Config = require('../url-notification/config');
+const Storage = require('../url-notification/storage');
 const i18n = require('./i18n');
-const config = require('../url-notification/config');
-const storage = require('../url-notification/storage');
 const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
+
+const config = new Config();
+const storage = new Storage();
 
 /**
  * @returns {PatternItem}

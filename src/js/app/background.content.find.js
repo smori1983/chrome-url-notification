@@ -1,5 +1,5 @@
 const badge = require('./background.badge');
-const finder = require('../url-notification/finder');
+const Finder = require('../url-notification/finder');
 
 /**
  * @typedef {Object} MessageContentScriptsFind
@@ -18,6 +18,7 @@ const listener = (request, sender, sendResponse) => {
     return;
   }
 
+  const finder = new Finder();
   const findResult = finder.findFor(request.data.url, { ignoreStatus: true });
   const status = findResult.matched ? findResult.data.status : null;
 

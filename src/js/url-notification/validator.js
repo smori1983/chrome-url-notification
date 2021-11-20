@@ -1,145 +1,224 @@
-const Validator = require('jsonschema').Validator;
 const deepMerge = require('deepmerge');
-const config = require('./config');
+const JsonschemaValidator = require('jsonschema').Validator;
+const Config = require('./config');
 
-const schemaForEssentialPart = () => {
-  return {
-    'type': 'object',
-    'properties': {
-      'version': {
-        'type': 'integer',
-        'minimum': 1,
-        'maximum': config.version(),
+class Validator {
+  constructor() {
+    /**
+     * @type {Config}
+     * @private
+     */
+    this._config = new Config();
+
+    /**
+     * @type {PatternGeneration[]}
+     * @private
+     */
+    this._generations = [];
+    this._generations.push(new PatternV1());
+    this._generations.push(new PatternV2());
+    this._generations.push(new PatternV3());
+    this._generations.push(new PatternV4());
+  }
+
+  /**
+   * @param {object} json
+   * @returns {boolean}
+   */
+  forImportJson(json) {
+    return this._validateEssentialPart(json) && this._validatePatternPart(json);
+  }
+
+  /**
+   * @param {object} json
+   * @returns {boolean}
+   * @private
+   */
+  _validateEssentialPart(json) {
+    const validator = new JsonschemaValidator();
+
+    return validator.validate(json, this._schemaForEssentialPart()).valid;
+  }
+
+  _schemaForEssentialPart() {
+    return {
+      'type': 'object',
+      'properties': {
+        'version': {
+          'type': 'integer',
+          'minimum': 1,
+          'maximum': this._config.version(),
+        },
+        'pattern': {
+          'type': 'array',
+        },
       },
-      'pattern': {
-        'type': 'array',
+      'required': [
+        'version',
+        'pattern',
+      ],
+    };
+  }
+
+  /**
+   * @param {object} json
+   * @returns {boolean}
+   * @private
+   */
+  _validatePatternPart(json) {
+    const validator = new JsonschemaValidator();
+
+    validator.addSchema(this._patternFor(json.version), '/item');
+
+    return validator.validate(json.pattern, this._patternBase()).valid;
+  }
+
+  /**
+   * @param {number} version
+   * @returns {Object}
+   * @throws {Error}
+   * @private
+   */
+  _patternFor(version) {
+    for (let i = 0, len = this._generations.length; i < len; i++) {
+      if (this._generations[i].supports(version)) {
+        return this._generations[i].get();
+      }
+    }
+
+    throw new Error('Validator not defined for version: ' + version);
+  }
+
+  /**
+   * @private
+   */
+  _patternBase() {
+    return {
+      'type': 'array',
+      'items': { '$ref': '/item' },
+    };
+  }
+}
+
+class PatternGeneration {
+  /**
+   * @param {number} version
+   * @returns {boolean}
+   */
+  supports(version) {
+  }
+
+  /**
+   * @returns {Object}
+   */
+  get() {
+  }
+
+  /**
+   * @returns {Object}
+   * @protected
+   */
+  _patternTemplate() {
+    return {
+      'id': '/item',
+      'properties': {},
+      'additionalProperties': false,
+    };
+  }
+}
+
+class PatternV1 extends PatternGeneration {
+  supports(version) {
+    return version === 1;
+  }
+
+  get() {
+    return deepMerge(this._patternTemplate(), {
+      'type': 'object',
+      'properties': {
+        'url': {
+          'type': 'string',
+          'minLength': 1,
+        },
+        'msg': {
+          'type': 'string',
+          'minLength': 1,
+        },
+        'backgroundColor': {
+          'type': 'string',
+          'pattern': '^[0-9a-fA-F]{6}$',
+        },
       },
-    },
-    'required': [
-      'version',
-      'pattern',
-    ],
-  };
-};
+      'required': [
+        'url',
+        'msg',
+        'backgroundColor',
+      ],
+    });
+  }
+}
 
-const patternBase = () => {
-  return {
-    'type': 'array',
-    'items': { '$ref': '/item' },
-  };
-};
+class PatternV2 extends PatternGeneration {
+  supports(version) {
+    return version === 2;
+  }
 
-const patternTemplate = () => {
-  return {
-    'id': '/item',
-    'properties': {},
-    'additionalProperties': false,
-  };
-};
+  get() {
+    const v1 = new PatternV1();
 
-const patternV1 = () => {
-  return deepMerge(patternTemplate(), {
-    'type': 'object',
-    'properties': {
-      'url': {
-        'type': 'string',
-        'minLength': 1,
+    return deepMerge(v1.get(), {
+      'properties': {
+        'displayPosition': {
+          'type': 'string',
+          'pattern': '^(bottom|top)$',
+        },
       },
-      'msg': {
-        'type': 'string',
-        'minLength': 1,
+      'required': [
+        'displayPosition',
+      ],
+    });
+  }
+}
+
+class PatternV3 extends PatternGeneration {
+  supports(version) {
+    return version === 3;
+  }
+
+  get() {
+    const v2 = new PatternV2();
+
+    return deepMerge(v2.get(), {
+      'properties': {
+        'status': {
+          'type': 'integer',
+          'minimum': 0,
+          'maximum': 1,
+        },
       },
-      'backgroundColor': {
-        'type': 'string',
-        'pattern': '^[0-9a-fA-F]{6}$',
+      'required': [
+        'status',
+      ],
+    });
+  }
+}
+
+class PatternV4 extends PatternGeneration {
+  supports(version) {
+    return version === 4;
+  }
+
+  get() {
+    const v3 = new PatternV3();
+
+    return deepMerge(v3.get(), {
+      'properties': {
+        'displayPosition': {
+          'pattern': '^(bottom|bottom_left|bottom_right|top|top_left|top_right)$',
+        },
       },
-    },
-    'required': [
-      'url',
-      'msg',
-      'backgroundColor',
-    ],
-  });
-};
+    });
+  }
+}
 
-const patternV2 = () => {
-  return deepMerge(patternV1(), {
-    'properties': {
-      'displayPosition': {
-        'type': 'string',
-        'pattern': '^(bottom|top)$',
-      },
-    },
-    'required': [
-      'displayPosition',
-    ],
-  });
-};
-
-const patternV3 = () => {
-  return deepMerge(patternV2(), {
-    'properties': {
-      'status': {
-        'type': 'integer',
-        'minimum': 0,
-        'maximum': 1,
-      },
-    },
-    'required': [
-      'status',
-    ],
-  });
-};
-
-const patternV4 = () => {
-  return deepMerge(patternV3(), {
-    'properties': {
-      'displayPosition': {
-        'pattern': '^(bottom|bottom_left|bottom_right|top|top_left|top_right)$',
-      },
-    },
-  });
-};
-
-const patterns = {
-  1: patternV1,
-  2: patternV2,
-  3: patternV3,
-  4: patternV4,
-};
-
-const patternFor = (version) => {
-  return patterns[version]();
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const validateEssentialPart = (json) => {
-  const validator = new Validator();
-
-  return validator.validate(json, schemaForEssentialPart()).valid;
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const validatePatternPart = (json) => {
-  const validator = new Validator();
-
-  validator.addSchema(patternFor(json.version), '/item');
-
-  return validator.validate(json.pattern, patternBase()).valid;
-};
-
-/**
- * @param {object} json
- * @returns {boolean}
- */
-const importJson = (json) => {
-  return validateEssentialPart(json) && validatePatternPart(json);
-};
-
-module.exports.forImportJson = importJson;
+module.exports = Validator;
