@@ -79,7 +79,7 @@ class MigrationExecutor {
       }
     }
 
-    throw new Error('Cannot migrate for version: ' + fromVersion);
+    throw new Error('Migration not defined for version: ' + fromVersion);
   }
 }
 
