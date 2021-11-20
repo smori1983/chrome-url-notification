@@ -10,14 +10,14 @@ class MigrationExecutor {
     this._config = new Config();
 
     /**
-     * @type {Executor[]}
+     * @type {MigrationGeneration[]}
      * @private
      */
-    this._executors = [];
-    this._executors.push(new For0());
-    this._executors.push(new For1());
-    this._executors.push(new For2());
-    this._executors.push(new For3());
+    this._generations = [];
+    this._generations.push(new For0());
+    this._generations.push(new For1());
+    this._generations.push(new For2());
+    this._generations.push(new For3());
   }
 
   /**
@@ -63,19 +63,19 @@ class MigrationExecutor {
    * @private
    */
   _executeOne(pattern, fromVersion) {
-    return this._find(fromVersion).execute(pattern);
+    return this._findMigration(fromVersion).execute(pattern);
   }
 
   /**
    * @param fromVersion
-   * @returns {Executor}
+   * @returns {MigrationGeneration}
    * @throws {Error}
    * @private
    */
-  _find(fromVersion) {
-    for (let i = 0, len = this._executors.length; i < len; i++) {
-      if (this._executors[i].supports(fromVersion)) {
-        return this._executors[i];
+  _findMigration(fromVersion) {
+    for (let i = 0, len = this._generations.length; i < len; i++) {
+      if (this._generations[i].supports(fromVersion)) {
+        return this._generations[i];
       }
     }
 
@@ -83,7 +83,7 @@ class MigrationExecutor {
   }
 }
 
-class Executor {
+class MigrationGeneration {
   constructor() {
     /**
      * @type {Config}
@@ -112,7 +112,7 @@ class Executor {
  *
  * - Set default background color with no condition.
  */
-class For0 extends Executor {
+class For0 extends MigrationGeneration {
   supports(version) {
     return version === 0;
   }
@@ -129,7 +129,7 @@ class For0 extends Executor {
  *
  * - Set default display position with no condition.
  */
-class For1 extends Executor {
+class For1 extends MigrationGeneration {
   supports(version) {
     return version === 1;
   }
@@ -146,7 +146,7 @@ class For1 extends Executor {
  *
  * - Set default status with no condition.
  */
-class For2 extends Executor {
+class For2 extends MigrationGeneration {
   supports(version) {
     return version === 2;
   }
@@ -163,7 +163,7 @@ class For2 extends Executor {
  *
  * - No need to set default value.
  */
-class For3 extends Executor {
+class For3 extends MigrationGeneration {
   supports(version) {
     return version === 3;
   }
