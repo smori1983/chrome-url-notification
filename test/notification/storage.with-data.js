@@ -26,19 +26,19 @@ describe('urlNotification.storage.withData', () => {
     it('delete all data', () => {
       SUT.deleteAll();
 
-      assert.strictEqual(SUT.getCount(), 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
 
     it('delete 1 item - has matching data', () => {
       SUT.deletePattern('https://example.com/1');
 
-      assert.strictEqual(SUT.getCount(), 2);
+      assert.strictEqual(SUT.getCollection().count(), 2);
     });
 
     it('delete 1 item - no matching data', () => {
       SUT.deletePattern('https://example.com/');
 
-      assert.strictEqual(SUT.getCount(), 3);
+      assert.strictEqual(SUT.getCollection().count(), 3);
     });
   });
 
@@ -68,7 +68,7 @@ describe('urlNotification.storage.withData', () => {
         msg: '!',
       });
 
-      assert.strictEqual(SUT.getCount(), 3);
+      assert.strictEqual(SUT.getCollection().count(), 3);
       assert.strictEqual(SUT.findByUrl('https://example.com/1').msg, '1');
       assert.strictEqual(SUT.findByUrl('https://example.com/2').msg, '2');
       assert.strictEqual(SUT.findByUrl('https://example.com/3').msg, '3');
@@ -80,7 +80,7 @@ describe('urlNotification.storage.withData', () => {
         msg: '!',
       });
 
-      assert.strictEqual(SUT.getCount(), 3);
+      assert.strictEqual(SUT.getCollection().count(), 3);
       assert.strictEqual(SUT.findByUrl('https://example.com/1').msg, '1');
       assert.strictEqual(SUT.findByUrl('https://example.com/2').msg, '!');
       assert.strictEqual(SUT.findByUrl('https://example.com/3').msg, '3');

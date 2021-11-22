@@ -23,13 +23,13 @@ describe('urlNotification.storage.withoutData', () => {
     it('delete all items', () => {
       SUT.deleteAll();
 
-      assert.strictEqual(SUT.getCount(), 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
 
     it('delete 1 item - no matching data', () => {
       SUT.deletePattern('https://example.com/');
 
-      assert.strictEqual(SUT.getCount(), 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
   });
 
@@ -71,7 +71,7 @@ describe('urlNotification.storage.withoutData', () => {
       SUT.addPattern(item);
       SUT.addPattern(item);
 
-      assert.strictEqual(SUT.getCount(), 1);
+      assert.strictEqual(SUT.getCollection().count(), 1);
     });
   });
 });
