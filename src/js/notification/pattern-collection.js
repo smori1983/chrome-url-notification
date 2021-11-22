@@ -11,6 +11,13 @@ class PatternCollection {
   }
 
   /**
+   * @returns {number}
+   */
+  count() {
+    return this._patterns.length;
+  }
+
+  /**
    * @returns {PatternItem[]}
    */
   get() {
