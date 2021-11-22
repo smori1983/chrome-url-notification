@@ -55,7 +55,7 @@ class Finder {
     option = deepMerge(this._defaultFindOption(), option || {});
 
     /** @type {PatternItem[]} */
-    const patterns = this._storage.getAll();
+    const patterns = this._storage.getCollection().get();
 
     for (i = 0, len = patterns.length; i < len; i++) {
       if (this._makeRegExp(patterns[i].url).test(url)) {
