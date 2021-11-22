@@ -59,13 +59,6 @@ class Storage {
   }
 
   /**
-   * @returns {number}
-   */
-  getCount() {
-    return this.getAll().length;
-  }
-
-  /**
    * @returns {PatternItem[]}
    */
   getAll() {
