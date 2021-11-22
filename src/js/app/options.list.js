@@ -1,13 +1,11 @@
 const sprintf = require('sprintf-js').sprintf;
 const Config = require('../notification/config');
-const Data = require('../notification/data');
 const Storage = require('../notification/storage');
 const i18n = require('./i18n');
 const patternForm = require('./options.pattern-form');
 const deleteForm = require('./options.delete-form');
 
 const config = new Config();
-const data = new Data();
 const storage = new Storage();
 
 /**
@@ -74,7 +72,7 @@ const refresh = ($) => {
  * @param {jQuery} $
  */
 const draw = ($) => {
-  const items = data.sortByMessage(storage.getAll());
+  const items = storage.getCollection().sortByMessage().get();
 
   drawBadge($, items);
   drawTable($, items);

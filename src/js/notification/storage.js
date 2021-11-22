@@ -1,3 +1,5 @@
+const PatternCollection = require('./pattern-collection');
+
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -74,6 +76,13 @@ class Storage {
     }
 
     return JSON.parse(data);
+  }
+
+  /**
+   * @returns {PatternCollection}
+   */
+  getCollection() {
+    return new PatternCollection(this.getAll());
   }
 
   /**
