@@ -60,8 +60,9 @@ class Storage {
 
   /**
    * @returns {PatternItem[]}
+   * @private
    */
-  getAll() {
+  _getAll() {
     const data = localStorage.getItem(this._key.pattern);
 
     if (data === null) {
@@ -75,7 +76,7 @@ class Storage {
    * @returns {PatternCollection}
    */
   getCollection() {
-    return new PatternCollection(this.getAll());
+    return new PatternCollection(this._getAll());
   }
 
   /**
@@ -85,7 +86,7 @@ class Storage {
    * @returns {(PatternItem|null)}
    */
   findByUrl(url) {
-    const patterns = this.getAll();
+    const patterns = this._getAll();
 
     for (let i = 0, len = patterns.length; i < len; i++) {
       if (patterns[i].url === url) {
@@ -104,7 +105,7 @@ class Storage {
       return;
     }
 
-    this._savePattern(this.getAll().concat(pattern));
+    this._savePattern(this._getAll().concat(pattern));
   }
 
   /**
@@ -122,7 +123,7 @@ class Storage {
    * @param {string} url
    */
   deletePattern(url) {
-    const filtered = this.getAll().filter((pattern) => {
+    const filtered = this._getAll().filter((pattern) => {
       return pattern.url !== url;
     });
 
