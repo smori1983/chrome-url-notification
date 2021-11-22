@@ -72,34 +72,34 @@ const refresh = ($) => {
  * @param {jQuery} $
  */
 const draw = ($) => {
-  const items = storage.getCollection().sortByMessage().get();
+  const collection = storage.getCollection().sortByMessage();
 
-  drawBadge($, items);
-  drawTable($, items);
+  drawBadge($, collection);
+  drawTable($, collection);
 };
 
 /**
  * @param {jQuery} $
- * @param {PatternItem[]} items
+ * @param {PatternCollection} collection
  */
-const drawBadge = ($, items) => {
-  $('#js_pattern_list_badge').text(items.length);
+const drawBadge = ($, collection) => {
+  $('#js_pattern_list_badge').text(collection.count());
 };
 
 /**
  * @param {jQuery} $
- * @param {PatternItem[]} items
+ * @param {PatternCollection} collection
  */
-const drawTable = ($, items) => {
+const drawTable = ($, collection) => {
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
   $headerArea.empty();
   $listArea.empty();
 
-  if (items.length > 0) {
+  if (collection.count() > 0) {
     makeHeader($).appendTo($headerArea);
-    items.forEach((item) => {
+    collection.get().forEach((item) => {
       makeRow($, item).appendTo($listArea);
     });
   }
