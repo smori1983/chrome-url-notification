@@ -44,12 +44,12 @@ describe('urlNotification.storage.withData', () => {
 
   describe('read', () => {
     it('get all items', () => {
-      const all = SUT.getAll();
+      const collection = SUT.getCollection();
 
-      assert.strictEqual(all.length, 3);
-      assert.strictEqual(all[0].msg, '1');
-      assert.strictEqual(all[1].msg, '2');
-      assert.strictEqual(all[2].msg, '3');
+      assert.strictEqual(collection.count(), 3);
+      assert.strictEqual(collection.get()[0].msg, '1');
+      assert.strictEqual(collection.get()[1].msg, '2');
+      assert.strictEqual(collection.get()[2].msg, '3');
     });
 
     it('find by url - no matching data', () => {

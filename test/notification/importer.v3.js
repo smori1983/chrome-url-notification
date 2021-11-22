@@ -36,7 +36,7 @@ describe('urlNotification.importer.v3', () => {
 
       SUT.importJson({version: 3, pattern: [arg.item]});
 
-      assert.deepStrictEqual(storage.getAll(), [arg.to]);
+      assert.deepStrictEqual(storage.getCollection().get(), [arg.to]);
     });
 
     given([
@@ -55,7 +55,7 @@ describe('urlNotification.importer.v3', () => {
 
       SUT.importJson({version: 3, pattern: [arg.item]});
 
-      assert.deepStrictEqual(storage.getAll(), [arg.to]);
+      assert.deepStrictEqual(storage.getCollection().get(), [arg.to]);
     });
   });
 });

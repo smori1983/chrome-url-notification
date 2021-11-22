@@ -35,9 +35,7 @@ describe('urlNotification.storage.withoutData', () => {
 
   describe('read', () => {
     it('get all items', () => {
-      const all = SUT.getAll();
-
-      assert.strictEqual(all.length, 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
 
     it('find by url - no matching data', () => {

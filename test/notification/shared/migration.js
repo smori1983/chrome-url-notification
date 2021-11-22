@@ -13,7 +13,7 @@ module.exports.runNoData = (version) => {
 
     migration.execute();
 
-    assert.deepStrictEqual(storage.getAll(), []);
+    assert.deepStrictEqual(storage.getCollection().get(), []);
     assert.strictEqual(storage.currentVersion(), testUtil.currentVersion());
   });
 };
