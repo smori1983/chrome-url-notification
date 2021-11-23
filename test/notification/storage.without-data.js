@@ -39,7 +39,7 @@ describe('urlNotification.storage.withoutData', () => {
     });
 
     it('find by url - no matching data', () => {
-      assert.strictEqual(SUT.findByUrl('https://example.com/'), null);
+      assert.strictEqual(SUT.find('https://example.com/'), null);
     });
   });
 
@@ -54,7 +54,7 @@ describe('urlNotification.storage.withoutData', () => {
 
       SUT.updatePattern('https://example.com/', item);
 
-      assert.strictEqual(SUT.findByUrl('https://example.com/'), null);
+      assert.strictEqual(SUT.find('https://example.com/'), null);
     });
 
     it('duplicated pattern cannot be registered', () => {

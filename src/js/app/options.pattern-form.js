@@ -220,13 +220,13 @@ const setUpJoi = () => {
         },
         validate(value, helpers, { mode, originalUrl }) {
           if (mode === 'add') {
-            if (storage.findByUrl(value)) {
+            if (storage.find(value)) {
               return helpers.error('string.existingUrl');
             }
           }
 
           if (mode === 'edit') {
-            if (value !== originalUrl && storage.findByUrl(value)) {
+            if (value !== originalUrl && storage.find(value)) {
               return helpers.error('string.existingUrl');
             }
           }

@@ -30,7 +30,7 @@ class Data {
    * @returns {boolean} true if successfully updated
    */
   updatePattern(url, data) {
-    const item = this._storage.findByUrl(url);
+    const item = this._storage.find(url);
 
     if (item === null) {
       return false;

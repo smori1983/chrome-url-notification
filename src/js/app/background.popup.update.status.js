@@ -25,7 +25,7 @@ const listener = (request, sender, sendResponse) => {
   }
 
   const storage = new Storage();
-  const pattern = storage.findByUrl(request.data.url);
+  const pattern = storage.find(request.data.url);
 
   // TODO: When pattern was not found.
   if (pattern) {

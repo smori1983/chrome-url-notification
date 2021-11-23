@@ -94,7 +94,7 @@ class Storage {
    * @param {string} url
    * @returns {(PatternItem|null)}
    */
-  findByUrl(url) {
+  find(url) {
     const patterns = this._getAll();
 
     for (let i = 0, len = patterns.length; i < len; i++) {
@@ -110,7 +110,7 @@ class Storage {
    * @param {PatternItem} pattern
    */
   addPattern(pattern) {
-    if (this.findByUrl(pattern.url)) {
+    if (this.find(pattern.url)) {
       return;
     }
 
@@ -122,7 +122,7 @@ class Storage {
    * @param {PatternItem} pattern
    */
   updatePattern(originalUrl, pattern) {
-    if (this.findByUrl(originalUrl)) {
+    if (this.find(originalUrl)) {
       this.deletePattern(originalUrl);
       this.addPattern(pattern);
     }

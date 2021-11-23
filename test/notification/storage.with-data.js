@@ -53,11 +53,11 @@ describe('urlNotification.storage.withData', () => {
     });
 
     it('find by url - no matching data', () => {
-      assert.strictEqual(SUT.findByUrl('https://example.com/'), null);
+      assert.strictEqual(SUT.find('https://example.com/'), null);
     });
 
     it('find by url - has matching data', () => {
-      assert.strictEqual(SUT.findByUrl('https://example.com/2').msg, '2');
+      assert.strictEqual(SUT.find('https://example.com/2').msg, '2');
     });
   });
 
@@ -69,9 +69,9 @@ describe('urlNotification.storage.withData', () => {
       });
 
       assert.strictEqual(SUT.getCollection().count(), 3);
-      assert.strictEqual(SUT.findByUrl('https://example.com/1').msg, '1');
-      assert.strictEqual(SUT.findByUrl('https://example.com/2').msg, '2');
-      assert.strictEqual(SUT.findByUrl('https://example.com/3').msg, '3');
+      assert.strictEqual(SUT.find('https://example.com/1').msg, '1');
+      assert.strictEqual(SUT.find('https://example.com/2').msg, '2');
+      assert.strictEqual(SUT.find('https://example.com/3').msg, '3');
     });
 
     it('update data - has matching data', () => {
@@ -81,9 +81,9 @@ describe('urlNotification.storage.withData', () => {
       });
 
       assert.strictEqual(SUT.getCollection().count(), 3);
-      assert.strictEqual(SUT.findByUrl('https://example.com/1').msg, '1');
-      assert.strictEqual(SUT.findByUrl('https://example.com/2').msg, '!');
-      assert.strictEqual(SUT.findByUrl('https://example.com/3').msg, '3');
+      assert.strictEqual(SUT.find('https://example.com/1').msg, '1');
+      assert.strictEqual(SUT.find('https://example.com/2').msg, '!');
+      assert.strictEqual(SUT.find('https://example.com/3').msg, '3');
     });
   });
 });
