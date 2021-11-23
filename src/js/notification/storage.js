@@ -129,6 +129,17 @@ class Storage {
   }
 
   /**
+   * @param {PatternItem} pattern
+   */
+  upsertPattern(pattern) {
+    if (this.find(pattern.url)) {
+      this.updatePattern(pattern.url, pattern);
+    } else {
+      this.addPattern(pattern);
+    }
+  }
+
+  /**
    * @param {string} url
    */
   deletePattern(url) {
