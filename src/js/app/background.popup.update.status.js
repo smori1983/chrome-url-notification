@@ -1,5 +1,4 @@
 const badge = require('./background.badge');
-const Data = require('../notification/data');
 const Storage = require('../notification/storage');
 
 /**
@@ -25,16 +24,20 @@ const listener = (request, sender, sendResponse) => {
     return;
   }
 
-  const data = new Data();
   const storage = new Storage();
+  const pattern = storage.findByUrl(request.data.url);
 
-  // TODO: Check return value.
-  data.updatePattern(request.data.url, { status: request.data.status });
+  // TODO: When pattern was not found.
+  if (pattern) {
+    pattern.status = request.data.status;
+
+    storage.updatePattern(request.data.url, pattern);
+  }
 
   badge.draw(request.data.tabId, true, request.data.status);
 
   sendResponse({
-    item: storage.findByUrl(request.data.url),
+    item: pattern,
     status: request.data.status,
   });
 };
