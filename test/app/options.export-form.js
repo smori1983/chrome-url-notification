@@ -40,6 +40,7 @@ describe('app.options.exportForm', () => {
 
   describe('exported json', () => {
     it('version should be current', () => {
+      storage.init(testUtil.currentVersion().toString(), []);
       options.header().clickExport();
 
       const json = options.exportForm().json();
@@ -48,6 +49,7 @@ describe('app.options.exportForm', () => {
     });
 
     it('without pattern data', () => {
+      storage.init(testUtil.currentVersion().toString(), []);
       options.header().clickExport();
 
       const json = options.exportForm().json();
@@ -57,14 +59,18 @@ describe('app.options.exportForm', () => {
 
     it('with pattern data', () => {
       storage.init(testUtil.currentVersion().toString(), [
-        testUtil.makePatternItem({}),
+        testUtil.makePatternItem({url: 'site2.example.com', msg: 'site2'}),
+        testUtil.makePatternItem({url: 'site1.example.com', msg: 'site1'}),
       ]);
       options.header().clickExport();
 
       const json = options.exportForm().json();
 
-      assert.strictEqual(json.pattern.length, 1);
-      assert.deepStrictEqual(json.pattern[0], testUtil.makePatternItem({}));
+      assert.strictEqual(json.pattern.length, 2);
+      assert.deepStrictEqual(json.pattern[0].url, 'site1.example.com');
+      assert.deepStrictEqual(json.pattern[0].msg, 'site1');
+      assert.deepStrictEqual(json.pattern[1].url, 'site2.example.com');
+      assert.deepStrictEqual(json.pattern[1].msg, 'site2');
     });
   });
 });

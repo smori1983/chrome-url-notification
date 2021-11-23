@@ -72,6 +72,15 @@ class Storage {
     return JSON.parse(data);
   }
 
+  dump() {
+    const result = {};
+
+    result[this._key.version] = this.currentVersion();
+    result[this._key.pattern] = this.getCollection().sortByMessage().get();
+
+    return result;
+  }
+
   /**
    * @returns {PatternCollection}
    */
