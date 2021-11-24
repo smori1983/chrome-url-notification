@@ -31,6 +31,9 @@ const listener = (request, sender, sendResponse) => {
   const pattern = storage.find(request.data.url);
 
   // TODO: When pattern was not found.
+  // TODO: When sent status was invalid.
+  // See: content.tab.js
+
   if (pattern) {
     pattern.status = request.data.status;
 
