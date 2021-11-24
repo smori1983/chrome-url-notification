@@ -40,9 +40,11 @@ const listener = (request, sender, sendResponse) => {
     if (validator.forUpdatePattern(pattern)) {
       storage.updatePattern(request.data.url, pattern);
     }
-  }
 
-  badge.draw(request.data.tabId, true, request.data.status);
+    badge.draw(request.data.tabId, true, request.data.status);
+  } else {
+    badge.draw(request.data.tabId, false, request.data.status);
+  }
 
   sendResponse({
     item: pattern,

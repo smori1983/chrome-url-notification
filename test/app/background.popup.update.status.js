@@ -45,4 +45,18 @@ describe('app.background.popup.update.status', () => {
     assert.strictEqual(data.item.status, 1);
     assert.strictEqual(data.status, 1);
   });
+
+  it('invoked for non-existing pattern', () => {
+    const res = testUtil.chromeBackground.sendResponse();
+
+    SUT.listen();
+
+    testUtil.chromeBackground.popupUpdateStatusDispatch(20001, 'xxx.example.com', 1, res.callback);
+
+    /** @type {MessageBrowserActionUpdateStatusResponse} */
+    const data = res.data();
+    assert.ok(testUtil.chromeBackground.setBadgeTextCalledWith('', 20001));
+    assert.strictEqual(data.item, null);
+    assert.strictEqual(data.status, 1);
+  });
 });
