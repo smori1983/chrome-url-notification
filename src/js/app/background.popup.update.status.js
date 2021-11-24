@@ -1,5 +1,6 @@
 const badge = require('./background.badge');
 const Storage = require('../notification/storage');
+const Validator = require('../notification/validator');
 
 /**
  * @typedef {Object} MessageBrowserActionUpdateStatus
@@ -25,13 +26,17 @@ const listener = (request, sender, sendResponse) => {
   }
 
   const storage = new Storage();
+  const validator = new Validator();
+
   const pattern = storage.find(request.data.url);
 
   // TODO: When pattern was not found.
   if (pattern) {
     pattern.status = request.data.status;
 
-    storage.updatePattern(request.data.url, pattern);
+    if (validator.forUpdatePattern(pattern)) {
+      storage.updatePattern(request.data.url, pattern);
+    }
   }
 
   badge.draw(request.data.tabId, true, request.data.status);
