@@ -50,14 +50,12 @@ class Finder {
    * @returns {FindResult}
    */
   findFor(url, option) {
-    let i, len;
-
     option = deepMerge(this._defaultFindOption(), option || {});
 
     /** @type {PatternItem[]} */
     const patterns = this._storage.getCollection().get();
 
-    for (i = 0, len = patterns.length; i < len; i++) {
+    for (let i = 0, len = patterns.length; i < len; i++) {
       if (this._makeRegExp(patterns[i].url).test(url)) {
         if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
           return {
