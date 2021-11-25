@@ -1,14 +1,10 @@
 const ClipboardJS = require('clipboard');
-const Config = require('../notification/config');
-const Data = require('../notification/data');
 const Storage = require('../notification/storage');
 const i18n = require('./i18n');
 const formFactory = require('./options.util.form');
 const messageFactory = require('./options.util.message');
 const modalFactory = require('./options.util.modal');
 
-const config = new Config();
-const data = new Data();
 const storage = new Storage();
 
 /**
@@ -28,11 +24,7 @@ const show = ($) => {
     message.show(i18n.get('message_copy_done'));
   });
 
-  const exportData = {
-    version: config.version(),
-    pattern: data.sortByMessage(storage.getAll()),
-  };
-  const json = JSON.stringify(exportData, null, 4);
+  const json = JSON.stringify(storage.dump(), null, 4);
 
   $('#js_export_display').html(json);
 

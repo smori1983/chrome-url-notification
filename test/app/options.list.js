@@ -112,18 +112,18 @@ describe('app.options.list', () => {
     beforeEach(() => {
       storage.init(testUtil.currentVersion().toString(), [
         {
-          url: 'site1.example.com',
-          msg: 'site1',
-          backgroundColor: '111111',
-          displayPosition: 'top',
-          status: 1,
-        },
-        {
           url: 'site2.example.com',
           msg: 'site2',
           backgroundColor: '222222',
           displayPosition: 'bottom',
           status: 0,
+        },
+        {
+          url: 'site1.example.com',
+          msg: 'site1',
+          backgroundColor: '111111',
+          displayPosition: 'top',
+          status: 1,
         },
       ]);
 

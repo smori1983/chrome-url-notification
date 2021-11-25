@@ -1,13 +1,11 @@
 const sprintf = require('sprintf-js').sprintf;
 const Config = require('../notification/config');
-const Data = require('../notification/data');
 const Storage = require('../notification/storage');
 const i18n = require('./i18n');
 const patternForm = require('./options.pattern-form');
 const deleteForm = require('./options.delete-form');
 
 const config = new Config();
-const data = new Data();
 const storage = new Storage();
 
 /**
@@ -74,34 +72,34 @@ const refresh = ($) => {
  * @param {jQuery} $
  */
 const draw = ($) => {
-  const items = data.sortByMessage(storage.getAll());
+  const collection = storage.getCollection().sortByMessage();
 
-  drawBadge($, items);
-  drawTable($, items);
+  drawBadge($, collection);
+  drawTable($, collection);
 };
 
 /**
  * @param {jQuery} $
- * @param {PatternItem[]} items
+ * @param {PatternCollection} collection
  */
-const drawBadge = ($, items) => {
-  $('#js_pattern_list_badge').text(items.length);
+const drawBadge = ($, collection) => {
+  $('#js_pattern_list_badge').text(collection.count());
 };
 
 /**
  * @param {jQuery} $
- * @param {PatternItem[]} items
+ * @param {PatternCollection} collection
  */
-const drawTable = ($, items) => {
+const drawTable = ($, collection) => {
   const $headerArea = $('#js_list_pattern thead');
   const $listArea = $('#js_list_pattern tbody');
 
   $headerArea.empty();
   $listArea.empty();
 
-  if (items.length > 0) {
+  if (collection.count() > 0) {
     makeHeader($).appendTo($headerArea);
-    items.forEach((item) => {
+    collection.get().forEach((item) => {
       makeRow($, item).appendTo($listArea);
     });
   }

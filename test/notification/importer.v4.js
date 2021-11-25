@@ -52,7 +52,7 @@ describe('urlNotification.importer.v4', () => {
 
       SUT.importJson({version: 4, pattern: [arg.item]});
 
-      assert.deepStrictEqual(storage.getAll(), [arg.to]);
+      assert.deepStrictEqual(storage.getCollection().get(), [arg.to]);
     });
 
     given([
@@ -71,7 +71,7 @@ describe('urlNotification.importer.v4', () => {
 
       SUT.importJson({version: 4, pattern: [arg.item]});
 
-      assert.deepStrictEqual(storage.getAll(), [arg.to]);
+      assert.deepStrictEqual(storage.getCollection().get(), [arg.to]);
     });
   });
 });

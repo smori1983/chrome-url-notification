@@ -23,25 +23,23 @@ describe('urlNotification.storage.withoutData', () => {
     it('delete all items', () => {
       SUT.deleteAll();
 
-      assert.strictEqual(SUT.getCount(), 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
 
     it('delete 1 item - no matching data', () => {
       SUT.deletePattern('https://example.com/');
 
-      assert.strictEqual(SUT.getCount(), 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
   });
 
   describe('read', () => {
     it('get all items', () => {
-      const all = SUT.getAll();
-
-      assert.strictEqual(all.length, 0);
+      assert.strictEqual(SUT.getCollection().count(), 0);
     });
 
     it('find by url - no matching data', () => {
-      assert.strictEqual(SUT.findByUrl('https://example.com/'), null);
+      assert.strictEqual(SUT.find('https://example.com/'), null);
     });
   });
 
@@ -56,7 +54,7 @@ describe('urlNotification.storage.withoutData', () => {
 
       SUT.updatePattern('https://example.com/', item);
 
-      assert.strictEqual(SUT.findByUrl('https://example.com/'), null);
+      assert.strictEqual(SUT.find('https://example.com/'), null);
     });
 
     it('duplicated pattern cannot be registered', () => {
@@ -71,7 +69,7 @@ describe('urlNotification.storage.withoutData', () => {
       SUT.addPattern(item);
       SUT.addPattern(item);
 
-      assert.strictEqual(SUT.getCount(), 1);
+      assert.strictEqual(SUT.getCollection().count(), 1);
     });
   });
 });

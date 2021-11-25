@@ -54,7 +54,7 @@ describe('urlNotification.migration.from.1', () => {
 
     SUT.execute();
 
-    assert.deepStrictEqual(storage.getAll(), [arg.to]);
+    assert.deepStrictEqual(storage.getCollection().get(), [arg.to]);
     assert.strictEqual(storage.currentVersion(), testUtil.currentVersion());
   });
 });

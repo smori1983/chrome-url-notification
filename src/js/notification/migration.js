@@ -25,7 +25,7 @@ class Migration {
 
   execute() {
     const version = this.currentVersion();
-    const patterns = this._storage.getAll();
+    const patterns = this._storage.getCollection().get();
 
     this._persist(this._migrationExecutor.toLatest(patterns, version));
   }

@@ -30,6 +30,19 @@ class Validator {
   }
 
   /**
+   * @param {PatternItem} pattern
+   * @returns {boolean}
+   */
+  forUpdatePattern(pattern) {
+    const dataForValidation = {
+      version: this._config.version(),
+      pattern: [pattern],
+    };
+
+    return this.forImportJson(dataForValidation);
+  }
+
+  /**
    * @param {object} json
    * @returns {boolean}
    * @private

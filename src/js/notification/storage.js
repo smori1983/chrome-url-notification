@@ -1,3 +1,5 @@
+const PatternCollection = require('./pattern-collection');
+
 /**
  * @typedef {object} PatternItem
  * @property {string} url Added schema version: 0
@@ -57,16 +59,10 @@ class Storage {
   }
 
   /**
-   * @returns {number}
-   */
-  getCount() {
-    return this.getAll().length;
-  }
-
-  /**
    * @returns {PatternItem[]}
+   * @private
    */
-  getAll() {
+  _getAll() {
     const data = localStorage.getItem(this._key.pattern);
 
     if (data === null) {
@@ -76,14 +72,30 @@ class Storage {
     return JSON.parse(data);
   }
 
+  dump() {
+    const result = {};
+
+    result[this._key.version] = this.currentVersion();
+    result[this._key.pattern] = this.getCollection().sortByMessage().get();
+
+    return result;
+  }
+
+  /**
+   * @returns {PatternCollection}
+   */
+  getCollection() {
+    return new PatternCollection(this._getAll());
+  }
+
   /**
    * Finds pattern item by exact match of URL pattern.
    *
    * @param {string} url
    * @returns {(PatternItem|null)}
    */
-  findByUrl(url) {
-    const patterns = this.getAll();
+  find(url) {
+    const patterns = this._getAll();
 
     for (let i = 0, len = patterns.length; i < len; i++) {
       if (patterns[i].url === url) {
@@ -98,11 +110,11 @@ class Storage {
    * @param {PatternItem} pattern
    */
   addPattern(pattern) {
-    if (this.findByUrl(pattern.url)) {
+    if (this.find(pattern.url)) {
       return;
     }
 
-    this._savePattern(this.getAll().concat(pattern));
+    this._savePattern(this._getAll().concat(pattern));
   }
 
   /**
@@ -110,8 +122,19 @@ class Storage {
    * @param {PatternItem} pattern
    */
   updatePattern(originalUrl, pattern) {
-    if (this.findByUrl(originalUrl)) {
+    if (this.find(originalUrl)) {
       this.deletePattern(originalUrl);
+      this.addPattern(pattern);
+    }
+  }
+
+  /**
+   * @param {PatternItem} pattern
+   */
+  upsertPattern(pattern) {
+    if (this.find(pattern.url)) {
+      this.updatePattern(pattern.url, pattern);
+    } else {
       this.addPattern(pattern);
     }
   }
@@ -120,7 +143,7 @@ class Storage {
    * @param {string} url
    */
   deletePattern(url) {
-    const filtered = this.getAll().filter((pattern) => {
+    const filtered = this._getAll().filter((pattern) => {
       return pattern.url !== url;
     });
 

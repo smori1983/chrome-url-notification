@@ -20,6 +20,9 @@ const listen = ($, pageInfo) => {
       return;
     }
 
+    // TODO: When item was not sent
+    // See: background.popup.update.status.js
+
     if (request.data.item) {
       const ui = uiFactory.init($, pageInfo);
 

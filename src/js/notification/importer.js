@@ -42,11 +42,7 @@ class Importer {
    */
   _persist(patterns) {
     patterns.forEach((pattern) => {
-      if (this._storage.findByUrl(pattern.url)) {
-        this._storage.updatePattern(pattern.url, pattern);
-      } else {
-        this._storage.addPattern(pattern);
-      }
+      this._storage.upsertPattern(pattern);
     });
   }
 }
