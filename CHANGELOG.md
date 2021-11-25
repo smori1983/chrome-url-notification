@@ -5,6 +5,7 @@
 
 ### Development
 
+- Refactoring.
 - Update `bootstrap` (`v4.6`)
 - Update `bootstrap-colorpicker` (`v3.4`)
 
