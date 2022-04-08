@@ -40,6 +40,9 @@ jobs:
       - run:
           name: Webpack build for production
           command: npm run build:prod
+      - run:
+          name: Coverage
+          command: npm run coverage:report
 
 workflows:
   # Below is the definition of your workflow.
