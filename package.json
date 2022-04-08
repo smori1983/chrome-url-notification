@@ -14,7 +14,7 @@
     "test": "mocha --require mock-local-storage test/*",
     "test:app": "mocha --require mock-local-storage test/app/*",
     "test:urlNotification": "mocha --require mock-local-storage test/notification/*",
-    "test:coverage": "istanbul cover --print both _mocha -- test/* --require mock-local-storage",
+    "test:coverage": "nyc --reporter=text --reporter=html npm run test ",
     "test:watch": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
     "test:app:watch": "watch 'npm run test:app' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
     "test:urlNotification:watch": "watch 'npm run test:urlNotification' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
