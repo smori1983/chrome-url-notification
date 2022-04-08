@@ -18,7 +18,8 @@
     "test:watch": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
     "test:app:watch": "watch 'npm run test:app' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
     "test:urlNotification:watch": "watch 'npm run test:urlNotification' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
-    "coverage:report": "istanbul cover _mocha -- test/* --require mock-local-storage && codecov"
+    "coverage:test": "nyc npm run test",
+    "coverage:report": "nyc report --reporter=lcov"
   },
   "dependencies": {
     "bootstrap": "^4.6.1",
