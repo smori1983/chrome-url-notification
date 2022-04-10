@@ -6,7 +6,6 @@
   "scripts": {
     "build:prod": "webpack",
     "build:dev": "webpack --config webpack.dev.config.js",
-    "build:dev:watch": "watch 'npm run build:dev' src/ --interval=1 --ignoreDotFiles",
     "build:test": "webpack --config webpack.test.config.js",
     "license:summary": "license-checker --production --summary --unknown",
     "lint": "eslint src/ test/ test_lib/",
@@ -15,9 +14,6 @@
     "test:app": "mocha --require mock-local-storage test/app/*",
     "test:notification": "mocha --require mock-local-storage test/notification/*",
     "test:coverage": "nyc --reporter=text --reporter=html npm run test ",
-    "test:watch": "watch 'npm run test' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
-    "test:app:watch": "watch 'npm run test:app' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
-    "test:notification:watch": "watch 'npm run test:urlNotification' src/ test/ test_lib/ --interval=1 --ignoreDotFiles",
     "coverage:test": "nyc npm run test",
     "coverage:report": "nyc report --reporter=lcov"
   },
