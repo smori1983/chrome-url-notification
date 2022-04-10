@@ -32,12 +32,12 @@ jobs:
           name: Webpack build for production
           command: npm run build:prod
       - run:
-          name: Coverage report
+          name: Report coverage
           command: npm run coverage:report
 
 workflows:
   # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
-  sample:
+  main-workflow:
     jobs:
       - build-and-test:
           # https://circleci.com/developer/orbs/orb/codecov/codecov
