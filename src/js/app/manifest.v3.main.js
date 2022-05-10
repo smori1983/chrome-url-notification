@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const Storage = require('../notification/storage');
+const StorageLegacy = require('../notification/storage-legacy');
 
 const completed = () => {
   $('#initial-message').hide();
@@ -11,8 +11,8 @@ $(() => {
     if (result.version && result.pattern) {
       completed();
     } else {
-      const storage = new Storage();
-      const data = storage.dump();
+      const storageLegacy = new StorageLegacy();
+      const data = storageLegacy.dump();
 
       chrome.storage.local.set({
         version: data.version.toString(),
