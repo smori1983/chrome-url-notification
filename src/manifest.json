@@ -33,7 +33,7 @@
   },
 
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "background.js"
   },
 
   "options_page": "html/options.html"

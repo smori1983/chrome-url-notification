@@ -8,7 +8,7 @@ const prepare = (mode, imageDir, outputPath) => {
     entry: {
       background: {
         import: './src/js/app/background.main.js',
-        filename: 'js/background.js',
+        filename: 'background.js',
       },
       content: {
         import: './src/js/app/content.main.js',
