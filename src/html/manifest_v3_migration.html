@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Chrome URL Notification</title>
+</head>
+<body>
+    <h1>Chrome URL Notification</h1>
+
+    <div id="initial-message">
+        <p>Migrating storage ...</p>
+    </div>
+
+    <div id="complete-message" style="display: none;">
+        <p>Data migration completed (from <code>localStorage</code> to <code>chrome.storage</code>).</p>
+        <p>Please rest assured that <code>chrome.storage</code> saves the data only in your local PC like <code>localStorage</code>.</p>
+    </div>
+
+    <script type="text/javascript" src="/js/manifest.v3.js"></script>
+</body>
+</html>

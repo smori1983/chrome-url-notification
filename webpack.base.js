@@ -22,6 +22,10 @@ const prepare = (mode, imageDir, outputPath) => {
         import: './src/js/app/popup.main.js',
         filename: 'js/popup.js',
       },
+      manifestV3: {
+        import: './src/js/app/manifest.v3.main.js',
+        filename: 'js/manifest.v3.js',
+      },
     },
     plugins: [
       new webpack.ProgressPlugin(),
