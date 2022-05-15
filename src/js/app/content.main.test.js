@@ -11,9 +11,13 @@ global.chrome = chrome;
 const $ = global.jQuery = require('jquery');
 const pageInfoFactory = require('./content.pageInfo');
 const contentFind = require('./content.find');
-const contentTab = require('./content.tab');
 
 const pageInfo = pageInfoFactory.init(window.location, $);
 
-contentFind.findForPage($, pageInfo.get());
-contentTab.listen($, pageInfo.get());
+const main = async () => {
+  await contentFind.setUp($, pageInfo.get());
+};
+
+(async () => {
+  await main();
+})();
