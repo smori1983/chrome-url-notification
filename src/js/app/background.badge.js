@@ -19,10 +19,10 @@ const determineText = (matched, status) => {
  * @param {(number|null)} status
  */
 const draw = (tabId, matched, status) => {
-  chrome.browserAction.setBadgeText({
+  chrome.action.setBadgeText({
     text: determineText(matched, status),
     tabId: tabId,
-  });
+  }).then();
 };
 
 module.exports.draw = draw;

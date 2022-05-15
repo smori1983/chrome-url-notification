@@ -31,18 +31,18 @@ const handlers = ($) => {
   };
 
   onClick('#js_button_add_pattern', () => {
-    patternForm.show($, 'add', patternForm.defaultValues(), () => {
-      patternList.refresh($);
+    patternForm.show($, 'add', patternForm.defaultValues(), async () => {
+      await patternList.refresh($);
     });
   });
 
-  onClick('#js_button_export', () => {
-    exportForm.show($);
+  onClick('#js_button_export', async () => {
+    await exportForm.show($);
   });
 
   onClick('#js_button_import', () => {
-    importForm.show($, () => {
-      patternList.refresh($);
+    importForm.show($, async () => {
+      await patternList.refresh($);
     })
   });
 };

@@ -1,5 +1,7 @@
 const i18n = require('./i18n');
-const popupFind = require('./popup.find');
+const badge = require('./background.badge');
+const Finder = require('../notification/finder');
+const Storage = require('../notification/storage');
 
 /**
  * @param {jQuery} $
@@ -12,7 +14,7 @@ const showCommonMenu = ($) => {
       e.preventDefault();
       chrome.tabs.create({
         url: chrome.runtime.getURL('html/options.html'),
-      });
+      }).then();
     })
     .appendTo($('#link_options'));
 };
@@ -26,8 +28,34 @@ const showMatchedMenu = ($) => {
   chrome.tabs.query({
     currentWindow: true,
     active: true,
-  }, (/** @type {chrome.tabs.Tab[]} */ tabs) => {
-    popupFind.findForTab($, tabs[0]);
+  }, async (tabs) => {
+    const finder = new Finder();
+    const findResult = await finder.findFor(tabs[0].url, {
+      ignoreStatus: true,
+    });
+
+    if (findResult.matched === false) {
+      $('#block_for_matched_page').hide();
+
+      return;
+    }
+
+    $('#pattern_status')
+      .prop('checked', findResult.data.status === 1)
+      .on('click', async (e) => {
+        const url = findResult.data.url;
+        const status = $(e.currentTarget).prop('checked') ? 1 : 0;
+
+        const storage = new Storage();
+        const pattern = await storage.find(url);
+
+        if (pattern) {
+          pattern.status = status;
+          await storage.updatePattern(url, pattern);
+
+          badge.draw(tabs[0].id, true, status);
+        }
+      });
   });
 };
 

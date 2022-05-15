@@ -1,4 +1,5 @@
 const $ = require('jquery');
+const v3Util = require('./manifest.v3.util');
 const StorageLegacy = require('../notification/storage-legacy');
 
 const completed = () => {
@@ -6,20 +7,18 @@ const completed = () => {
   $('#complete-message').show();
 };
 
-$(() => {
-  chrome.storage.local.get(['version', 'pattern'], (result) => {
-    if (result.version && result.pattern) {
-      completed();
-    } else {
-      const storageLegacy = new StorageLegacy();
-      const data = storageLegacy.dump();
+$(async () => {
+  if (await v3Util.hasData()) {
+    completed();
+  } else {
+    const storageLegacy = new StorageLegacy();
+    const data = storageLegacy.dump();
 
-      chrome.storage.local.set({
-        version: data.version.toString(),
-        pattern: JSON.stringify(data.pattern),
-      }, () => {
-        completed();
-      });
-    }
-  });
+    await chrome.storage.local.set({
+      version: data.version.toString(),
+      pattern: JSON.stringify(data.pattern),
+    });
+
+    completed();
+  }
 });

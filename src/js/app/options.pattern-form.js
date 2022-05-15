@@ -96,9 +96,9 @@ const show = ($, mode, item, callback) => {
     clear($);
   });
 
-  $('#js_form_pattern').on('submit', (e) => {
+  $('#js_form_pattern').on('submit', async (e) => {
     e.preventDefault();
-    submit($, item, mode, () => {
+    await submit($, item, mode, () => {
       modal.hide();
       callback();
     });
@@ -122,10 +122,10 @@ const show = ($, mode, item, callback) => {
  * @param {string} mode
  * @param {function} callback
  */
-const submit = ($, item, mode, callback) => {
+const submit = async ($, item, mode, callback) => {
   resetValidator($);
 
-  const result = validate($, mode, item);
+  const result = await validate($, mode, item);
   if (result.error) {
     result.error.details.forEach((item) => {
       const selector = '#js_input_' + item.path[0] + '-error';
@@ -138,11 +138,11 @@ const submit = ($, item, mode, callback) => {
   const saveData = getValues($);
 
   if (mode === 'add') {
-    storage.addPattern(saveData);
+    await storage.addPattern(saveData);
   }
 
   if (mode === 'edit') {
-    storage.updatePattern(item.url, saveData);
+    await storage.updatePattern(item.url, saveData);
   }
 
   callback();
@@ -153,7 +153,7 @@ const submit = ($, item, mode, callback) => {
  * @param {string} mode
  * @param {PatternItem} item
  */
-const validate = ($, mode, item) => {
+const validate = async ($, mode, item) => {
   const displayPositionChoices = [
     'top',
     'top_left',
@@ -162,7 +162,7 @@ const validate = ($, mode, item) => {
     'bottom_left',
     'bottom_right',
   ];
-  const custom = setUpJoi();
+  const custom = await setUpJoi();
   const schema = custom.object({
     url: custom.string().required().existingUrl(mode, item.url),
     msg: custom.string().required(),
@@ -179,7 +179,12 @@ const validate = ($, mode, item) => {
 /**
  * @return {Joi.Root}
  */
-const setUpJoi = () => {
+const setUpJoi = async () => {
+  const collection = await storage.getCollection();
+  const existingUrls = collection.get().map((item) => {
+    return item.url;
+  });
+
   return Joi.extend({
     type: 'string',
     base: Joi.string(),
@@ -220,13 +225,13 @@ const setUpJoi = () => {
         },
         validate(value, helpers, { mode, originalUrl }) {
           if (mode === 'add') {
-            if (storage.find(value)) {
+            if (existingUrls.indexOf(value) >= 0) {
               return helpers.error('string.existingUrl');
             }
           }
 
           if (mode === 'edit') {
-            if (value !== originalUrl && storage.find(value)) {
+            if (value !== originalUrl && existingUrls.indexOf(value) >= 0) {
               return helpers.error('string.existingUrl');
             }
           }

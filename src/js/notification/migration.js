@@ -23,11 +23,15 @@ class Migration {
     this._storage = new Storage();
   }
 
-  execute() {
-    const version = this.currentVersion();
-    const patterns = this._storage.getCollection().get();
+  /**
+   * @return {Promise<void>}
+   */
+  async execute() {
+    const version = await this.currentVersion();
+    const collection = await this._storage.getCollection();
+    const patterns = collection.get();
 
-    this._persist(this._migrationExecutor.toLatest(patterns, version));
+    await this._persist(this._migrationExecutor.toLatest(patterns, version));
   }
 
   /**
@@ -36,24 +40,25 @@ class Migration {
    * Assumes that patterns are fully migrated.
    *
    * @param {PatternItem[]} patterns
+   * @return {Promise<void>}
    * @private
    */
-  _persist(patterns) {
-    this._storage.replace(this._config.version(), patterns);
+  async _persist(patterns) {
+    await this._storage.replace(this._config.version(), patterns);
   }
 
   /**
-   * @returns {boolean}
+   * @return {Promise<boolean>}
    */
-  hasVersion() {
-    return this._storage.hasVersion();
+  async hasVersion() {
+    return await this._storage.hasVersion();
   }
 
   /**
-   * @returns {number}
+   * @return {Promise<number>}
    */
-  currentVersion() {
-    return this._storage.currentVersion();
+  async currentVersion() {
+    return await this._storage.currentVersion();
   }
 }
 

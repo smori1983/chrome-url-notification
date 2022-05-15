@@ -10,7 +10,7 @@ const storage = new Storage();
 /**
  * @param {jQuery} $
  */
-const show = ($) => {
+const show = async ($) => {
   formFactory.initForm($, '#js_modal_export_container', '#js_modal_export_html');
 
   const clipboard = new ClipboardJS('#js_export_copy', {
@@ -24,7 +24,7 @@ const show = ($) => {
     message.show(i18n.get('message_copy_done'));
   });
 
-  const json = JSON.stringify(storage.dump(), null, 4);
+  const json = JSON.stringify(await storage.dump(), null, 4);
 
   $('#js_export_display').html(json);
 

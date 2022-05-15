@@ -21,19 +21,21 @@ class Storage {
   }
 
   /**
-   * @returns {boolean}
+   * @return {Promise<boolean>}
    */
-  hasVersion() {
-    return this._isValidStringAsVersion(this._getVersion());
+  async hasVersion() {
+    const version = await this._getVersion();
+
+    return this._isValidStringAsVersion(version);
   }
 
   /**
    * Gets the version stored in storage.
    *
-   * @returns {number}
+   * @return {Promise<number>}
    */
-  currentVersion() {
-    const version = this._getVersion();
+  async currentVersion() {
+    const version = await this._getVersion();
 
     if (this._isValidStringAsVersion(version)) {
       return parseInt(version, 10);
@@ -43,15 +45,22 @@ class Storage {
   }
 
   /**
+   * @return {Promise<string>}
    * @private
    */
-  _getVersion() {
-    return localStorage.getItem(this._key.version);
+  async _getVersion() {
+    const result = await chrome.storage.local.get(this._key.version);
+
+    if (!result[this._key.version]) {
+      return null;
+    }
+
+    return result[this._key.version];
   }
 
   /**
    * @param {*} value
-   * @returns {boolean}
+   * @return {boolean}
    * @private
    */
   _isValidStringAsVersion(value) {
@@ -59,43 +68,53 @@ class Storage {
   }
 
   /**
-   * @returns {PatternItem[]}
+   * @return {PatternItem[]}
+   * @return {Promise<PatternItem[]>}
    * @private
    */
-  _getAll() {
-    const data = localStorage.getItem(this._key.pattern);
+  async _getAll() {
+    const result = await chrome.storage.local.get(this._key.pattern);
 
-    if (data === null) {
+    if (!result[this._key.pattern]) {
       return [];
     }
 
-    return JSON.parse(data);
+    return JSON.parse(result[this._key.pattern]);
   }
 
-  dump() {
+  /**
+   * @return {Promise<Object>}
+   */
+  async dump() {
     const result = {};
 
-    result[this._key.version] = this.currentVersion();
-    result[this._key.pattern] = this.getCollection().sortByMessage().get();
+    const version = await this.currentVersion();
+    const collection = await this.getCollection();
+
+    result[this._key.version] = version;
+    result[this._key.pattern] = collection.sortByMessage().get();
 
     return result;
   }
 
   /**
-   * @returns {PatternCollection}
+   *
+   * @return {Promise<PatternCollection>}
    */
-  getCollection() {
-    return new PatternCollection(this._getAll());
+  async getCollection() {
+    const patterns = await this._getAll();
+
+    return new PatternCollection(patterns);
   }
 
   /**
    * Finds pattern item by exact match of URL pattern.
    *
    * @param {string} url
-   * @returns {(PatternItem|null)}
+   * @return {Promise<PatternItem|null>}
    */
-  find(url) {
-    const patterns = this._getAll();
+  async find(url) {
+    const patterns = await this._getAll();
 
     for (let i = 0, len = patterns.length; i < len; i++) {
       if (patterns[i].url === url) {
@@ -108,75 +127,103 @@ class Storage {
 
   /**
    * @param {PatternItem} pattern
+   * @return {Promise<void>}
    */
-  addPattern(pattern) {
-    if (this.find(pattern.url)) {
+  async addPattern(pattern) {
+    if (await this.find(pattern.url)) {
       return;
     }
 
-    this._savePattern(this._getAll().concat(pattern));
+    const allData = await this._getAll();
+
+    await this._savePattern(allData.concat(pattern));
   }
 
   /**
+   * To invoke storage change event once, do not call deletePattern() and addPattern().
+   *
    * @param {string} originalUrl
    * @param {PatternItem} pattern
+   * @return {Promise<void>}
    */
-  updatePattern(originalUrl, pattern) {
-    if (this.find(originalUrl)) {
-      this.deletePattern(originalUrl);
-      this.addPattern(pattern);
+  async updatePattern(originalUrl, pattern) {
+    if (await this.find(originalUrl)) {
+      const allData = await this._getAll();
+      const filtered = allData.filter((pattern) => {
+        return pattern.url !== originalUrl;
+      });
+      const newData = filtered.concat(pattern);
+
+      await this._savePattern(newData);
     }
   }
 
   /**
    * @param {PatternItem} pattern
+   * @return {Promise<void>}
    */
-  upsertPattern(pattern) {
-    if (this.find(pattern.url)) {
-      this.updatePattern(pattern.url, pattern);
+  async upsertPattern(pattern) {
+    if (await this.find(pattern.url)) {
+      await this.updatePattern(pattern.url, pattern);
     } else {
-      this.addPattern(pattern);
+      await this.addPattern(pattern);
     }
   }
 
   /**
    * @param {string} url
+   * @return {Promise<void>}
    */
-  deletePattern(url) {
-    const filtered = this._getAll().filter((pattern) => {
+  async deletePattern(url) {
+    const allData = await this._getAll();
+    const filtered = allData.filter((pattern) => {
       return pattern.url !== url;
     });
 
-    this._savePattern(filtered);
+    await this._savePattern(filtered);
   }
 
-  deleteAll() {
-    this._savePattern([]);
+  /**
+   * @return {Promise<void>}
+   */
+  async deleteAll() {
+    await this._savePattern([]);
   }
 
   /**
    * @param {number} version
    * @param {PatternItem[]} patterns
+   * @return {Promise<void>}
    */
-  replace(version, patterns) {
-    this._saveVersion(version);
-    this._savePattern(patterns);
+  async replace(version, patterns) {
+    await this._saveVersion(version);
+    await this._savePattern(patterns);
   }
 
   /**
    * @param {number} version
+   * @return {Promise<void>}
    * @private
    */
-  _saveVersion(version) {
-    localStorage.setItem(this._key.version, version.toString());
+  async _saveVersion(version) {
+    const saveData = {};
+
+    saveData[this._key.version] = version.toString();
+
+    await chrome.storage.local.set(saveData);
   }
 
   /**
    * @param {PatternItem[]} data
+   * @return {Promise<void>}
    * @private
    */
-  _savePattern(data) {
-    localStorage.setItem(this._key.pattern, JSON.stringify(data));
+  async _savePattern(data) {
+    const saveData = {};
+
+    saveData[this._key.pattern] = JSON.stringify(data);
+
+    await chrome.storage.local.set(saveData);
   }
 }
 

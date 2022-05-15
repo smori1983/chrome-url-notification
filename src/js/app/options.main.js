@@ -11,9 +11,11 @@ const i18n = require('./i18n');
 const header = require('./options.header');
 const patternList = require('./options.list');
 
-$(() => {
+// ToDo: Add chrome.storage data check code.
+
+$(async () => {
   header.show($);
-  patternList.show($);
+  await patternList.show($);
 
   i18n.apply($, 'body');
 });

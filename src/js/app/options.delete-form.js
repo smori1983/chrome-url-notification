@@ -16,9 +16,9 @@ const show = ($, item, callback) => {
   $('#js_form_delete_pattern').text(item.url);
   $('#js_form_delete_message').text(item.msg);
 
-  $('#js_form_delete').on('submit', (e) => {
+  $('#js_form_delete').on('submit', async (e) => {
     e.preventDefault();
-    storage.deletePattern(item.url);
+    await storage.deletePattern(item.url);
     modal.hide();
     callback();
   });

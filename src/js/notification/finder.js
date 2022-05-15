@@ -47,13 +47,15 @@ class Finder {
    *
    * @param {string} url
    * @param {FindOption} [option]
-   * @returns {FindResult}
+   * @return {Promise<FindResult>}
    */
-  findFor(url, option) {
+  async findFor(url, option) {
     option = deepMerge(this._defaultFindOption(), option || {});
 
+    const collection = await this._storage.getCollection();
+
     /** @type {PatternItem[]} */
-    const patterns = this._storage.getCollection().get();
+    const patterns = collection.get();
 
     for (let i = 0, len = patterns.length; i < len; i++) {
       if (this._makeRegExp(patterns[i].url).test(url)) {
