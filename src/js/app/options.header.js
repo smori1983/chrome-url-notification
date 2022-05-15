@@ -1,5 +1,6 @@
 const exportForm = require('./options.export-form');
 const importForm = require('./options.import-form');
+const oldDataForm = require('./options.old-data-form');
 const patternForm = require('./options.pattern-form');
 const patternList = require('./options.list');
 
@@ -44,6 +45,10 @@ const handlers = ($) => {
     importForm.show($, async () => {
       await patternList.refresh($);
     })
+  });
+
+  onClick('#js_button_old_data', () => {
+    oldDataForm.show($);
   });
 };
 

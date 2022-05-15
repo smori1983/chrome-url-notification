@@ -44,6 +44,9 @@
   "label_message": {
     "message": "Message"
   },
+  "label_old_data": {
+    "message": "Old data"
+  },
   "label_operation": {
     "message": "Operation"
   },

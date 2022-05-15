@@ -17,6 +17,9 @@
                     <li class="nav-item"><a class="nav-link" href="#" id="js_button_export" data-i18n="label_export"></a></li>
                     <li class="nav-item"><a class="nav-link" href="#" id="js_button_import" data-i18n="label_import"></a></li>
                 </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" id="js_button_old_data" data-i18n="label_old_data"></a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -174,6 +177,24 @@
         </div>
     </div>
 </div>
+</script>
+
+<div id="js_modal_old_data_container"></div>
+
+<script type="text/template" id="js_modal_old_data_html">
+    <div id="js_modal_old_data" class="modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <pre id="js_old_data_display" class="border p-2"></pre>
+                </div>
+                <div class="modal-footer">
+                    <span id="js_old_data_message" class="text-success"></span>
+                    <button id="js_old_data_copy" class="btn btn-success" data-clipboard-target="#js_old_data_display" data-i18n="label_copy"></button>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/javascript" src="/js/options.js"></script>
