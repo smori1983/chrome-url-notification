@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Chrome URL Notification</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand fixed-top navbar-dark bg-dark">
+            <div class="container">
+                <span class="navbar-brand">Chrome URL Notification<span id="js_version" class="ml-3"></span></span>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="#" id="js_button_options_page" data-i18n="label_options"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="initial-message">
+            <p>Migrating storage ...</p>
+        </div>
+
+        <div id="complete-message" style="display: none;">
+            <p>Data migration completed (from <code>localStorage</code> to <code>chrome.storage</code>).</p>
+            <p>Please rest assured that <code>chrome.storage</code> saves the data only in your local PC like <code>localStorage</code>.</p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/js/manifest.v3.js"></script>
+</body>
+</html>

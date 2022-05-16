@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
 
   "name": "Chrome URL Notification",
   "description": "Notify user when the URL matches the registered patterns.",
@@ -14,6 +14,7 @@
   "default_locale": "en",
 
   "permissions": [
+    "storage",
     "tabs"
   ],
 
@@ -25,17 +26,14 @@
     "run_at": "document_end"
   }],
 
-  "browser_action": {
+  "action": {
     "default_icon": "image/icon_16.png",
     "default_title": "Chrome URL Notification",
     "default_popup": "html/popup.html"
   },
 
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
+    "service_worker": "background.js"
   },
 
   "options_page": "html/options.html"

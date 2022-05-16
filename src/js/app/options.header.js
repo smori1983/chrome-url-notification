@@ -1,5 +1,6 @@
 const exportForm = require('./options.export-form');
 const importForm = require('./options.import-form');
+const oldDataForm = require('./options.old-data-form');
 const patternForm = require('./options.pattern-form');
 const patternList = require('./options.list');
 
@@ -31,19 +32,23 @@ const handlers = ($) => {
   };
 
   onClick('#js_button_add_pattern', () => {
-    patternForm.show($, 'add', patternForm.defaultValues(), () => {
-      patternList.refresh($);
+    patternForm.show($, 'add', patternForm.defaultValues(), async () => {
+      await patternList.refresh($);
     });
   });
 
-  onClick('#js_button_export', () => {
-    exportForm.show($);
+  onClick('#js_button_export', async () => {
+    await exportForm.show($);
   });
 
   onClick('#js_button_import', () => {
-    importForm.show($, () => {
-      patternList.refresh($);
+    importForm.show($, async () => {
+      await patternList.refresh($);
     })
+  });
+
+  onClick('#js_button_old_data', () => {
+    oldDataForm.show($);
   });
 };
 

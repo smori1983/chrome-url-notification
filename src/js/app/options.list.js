@@ -19,8 +19,8 @@ const initEventHandler = ($) => {
     if ($element.data('un-action') === 'pattern-item-copy') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      patternForm.show($, 'add', $element.data('un-pattern-item'), () => {
-        refresh($);
+      patternForm.show($, 'add', $element.data('un-pattern-item'), async () => {
+        await refresh($);
       });
     }
   });
@@ -30,8 +30,8 @@ const initEventHandler = ($) => {
     if ($element.data('un-action') === 'pattern-item-edit') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      patternForm.show($, 'edit', $element.data('un-pattern-item'), () => {
-        refresh($);
+      patternForm.show($, 'edit', $element.data('un-pattern-item'), async () => {
+        await refresh($);
       });
     }
   });
@@ -41,41 +41,42 @@ const initEventHandler = ($) => {
     if ($element.data('un-action') === 'pattern-item-delete') {
       e.preventDefault();
       $(e.target).trigger('blur');
-      deleteForm.show($, $element.data('un-pattern-item'), () => {
-        refresh($);
+      deleteForm.show($, $element.data('un-pattern-item'), async () => {
+        await refresh($);
       });
     }
   });
 
-  $('#js_list_pattern_reload').on('click', (e) => {
+  $('#js_list_pattern_reload').on('click', async (e) => {
     e.preventDefault();
-    refresh($);
+    await refresh($);
   });
 };
 
 /**
  * @param {jQuery} $
  */
-const show = ($) => {
+const show = async ($) => {
   initEventHandler($);
-  draw($);
+  await draw($);
 };
 
 /**
  * @param {jQuery} $
  */
-const refresh = ($) => {
-  draw($);
+const refresh = async ($) => {
+  await draw($);
 };
 
 /**
  * @param {jQuery} $
  */
-const draw = ($) => {
-  const collection = storage.getCollection().sortByMessage();
+const draw = async ($) => {
+  const collection = await storage.getCollection();
+  const sorted = collection.sortByMessage();
 
-  drawBadge($, collection);
-  drawTable($, collection);
+  drawBadge($, sorted);
+  drawTable($, sorted);
 };
 
 /**

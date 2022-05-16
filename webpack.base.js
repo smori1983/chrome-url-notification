@@ -8,7 +8,7 @@ const prepare = (mode, imageDir, outputPath) => {
     entry: {
       background: {
         import: './src/js/app/background.main.js',
-        filename: 'js/background.js',
+        filename: 'background.js',
       },
       content: {
         import: './src/js/app/content.main.js',
@@ -21,6 +21,10 @@ const prepare = (mode, imageDir, outputPath) => {
       popup: {
         import: './src/js/app/popup.main.js',
         filename: 'js/popup.js',
+      },
+      manifestV3: {
+        import: './src/js/app/manifest.v3.main.js',
+        filename: 'js/manifest.v3.js',
       },
     },
     plugins: [

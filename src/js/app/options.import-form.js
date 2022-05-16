@@ -15,9 +15,9 @@ const validator = new Validator();
 const show = ($, callback) => {
   formFactory.initForm($, '#js_modal_import_container', '#js_modal_import_html');
 
-  $('#js_form_import').on('submit', (e) => {
+  $('#js_form_import').on('submit', async (e) => {
     e.preventDefault();
-    submit($, () => {
+    await submit($, () => {
       modal.hide();
       callback();
     });
@@ -40,7 +40,7 @@ const show = ($, callback) => {
  * @param {jQuery} $
  * @param {function} callback
  */
-const submit = ($, callback) => {
+const submit = async ($, callback) => {
   const jsonText = $('#js_form_import_json').val().trim();
 
   try {
@@ -48,7 +48,7 @@ const submit = ($, callback) => {
 
     validate(json);
 
-    importer.importJson(/** @type {ImportJson} */ json)
+    await importer.importJson(/** @type {ImportJson} */ json);
 
     callback();
   } catch (e) {

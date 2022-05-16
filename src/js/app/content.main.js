@@ -1,9 +1,22 @@
 const $ = require('jquery');
 const pageInfoFactory = require('./content.pageInfo');
 const contentFind = require('./content.find');
-const contentTab = require('./content.tab');
+const v3Util = require('./manifest.v3.util');
 
 const pageInfo = pageInfoFactory.init(window.location, $);
 
-contentFind.findForPage($, pageInfo.get());
-contentTab.listen($, pageInfo.get());
+const main = async () => {
+  await contentFind.setUp($, pageInfo.get());
+};
+
+(async () => {
+  if (await v3Util.hasData()) {
+    await main();
+  } else {
+    chrome.runtime.sendMessage({
+      command: 'invoke:storage:migration',
+    }).catch(() => {
+      // Handle: 'Error: The message port closed before a response was received.'
+    });
+  }
+})();

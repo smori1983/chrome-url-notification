@@ -44,6 +44,9 @@
   "label_message": {
     "message": "メッセージ"
   },
+  "label_old_data": {
+    "message": "旧データ"
+  },
   "label_operation": {
     "message": "操作"
   },

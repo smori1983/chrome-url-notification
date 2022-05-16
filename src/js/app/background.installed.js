@@ -1,8 +1,11 @@
+const v3Util = require('./manifest.v3.util');
 const Migration = require('../notification/migration');
 
-const listener = () => {
-  const migration = new Migration();
-  migration.execute();
+const listener = async () => {
+  if (await v3Util.hasData()) {
+    const migration = new Migration();
+    await migration.execute();
+  }
 };
 
 const listen = () => {

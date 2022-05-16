@@ -26,24 +26,26 @@ class Importer {
    * Assumes that json is validated.
    *
    * @param {ImportJson} json
+   * @return {Promise<void>}
    */
-  importJson(json) {
+  async importJson(json) {
     const version = json.version;
     const patterns = json.pattern;
 
-    this._persist(this._migrationExecutor.toLatest(patterns, version));
+    await this._persist(this._migrationExecutor.toLatest(patterns, version));
   }
 
   /**
    * Persistence phase using storage.
    *
    * @param {PatternItem[]} patterns
+   * @return {Promise<void>}
    * @private
    */
-  _persist(patterns) {
-    patterns.forEach((pattern) => {
-      this._storage.upsertPattern(pattern);
-    });
+  async _persist(patterns) {
+    for (const pattern of patterns) {
+      await this._storage.upsertPattern(pattern);
+    }
   }
 }
 
