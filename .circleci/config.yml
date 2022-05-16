@@ -19,27 +19,28 @@ jobs:
       - run:
           name: Run eslint
           command: npm run lint
-      - run:
-          name: Webpack build for test
-          command: npm run build:test
-      - run:
-          name: Run tests with nyc
-          command: npm run coverage:test
+      #- run:
+      #    name: Webpack build for test
+      #    command: npm run build:test
+      #- run:
+      #    name: Run tests with nyc
+      #    command: npm run coverage:test
       - run:
           name: Webpack build for dev
           command: npm run build:dev
       - run:
           name: Webpack build for production
           command: npm run build:prod
-      - run:
-          name: Report coverage
-          command: npm run coverage:report
+      #- run:
+      #    name: Report coverage
+      #    command: npm run coverage:report
 
 workflows:
   # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
   main-workflow:
     jobs:
-      - build-and-test:
-          # https://circleci.com/developer/orbs/orb/codecov/codecov
-          post-steps:
-            - codecov/upload
+      - build-and-test
+      #- build-and-test:
+      #    # https://circleci.com/developer/orbs/orb/codecov/codecov
+      #    post-steps:
+      #      - codecov/upload
