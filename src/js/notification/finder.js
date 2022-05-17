@@ -1,11 +1,5 @@
-const deepMerge = require('deepmerge');
 const Config = require('./config');
 const Storage = require('./storage');
-
-/**
- * @typedef {object} FindOption
- * @property {boolean} ignoreStatus
- */
 
 /**
  * @typedef {object} FoundItem
@@ -42,16 +36,12 @@ class Finder {
    * Find pattern.
    *
    * Conditions:
-   * - PatternItem.status is 1 (if option.ignoreStatus is false)
    * - PatternItem.url matches url
    *
    * @param {string} url
-   * @param {FindOption} [option]
    * @return {Promise<FindResult>}
    */
-  async findFor(url, option) {
-    option = deepMerge(this._defaultFindOption(), option || {});
-
+  async findFor(url) {
     const collection = await this._storage.getCollection();
 
     /** @type {PatternItem[]} */
@@ -59,11 +49,9 @@ class Finder {
 
     for (let i = 0, len = patterns.length; i < len; i++) {
       if (this._makeRegExp(patterns[i].url).test(url)) {
-        if ((option.ignoreStatus === true) || (option.ignoreStatus === false && patterns[i].status === 1)) {
-          return {
-            matched: true,
-            data: this._createData(patterns[i]),
-          }
+        return {
+          matched: true,
+          data: this._createData(patterns[i]),
         }
       }
     }
@@ -71,16 +59,6 @@ class Finder {
     return {
       matched: false,
       data: null,
-    };
-  }
-
-  /**
-   * @returns {FindOption}
-   * @private
-   */
-  _defaultFindOption() {
-    return {
-      ignoreStatus: false,
     };
   }
 

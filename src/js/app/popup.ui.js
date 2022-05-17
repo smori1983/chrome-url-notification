@@ -30,9 +30,7 @@ const showMatchedMenu = ($) => {
     active: true,
   }, async (tabs) => {
     const finder = new Finder();
-    const findResult = await finder.findFor(tabs[0].url, {
-      ignoreStatus: true,
-    });
+    const findResult = await finder.findFor(tabs[0].url);
 
     if (findResult.matched === false) {
       $('#block_for_matched_page').hide();

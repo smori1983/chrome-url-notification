@@ -98,49 +98,4 @@ describe('urlNotification.finder', () => {
     });
   });
 
-  describe('find option - ignoreStatus', () => {
-    beforeEach(() => {
-      testUtil.initStorage(testUtil.currentVersion().toString(), [
-        testUtil.makePatternItem({url: 'https://example.com/1', msg: '1', status: 1 }),
-        testUtil.makePatternItem({url: 'https://example.com/2', msg: '2', status: 0 }),
-        testUtil.makePatternItem({url: 'https://example.com/3', msg: '3', status: 1 }),
-      ]);
-    });
-
-    it('ignoreStatus not set and pattern exists with status is 1', () => {
-      const result = SUT.findFor('https://example.com/1');
-
-      assert.strictEqual(result.data.message, '1');
-    });
-
-    it('ignoreStatus not set and pattern exists with status is 0', () => {
-      const result = SUT.findFor('https://example.com/2');
-
-      assert.strictEqual(result.data, null);
-    });
-
-    it('ignoreStatus is true and pattern exists with status is 1', () => {
-      const result = SUT.findFor('https://example.com/1', { ignoreStatus: true });
-
-      assert.strictEqual(result.data.message, '1');
-    });
-
-    it('ignoreStatus is true and pattern exists with status is 0', () => {
-      const result = SUT.findFor('https://example.com/2', { ignoreStatus: true });
-
-      assert.strictEqual(result.data.message, '2');
-    });
-
-    it('ignoreStatus is false and pattern exists with status is 1', () => {
-      const result = SUT.findFor('https://example.com/1', { ignoreStatus: false });
-
-      assert.strictEqual(result.data.message, '1');
-    });
-
-    it('ignoreStatus is false and pattern exists with status is 0', () => {
-      const result = SUT.findFor('https://example.com/2', { ignoreStatus: false });
-
-      assert.strictEqual(result.data, null);
-    });
-  });
 });

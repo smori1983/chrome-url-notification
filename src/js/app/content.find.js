@@ -47,9 +47,7 @@ const watch = ($, pageInfo) => {
 const findPattern = async (pageInfo) => {
   const finder = new Finder();
 
-  return await finder.findFor(pageInfo.location.href, {
-    ignoreStatus: true,
-  });
+  return await finder.findFor(pageInfo.location.href);
 };
 
 module.exports.setUp = setUp;
