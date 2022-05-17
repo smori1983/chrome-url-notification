@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## v7.0.0
+
+### Development
+
+- Update for Chrome Extensions manifest V3.
+
+
 ## v6.4.0
 
 ### Development
