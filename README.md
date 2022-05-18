@@ -33,12 +33,6 @@ Register data in options page.
 - status (enabled / disabled)
 
 
-## Message APIs
-
-![message.content](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/message.content.v5.2.png)
-
-![message.content](https://raw.githubusercontent.com/smori1983/chrome-url-notification/images/message.popup.v5.2.png)
-
 ## TODO
 
 Displaying message might not work well in pages that use `position:fixed`.
