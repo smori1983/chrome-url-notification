@@ -35,6 +35,7 @@ const watch = ($, pageInfo) => {
 
       if (findResult.matched) {
         const ui = uiFactory.init($, pageInfo);
+        ui.initUI(findResult.data);
         ui.updateUI(findResult.data);
       }
     }

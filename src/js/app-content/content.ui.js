@@ -16,6 +16,7 @@ const main = ($, pageInfo) => {
      * @param {FoundItem} item
      */
     initUI: (item) => {
+      $('#' + messageContainerId).remove();
       $('<div>')
         .attr('id', messageContainerId)
         .css(css.forMessage(item))
