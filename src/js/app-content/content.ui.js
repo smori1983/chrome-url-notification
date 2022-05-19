@@ -43,6 +43,9 @@ const main = ($, pageInfo) => {
 
       $body.css(css.forBody(item.displayPosition, item.status));
     },
+    removeUI: () => {
+      $('#' + messageContainerId).remove();
+    },
   };
 };
 

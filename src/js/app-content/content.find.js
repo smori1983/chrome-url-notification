@@ -33,10 +33,13 @@ const watch = ($, pageInfo) => {
     if (changes.pattern) {
       const findResult = await findPattern(pageInfo);
 
+      const ui = uiFactory.init($, pageInfo);
+
       if (findResult.matched) {
-        const ui = uiFactory.init($, pageInfo);
         ui.initUI(findResult.data);
         ui.updateUI(findResult.data);
+      } else {
+        ui.removeUI();
       }
     }
   });
