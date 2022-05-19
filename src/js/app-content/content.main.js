@@ -1,7 +1,7 @@
 const $ = require('jquery');
 const pageInfoFactory = require('./content.pageInfo');
 const contentFind = require('./content.find');
-const v3Util = require('./manifest.v3.util');
+const v3Util = require('../app/manifest.v3.util');
 
 const pageInfo = pageInfoFactory.init(window.location, $);
 

@@ -23,7 +23,7 @@ const $ = global.jQuery = require('jquery');
 require('bootstrap');
 require('bootstrap-colorpicker');
 
-const i18n = require('./i18n');
+const i18n = require('../app/i18n');
 const header = require('./options.header');
 const patternList = require('./options.list');
 

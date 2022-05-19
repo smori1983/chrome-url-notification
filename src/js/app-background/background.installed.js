@@ -1,4 +1,4 @@
-const v3Util = require('./manifest.v3.util');
+const v3Util = require('../app/manifest.v3.util');
 const Migration = require('../notification/migration');
 
 const listener = async () => {

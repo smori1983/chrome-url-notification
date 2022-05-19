@@ -1,7 +1,7 @@
 const sprintf = require('sprintf-js').sprintf;
 const Config = require('../notification/config');
 const Storage = require('../notification/storage');
-const i18n = require('./i18n');
+const i18n = require('../app/i18n');
 const patternForm = require('./options.pattern-form');
 const deleteForm = require('./options.delete-form');
 

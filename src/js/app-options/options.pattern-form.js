@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const Config = require('../notification/config');
 const Storage = require('../notification/storage');
-const i18n = require('./i18n');
+const i18n = require('../app/i18n');
 const formFactory = require('./options.util.form');
 const modalFactory = require('./options.util.modal');
 

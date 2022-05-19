@@ -1,5 +1,5 @@
-const i18n = require('./i18n');
-const badge = require('./background.badge');
+const i18n = require('../app/i18n');
+const badge = require('../app-background/background.badge');
 const Finder = require('../notification/finder');
 const Storage = require('../notification/storage');
 

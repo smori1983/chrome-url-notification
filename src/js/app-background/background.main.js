@@ -1,6 +1,6 @@
 const installed = require('./background.installed');
 const tab = require('./background.tab');
-const v3Util = require('./manifest.v3.util');
+const v3Util = require('../app/manifest.v3.util');
 
 installed.listen();
 

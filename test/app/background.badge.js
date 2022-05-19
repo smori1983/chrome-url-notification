@@ -1,7 +1,7 @@
 const { describe } = require('mocha');
 const { given } = require('mocha-testdata');
 const assert = require('assert');
-const SUT = require('../../src/js/app/background.badge');
+const SUT = require('../../src/js/app-background/background.badge');
 const testUtil = require('../../test_lib/util');
 
 describe('app.background.badge', () => {
