@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Run eslint
           command: npm run lint
+      - run:
+          name: Run test:vendor
+          command: npm run test:vendor
       #- run:
       #    name: Webpack build for test
       #    command: npm run build:test
