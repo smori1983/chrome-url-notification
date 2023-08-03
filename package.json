@@ -13,6 +13,7 @@
     "test": "mocha --require mock-local-storage test/*",
     "test:app": "mocha --require mock-local-storage test/app/*",
     "test:notification": "mocha --require mock-local-storage test/notification/*",
+    "test:vendor": "mocha test/vendor*",
     "test:coverage": "nyc --reporter=text --reporter=html npm run test ",
     "coverage:test": "nyc npm run test",
     "coverage:report": "nyc report --reporter=lcov"
