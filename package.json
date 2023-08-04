@@ -19,7 +19,7 @@
     "coverage:report": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^4.6.2",
     "bootstrap-colorpicker": "^3.4.0",
     "clipboard": "^2.0.8",
     "deepmerge": "^4.3.1",
