@@ -3,66 +3,65 @@
 
 ## v7.0.0
 
-### Development
+### Features
 
-- Update for Chrome Extensions manifest V3.
+- Update for Chrome Extensions manifest V3 ([#97](https://github.com/smori1983/chrome-url-notification/pull/97))
 
 
 ## v6.4.0
 
-### Development
+### Features
 
-- Refactoring.
-- Update `bootstrap` (`v4.6`)
-- Update `bootstrap-colorpicker` (`v3.4`)
+- `bootstrap` (`v4.6`) ([#63](https://github.com/smori1983/chrome-url-notification/pull/63))
+- `bootstrap-colorpicker` (`v3.4`) ([#63](https://github.com/smori1983/chrome-url-notification/pull/63))
 
 
 ## v6.3.0
 
+### Features
+
+- Introduce `joi` ([#73](https://github.com/smori1983/chrome-url-notification/pull/73))
+- Remove `jquery-validation` ([#73](https://github.com/smori1983/chrome-url-notification/pull/73))
+
 ### Development
 
-- Introduce `joi`.
-- Remove `jquery-validation`.
-- Overall update for tests using `jsdom`.
+- Overall update for tests using `jsdom`
 
 
 ## v6.2.0
 
 ### Development
 
-- Introduce `webpack`.
+- Introduce `webpack`
 
 
 ## v6.1.0
 
 ### Development
 
-- Refactoring.
-- Update dependent packages.
+- Refactoring
+- Update dependent packages
 
 
 ## v6.0.2
 
-### Bug fix
+### Bug Fixes
 
-- Fix margin update code of top and bottom cases in display position.
+- Fix margin update code of top and bottom cases in display position ([#38](https://github.com/smori1983/chrome-url-notification/pull/38))
 
 
 ## v6.0.1
 
-### Bug fix
+### Bug Fixes
 
-- Prevent duplicate open of modal form.
-  - Export form
-  - Pattern item delete form
+- Prevent duplicate open of modal form ([#31](https://github.com/smori1983/chrome-url-notification/pull/31))
 
 
 ## v6.0.0
 
-### Feature
+### Features
 
-- Support additional choices for message display position.
-  - top left / top right / bottom left / bottom right
+- Support additional choices for message display position ([#24](https://github.com/smori1983/chrome-url-notification/pull/24))
 
 
 ## v5.4.0
@@ -96,7 +95,7 @@
 
 ## v5.1.0
 
-### Feature
+### Features
 
 - Toggle message area of matched page in conjunction with the browser action
 - Show badge text based on current status of pattern
@@ -104,7 +103,7 @@
 
 ## v5.0.0
 
-### Feature
+### Features
 
 - Introduce browser action
   - Show status change menu for pattern matched pages
@@ -122,7 +121,7 @@
 
 ## v4.0.0
 
-### Feature
+### Features
 
 - Introduce 'status' field for each pattern
   - User can disable pattern temporarily
@@ -135,7 +134,7 @@
 
 ## v3.3.0
 
-### Feature
+### Features
 
 - Show 'display position' in pattern list
 - The id attribute of DOM element injected by `content.js` become more conflict free
@@ -167,7 +166,7 @@
 
 ## v3.0.0
 
-### Feature
+### Features
 
 - i18n
   - en
@@ -206,7 +205,7 @@
 
 ## v2.0.0
 
-### Feature
+### Features
 
 - User can select the position of notification bar (top or bottom)
 
