@@ -16,6 +16,7 @@ const main = ($, pageInfo) => {
      * @param {FoundItem} item
      */
     initUI: (item) => {
+      $('#' + messageContainerId).remove();
       $('<div>')
         .attr('id', messageContainerId)
         .css(css.forMessage(item))
@@ -41,6 +42,9 @@ const main = ($, pageInfo) => {
       }
 
       $body.css(css.forBody(item.displayPosition, item.status));
+    },
+    removeUI: () => {
+      $('#' + messageContainerId).remove();
     },
   };
 };
